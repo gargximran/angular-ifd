@@ -1,0 +1,29 @@
+
+button.mfp-close{
+	border-radius: 50% !important;
+	top:10px !important;
+	background-color: #fff !important;
+	right: 15px;
+}
+
+
+button.mfp-close::before{
+	top:3px !important;
+	color:red;
+}
+
+button.mfp-close::after{
+	top:3px !important;
+	color:red;
+}
+
+
+.small_dialog_header {
+    width: 100%;
+    left: 0;
+}
+
+
+.padding-custom{
+	padding: 0px 20px 51px 20px;
+}

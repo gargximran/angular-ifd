@@ -89,12 +89,6 @@
 .rev_slider .tp-mask-wrap .tp-caption, .rev_slider .tp-mask-wrap *:last-child, .wpb_text_column .rev_slider .tp-mask-wrap .tp-caption, .wpb_text_column .rev_slider .tp-mask-wrap *:last-child {
 	margin-bottom: 0;
 }
-.tp-carousel-wrapper {
-	cursor: url(openhand.cur), move;
-}
-.tp-carousel-wrapper.dragged {
-	cursor: url(closedhand.cur), move;
-}
 .tp-caption {
 	z-index: 1111;
 }
@@ -333,10 +327,10 @@ img.tp-slider-alternative-image {
 	-o-transition: opacity .3s;
 	-ms-transition: opacity .3s;
 	transition: opacity .3s;
-	background-image: linear-gradient(bottom, rgb(0,0,0) 13%, rgb(50,50,50) 100%);
-	background-image: -o-linear-gradient(bottom, rgb(0,0,0) 13%, rgb(50,50,50) 100%);
-	background-image: -moz-linear-gradient(bottom, rgb(0,0,0) 13%, rgb(50,50,50) 100%);
-	background-image: -webkit-linear-gradient(bottom, rgb(0,0,0) 13%, rgb(50,50,50) 100%);
+	background-image: linear-gradient(to bottom, rgb(0,0,0) 13%, rgb(50,50,50) 100%);
+	background-image: -o-linear-gradient(to bottom, rgb(0,0,0) 13%, rgb(50,50,50) 100%);
+	background-image: -moz-linear-gradient(to bottom, rgb(0,0,0) 13%, rgb(50,50,50) 100%);
+	background-image: -webkit-linear-gradient(to bottom, rgb(0,0,0) 13%, rgb(50,50,50) 100%);
 	background-image: -ms-linear-gradient(bottom, rgb(0,0,0) 13%, rgb(50,50,50) 100%);
 	background-image: -webkit-gradient(linear, left bottom, left top, color-stop(0.13, rgb(0,0,0)), color-stop(1, rgb(50,50,50)));
 	display: table;
@@ -406,18 +400,6 @@ display:none !important;
 	top: 0px;
 	left: 0px;
 	z-index: 3
-}
-.tp-dottedoverlay.twoxtwo {
-	background: url(../assets/gridtile.png)
-}
-.tp-dottedoverlay.twoxtwowhite {
-	background: url(../assets/gridtile_white.png)
-}
-.tp-dottedoverlay.threexthree {
-	background: url(../assets/gridtile_3x3.png)
-}
-.tp-dottedoverlay.threexthreewhite {
-	background: url(../assets/gridtile_3x3_white.png)
 }
 .tp-shadowcover {
 	width: 100%;
@@ -893,11 +875,8 @@ top: 29%;
 .caption.slidelink a div, .tp-caption.slidelink a div {
 	width: 3000px;
 	height: 1500px;
-	background: url(../assets/coloredbg.png) repeat
 }
-.tp-caption.slidelink a span {
-	background: url(../assets/coloredbg.png) repeat
-}
+
 .tp-shape {
 	width: 100%;
 	height: 100%;
@@ -912,7 +891,7 @@ top: 29%;
 	width: 40px;
 	height: 40px;
 	background-color: #fff;
-	background: url(../img/loading.gif) no-repeat center center;
+	background: url(../images/loading.gif) no-repeat center center;
 	box-shadow: 0px 0px 20px 0px rgba(0,0,0,0.15);
 	-webkit-box-shadow: 0px 0px 20px 0px rgba(0,0,0,0.15);
 	margin-top: -20px;
@@ -938,7 +917,7 @@ top: 29%;
 	-webkit-border-radius: 3px;
 }
 .tp-loader.spinner5 {
-	background: url(../img/loading.gif) no-repeat 10px 10px;
+	background: url(../images/loading.gif) no-repeat 10px 10px;
 	background-color: #fff;
 	margin: -22px -22px;
 	width: 44px;

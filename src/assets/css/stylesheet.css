@@ -22,89 +22,7 @@ Version: 1.0.8
 @import url("https://fonts.googleapis.com/css?family=Open+Sans:300,400,500,600,700,800");
 @import url('https://fonts.googleapis.com/css?family=Nunito:300,400,600,600i,700,800&subset=latin-ext');
 
-/*=================
-Table Of Content
-------------------------------------
 
-#. Typography
-#. Loader
-#. Header
-#. Backto Top
-#. Navigation
-#. Footer
-#. User Menu
-#. Verified Style
-#. Panel Menu Style
-#. Bookings Style
-#. Search Container Block
-#. Main Inner Search Block
-#. Rangeslider Style
-#. Chosen Container Style
-#. Listing Filter Block
-#. Search Map Section Block
-#. Sort By Style
-#. Main Input Search Style
-#. Select Option Style
-#. Panel Dropdown Style
-#. More Search Style
-#. Navigation Layout Style
-#. Listings Container Style
-#. Bootstrap Column Style
-#. Titlebar Style
-#. Listing Slider Style
-#. Box Widget Style
-#. Opening Hours Style
-#. Listing Share Style
-#. Listing Nav Style
-#. Pricing Info Style
-#. Color Switcher Style
-#. Pricing List Container Style
-#. Show More Style
-#. Comments Style
-#. Review Style
-#. Pagination Style
-#. Contact Style
-#. Sidebar Style
-#. Blog Post Style
-#. Widget Style
-#. Blog Single Post Style
-#. Button Style
-#. Box Icon Style
-#. Posts Nav Style
-#. Coming Soon Style
-#. Plan Featured Style
-#. Testimonial Style
-#. Flip Banner Style
-#. Tabs Nav Style
-#. Login Block
-#. Social Icon Style
-#. Check Box Style
-#. Listing Item Container Style
-#. Categories Box
-#. Titlebar Style
-#. Breadcrumbs Style
-#. Page Not Found Style
-#. Bookings Wallet Style
-#. Bookings Payment Style
-#. Bookings Style
-#. Bookings Confimation Style
-#. Edit Profile Style
-#. Dashboard Content Style
-#. Messages Style
-#. Edit Profile Style
-#. Dashboard List Style
-#. Map Box Style
-#. Dropzone Style
-#. Slick Slider Style
-#. Categorie Item Style
-#. Typography List
-#. Responsive Style
-=================*/
-
-
-/*==========
-  Typography
-============*/
 
 body {
 	color: #707070;
@@ -409,11 +327,12 @@ header.fullwidth_block .container {
 }
 .header-one .search_container_block:before {
 	background: rgba(48,48,48,.80)
+
+
+	
 }
 
-/*==========
-  Backto Top
-============*/
+
 #bottom_backto_top {
 	position: fixed;
 	right: 0;
@@ -14114,7 +14033,6 @@ input#date-picker:hover {
 }
 #booking-date-range i {
 	color: #999;
-background-color:
 }
 .daterangepicker .ranges li {
 	font-size: 13px;
@@ -14913,8 +14831,8 @@ button.panel-cancel:active {
 	height: 100%;
 	width: 100%;
 	z-index: 9;
-	background: -webkit-linear-gradient(bottom, rgba(35,35,37,0.85) 0%, rgba(35,35,37,0.8) 35%, rgba(22,22,23,0) 100%, rgba(0,0,0,0) 100%);
-	background: -o-linear-gradient(bottom, rgba(35,35,37,0.85) 0%, rgba(35,35,37,0.8) 35%, rgba(22,22,23,0) 100%, rgba(0,0,0,0) 100%);
+	background: -webkit-linear-gradient(to bottom, rgba(35,35,37,0.85) 0%, rgba(35,35,37,0.8) 35%, rgba(22,22,23,0) 100%, rgba(0,0,0,0) 100%);
+	background: -o-linear-gradient(to bottom, rgba(35,35,37,0.85) 0%, rgba(35,35,37,0.8) 35%, rgba(22,22,23,0) 100%, rgba(0,0,0,0) 100%);
 	background: linear-gradient(to top, rgba(35,35,37,0.85) 0%, rgba(35,35,37,0.8) 35%, rgba(22,22,23,0) 100%, rgba(0,0,0,0) 100%);
 }
 .fullwidth_block-slick-carousel.category-carousel .slick-slide {
