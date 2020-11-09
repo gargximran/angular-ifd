@@ -33,14 +33,17 @@ export class LoginComponent implements OnInit {
   }
 
   submitRegister(){
-    this.http.post(`${url}/user/register`, this.registerForm.value, {
-      headers: {
-        'Content-Type': "multipart/form-data;",
-        'Accept': "*/*",
-        "Access-Control-Allow-Origin": "*"
+    var formData = new FormData();
+    formData.append('first_name', this.registerForm.get('first_name').value);
+    formData.append('last_name', this.registerForm.get('last_name').value);
+    formData.append('email', this.registerForm.get('email').value)
+    formData.append('phone', this.registerForm.get('phone').value)
+    formData.append('username', this.registerForm.get('username').value)
+    formData.append("gender", this.registerForm.get('gender').value)
+    formData.append('password', this.registerForm.get('password').value)
 
-      }
-    }).subscribe(res => {
+    console.log(formData);
+    this.http.post(`${url}/user/register`, formData).subscribe(res => {
       console.log(res)
     }, err => {
       console.log(err)
