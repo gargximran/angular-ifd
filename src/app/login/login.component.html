@@ -1,45 +1,20 @@
-<div class="holding_container bg-dark">
-  <div class="container-login">
-    <div class="small_dialog_header for-mob">
-      <h3>{{headingText}}</h3>
+<div class="holding_container bg-dark" >
+  <div class="container-login" >
+    <div class="small_dialog_header for-mob" @fade_in>
+      <h3>Sign In</h3>
     </div>
-    <div class="utf_signin_form style_one padding-custom">
+    <div  class="utf_signin_form style_one padding-custom" @fade_in>
       <ul class="utf_tabs_nav">
-        <li
-          #signInTabBtn
-          class="active"
-          (click)="
-            toggleInModalAction(
-              signInTabBtn,
-              registerTabBtn,
-              signInTab,
-              registerTab
-            )
-		  "
-		  
-		  (click)="changeHeading('Sign In')"
-        >
+        <li class="active">
           <a>Log In</a>
         </li>
-        <li
-          #registerTabBtn
-          (click)="
-            toggleInModalAction(
-              registerTabBtn,
-              signInTabBtn,
-              registerTab,
-              signInTab
-            )
-		  "
-		  
-		  (click)="changeHeading('Register New')"
-        >
-          <a>Register</a>
+        <li>
+          <a [routerLink]="['/register']">Register</a>
         </li>
       </ul>
       <div class="tab_container alt">
-        <div class="tab_content" #signInTab>
-          <form  [formGroup]="registerForm" class="login">
+        <div class="tab_content">
+          <form class="login" [formGroup]="loginForm">
             <a href="javascript:void(0);" class="social_bt facebook_btn"
               ><i class="fa fa-facebook"></i>Login with Facebook</a
             >
@@ -86,96 +61,6 @@
                 value="Login"
               />
             </div>
-          </form>
-        </div>
-
-        <div class="tab_content" #registerTab style="display: none">
-          <form [formGroup]="registerForm" class="register" (ngSubmit)="submitRegister()">
-            <p class="utf_row_form utf_form_wide_block">
-              <label for="first_name">
-                <input
-                  type="text"
-                  class="input-text"
-                  id="first_name"
-                  formControlName="first_name"
-                  placeholder="First Name"
-                />
-              </label>
-            </p>
-
-            <p class="utf_row_form utf_form_wide_block">
-              <label for="last_name">
-                <input
-                  type="text"
-                  class="input-text"
-                  id="last_name"
-                  formControlName="last_name"
-                  placeholder="Last Name"
-                />
-              </label>
-            </p>
-
-            <p class="utf_row_form utf_form_wide_block">
-              <label for="email2">
-                <input
-                  type="text"
-                  class="input-text"
-                  id="email2"
-                  formControlName="email"
-                  placeholder="Email"
-                />
-              </label>
-            </p>
-
-            <p class="utf_row_form utf_form_wide_block">
-              <label for="phone">
-                <input
-                  type="text"
-                  class="input-text"
-                  id="phone"
-                  formControlName="phone"
-                  placeholder="Phone"
-                />
-              </label>
-			</p>
-			
-			<p class="utf_row_form utf_form_wide_block">
-				<label for="gender">
-					<select formControlName='gender' id="gender">
-						<option value="m" selected="true">Male</option>
-						<option value="f">Female</option>
-						<option value="o">other</option>
-					</select>				  
-				</label>
-			  </p>
-
-            <p class="utf_row_form utf_form_wide_block">
-              <label for="username">
-                <input
-                  type="text"
-                  class="input-text"
-                  id="username"
-                  formControlName="username"
-                  placeholder="username"
-                />
-              </label>
-            </p>
-            <p class="utf_row_form utf_form_wide_block">
-              <label for="password1">
-                <input
-                  class="input-text"
-                  type="password"
-                  formControlName="password"
-                  id="password1"
-                  placeholder="Password"
-                />
-              </label>
-            </p>
-            <input
-              type="submit"
-              class="button border fw margin-top-10"
-              name="register"
-            />
           </form>
         </div>
       </div>
