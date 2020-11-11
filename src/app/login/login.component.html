@@ -14,22 +14,22 @@
       </ul>
       <div class="tab_container alt">
         <div class="tab_content">
-          <form class="login" [formGroup]="loginForm">
-            <a href="javascript:void(0);" class="social_bt facebook_btn"
+          <form class="login" [formGroup]="loginForm" (ngSubmit)="login()">
+            <!-- <a href="javascript:void(0);" class="social_bt facebook_btn"
               ><i class="fa fa-facebook"></i>Login with Facebook</a
             >
             <a href="javascript:void(0);" class="social_bt google_btn"
               ><i class="fa fa-google-plus"></i>Login with Google</a
-            >
+            > -->
             <p class="utf_row_form utf_form_wide_block">
               <label for="username">
                 <input
                   type="text"
                   class="input-text"
-                  name="username"
+                  formControlName="email"
                   id="username"
                   value=""
-                  placeholder="Username"
+                  placeholder="Email or Username"
                 />
               </label>
             </p>
@@ -38,7 +38,7 @@
                 <input
                   class="input-text"
                   type="password"
-                  name="password"
+                  formControlName="password"
                   id="password"
                   placeholder="Password"
                 />
@@ -49,7 +49,7 @@
                 <a href="javascript:void(0);">Forgot Password?</a>
               </span>
               <div class="checkboxes fl_right">
-                <input id="remember-me" type="checkbox" name="check" />
+                <input id="remember-me" type="checkbox" formControlName="remember" />
                 <label for="remember-me">Remember Me</label>
               </div>
             </div>

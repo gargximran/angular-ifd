@@ -18,10 +18,11 @@ export class AuthGuard implements CanActivate {
       let logged: boolean = await this.authService
         .check(token)
         .toPromise()
-        .then((res) => {
+        .then(() => {
+          console.log("here")
           return true;
         })
-        .catch((er) => {
+        .catch(() => {
           this.router.navigate(['/login']);
           return false;
         });

@@ -78,8 +78,9 @@
 
             <p class="utf_row_form utf_form_wide_block">
               <label for="gender">
-                <select formControlName="gender" value='m' id="gender" [class.error]='!!error.gender'>
-                  <option value="m" #selectedGender>Male</option>
+                <select formControlName="gender" value='Select Gender' id="gender" [class.error]='!!error.gender'>
+                  <option #selectedGender disabled>Select Gender</option>
+                  <option value="m">Male</option>
                   <option value="f">Female</option>
                   <option value="o">other</option>
 				</select>

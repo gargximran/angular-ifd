@@ -15,10 +15,48 @@ import { fadeIn } from 'ng-animate'
 })
 export class LoginComponent implements OnInit {
 
-
+  loginError = ''
   constructor(private http: HttpClient) { }
 
-  loginForm = new FormGroup({})
+  loginForm = new FormGroup({
+    email: new FormControl(''),
+    password: new FormControl(''),
+    remember: new FormControl('')
+  })
+
+  login(){
+
+    interface DataLogin{
+      token: string;
+    }
+
+    interface ResponseLogin{
+      data: DataLogin;
+      error: object;
+      message: string;
+      status: string;
+    }
+
+    let formData = new FormData()
+    formData.append('email', this.loginForm.get('email').value)
+    formData.append('password', this.loginForm.get('password').value)
+    formData.append('remember', this.loginForm.get('remember').value)
+    
+    this.http.post(`${url}/user/login`, formData).subscribe((res: ResponseLogin) => {
+      localStorage.setItem('xi-token', res.data.token)
+    }, (error: any) => {
+      this.loginError = "Unknown Credentials!"
+    })
+    
+    
+    
+    
+    
+    
+   
+    
+   
+  }
 
  
 
