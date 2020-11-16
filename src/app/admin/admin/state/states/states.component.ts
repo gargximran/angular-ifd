@@ -22,12 +22,80 @@ export class StatesComponent implements OnInit {
     config.keyboard = false;
   }
 
+  delete_item = {
+    id: '',
+    name: '',
+    slug: '',
+    created_at: '',
+    index: ''
+  }
+
+  edit_item = {
+    id: '',
+    name: '',
+    slug: '',
+    created_at: '',
+    index: ''
+  }
+
   new_state_error = ' '
+  update_state_error = ''
   loading = false
 
   newState = new FormGroup({
     name: new FormControl('')
   })
+
+  updateStateForm = new FormGroup({
+    name: new FormControl(this.edit_item.name)
+  })
+
+  open_update_modal(content, index){
+    this.edit_item = this.states[index]
+    this.updateStateForm.patchValue({"name": this.edit_item.name})
+    this.open(content)
+  }
+
+  open_delete_modal(content, index){
+    this.delete_item = this.states[index]
+    this.open(content)
+  }
+
+  delete_state_(){
+    this.api.post("/state/delete/"+ this.delete_item.id, {}).subscribe(
+      res => {
+        this.toastr.info("State Deleted!")
+        this.modalService.dismissAll()
+        this.states.splice(parseInt(this.delete_item.index), 1)
+      },
+      err => {
+        this.toastr.error('Something went wrong!')
+        this.modalService.dismissAll()
+      }
+    )
+  }
+
+  updateState(){
+    let formdata = new FormData()
+    formdata.append('name', this.updateStateForm.get('name').value)
+    this.loading = true
+    this.update_state_error = ''
+    this.api.post(`/state/update/${this.edit_item.id}`, formdata).subscribe(
+      res => {
+        this.toastr.success('State updated successfuly!')
+        this.loading = false
+        this.modalService.dismissAll()
+        this.states.splice(parseInt(this.edit_item.index), 1, res.data)
+
+
+      },
+      err => {
+        this.loading = false
+        this.update_state_error = err.errors.name
+        this.toastr.error('Something went wrong!')
+      }
+    )
+  }
 
   open(content) {
     this.modalService.open(content, {centered:true, backdropClass: 'dark-backdrop'});
@@ -42,6 +110,7 @@ export class StatesComponent implements OnInit {
       this.loading = false
       this.toastr.success('State added successfully!')
       this.modalService.dismissAll()
+      this.states.push(res.data)
     }, 
     err => {
       if(err.errors){
@@ -60,7 +129,6 @@ export class StatesComponent implements OnInit {
     this.api.get('/state/view').subscribe(
       res=> {
         this.states = res.data
-        console.log(this.states)
       },
       err => {
         this.toastr.warning('Something went wrong!')
@@ -70,11 +138,6 @@ export class StatesComponent implements OnInit {
 
   ngOnInit(): void {
    this.initialize_all_states()
-
-
-   setTimeout(()=>{
-     this.states.splice(2, 1)
-   }, 1000)
   }
 
 }

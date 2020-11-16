@@ -23,18 +23,100 @@
           </button>
         </div>
         <div class="modal-body">
-			<p *ngIf="loading" @zoom_in><ngb-progressbar type="warning" [value]="100" [striped]="true" [animated]="true"><i></i></ngb-progressbar></p>
-			<form [formGroup]="newState" (ngSubmit)="createState()">
-				<div class="form-group">
-					<label for="new_state">Name :</label>
-					<input formControlName="name" type="text" class="form-control" id="new_state" placeholder="Enter name">
-					<small *ngIf="new_state_error" class="form-text text-danger">{{new_state_error}}</small>
-				</div>
-				<button type="submit" class="btn-lg btn-primary">Submit</button>
-			</form>
-
+          <p *ngIf="loading">
+            <ngb-progressbar
+              type="primary"
+              [value]="100"
+              [striped]="true"
+              [animated]="true"
+              >Loading...</ngb-progressbar>
+          </p>
+          <form [formGroup]="newState" (ngSubmit)="createState()">
+            <div class="form-group">
+              <label for="new_state">Name :</label>
+              <input
+                formControlName="name"
+                type="text"
+                class="form-control"
+                id="new_state"
+                placeholder="Enter name"
+              />
+              <small *ngIf="new_state_error" class="form-text text-danger">{{
+                new_state_error
+              }}</small>
+            </div>
+            <button type="submit" class="btn-lg btn-primary">Submit</button>
+          </form>
         </div>
-        
+      </ng-template>
+
+
+      <ng-template #delete_state  let-g="dismiss">
+        <div class="modal-header">
+          <h4 class="modal-title text-danger" id="modal-basic-title">Delete State ?</h4>
+          <button
+            type="button"
+            class="close text-danger"
+            aria-label="Close"
+            (click)="g('Cross click')"
+          >
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <p *ngIf="loading">
+            <ngb-progressbar
+              type="danger"
+              [value]="100"
+              [striped]="true"
+              [animated]="true"
+              >Deleting...</ngb-progressbar>
+          </p>
+          <p class="text-info">Are you sure want to delete {{ delete_item.name }} ?</p>
+            
+            <button type="button" class="btn-lg btn-danger" (click)="delete_state_()">Delete</button>
+       
+        </div>
+      </ng-template>
+
+      <ng-template #update_state let-e="dismiss">
+        <div class="modal-header">
+          <h4 class="modal-title" id="modal-basic-title">Update State</h4>
+          <button
+            type="button"
+            class="close text-danger"
+            aria-label="Close"
+            (click)="e('Cross click')"
+          >
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <p *ngIf="loading">
+            <ngb-progressbar
+              type="primary"
+              [value]="100"
+              [striped]="true"
+              [animated]="true"
+              >Loading...</ngb-progressbar>
+          </p>
+          <form [formGroup]="updateStateForm" (ngSubmit)="updateState()">
+            <div class="form-group">
+              <label for="new_state">Name :</label>
+              <input
+                formControlName="name"
+                type="text"
+                class="form-control"
+                id="update_state"
+                placeholder="Enter name"
+              />
+              <small *ngIf="update_state_error" class="form-text text-danger">{{
+                update_state_error
+              }}</small>
+            </div>
+            <button type="submit" class="btn-lg btn-primary">Submit</button>
+          </form>
+        </div>
       </ng-template>
 
       <button class="btn btn-lg btn-outline-primary" (click)="open(content)">
@@ -61,22 +143,21 @@
         </div>
       </div>
       <h4><i class="sl sl-icon-list"></i> My Listings</h4>
-      <ul >
-        <li *ngFor="let state of states" @SlideRight>
+      <ul>
+        <li *ngFor="let state of states; let i = index" @SlideRight>
           <div class="utf_list_box_listing_item">
             <div class="utf_list_box_listing_item_content">
               <div class="inner">
-                <h3>{{state.name}}</h3>
-                <span> {{state.slug}}</span>
-              
+                <h3>{{ state.name }}</h3>
+                <span> {{ state.slug }}</span>
               </div>
             </div>
           </div>
           <div class="buttons-to-right">
-            <a href="#" class="button gray"
+            <a (click)='open_update_modal(update_state, i)' class="button gray"
               ><i class="fa fa-pencil"></i> Edit</a
             >
-            <a href="#" class="button gray"
+            <a (click)="open_delete_modal(delete_state, i)" class="button gray"
               ><i class="fa fa-trash-o"></i> Delete</a
             >
           </div>

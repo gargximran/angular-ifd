@@ -9,6 +9,7 @@ import { AdminDashboardComponent } from './dashboard/dashboard.component';
 import { PlaceholderComponent } from './admin/placeholder/placeholder.component';
 import { StatesComponent } from './admin/state/states/states.component';
 import { ReactiveFormsModule } from '@angular/forms';
+import { NgbModule, NgbProgressbarModule } from '@ng-bootstrap/ng-bootstrap';
 
 @NgModule({
   declarations: [
@@ -23,7 +24,9 @@ import { ReactiveFormsModule } from '@angular/forms';
   imports: [
     CommonModule,
     AdminRoutingModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    NgbModule,
+    NgbProgressbarModule
   ],
 })
 export class AdminModule {}
