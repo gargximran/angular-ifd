@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { ApiService } from 'src/app/service/api.service';
+import { AuthService } from 'src/app/service/auth.service';
 
 @Component({
   selector: 'app-admin-nav',
@@ -7,7 +9,7 @@ import { Component, OnInit } from '@angular/core';
 })
 export class AdminNavComponent implements OnInit {
 
-  constructor() { }
+  constructor(private api: ApiService, private auth: AuthService) { }
 
   ngOnInit(): void {
   }
@@ -15,6 +17,14 @@ export class AdminNavComponent implements OnInit {
 
   toggleMobileMenu(menu){
     menu.classList.toggle('active')
+  }
+
+  logout(){
+    this.api.post('/user/logout', {}).subscribe(
+      (res)=> {
+        this.auth.logout()
+      }
+    )
   }
 
 }

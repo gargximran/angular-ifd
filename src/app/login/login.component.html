@@ -14,6 +14,9 @@
       </ul>
       <div class="tab_container alt">
         <div class="tab_content">
+          <p *ngIf="loading" @zoom_in><ngb-progressbar type="warning" [value]="100" [striped]="true" [animated]="true"><i></i></ngb-progressbar></p>
+          <p *ngIf="loginSuccess != ' '" class="text-success" @zoom_in>{{loginSuccess}}</p>
+          <p *ngIf="loginError != ' '" class="text-danger" @zoom_in>{{loginError}}</p>
           <form class="login" [formGroup]="loginForm" (ngSubmit)="login()">
             <!-- <a href="javascript:void(0);" class="social_bt facebook_btn"
               ><i class="fa fa-facebook"></i>Login with Facebook</a

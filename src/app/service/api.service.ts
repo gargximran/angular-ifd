@@ -30,8 +30,8 @@ export class ApiService {
         this.auth.setSession = resp;
         return resp;
       },
-      catchError(err => {
-        this.auth.setSession = err.error;
+      catchError((err) => {
+        this.auth.logout();
         return throwError(err.error)
       })
       )
@@ -48,7 +48,7 @@ export class ApiService {
         return resp;
       }),
       catchError(err => {
-        this.auth.setSession = err.error;
+        this.auth.logout()
         return throwError(err.error)
       })
     )

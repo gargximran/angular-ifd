@@ -5,6 +5,7 @@ import { url } from '../env';
 import { trigger, transition, useAnimation } from '@angular/animations';
 import { fadeIn} from 'ng-animate'
 import { Router} from '@angular/router';
+import { ApiService } from '../service/api.service';
 
 @Component({
   selector: 'app-register',
@@ -31,9 +32,14 @@ export class RegisterComponent implements OnInit {
     password: false
   }
 
-  constructor(private http: HttpClient, private router: Router) { }
+  constructor(private http: HttpClient, private router: Router, private api: ApiService) { }
 
   ngOnInit(): void {
+    this.api.get("/user/check").subscribe(res => {
+      if(res.status_code == 208){
+        this.router.navigateByUrl('/dashboard')
+      }
+    })
 
   }
 
