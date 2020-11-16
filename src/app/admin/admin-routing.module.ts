@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { AdminAddListingComponent } from './admin-add-listing/admin-add-listing.component';
+import { PlaceholderComponent } from './admin/placeholder/placeholder.component';
+import { StatesComponent } from './admin/state/states/states.component';
 import { AdminDashboardComponent } from './dashboard/dashboard.component';
 import { AdminLayoutComponent } from './include/admin-layout/admin-layout.component';
 
@@ -14,8 +15,14 @@ const routes: Routes = [
                 component: AdminDashboardComponent
             },
             {
-                path: 'add-listing',
-                component: AdminAddListingComponent
+                path: 'admin-dashboard',
+                component: PlaceholderComponent,
+                children:[
+                    {
+                        path: 'states',
+                        component: StatesComponent
+                    }
+                ]
             }
         ]
     }

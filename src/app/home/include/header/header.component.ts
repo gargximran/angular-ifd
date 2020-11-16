@@ -4,8 +4,6 @@ import { FormControl, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { url } from '../../../env';
-import { ApiService } from '../../../service/api.service';
-import { AuthService } from '../../../service/auth.service';
 import { Response } from '../../../models/api_response';
 import { trigger, transition, useAnimation } from '@angular/animations';
 import { fadeIn, zoomIn } from 'ng-animate';

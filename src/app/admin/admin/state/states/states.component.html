@@ -1,0 +1,103 @@
+<div id="titlebar" class="dashboard_gradient">
+  <div class="row">
+    <div class="col-md-12">
+      <h2>All States</h2>
+      <nav id="breadcrumbs">
+        <ul>
+          <li><a [routerLink]="['/']">Home</a></li>
+          <li><a [routerLink]="['/dashboard']">Dashboard</a></li>
+          <li>States</li>
+        </ul>
+      </nav>
+
+      <ng-template #content let-c="close" let-d="dismiss">
+        <div class="modal-header">
+          <h4 class="modal-title" id="modal-basic-title">New State</h4>
+          <button
+            type="button"
+            class="close text-danger"
+            aria-label="Close"
+            (click)="d('Cross click')"
+          >
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+			<p *ngIf="loading" @zoom_in><ngb-progressbar type="warning" [value]="100" [striped]="true" [animated]="true"><i></i></ngb-progressbar></p>
+			<form [formGroup]="newState" (ngSubmit)="createState()">
+				<div class="form-group">
+					<label for="new_state">Name :</label>
+					<input formControlName="name" type="text" class="form-control" id="new_state" placeholder="Enter name">
+					<small *ngIf="new_state_error" class="form-text text-danger">{{new_state_error}}</small>
+				</div>
+				<button type="submit" class="btn-lg btn-primary">Submit</button>
+			</form>
+
+        </div>
+        
+      </ng-template>
+
+      <button class="btn btn-lg btn-outline-primary" (click)="open(content)">
+        Add New State
+      </button>
+    </div>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-lg-12 col-md-12">
+    <div class="utf_dashboard_list_box margin-top-0">
+      <div class="sort-by my_sort_by">
+        <div class="utf_sort_by_select_item">
+          <select
+            data-placeholder="Default Listing"
+            class="utf_chosen_select_single"
+          >
+            <option>Default Listing</option>
+            <option>Active Listing</option>
+            <option>Pending Listing</option>
+            <option>Expired Listing</option>
+          </select>
+        </div>
+      </div>
+      <h4><i class="sl sl-icon-list"></i> My Listings</h4>
+      <ul >
+        <li *ngFor="let state of states" @SlideRight>
+          <div class="utf_list_box_listing_item">
+            <div class="utf_list_box_listing_item_content">
+              <div class="inner">
+                <h3>{{state.name}}</h3>
+                <span> {{state.slug}}</span>
+              
+              </div>
+            </div>
+          </div>
+          <div class="buttons-to-right">
+            <a href="#" class="button gray"
+              ><i class="fa fa-pencil"></i> Edit</a
+            >
+            <a href="#" class="button gray"
+              ><i class="fa fa-trash-o"></i> Delete</a
+            >
+          </div>
+        </li>
+      </ul>
+    </div>
+    <div class="clearfix"></div>
+    <div class="utf_pagination_container_part margin-top-30 margin-bottom-30">
+      <nav class="pagination">
+        <ul>
+          <li>
+            <a href="#"><i class="sl sl-icon-arrow-left"></i></a>
+          </li>
+          <li><a href="#" class="current-page">1</a></li>
+          <li><a href="#">2</a></li>
+          <li><a href="#">3</a></li>
+          <li>
+            <a href="#"><i class="sl sl-icon-arrow-right"></i></a>
+          </li>
+        </ul>
+      </nav>
+    </div>
+  </div>
+</div>
