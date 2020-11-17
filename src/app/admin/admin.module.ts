@@ -10,6 +10,7 @@ import { PlaceholderComponent } from './admin/placeholder/placeholder.component'
 import { StatesComponent } from './admin/state/states/states.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { NgbModule, NgbProgressbarModule } from '@ng-bootstrap/ng-bootstrap';
+import { CityComponent } from './admin/city/city/city.component';
 
 @NgModule({
   declarations: [
@@ -20,6 +21,7 @@ import { NgbModule, NgbProgressbarModule } from '@ng-bootstrap/ng-bootstrap';
     AdminDashboardComponent,
     PlaceholderComponent,
     StatesComponent,
+    CityComponent,
   ],
   imports: [
     CommonModule,

@@ -15800,7 +15800,7 @@ header.fullwidth_block.dashboard .container {
     right: 0;
 }
 .utf_dashboard_navigation, .dashboard #logo {
-    min-width: auto;
+    
     max-width: auto;
 }
 .dashboard #logo a {

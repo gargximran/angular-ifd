@@ -4,11 +4,12 @@
   <div class="utf_dashboard_navigation js-scrollbar" #menu>
     <div class="utf_dashboard_navigation_inner_block">
       <ul>
-        <li class="active">
-          <a [routerLink]="[ '/dashboard' ]"
+        <li >
+          <a routerLinkActive="active" [routerLink]="[ '/dashboard' ]"
             ><i class="sl sl-icon-layers"></i> Dashboard</a
           >
         </li>
+        
         <li (click)="toggleMobileMenu(submenu1)" #submenu1>
           <a ><i class="sl sl-icon-layers"></i> My Listings</a>
           <ul>
@@ -30,8 +31,14 @@
           </ul>
         </li>
         <li>
-          <a [routerLink]="[ '/dashboard/admin-dashboard/states' ]"
+          <a routerLinkActive="active" [routerLink]="[ '/dashboard/admin-dashboard/states' ]"
             ><i class="sl sl-icon-envelope-open"></i> States</a
+          >
+        </li>
+
+        <li>
+          <a routerLinkActive="active" [routerLink]="[ '/dashboard/admin-dashboard/cities' ]"
+            ><i class="sl sl-icon-envelope-open"></i> Cities</a
           >
         </li>
         <li>

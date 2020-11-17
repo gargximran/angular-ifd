@@ -67,6 +67,8 @@ export class StatesComponent implements OnInit {
         this.toastr.info("State Deleted!")
         this.modalService.dismissAll()
         this.states.splice(parseInt(this.delete_item.index), 1)
+
+        this.initialize_all_states()
       },
       err => {
         this.toastr.error('Something went wrong!')
@@ -85,9 +87,7 @@ export class StatesComponent implements OnInit {
         this.toastr.success('State updated successfuly!')
         this.loading = false
         this.modalService.dismissAll()
-        this.states.splice(parseInt(this.edit_item.index), 1, res.data)
-
-
+        this.initialize_all_states()
       },
       err => {
         this.loading = false
