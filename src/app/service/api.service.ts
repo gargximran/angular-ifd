@@ -1,6 +1,7 @@
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { Observable, throwError } from 'rxjs';
 import {catchError, map} from 'rxjs/operators'
 import { url } from '../env';
@@ -19,7 +20,8 @@ export class ApiService {
   constructor(
     private http: HttpClient,
     private router: Router,
-    private auth: AuthService
+    private auth: AuthService,
+    private modal: NgbModal
   ) {}
 
   public get(endpoint, params: HttpParams = null): Observable<Response> {
@@ -32,8 +34,10 @@ export class ApiService {
       },
       catchError((err) => {
         if(!err.error.session){
+          this.modal.dismissAll()
           this.auth.logout()
         }
+
         return throwError(err.error)
       })
       )
@@ -49,9 +53,9 @@ export class ApiService {
         this.auth.setSession = resp;
         return resp;
       }),
-      catchError(err => {
-       
+      catchError(err => {       
         if(!err.error.session){
+          this.modal.dismissAll()
           this.auth.logout()
         }
         return throwError(err.error)

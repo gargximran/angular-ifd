@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { NgbModal, NgbModalConfig } from '@ng-bootstrap/ng-bootstrap';
 import { ToastrService } from 'ngx-toastr';
@@ -10,7 +10,8 @@ import { ApiService } from 'src/app/service/api.service';
   styleUrls: ['./city.component.css']
 })
 export class CityComponent implements OnInit {
-
+ 
+  
   constructor(config: NgbModalConfig, private modalService: NgbModal, private toastr: ToastrService, private api: ApiService) { 
     config.backdrop = 'static';
     config.keyboard = false;

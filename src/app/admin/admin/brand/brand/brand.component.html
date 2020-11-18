@@ -1,0 +1,220 @@
+<ng-template #content let-c="close" let-d="dismiss">
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">New Brand</h4>
+    <button
+      type="button"
+      class="close text-danger"
+      aria-label="Close"
+      (click)="d('Cross click')"
+    >
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <p *ngIf="loading">
+      <ngb-progressbar
+        type="primary"
+        [value]="100"
+        [striped]="true"
+        [animated]="true"
+        >Loading...</ngb-progressbar
+      >
+    </p>
+    <form [formGroup]="brandCreateForm" (ngSubmit)="create_new_brand()">
+      <div class="form-group">
+        <label for="new_city">Name :</label>
+        <input
+          formControlName="name"
+          type="text"
+          class="form-control"
+          id="new_city"
+          placeholder="Enter name"
+        />
+        <small
+          *ngIf="create_new_brand_errors.name"
+          class="form-text text-danger"
+          >{{ create_new_brand_errors.name }}</small
+        >
+      </div>
+
+      <div class="form-group">
+        <label>Description :</label>
+        <textarea
+          class="form-control"
+          formControlName="description"
+          placeholder="Sort Description..."
+        ></textarea>
+
+        <small
+          *ngIf="create_new_brand_errors.description"
+          class="form-text text-danger"
+          >{{ create_new_brand_errors.description }}</small
+        >
+      </div>
+
+      <div class="form-group">
+        <label for="new_icon">Icon :</label>
+        <input
+          type="file"
+          class="form-control-file"
+          id="new_icon"
+          accept="image/*"
+          (change)="patch_image($event)"
+          style="line-height: unset; padding: 0; height: 100%"
+        />
+
+        <small
+          *ngIf="create_new_brand_errors.icon"
+          class="form-text text-danger"
+          >{{ create_new_brand_errors.icon }}</small
+        >
+      </div>
+      <button type="submit" class="btn-lg btn-primary">Submit</button>
+    </form>
+  </div>
+</ng-template>
+
+<ng-template #delete_brand let-g="dismiss">
+  <div class="modal-header">
+    <h4 class="modal-title text-danger" id="modal-basic-title">
+      Delete Brand ?
+    </h4>
+    <button
+      type="button"
+      class="close text-danger"
+      aria-label="Close"
+      (click)="g('Cross click')"
+    >
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <p *ngIf="loading">
+      <ngb-progressbar
+        type="danger"
+        [value]="100"
+        [striped]="true"
+        [animated]="true"
+        >Deleting...</ngb-progressbar
+      >
+    </p>
+    <p class="text-info">Are you sure want to delete ?</p>
+
+    <button type="button" class="btn-lg btn-danger">Delete</button>
+  </div>
+</ng-template>
+
+<ng-template #update_city let-e="dismiss">
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">Update State</h4>
+    <button
+      type="button"
+      class="close text-danger"
+      aria-label="Close"
+      (click)="e('Cross click')"
+    >
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <p *ngIf="loading">
+      <ngb-progressbar
+        type="primary"
+        [value]="100"
+        [striped]="true"
+        [animated]="true"
+        >Loading...</ngb-progressbar
+      >
+    </p>
+    <form [formGroup]="brandUpdateForm">
+      <div class="form-group">
+        <label for="update_city_name">Name :</label>
+        <input
+          type="text"
+          class="form-control"
+          id="update_city_name"
+          placeholder="Enter name"
+        />
+        <small *ngIf="true" class="form-text text-danger"></small>
+      </div>
+
+      <button type="submit" class="btn-lg btn-primary">Submit</button>
+    </form>
+  </div>
+</ng-template>
+
+<div id="titlebar" class="dashboard_gradient">
+  <div class="row">
+    <div class="col-md-12">
+      <h2>All Brands</h2>
+      <nav id="breadcrumbs">
+        <ul>
+          <li><a [routerLink]="['/']">Home</a></li>
+          <li><a [routerLink]="['/dashboard']">Dashboard</a></li>
+          <li>Brand</li>
+        </ul>
+      </nav>
+
+      <button class="btn btn-lg btn-outline-primary" (click)="open(content)">
+        Add New Brand
+      </button>
+    </div>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-lg-12 col-md-12">
+    <div class="utf_dashboard_list_box margin-top-0">
+      
+      <h4><i class="sl sl-icon-list"></i> All Brands</h4>
+      <ul>
+        <li *ngFor="let brand of brands">
+          <div class="utf_list_box_listing_item">
+            <div class="utf_list_box_listing_item-img brand_image">
+              <a>
+                  <ng-container *ngIf="brand.icon; else elseTemplate">
+                    <img src="{{brand.icon}}" alt="" />
+                  </ng-container>
+                  <ng-template #elseTemplate>
+                    <img src="assets/images/dumylogo.png" alt="" />
+                  </ng-template>
+                  
+                  
+                </a>
+            </div>
+            <div class="utf_list_box_listing_item_content">
+              <div class="inner">
+                <h3>{{brand.name}}</h3>
+                <span>{{brand.description}}</span>
+              </div>
+            </div>
+          </div>
+          <div class="buttons-to-right">
+            <a href="#" class="button gray"
+              ><i class="fa fa-pencil"></i> Edit</a
+            >
+            <a href="#" class="button gray"
+              ><i class="fa fa-trash-o"></i> Delete</a
+            >
+          </div>
+        </li>
+      </ul>
+    </div>
+    <div class="clearfix"></div>
+    <div class="utf_pagination_container_part margin-top-30 margin-bottom-30">
+      <nav class="pagination">
+        <ul>
+          <li>
+            <a href="#"><i class="sl sl-icon-arrow-left"></i></a>
+          </li>
+          <li><a href="#" class="current-page">1</a></li>
+          <li><a href="#">2</a></li>
+          <li><a href="#">3</a></li>
+          <li>
+            <a href="#"><i class="sl sl-icon-arrow-right"></i></a>
+          </li>
+        </ul>
+      </nav>
+    </div>
+  </div>
+</div>

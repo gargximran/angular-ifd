@@ -11,6 +11,7 @@ import { StatesComponent } from './admin/state/states/states.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { NgbModule, NgbProgressbarModule } from '@ng-bootstrap/ng-bootstrap';
 import { CityComponent } from './admin/city/city/city.component';
+import { BrandComponent } from './admin/brand/brand/brand.component';
 
 @NgModule({
   declarations: [
@@ -22,6 +23,7 @@ import { CityComponent } from './admin/city/city/city.component';
     PlaceholderComponent,
     StatesComponent,
     CityComponent,
+    BrandComponent,
   ],
   imports: [
     CommonModule,

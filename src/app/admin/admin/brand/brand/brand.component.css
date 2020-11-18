@@ -1,0 +1,11 @@
+.brand_image{
+    max-width: 100px !important;
+}
+
+.brand_image a{
+   height: unset !important;
+}
+
+.brand_image a img{
+    height: unset !important;
+ }

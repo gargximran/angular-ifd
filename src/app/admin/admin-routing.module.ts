@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { BrandComponent } from './admin/brand/brand/brand.component';
 import { CityComponent } from './admin/city/city/city.component';
 import { PlaceholderComponent } from './admin/placeholder/placeholder.component';
 import { StatesComponent } from './admin/state/states/states.component';
@@ -26,6 +27,10 @@ const routes: Routes = [
                     {
                         path:"cities",
                         component: CityComponent
+                    },
+                    {
+                        path: 'brands',
+                        component: BrandComponent
                     }
                 ]
             }
