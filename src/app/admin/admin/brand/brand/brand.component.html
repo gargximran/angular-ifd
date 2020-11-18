@@ -100,13 +100,13 @@
     </p>
     <p class="text-info">Are you sure want to delete ?</p>
 
-    <button type="button" class="btn-lg btn-danger">Delete</button>
+    <button type="button" (click)="delete_brand_()" class="btn-lg btn-danger">Delete</button>
   </div>
 </ng-template>
 
-<ng-template #update_city let-e="dismiss">
+<ng-template #update_brand let-e="dismiss">
   <div class="modal-header">
-    <h4 class="modal-title" id="modal-basic-title">Update State</h4>
+    <h4 class="modal-title" id="modal-basic-title">Update Brand</h4>
     <button
       type="button"
       class="close text-danger"
@@ -126,19 +126,66 @@
         >Loading...</ngb-progressbar
       >
     </p>
-    <form [formGroup]="brandUpdateForm">
+    <form [formGroup]="brandUpdateForm" (ngSubmit)="submit_update_form()">
       <div class="form-group">
-        <label for="update_city_name">Name :</label>
+        <label for="new_city">Name :</label>
         <input
+          formControlName="name"
           type="text"
           class="form-control"
-          id="update_city_name"
+          id="new_city"
           placeholder="Enter name"
         />
-        <small *ngIf="true" class="form-text text-danger"></small>
+        <small
+          *ngIf="update_brand_errors.name"
+          class="form-text text-danger"
+          >{{ update_brand_errors.name }}</small
+        >
       </div>
 
-      <button type="submit" class="btn-lg btn-primary">Submit</button>
+      <div class="form-group">
+        <label>Description :</label>
+        <textarea
+          class="form-control"
+          formControlName="description"
+          placeholder="Sort Description..."
+        ></textarea>
+
+        <small
+          *ngIf="update_brand_errors.description"
+          class="form-text text-danger"
+          >{{ update_brand_errors.description }}</small
+        >
+      </div>
+      <div class="row">
+        <div *ngIf="selected_item.icon" class="col-md-4">
+          <img src="{{selected_item.icon}}" alt="" class="img-fluid">
+        </div>
+        <div class="col-md-8">
+          <div class="form-group">
+            <label for="update_icon">Change icon :</label>
+            <input
+              type="file"
+              class="form-control-file"
+              id="update_icon"
+              accept="image/*"
+              (change)="patch_update_image($event)"
+              style="line-height: unset; padding: 0; height: 100%"
+            />
+    
+            <small
+              *ngIf="update_brand_errors.icon"
+              class="form-text text-danger"
+              >{{ update_brand_errors.icon }}</small
+            >
+          </div>
+        </div>
+        
+      </div>
+
+      
+
+      <button type="submit" class="btn-lg btn-primary mt-2">Submit</button>
     </form>
   </div>
 </ng-template>
@@ -168,7 +215,7 @@
       
       <h4><i class="sl sl-icon-list"></i> All Brands</h4>
       <ul>
-        <li *ngFor="let brand of brands">
+        <li *ngFor="let brand of brands; let i = index">
           <div class="utf_list_box_listing_item">
             <div class="utf_list_box_listing_item-img brand_image">
               <a>
@@ -190,10 +237,10 @@
             </div>
           </div>
           <div class="buttons-to-right">
-            <a href="#" class="button gray"
+            <a (click)="open_update_brand_modal(update_brand, brand)" class="button gray"
               ><i class="fa fa-pencil"></i> Edit</a
             >
-            <a href="#" class="button gray"
+            <a (click)="open_delete_brand_modal(delete_brand, brand)" class="button gray"
               ><i class="fa fa-trash-o"></i> Delete</a
             >
           </div>

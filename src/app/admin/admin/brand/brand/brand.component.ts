@@ -73,13 +73,25 @@ export class BrandComponent implements OnInit {
     
   }
 
+  patch_update_image(event){
+    if(event.target.files[0]){
+      this.brandUpdateForm.patchValue({'icon': event.target.files[0]})
+    }else{
+      this.brandUpdateForm.patchValue({'icon': ''})
+    }
+  }
+
   create_new_brand_errors: any = {
     name: '',
     description: '',
     icon: ''
   } 
 
-  
+  update_brand_errors: any = {
+    name: '',
+    description: '',
+    icon: ''
+  }
 
 
   brandUpdateForm = new FormGroup({
@@ -94,11 +106,70 @@ export class BrandComponent implements OnInit {
     })
   }
 
+  selected_item: any = {}
+
+  open_delete_brand_modal(content, brand){
+    this.selected_item = brand
+    this.open(content)
+  }
+
+  delete_brand_(){
+    this.loading = true
+    this.api.post('/classified_brand/delete/'+ this.selected_item.id, {}).subscribe(
+      res => {
+        this.loading = false
+        this.modelService.dismissAll()
+        this.toastr.success('Brand Deleted!')
+        this.selected_item = {}
+        this.initBrands()
+      },
+      err => {
+        this.loading = false
+        this.toastr.error('Something went wrong!')
+      }
+    )
+
+  }
+
+
+  open_update_brand_modal(content, brand){
+    this.selected_item = brand
+    this.brandUpdateForm.patchValue({
+      'name': brand.name,
+      'description': brand.description || '',
+      'icon': brand.icon || ''
+    })
+    this.open(content)
+  }
+
+  submit_update_form(){
+    this.update_brand_errors = {}
+    this.loading = true
+    let form = new FormData()
+    form.append('name', this.brandUpdateForm.get('name').value)
+    form.append('description', this.brandUpdateForm.get('description').value)
+    form.append('icon', this.brandUpdateForm.get('icon').value)
+    this.api.post('/classified_brand/update/'+ this.selected_item.id, form).subscribe(
+      res => {
+        this.loading = false
+        this.toastr.info('Brand updated!')
+        this.modelService.dismissAll()
+        this.selected_item = {}        
+        this.initBrands()
+      },
+      err => {
+        this.loading = false
+        this.toastr.error('Something went wrong!')
+        this.update_brand_errors = err.errors
+      }
+    )
+  }
+
 
   initBrands(){
     this.api.get('/classified_brand/all').subscribe(
       res=> {
-        this.brands = [...res.data]
+        this.brands = res.data
       },
       err => {
         this.toastr.warning('Something went wrong!')

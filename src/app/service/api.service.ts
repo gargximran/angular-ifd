@@ -31,13 +31,13 @@ export class ApiService {
       map((resp) => {
         this.auth.setSession = resp;
         return resp;
+        
       },
-      catchError((err) => {
+      catchError(err => {       
         if(!err.error.session){
           this.modal.dismissAll()
           this.auth.logout()
         }
-
         return throwError(err.error)
       })
       )
@@ -64,7 +64,7 @@ export class ApiService {
   }
 
 
-  private _set_url_(endpoint){
+  private _set_url_(endpoint:string){
     this.ENDPOINT = endpoint;
     this.FULL_URL = `${this.BASE_URL}${this.ENDPOINT}`
   }
