@@ -29,6 +29,10 @@ const routes: Routes = [
                         component: CityComponent
                     },
                     {
+                        path: 'cities/:state',
+                        component: CityComponent
+                    },
+                    {
                         path: 'brands',
                         component: BrandComponent
                     }

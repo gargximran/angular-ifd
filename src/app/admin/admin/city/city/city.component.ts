@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
+import { ActivatedRoute } from '@angular/router';
 import { NgbModal, NgbModalConfig } from '@ng-bootstrap/ng-bootstrap';
 import { ToastrService } from 'ngx-toastr';
 import { ApiService } from 'src/app/service/api.service';
@@ -12,7 +13,7 @@ import { ApiService } from 'src/app/service/api.service';
 export class CityComponent implements OnInit {
  
   
-  constructor(config: NgbModalConfig, private modalService: NgbModal, private toastr: ToastrService, private api: ApiService) { 
+  constructor(config: NgbModalConfig, private modalService: NgbModal, private toastr: ToastrService, private api: ApiService, private route: ActivatedRoute) { 
     config.backdrop = 'static';
     config.keyboard = false;
   }
@@ -72,7 +73,7 @@ export class CityComponent implements OnInit {
         this.loading = false
         this.add_city_errors = {...this.add_city_errors, name: '', state: ''}
         this.toastr.success('New City addes!')
-        this.cities = [...this.cities, res.data]
+        this.initialize_all_cities()
         this.modalService.dismissAll()
         this.cityCreateForm.reset()
       },
@@ -100,11 +101,7 @@ export class CityComponent implements OnInit {
         this.loading = false
         this.modalService.dismissAll()
         this.toastr.info("City updated!")
-        this.cities.filter((value, index)=>{
-          if(value.id == res.data.id){
-            this.cities.splice(index, 1, res.data)
-          }
-        })
+        this.initialize_all_cities()
       },
       err => {
         this.toastr.error('Update failed!')
@@ -134,11 +131,7 @@ export class CityComponent implements OnInit {
     this.api.post('/city/delete/'+this.selected_item.id, {}).subscribe(
       res => {
         this.loading = false
-        this.cities.filter((value, index) => {
-          if(this.selected_item.id == value.id){
-            this.cities.splice(index, 1)
-          }
-        })
+        this.initialize_all_cities()
         this.selected_item = {
           state:{
             name: null
@@ -156,15 +149,39 @@ export class CityComponent implements OnInit {
     )
   }
 
+
+  state_name = null
+
   initialize_all_cities(){
-    this.api.get('/city/view').subscribe(
-      res => {
-        this.cities = [...res.data]
-      },
-      err => {
-        this.toastr.warning('Someting went wrong!')
+    this.route.paramMap.subscribe(
+      d => {
+        let state = d.get('state')
+        if(state){
+          this.api.get('/state/view/'+ state + "/cities").subscribe(
+            res => {
+              this.cities = res.data
+            },
+            err => {
+              this.cities = []
+              this.toastr.warning('Someting went wrong!')
+            }
+          )
+        }else{
+          this.api.get('/city/view').subscribe(
+            res => {
+              this.cities = res.data
+            },
+            err => {
+              this.cities = []
+              this.toastr.warning('Someting went wrong!')
+            }
+          )
+          
+        }
+
       }
     )
+    
   }
 
 
