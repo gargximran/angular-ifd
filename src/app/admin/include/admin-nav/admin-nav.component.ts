@@ -12,7 +12,12 @@ export class AdminNavComponent implements OnInit {
   constructor(private api: ApiService, private auth: AuthService) { }
 
   ngOnInit(): void {
+    if(this.auth.isAdmin()){
+      this.isAdmin = true
+    }
   }
+
+  isAdmin = false
 
 
   toggleMobileMenu(menu){

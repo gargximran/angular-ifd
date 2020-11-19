@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { AdminGuard } from '../guard/admin.guard';
 import { BrandComponent } from './admin/brand/brand/brand.component';
 import { CityComponent } from './admin/city/city/city.component';
 import { PlaceholderComponent } from './admin/placeholder/placeholder.component';
@@ -19,6 +20,7 @@ const routes: Routes = [
             {
                 path: 'admin-dashboard',
                 component: PlaceholderComponent,
+                canActivate: [AdminGuard],
                 children:[
                     {
                         path: 'states',

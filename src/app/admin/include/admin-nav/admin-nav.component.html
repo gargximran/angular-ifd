@@ -5,7 +5,8 @@
     <div class="utf_dashboard_navigation_inner_block">
       <ul>
         <li >
-          <a routerLinkActive="active" [routerLink]="[ '/dashboard' ]"
+          <a routerLinkActive="active" [routerLinkActiveOptions]="{exact:
+            true}" [routerLink]="[ '/dashboard' ]"
             ><i class="sl sl-icon-layers"></i> Dashboard</a
           >
         </li>
@@ -30,20 +31,23 @@
             </li>
           </ul>
         </li>
-        <li>
-          <a routerLinkActive="active" [routerLink]="[ '/dashboard/admin-dashboard/states' ]"
+        <li *ngIf="isAdmin">
+          <a routerLinkActive="active" [routerLinkActiveOptions]="{exact:
+            true}" [routerLink]="[ '/dashboard/admin-dashboard/states' ]"
             ><i class="sl sl-icon-envelope-open"></i> States</a
           >
         </li>
 
-        <li>
-          <a routerLinkActive="active" [routerLink]="[ '/dashboard/admin-dashboard/cities' ]"
+        <li *ngIf="isAdmin">
+          <a routerLinkActive="active" [routerLinkActiveOptions]="{exact:
+            true}" [routerLink]="[ '/dashboard/admin-dashboard/cities' ]"
             ><i class="sl sl-icon-envelope-open"></i> Cities</a
           >
         </li>
 
-        <li>
-          <a routerLinkActive="active" [routerLink]="[ '/dashboard/admin-dashboard/brands' ]"
+        <li *ngIf="isAdmin">
+          <a routerLinkActive="active" [routerLinkActiveOptions]="{exact:
+            true}" [routerLink]="[ '/dashboard/admin-dashboard/brands' ]"
             ><i class="sl sl-icon-envelope-open"></i> Brands</a
           >
         </li>

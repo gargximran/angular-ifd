@@ -237,16 +237,9 @@
       </li>
       <li
         #registerTabBtn
-        (click)="
-          toggleInModalAction(
-            registerTabBtn,
-            signInTabBtn,
-            registerTab,
-            signInTab
-          )
-        "
       >
-        <a>Register</a>
+        <a (click)="modal.close('close')" [routerLink]="[ '/register' ]">Register</a>
+  
       </li>
     </ul>
     <div class="tab_container alt">
