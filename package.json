@@ -24,6 +24,7 @@
     "bootstrap": "^4.5.0",
     "ng-animate": "^0.3.4",
     "ng-modals": "^1.0.4",
+    "ng-select2-component": "^7.1.11",
     "ngx-toastr": "^13.1.0",
     "ngx-typed-js": "^2.0.2",
     "rxjs": "~6.6.0",

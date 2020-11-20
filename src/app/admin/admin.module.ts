@@ -12,6 +12,8 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { NgbModule, NgbProgressbarModule } from '@ng-bootstrap/ng-bootstrap';
 import { CityComponent } from './admin/city/city/city.component';
 import { BrandComponent } from './admin/brand/brand/brand.component';
+import { ClassifiedCategoryComponent } from './admin/classified-category/classified-category.component';
+import {Select2Module} from 'ng-select2-component';
 
 @NgModule({
   declarations: [
@@ -24,13 +26,15 @@ import { BrandComponent } from './admin/brand/brand/brand.component';
     StatesComponent,
     CityComponent,
     BrandComponent,
+    ClassifiedCategoryComponent,
   ],
   imports: [
     CommonModule,
     AdminRoutingModule,
     ReactiveFormsModule,
     NgbModule,
-    NgbProgressbarModule
+    NgbProgressbarModule,
+    Select2Module
   ],
 })
 export class AdminModule {}

@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { Observable, throwError } from 'rxjs';
-import {catchError, map} from 'rxjs/operators'
+import {catchError, map} from 'rxjs/operators';
 import { url } from '../env';
 import { Response } from '../models/api_response';
 import { AuthService } from './auth.service';
@@ -31,49 +31,48 @@ export class ApiService {
       map((resp) => {
         this.auth.setSession = resp;
         return resp;
-        
-      },
-      catchError(err => {       
-        if(!err.error.session){
-          this.modal.dismissAll()
-          this.auth.logout()
+
+      }),
+      catchError(err => {
+        if (!err.error.session){
+          this.modal.dismissAll();
+          this.auth.logout();
         }
-        return throwError(err.error)
+        return throwError(err.error);
       })
-      )
-    )
+    );
+
   }
 
 
   public post(endpoint, data, params: HttpParams = null): Observable<Response>{
     this._set_url_(endpoint);
     this.setHeaders();
-    return this.http.post<Response>(this.FULL_URL, data, {params, headers:this.headers}).pipe(
+    return this.http.post<Response>(this.FULL_URL, data, {params, headers: this.headers}).pipe(
       map(resp => {
         this.auth.setSession = resp;
         return resp;
       }),
-      catchError(err => {       
-        if(!err.error.session){
-          this.modal.dismissAll()
-          this.auth.logout()
+      catchError(err => {
+        if (!err.error.session){
+          this.modal.dismissAll();
+          this.auth.logout();
         }
-        return throwError(err.error)
+        return throwError(err.error);
       })
-    )
+    );
   }
 
 
-  private _set_url_(endpoint:string){
+  private _set_url_(endpoint: string): void{
     this.ENDPOINT = endpoint;
-    this.FULL_URL = `${this.BASE_URL}${this.ENDPOINT}`
+    this.FULL_URL = `${this.BASE_URL}${this.ENDPOINT}`;
   }
 
 
-  private setHeaders(){
-    let token;
-    if(this.auth.token){
-      this.headers = this.headers.set("auth-token", String(this.auth.token) || "notoken") 
+  private setHeaders(): void{
+    if (this.auth.token){
+      this.headers = this.headers.set('auth-token', String(this.auth.token) || 'notoken');
     }
   }
 

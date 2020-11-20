@@ -7,10 +7,11 @@ import { PlaceholderComponent } from './admin/placeholder/placeholder.component'
 import { StatesComponent } from './admin/state/states/states.component';
 import { AdminDashboardComponent } from './dashboard/dashboard.component';
 import { AdminLayoutComponent } from './include/admin-layout/admin-layout.component';
+import {ClassifiedCategoryComponent} from './admin/classified-category/classified-category.component';
 
 const routes: Routes = [
     {
-        path: "",
+        path: '',
         component: AdminLayoutComponent,
         children: [
             {
@@ -21,13 +22,13 @@ const routes: Routes = [
                 path: 'admin-dashboard',
                 component: PlaceholderComponent,
                 canActivate: [AdminGuard],
-                children:[
+                children: [
                     {
                         path: 'states',
                         component: StatesComponent
                     },
                     {
-                        path:"cities",
+                        path: 'cities',
                         component: CityComponent
                     },
                     {
@@ -37,7 +38,11 @@ const routes: Routes = [
                     {
                         path: 'brands',
                         component: BrandComponent
-                    }
+                    },
+                  {
+                    path: 'classified_category',
+                    component: ClassifiedCategoryComponent
+                  }
                 ]
             }
         ]

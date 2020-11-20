@@ -17,12 +17,12 @@ import { zoomInRight, zoomOutRight } from 'ng-animate';
 })
 export class StatesComponent implements OnInit {
 
-  constructor(config: NgbModalConfig, private modalService: NgbModal, private toastr: ToastrService, private api: ApiService) { 
+  constructor(config: NgbModalConfig, private modalService: NgbModal, private toastr: ToastrService, private api: ApiService) {
     config.backdrop = 'static';
     config.keyboard = false;
   }
 
-  delete_item = {
+  delete_item: any = {
     id: '',
     name: '',
     slug: '',
@@ -111,7 +111,7 @@ export class StatesComponent implements OnInit {
       this.toastr.success('State added successfully!')
       this.modalService.dismissAll()
       this.states.push(res.data)
-    }, 
+    },
     err => {
       if(err.errors){
         this.loading = false

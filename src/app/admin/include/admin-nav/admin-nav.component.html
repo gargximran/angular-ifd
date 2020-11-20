@@ -1,59 +1,66 @@
-<a  (click)="toggleMobileMenu(menu)" class="utf_dashboard_nav_responsive"
-    ><i class="fa fa-reorder"></i> Dashboard Sidebar Menu</a
-  >
-  <div class="utf_dashboard_navigation js-scrollbar" #menu>
-    <div class="utf_dashboard_navigation_inner_block">
-      <ul>
-        <li >
-          <a routerLinkActive="active" [routerLinkActiveOptions]="{exact:
-            true}" [routerLink]="[ '/dashboard' ]"
-            ><i class="sl sl-icon-layers"></i> Dashboard</a
-          >
-        </li>
-        
-        <li (click)="toggleMobileMenu(submenu1)" #submenu1>
-          <a ><i class="sl sl-icon-layers"></i> My Listings</a>
-          <ul>
-            <li>
-              <a
-                >Active <span class="nav-tag green">10</span></a
-              >
-            </li>
-            <li>
-              <a 
-                >Pending <span class="nav-tag yellow">4</span></a
-              >
-            </li>
-            <li>
-              <a 
-                >Expired <span class="nav-tag red">8</span></a
-              >
-            </li>
-          </ul>
-        </li>
-        <li *ngIf="isAdmin">
-          <a routerLinkActive="active" [routerLinkActiveOptions]="{exact:
-            true}" [routerLink]="[ '/dashboard/admin-dashboard/states' ]"
-            ><i class="sl sl-icon-envelope-open"></i> States</a
-          >
-        </li>
+<a (click)="toggleMobileMenu(menu)" class="utf_dashboard_nav_responsive"
+><i class="fa fa-reorder"></i> Dashboard Sidebar Menu</a
+>
+<div #menu class="utf_dashboard_navigation js-scrollbar">
+  <div class="utf_dashboard_navigation_inner_block">
+    <ul>
+      <li>
+        <a [routerLinkActiveOptions]="{exact:
+            true}" [routerLink]="[ '/dashboard' ]" routerLinkActive="active"
+        ><i class="sl sl-icon-layers"></i> Dashboard</a
+        >
+      </li>
 
-        <li *ngIf="isAdmin">
-          <a routerLinkActive="active" [routerLinkActiveOptions]="{exact:
-            true}" [routerLink]="[ '/dashboard/admin-dashboard/cities' ]"
-            ><i class="sl sl-icon-envelope-open"></i> Cities</a
-          >
-        </li>
+      <li #submenu1 (click)="toggleMobileMenu(submenu1)">
+        <a><i class="sl sl-icon-layers"></i> My Listings</a>
+        <ul>
+          <li>
+            <a
+            >Active <span class="nav-tag green">10</span></a
+            >
+          </li>
+          <li>
+            <a
+            >Pending <span class="nav-tag yellow">4</span></a
+            >
+          </li>
+          <li>
+            <a
+            >Expired <span class="nav-tag red">8</span></a
+            >
+          </li>
+        </ul>
+      </li>
+      <li *ngIf="isAdmin">
+        <a [routerLinkActiveOptions]="{exact:
+            true}" [routerLink]="[ '/dashboard/admin-dashboard/states' ]" routerLinkActive="active"
+        ><i class="sl sl-icon-envelope-open"></i> States</a
+        >
+      </li>
 
-        <li *ngIf="isAdmin">
-          <a routerLinkActive="active" [routerLinkActiveOptions]="{exact:
-            true}" [routerLink]="[ '/dashboard/admin-dashboard/brands' ]"
-            ><i class="sl sl-icon-envelope-open"></i> Brands</a
-          >
-        </li>
-        <li>
-          <a (click)="logout()"><i class="sl sl-icon-power"></i> Logout</a>
-        </li>
-      </ul>
-    </div>
+      <li *ngIf="isAdmin">
+        <a [routerLinkActiveOptions]="{exact:
+            true}" [routerLink]="[ '/dashboard/admin-dashboard/cities' ]" routerLinkActive="active"
+        ><i class="sl sl-icon-envelope-open"></i> Cities</a
+        >
+      </li>
+
+      <li *ngIf="isAdmin">
+        <a [routerLinkActiveOptions]="{exact:
+            true}" [routerLink]="[ '/dashboard/admin-dashboard/brands' ]" routerLinkActive="active"
+        ><i class="sl sl-icon-envelope-open"></i> Brands</a
+        >
+      </li>
+
+      <li *ngIf="isAdmin">
+        <a [routerLinkActiveOptions]="{exact:
+            true}" [routerLink]="[ '/dashboard/admin-dashboard/classified_category' ]" routerLinkActive="active"
+        ><i class="sl sl-icon-envelope-open"></i> Classified Category</a
+        >
+      </li>
+      <li>
+        <a (click)="logout()"><i class="sl sl-icon-power"></i> Logout</a>
+      </li>
+    </ul>
   </div>
+</div>
