@@ -195,7 +195,7 @@
       <h4><i class="sl sl-icon-list"></i> Category List</h4>
       <ul class="border-left">
         <ng-container *ngFor="let category of categoryTree">
-          <li class="border-left" style="border-radius: 0px 0px 0px 11px;box-shadow: #130f0f7d -5px 1px 0px 0px;">
+          <li>
             <div class="utf_list_box_listing_item">
               <div class="utf_list_box_listing_item-img category_image">
                 <a>
@@ -220,83 +220,10 @@
               <a (click)="openDeleteModal(delete_category , category)" class="button gray"><i class="fa fa-trash-o"></i> Delete</a>
             </div>
           </li>
-          <ng-container *ngIf="category.children">
-            <ng-container *ngFor="let childCategory of category.children">
-              <li
-                class="ml-4 border-left"
-                style="border-radius: 0px 0px 0px 13px;box-shadow: #502e2e7d -5px 1px 0px 0px;"
-              >
-                <div class="utf_list_box_listing_item">
-                  <div class="utf_list_box_listing_item-img category_image">
-                    <a>
-                      <ng-container
-                        *ngIf="childCategory.icon; else elseTemplate"
-                      >
-                        <img src="{{ childCategory.icon }}" alt="" />
-                      </ng-container>
-                      <ng-template #elseTemplate>
-                        <img src="assets/images/dumylogo.png" alt="" />
-                      </ng-template>
-                    </a>
-                  </div>
-                  <div class="utf_list_box_listing_item_content">
-                    <div class="inner">
-                      <h3>{{ childCategory.name }}</h3>
-                      <span>Slug : {{ childCategory.slug }}</span>
-                      <span>{{ childCategory.description }}</span>
-                    </div>
-                  </div>
-                </div>
-                <div class="buttons-to-right">
-                  <a (click)="openCategoryEditModal(editModal,  childCategory)" class="button gray"><i class="fa fa-pencil"></i> Edit</a>
-                  <a (click)="openDeleteModal(delete_category , childCategory)" class="button gray"
-                    ><i class="fa fa-trash-o"></i> Delete</a
-                  >
-                </div>
-              </li>
-              <ng-container *ngIf="childCategory.children">
-                <ng-container
-                  *ngFor="let subChildCategory of childCategory.children"
-                >
-                  <li class="ml-5 border-left" style="box-shadow: #9b43437d -5px 1px 0px 0px;border-radius: 0px 0px 0px 13px">
-                    <div class="utf_list_box_listing_item">
-                      <div class="utf_list_box_listing_item-img category_image">
-                        <a>
-                          <ng-container
-                            *ngIf="subChildCategory.icon; else elseTemplate"
-                          >
-                            <img src="{{ subChildCategory.icon }}" alt="" />
-                          </ng-container>
-                          <ng-template #elseTemplate>
-                            <img src="assets/images/dumylogo.png" alt="" />
-                          </ng-template>
-                        </a>
-                      </div>
-                      <div class="utf_list_box_listing_item_content">
-                        <div class="inner">
-                          <h3>{{ subChildCategory.name }}</h3>
-                          <span>Slug : {{ subChildCategory.slug }}</span>
-                          <span>{{ subChildCategory.description }}</span>
-                        </div>
-                      </div>
-                    </div>
-                    <div class="buttons-to-right">
-                      <a (click)="openCategoryEditModal(editModal, subChildCategory)" class="button gray"
-                        ><i class="fa fa-pencil"></i> Edit</a
-                      >
-                      <a (click)="openDeleteModal(delete_category , subChildCategory)" class="button gray"
-                        ><i class="fa fa-trash-o"></i> Delete</a
-                      >
-                    </div>
-                  </li>
-                </ng-container>
-              </ng-container>
-            </ng-container>
-          </ng-container>
         </ng-container>
       </ul>
     </div>
     <div class="clearfix"></div>
-    
+
   </div>
 </div>

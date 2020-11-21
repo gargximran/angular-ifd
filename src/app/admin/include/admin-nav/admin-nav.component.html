@@ -11,53 +11,40 @@
         >
       </li>
 
-      <li #submenu1 (click)="toggleMobileMenu(submenu1)">
-        <a><i class="sl sl-icon-layers"></i> My Listings</a>
+      <li *ngIf="isAdmin" #classified_menu (click)="toggleMobileMenu(classified_menu)">
+        <a><i class="sl sl-icon-layers"></i> Classified</a>
         <ul>
-          <li>
-            <a
-            >Active <span class="nav-tag green">10</span></a
+          <li *ngIf="isAdmin">
+            <a [routerLink]="[ '/dashboard/admin-dashboard/brands' ]"
+            ><i class="sl sl-icon-envelope-open"></i> Brands</a
             >
           </li>
-          <li>
-            <a
-            >Pending <span class="nav-tag yellow">4</span></a
+          <li *ngIf="isAdmin">
+            <a [routerLink]="[ '/dashboard/admin-dashboard/classified_category' ]"
+            ><i class="sl sl-icon-envelope-open"></i> Category</a
             >
           </li>
-          <li>
-            <a
-            >Expired <span class="nav-tag red">8</span></a
+
+        </ul>
+      </li>
+
+      <li *ngIf="isAdmin" #location_menu (click)="toggleMobileMenu(location_menu)">
+        <a><i class="sl sl-icon-layers"></i> Location</a>
+        <ul>
+          <li *ngIf="isAdmin">
+            <a [routerLink]="[ '/dashboard/admin-dashboard/states' ]"
+            ><i class="sl sl-icon-envelope-open"></i> States</a
+            >
+          </li>
+
+          <li *ngIf="isAdmin">
+            <a [routerLink]="[ '/dashboard/admin-dashboard/cities' ]"
+            ><i class="sl sl-icon-envelope-open"></i> Cities</a
             >
           </li>
         </ul>
       </li>
-      <li *ngIf="isAdmin">
-        <a [routerLinkActiveOptions]="{exact:
-            true}" [routerLink]="[ '/dashboard/admin-dashboard/states' ]" routerLinkActive="active"
-        ><i class="sl sl-icon-envelope-open"></i> States</a
-        >
-      </li>
 
-      <li *ngIf="isAdmin">
-        <a [routerLinkActiveOptions]="{exact:
-            true}" [routerLink]="[ '/dashboard/admin-dashboard/cities' ]" routerLinkActive="active"
-        ><i class="sl sl-icon-envelope-open"></i> Cities</a
-        >
-      </li>
-
-      <li *ngIf="isAdmin">
-        <a [routerLinkActiveOptions]="{exact:
-            true}" [routerLink]="[ '/dashboard/admin-dashboard/brands' ]" routerLinkActive="active"
-        ><i class="sl sl-icon-envelope-open"></i> Brands</a
-        >
-      </li>
-
-      <li *ngIf="isAdmin">
-        <a [routerLinkActiveOptions]="{exact:
-            true}" [routerLink]="[ '/dashboard/admin-dashboard/classified_category' ]" routerLinkActive="active"
-        ><i class="sl sl-icon-envelope-open"></i> Classified Category</a
-        >
-      </li>
       <li>
         <a (click)="logout()"><i class="sl sl-icon-power"></i> Logout</a>
       </li>

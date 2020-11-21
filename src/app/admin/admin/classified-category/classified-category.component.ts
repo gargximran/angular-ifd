@@ -39,20 +39,52 @@ export class ClassifiedCategoryComponent implements OnInit {
     description: new FormControl(''),
     parent: new FormControl(''),
     icon: new FormControl(''),
-    sub: new FormControl(" ")
+    sub: new FormControl(' ')
+  });
+
+  url = {
+    initCategoryTree: '',
+    initParentCategory: '',
+    createNew: '',
+    getChildCategory: '',
+    deleteCategory: ''
+  };
+
+  categoryTree: any = [];
+
+
+
+  selectedItem: any = {
+    id: '',
+    name: '',
+    icon: '',
+    description: '',
+    clear: () => {
+      this.selectedItem.id = '';
+      this.selectedItem.name = '',
+      this.selectedItem.icon = '',
+      this.selectedItem.description = '';
+    }
+  };
+
+
+  updateForm = new FormGroup({
+    name: new FormControl(''),
+    description: new FormControl(''),
+    icon: new FormControl('')
   });
 
   update(value): any {
-    this.classifiedCategoryCreateForm.get('sub').reset()
-    this.subParentValue='';
+    this.classifiedCategoryCreateForm.get('sub').reset();
+    this.subParentValue = '';
     if (value.value) {
       this.api
         .get(this.url.getChildCategory + value.value)
         .subscribe(
           (res) => {
-            let datas = [];
+            const datas = [];
             res.data.forEach((element) => {
-              let data = {
+              const data = {
                 label: element.name.toUpperCase(),
                 value: element.id,
               };
@@ -74,10 +106,9 @@ export class ClassifiedCategoryComponent implements OnInit {
 
   // tslint:disable-next-line:typedef
   create_new_category() {
-    console.log(this.classifiedCategoryCreateForm.value)
     this.createNewCategoryErrors = [];
     this.loading = true;
-    let form = new FormData();
+    const form = new FormData();
     form.append('name', this.classifiedCategoryCreateForm.get('name').value);
     form.append(
       'description',
@@ -97,29 +128,18 @@ export class ClassifiedCategoryComponent implements OnInit {
       },
       (err) => {
         this.loading = false;
-        this.toastr.error('Invlid input!');
+        this.toastr.error('Invalid input!');
         this.createNewCategoryErrors = err.errors;
       }
     );
   }
 
-  url = {
-    initCategoryTree: '',
-    initParentCategory: '',
-    createNew: '',
-    getChildCategory: '',
-    deleteCategory: ''
-  }
-
   ngOnInit(): void {
-    if (this.route.snapshot.data[0] == 'classified'){
-      this.url.initCategoryTree = '/classified_category/get_categories';
-      this.url.initParentCategory = '/classified_category/get_parent_category';
-      this.url.createNew = '/classified_category/create';
-      this.url.getChildCategory = '/classified_category/get_child_from_parent/';
-      this.url.deleteCategory = '/classified_category/delete/';
-    }
-  
+    this.url.initCategoryTree = '/classified_category/get_categories';
+    this.url.initParentCategory = '/classified_category/get_parent_category';
+    this.url.createNew = '/classified_category/create';
+    this.url.getChildCategory = '/classified_category/get_child_from_parent/';
+    this.url.deleteCategory = '/classified_category/delete/';
     this.initParentCategory();
     this.initCategoryTree();
     this.classifiedCategoryCreateForm.reset();
@@ -141,15 +161,15 @@ export class ClassifiedCategoryComponent implements OnInit {
     }
   }
 
- 
+
 
   initParentCategory(): any {
     this.api.get(this.url.initParentCategory).subscribe(
       (res) => {
-        let datas = [];
+        const datas = [];
 
         res.data.forEach((element) => {
-          let data = { label: element.name.toUpperCase(), value: element.id };
+          const data = { label: element.name.toUpperCase(), value: element.id };
           datas.push(data);
         });
         this.parentCategory = [
@@ -165,32 +185,15 @@ export class ClassifiedCategoryComponent implements OnInit {
     );
   }
 
-  categoryTree: any = []
-
   initCategoryTree(): any {
     this.api.get(this.url.initCategoryTree).subscribe(
       (res) => {
         this.categoryTree = res.data;
       },
       (err) => {
-        this.toastr.error("Something went wrong!")
+        this.toastr.error('Something went wrong!');
       }
     );
-  }
-
-
-
-  selectedItem: any = {
-    id: '',
-    name: '',
-    icon: '',
-    description: '',
-    clear: () => {
-      this.selectedItem.id = '';
-      this.selectedItem.name = '',
-      this.selectedItem.icon = '',
-      this.selectedItem.description = ''
-    }
   }
 
   openDeleteModal(content, data): void {
@@ -203,17 +206,17 @@ export class ClassifiedCategoryComponent implements OnInit {
   deleteCategoryFunction(): void {
     this.api.post(this.url.deleteCategory + this.selectedItem.id, {}).subscribe(
       res => {
-        this.modalService.dismissAll()
-        this.toastr.error('Category Deleted!')
+        this.modalService.dismissAll();
+        this.toastr.error('Category Deleted!');
         this.selectedItem.clear();
-        this.ngOnInit()
+        this.ngOnInit();
       },
       err => {
         this.modalService.dismissAll();
-        this.toastr.warning('Something went wrong!')
+        this.toastr.warning('Something went wrong!');
         this.selectedItem.clear();
       }
-    )
+    );
   }
 
   openCategoryEditModal(content, data): void{
@@ -223,11 +226,4 @@ export class ClassifiedCategoryComponent implements OnInit {
     this.selectedItem.icon = data.icon;
     this.open(content);
   }
-
-
-  updateForm = new FormGroup({
-    name: new FormControl(''),
-    description: new FormControl(''),
-    icon: new FormControl('')
-  })
 }
