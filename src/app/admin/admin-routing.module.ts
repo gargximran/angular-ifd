@@ -41,7 +41,8 @@ const routes: Routes = [
                     },
                   {
                     path: 'classified_category',
-                    component: ClassifiedCategoryComponent
+                    component: ClassifiedCategoryComponent,
+                    data: ['classified']
                   }
                 ]
             }
