@@ -31,10 +31,8 @@ export class AuthService {
   }
 
   public logout(){
-    localStorage.removeItem("__auth_session__");
-  
-    
-    this.toastr.error('Logged Out!')
+    localStorage.removeItem("__auth_session__");    
+    this.toastr.error('Your are logged out!')
     this.router.navigateByUrl('/');
   }
 

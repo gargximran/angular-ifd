@@ -25,21 +25,20 @@ export class ClassifiedCategoryComponent implements OnInit {
     name: '',
     description: '',
     icon: '',
+    parent: ''
   };
 
   parentValue = '';
-  subParentValue = '';
 
   parentCategory: Select2Data = [];
 
-  subParentCategory: Select2Data = [];
+
 
   classifiedCategoryCreateForm = new FormGroup({
     name: new FormControl(''),
     description: new FormControl(''),
     parent: new FormControl(''),
-    icon: new FormControl(''),
-    sub: new FormControl(' ')
+    icon: new FormControl('')
   });
 
   url = {
@@ -74,49 +73,21 @@ export class ClassifiedCategoryComponent implements OnInit {
     icon: new FormControl('')
   });
 
-  update(value): any {
-    this.classifiedCategoryCreateForm.get('sub').reset();
-    this.subParentValue = '';
-    if (value.value) {
-      this.api
-        .get(this.url.getChildCategory + value.value)
-        .subscribe(
-          (res) => {
-            const datas = [];
-            res.data.forEach((element) => {
-              const data = {
-                label: element.name.toUpperCase(),
-                value: element.id,
-              };
-              datas.push(data);
-            });
-            this.subParentCategory = [
-              {
-                label: 'Select Sub Parent',
-                options: datas,
-              },
-            ];
-          },
-          (err) => {
-            this.subParentCategory = [];
-          }
-        );
-    }
-  }
+
 
   // tslint:disable-next-line:typedef
   create_new_category() {
     this.createNewCategoryErrors = [];
     this.loading = true;
     const form = new FormData();
-    form.append('name', this.classifiedCategoryCreateForm.get('name').value);
+    form.append('name', this.classifiedCategoryCreateForm.get('name').value || '');
     form.append(
       'description',
       this.classifiedCategoryCreateForm.get('description').value || ''
     );
     form.append(
       'parent',
-      this.classifiedCategoryCreateForm.get('sub').value || (this.classifiedCategoryCreateForm.get('parent').value || '')
+      this.classifiedCategoryCreateForm.get('parent').value || ''
     );
     form.append('icon', this.classifiedCategoryCreateForm.get('icon').value);
     this.api.post(this.url.createNew, form).subscribe(

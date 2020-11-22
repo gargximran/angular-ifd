@@ -11,15 +11,6 @@
     </button>
   </div>
   <div class="modal-body">
-    <p *ngIf="loading">
-      <ngb-progressbar
-        type="primary"
-        [value]="100"
-        [striped]="true"
-        [animated]="true"
-        >Loading...</ngb-progressbar
-      >
-    </p>
     <form
       [formGroup]="classifiedCategoryCreateForm"
       (ngSubmit)="create_new_category()"
@@ -29,7 +20,7 @@
         <input
           formControlName="name"
           type="text"
-          class="form-control"
+          class="form-control mb-0"
           id="category_name_new"
           placeholder="Enter name"
         />
@@ -42,7 +33,7 @@
 
       <div class="form-group">
         <label>Description :</label>
-        <textarea class="form-control" formControlName="description"></textarea>
+        <textarea class="form-control mb-0" formControlName="description"></textarea>
         <small
           *ngIf="createNewCategoryErrors.description"
           class="form-text text-danger"
@@ -55,7 +46,7 @@
         <input
           accept="image/*"
           type="file"
-          class="form-control-file"
+          class="form-control-file mb-0"
           (change)="patchCreateFormImageValue($event)"
           style="line-height: unset; padding: 0; height: 100%"
         />
@@ -74,19 +65,23 @@
           placeholder="Select Parent Category"
         >
         </select2>
+        <small
+          *ngIf="createNewCategoryErrors.parent"
+          class="form-text text-danger"
+          >{{ createNewCategoryErrors.parent }}</small>
       </div>
-
-      <div class="form-group">
-        <label>Sub Parent Category : (optional)</label>
-        <select2
-          [data]="subParentCategory"
-          formControlName="sub"
-          placeholder="Select Parent Category"
-        >
-        </select2>
-      </div>
-      <button type="submit" class="btn-lg btn-primary">Submit</button>
-      <button type="reset" class="btn-lg btn-warning ml-3">Reset</button>
+      <button [disabled]='loading' type="submit" class="btn-lg btn-danger btn-block">
+        <ng-container *ngIf="loading; else createElse">
+          <div class="spinner-border" role="status">
+          </div>
+        </ng-container>
+        <ng-template #createElse>
+          Submit
+        </ng-template>
+        
+        
+      </button>
+      <button type="reset" class="btn-lg btn-warning btn-block">Reset</button>
     </form>
   </div>
 </ng-template>
@@ -172,12 +167,12 @@
 <div id="titlebar" class="dashboard_gradient">
   <div class="row">
     <div class="col-md-12">
-      <h2>All Cities</h2>
+      <h2>Classified Category</h2>
       <nav id="breadcrumbs">
         <ul>
           <li><a [routerLink]="['/']">Home</a></li>
           <li><a [routerLink]="['/dashboard']">Dashboard</a></li>
-          <li>City</li>
+          <li>Classified Category</li>
         </ul>
       </nav>
 
@@ -216,6 +211,7 @@
               </div>
             </div>
             <div class="buttons-to-right">
+              <a  (click)="openCategoryEditModal(editModal, category)" class="button gray"><i class="fa fa-eye"></i> View Child</a>
               <a  (click)="openCategoryEditModal(editModal, category)" class="button gray"><i class="fa fa-pencil"></i> Edit</a>
               <a (click)="openDeleteModal(delete_category , category)" class="button gray"><i class="fa fa-trash-o"></i> Delete</a>
             </div>
