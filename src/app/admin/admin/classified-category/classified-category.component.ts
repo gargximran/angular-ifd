@@ -30,8 +30,12 @@ export class ClassifiedCategoryComponent implements OnInit {
 
   parentValue = '';
 
-  parentCategory: Select2Data = [];
+  currentPageNumber = 1;
+  totalVolume = 0;
+  itemPerPage = 10;
 
+
+  parentCategory: Select2Data = [];
 
 
   classifiedCategoryCreateForm = new FormGroup({
@@ -41,15 +45,8 @@ export class ClassifiedCategoryComponent implements OnInit {
     icon: new FormControl('')
   });
 
-  url = {
-    initCategoryTree: '',
-    initParentCategory: '',
-    createNew: '',
-    getChildCategory: '',
-    deleteCategory: ''
-  };
 
-  categoryTree: any = [];
+  categories = [];
 
 
 
@@ -58,11 +55,13 @@ export class ClassifiedCategoryComponent implements OnInit {
     name: '',
     icon: '',
     description: '',
+    parent: '',
     clear: () => {
       this.selectedItem.id = '';
-      this.selectedItem.name = '',
-      this.selectedItem.icon = '',
+      this.selectedItem.name = '';
+      this.selectedItem.icon = '';
       this.selectedItem.description = '';
+      this.selectedItem.parent = '';
     }
   };
 
@@ -73,7 +72,35 @@ export class ClassifiedCategoryComponent implements OnInit {
     icon: new FormControl('')
   });
 
-
+  // update(value): any {
+  //   this.classifiedCategoryCreateForm.get('sub').reset();
+  //   this.subParentValue = '';
+  //   if (value.value) {
+  //     this.api
+  //       .get(this.url.getChildCategory + value.value)
+  //       .subscribe(
+  //         (res) => {
+  //           const datas = [];
+  //           res.data.forEach((element) => {
+  //             const data = {
+  //               label: element.name.toUpperCase(),
+  //               value: element.id,
+  //             };
+  //             datas.push(data);
+  //           });
+  //           this.subParentCategory = [
+  //             {
+  //               label: 'Select Sub Parent',
+  //               options: datas,
+  //             },
+  //           ];
+  //         },
+  //         (err) => {
+  //           this.subParentCategory = [];
+  //         }
+  //       );
+  //   }
+  // }
 
   // tslint:disable-next-line:typedef
   create_new_category() {
@@ -87,10 +114,9 @@ export class ClassifiedCategoryComponent implements OnInit {
     );
     form.append(
       'parent',
-      this.classifiedCategoryCreateForm.get('parent').value || ''
-    );
+      this.classifiedCategoryCreateForm.get('parent').value  || '');
     form.append('icon', this.classifiedCategoryCreateForm.get('icon').value);
-    this.api.post(this.url.createNew, form).subscribe(
+    this.api.post('/classified_category/create', form).subscribe(
       (res) => {
         this.loading = false;
         this.toastr.success('Category created!');
@@ -106,13 +132,8 @@ export class ClassifiedCategoryComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.url.initCategoryTree = '/classified_category/get_categories';
-    this.url.initParentCategory = '/classified_category/get_parent_category';
-    this.url.createNew = '/classified_category/create';
-    this.url.getChildCategory = '/classified_category/get_child_from_parent/';
-    this.url.deleteCategory = '/classified_category/delete/';
-    this.initParentCategory();
-    this.initCategoryTree();
+    this.fetchCategories();
+    this.initAllCategory();
     this.classifiedCategoryCreateForm.reset();
   }
 
@@ -134,8 +155,8 @@ export class ClassifiedCategoryComponent implements OnInit {
 
 
 
-  initParentCategory(): any {
-    this.api.get(this.url.initParentCategory).subscribe(
+  initAllCategory(): any {
+    this.api.get('/classified_category/get_categories').subscribe(
       (res) => {
         const datas = [];
 
@@ -156,15 +177,33 @@ export class ClassifiedCategoryComponent implements OnInit {
     );
   }
 
-  initCategoryTree(): any {
-    this.api.get(this.url.initCategoryTree).subscribe(
+
+
+
+  fetchCategories(): any {
+    const form = new FormData();
+    form.append('itemPerPage', String(this.itemPerPage));
+    form.append('pageNumber', String(this.currentPageNumber));
+
+    this.api.post('/classified_category/get_parent', form ).subscribe(
       (res) => {
-        this.categoryTree = res.data;
+        this.totalVolume = res.data.count;
+        this.categories = res.data.collections;
+        console.log(this.categories);
       },
       (err) => {
         this.toastr.error('Something went wrong!');
       }
     );
+  }
+
+  pageChange(event): any{
+    this.currentPageNumber = event;
+    this.fetchCategories();
+  }
+  ChangeItemPerPageSize(event): void{
+    this.itemPerPage = event.target.value;
+    this.fetchCategories();
   }
 
   openDeleteModal(content, data): void {
@@ -174,21 +213,21 @@ export class ClassifiedCategoryComponent implements OnInit {
     this.open(content);
   }
 
-  deleteCategoryFunction(): void {
-    this.api.post(this.url.deleteCategory + this.selectedItem.id, {}).subscribe(
-      res => {
-        this.modalService.dismissAll();
-        this.toastr.error('Category Deleted!');
-        this.selectedItem.clear();
-        this.ngOnInit();
-      },
-      err => {
-        this.modalService.dismissAll();
-        this.toastr.warning('Something went wrong!');
-        this.selectedItem.clear();
-      }
-    );
-  }
+  // deleteCategoryFunction(): void {
+  //   this.api.post(this.url.deleteCategory + this.selectedItem.id, {}).subscribe(
+  //     res => {
+  //       this.modalService.dismissAll();
+  //       this.toastr.error('Category Deleted!');
+  //       this.selectedItem.clear();
+  //       this.ngOnInit();
+  //     },
+  //     err => {
+  //       this.modalService.dismissAll();
+  //       this.toastr.warning('Something went wrong!');
+  //       this.selectedItem.clear();
+  //     }
+  //   );
+  // }
 
   openCategoryEditModal(content, data): void{
     this.selectedItem.id = data.id;

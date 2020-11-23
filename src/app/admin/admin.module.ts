@@ -14,6 +14,7 @@ import { CityComponent } from './admin/city/city/city.component';
 import { BrandComponent } from './admin/brand/brand/brand.component';
 import { ClassifiedCategoryComponent } from './admin/classified-category/classified-category.component';
 import {Select2Module} from 'ng-select2-component';
+import {NgxPaginationModule} from 'ngx-pagination';
 
 @NgModule({
   declarations: [
@@ -34,7 +35,8 @@ import {Select2Module} from 'ng-select2-component';
     ReactiveFormsModule,
     NgbModule,
     NgbProgressbarModule,
-    Select2Module
+    Select2Module,
+    NgxPaginationModule
   ],
 })
 export class AdminModule {}

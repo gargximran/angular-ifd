@@ -1,5 +1,5 @@
 <ng-template #content let-c="close" let-d="dismiss">
-  <div class="modal-header">
+  <div class="modal-header p-4">
     <h4 class="modal-title" id="modal-basic-title">New Category</h4>
     <button
       type="button"
@@ -10,7 +10,7 @@
       <span aria-hidden="true">&times;</span>
     </button>
   </div>
-  <div class="modal-body">
+  <div class="modal-body p-4">
     <form
       [formGroup]="classifiedCategoryCreateForm"
       (ngSubmit)="create_new_category()"
@@ -33,7 +33,7 @@
 
       <div class="form-group">
         <label>Description :</label>
-        <textarea class="form-control mb-0" formControlName="description"></textarea>
+        <textarea class="form-control" formControlName="description"></textarea>
         <small
           *ngIf="createNewCategoryErrors.description"
           class="form-text text-danger"
@@ -61,25 +61,23 @@
         <select2
           [data]="parentCategory"
           formControlName="parent"
-          (update)="update($event)"
           placeholder="Select Parent Category"
         >
         </select2>
         <small
           *ngIf="createNewCategoryErrors.parent"
           class="form-text text-danger"
-          >{{ createNewCategoryErrors.parent }}</small>
+        >{{ createNewCategoryErrors.parent }}</small
+        >
       </div>
-      <button [disabled]='loading' type="submit" class="btn-lg btn-danger btn-block">
-        <ng-container *ngIf="loading; else createElse">
+
+      <button type="submit" class="btn-lg btn-danger btn-block" [disabled]="loading">
+        <ng-container *ngIf="loading; else submitText">
           <div class="spinner-border" role="status">
+
           </div>
         </ng-container>
-        <ng-template #createElse>
-          Submit
-        </ng-template>
-        
-        
+        <ng-template #submitText>Submit</ng-template>
       </button>
       <button type="reset" class="btn-lg btn-warning btn-block">Reset</button>
     </form>
@@ -117,7 +115,7 @@
     <button
       type="button"
       class="btn-lg btn-danger"
-      (click)="deleteCategoryFunction()"
+      
     >
       Delete
     </button>
@@ -167,16 +165,16 @@
 <div id="titlebar" class="dashboard_gradient">
   <div class="row">
     <div class="col-md-12">
-      <h2>Classified Category</h2>
+      <h2>All Cities</h2>
       <nav id="breadcrumbs">
         <ul>
           <li><a [routerLink]="['/']">Home</a></li>
           <li><a [routerLink]="['/dashboard']">Dashboard</a></li>
-          <li>Classified Category</li>
+          <li>City</li>
         </ul>
       </nav>
 
-      <button class="btn btn-lg btn-outline-primary" (click)="open(content)">
+      <button class="btn btn-lg btn-danger" (click)="open(content)">
         Add New Category
       </button>
     </div>
@@ -186,10 +184,21 @@
 <div class="row">
   <div class="col-lg-12 col-md-12">
     <div class="utf_dashboard_list_box margin-top-0">
-      <div class="sort-by my_sort_by"></div>
+      <div class="sort-by my_sort_by">
+          <div class="utf_sort_by_select_item">
+            <select (change)="ChangeItemPerPageSize($event)"
+              class="utf_chosen_select_single"
+            >
+              <option value="10">10 items per page</option>
+              <option value="50">50 items per page</option>
+              <option value="100">100 items per page</option>
+              <option value="200">200 items per page</option>
+            </select>
+          </div>
+      </div>
       <h4><i class="sl sl-icon-list"></i> Category List</h4>
       <ul class="border-left">
-        <ng-container *ngFor="let category of categoryTree">
+        <ng-container *ngFor="let category of categories | paginate: { currentPage: currentPageNumber, totalItems: totalVolume, itemsPerPage: itemPerPage}">
           <li>
             <div class="utf_list_box_listing_item">
               <div class="utf_list_box_listing_item-img category_image">
@@ -211,7 +220,7 @@
               </div>
             </div>
             <div class="buttons-to-right">
-              <a  (click)="openCategoryEditModal(editModal, category)" class="button gray"><i class="fa fa-eye"></i> View Child</a>
+              <a  *ngIf="category.children" class="button gray"><i class="fa fa-eye"></i> View Child</a>
               <a  (click)="openCategoryEditModal(editModal, category)" class="button gray"><i class="fa fa-pencil"></i> Edit</a>
               <a (click)="openDeleteModal(delete_category , category)" class="button gray"><i class="fa fa-trash-o"></i> Delete</a>
             </div>
@@ -220,6 +229,10 @@
       </ul>
     </div>
     <div class="clearfix"></div>
+
+    <div class="utf_pagination_container_part margin-top-30 margin-bottom-30">
+      <pagination-controls screenReaderCurrentLabel=".." nextLabel="" previousLabel="" class="pagination" (pageChange)="pageChange( $event)"></pagination-controls>
+    </div>
 
   </div>
 </div>

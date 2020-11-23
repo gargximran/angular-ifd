@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { Observable, of } from 'rxjs';
-import { Response } from '../models/api_response'
+import { Response } from '../models/api_response';
 
 @Injectable({
   providedIn: 'root'
@@ -15,42 +15,44 @@ export class AuthService {
   ) { }
 
   public set setSession(request: Response){
-    if(request.session){
-      localStorage.setItem("__auth_session__", JSON.stringify(request.session))
+    if (request.session){
+      localStorage.setItem('__auth_session__', JSON.stringify(request.session));
     }
   }
 
-  public get token(){
+  public get token(): any{
     let token;
-    this.watchSession().subscribe(d => token = d?.token)
-    return token
+    this.watchSession().subscribe(d => token = d?.token);
+    return token;
   }
 
   public get isLoggedIn(): boolean {
-    return this.token
+    return this.token;
   }
 
-  public logout(){
-    localStorage.removeItem("__auth_session__");    
-    this.toastr.error('Your are logged out!')
+  public logout(): void{
+    localStorage.removeItem('__auth_session__');
+
+
+    this.toastr.error('Logged Out!');
     this.router.navigateByUrl('/');
   }
 
-  public isAdmin(){
-    if(this._getUser_()){
-      if(this._getUser_().type == 'admin'){
-        return true
+  public isAdmin(): boolean{
+    if (this._getUser_()){
+      if (this._getUser_().type.role === 'admin'){
+        return true;
       }
     }
   }
 
   private watchUser(): Observable<any> {
-    return of(this._getUser_())
+    return of(this._getUser_());
   }
 
-  private _getUser_(){
-    if(this._getSession_()){
-      return this._getSession_().user
+  private _getUser_(): any{
+    if (this._getSession_()){
+      return this._getSession_().user;
     }
   }
 
@@ -60,9 +62,9 @@ export class AuthService {
   }
 
 
-  private _getSession_(){
-    if(localStorage.getItem('__auth_session__')){
-      return JSON.parse(localStorage.getItem('__auth_session__'))
+  private _getSession_(): any{
+    if (localStorage.getItem('__auth_session__')){
+      return JSON.parse(localStorage.getItem('__auth_session__'));
     }
   }
 
