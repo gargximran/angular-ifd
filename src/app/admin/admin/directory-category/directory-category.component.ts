@@ -250,7 +250,7 @@ export class DirectoryCategoryComponent implements OnInit {
     this.updateForm.patchValue({
       name: data.name,
       description: data.description || '',
-      parent: String(data.parent) || '',
+      parent: data.parent || ''
     });
     this.open(content);
   }
