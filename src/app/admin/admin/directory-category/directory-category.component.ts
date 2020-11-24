@@ -1,17 +1,18 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
-import { Select2Data } from 'ng-select2-component';
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { ApiService } from '../../../service/api.service';
-import { ToastrService } from 'ngx-toastr';
 import { ActivatedRoute } from '@angular/router';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { Select2Data } from 'ng-select2-component';
+import { ToastrService } from 'ngx-toastr';
+import { ApiService } from 'src/app/service/api.service';
 
 @Component({
-  selector: 'app-classified-category',
-  templateUrl: './classified-category.component.html',
-  styleUrls: ['./classified-category.component.css'],
+  selector: 'app-directory-category',
+  templateUrl: './directory-category.component.html',
+  styleUrls: ['./directory-category.component.css']
 })
-export class ClassifiedCategoryComponent implements OnInit {
+export class DirectoryCategoryComponent implements OnInit {
+
   constructor(
     private modalService: NgbModal,
     private api: ApiService,
@@ -94,7 +95,7 @@ export class ClassifiedCategoryComponent implements OnInit {
       this.classifiedCategoryCreateForm.get('parent').value || ''
     );
     form.append('icon', this.classifiedCategoryCreateForm.get('icon').value);
-    this.api.post('/classified_category/create', form).subscribe(
+    this.api.post('/directory_category/create', form).subscribe(
       (res) => {
         this.loading = false;
         this.toastr.success('Category created!');
@@ -156,7 +157,7 @@ export class ClassifiedCategoryComponent implements OnInit {
   }
 
   initAllCategory(): any {
-    this.api.get('/classified_category/get_categories').subscribe(
+    this.api.get('/directory_category/get_categories').subscribe(
       (res) => {
         const datas = [];
 
@@ -186,9 +187,9 @@ export class ClassifiedCategoryComponent implements OnInit {
     this.route.paramMap.subscribe((d) => {
       let parent_id = d.get('parent');
       if (parent_id) {
-        url = '/classified_category/get_child/' + parent_id;
+        url = '/directory_category/get_child/' + parent_id;
       } else {
-        url = '/classified_category/get_parent';
+        url = '/directory_category/get_parent';
       }
     });
 
@@ -221,7 +222,7 @@ export class ClassifiedCategoryComponent implements OnInit {
 
   deleteCategory(): void {
     this.api
-      .post('/classified_category/delete/' + this.selectedItem.id, {})
+      .post('/directory_category/delete/' + this.selectedItem.id, {})
       .subscribe(
         (res) => {
           this.deleteSuccess.fire();
@@ -268,7 +269,7 @@ export class ClassifiedCategoryComponent implements OnInit {
     form.append('description', this.updateForm.get('description').value || '');
     form.append('icon', this.updateForm.get('icon').value || '');
     this.api
-      .post('/classified_category/update/' + this.selectedItem.id, form)
+      .post('/directory_category/update/' + this.selectedItem.id, form)
       .subscribe(
         (res) => {
           this.loading = false;
@@ -287,4 +288,5 @@ export class ClassifiedCategoryComponent implements OnInit {
         }
       );
   }
+
 }

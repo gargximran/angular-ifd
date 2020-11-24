@@ -15,6 +15,8 @@ import { BrandComponent } from './admin/brand/brand/brand.component';
 import { ClassifiedCategoryComponent } from './admin/classified-category/classified-category.component';
 import {Select2Module} from 'ng-select2-component';
 import {NgxPaginationModule} from 'ngx-pagination';
+import { SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
+import { DirectoryCategoryComponent } from './admin/directory-category/directory-category.component';
 
 @NgModule({
   declarations: [
@@ -28,6 +30,7 @@ import {NgxPaginationModule} from 'ngx-pagination';
     CityComponent,
     BrandComponent,
     ClassifiedCategoryComponent,
+    DirectoryCategoryComponent,
   ],
   imports: [
     CommonModule,
@@ -36,7 +39,8 @@ import {NgxPaginationModule} from 'ngx-pagination';
     NgbModule,
     NgbProgressbarModule,
     Select2Module,
-    NgxPaginationModule
+    NgxPaginationModule,
+    SweetAlert2Module.forRoot()
   ],
 })
 export class AdminModule {}

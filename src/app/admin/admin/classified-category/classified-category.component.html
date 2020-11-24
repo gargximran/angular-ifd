@@ -84,46 +84,28 @@
   </div>
 </ng-template>
 
-<ng-template #delete_category let-g="dismiss">
-  <div class="modal-header">
-    <h4 class="modal-title text-danger" id="modal-basic-title">
-      Delete Category ?
-    </h4>
-    <button
-      type="button"
-      class="close text-danger"
-      aria-label="Close"
-      (click)="g('Cross click')"
-    >
-      <span aria-hidden="true">&times;</span>
-    </button>
-  </div>
-  <div class="modal-body">
-    <p *ngIf="loading">
-      <ngb-progressbar
-        type="danger"
-        [value]="100"
-        [striped]="true"
-        [animated]="true"
-        >Deleting...</ngb-progressbar
-      >
-    </p>
-    <p class="text-info">
-      Are you sure want to delete {{ selectedItem.name }}?
-    </p>
 
-    <button
-      type="button"
-      class="btn-lg btn-danger"
 
-    >
-      Delete
-    </button>
-  </div>
-</ng-template>
+<swal
+  #deleteSwal
+  text="This cannot be undone"
+  icon="question"
+  title=""
+  [showCancelButton]="true"
+  (confirm)="deleteCategory()"
+  (cancel)="cancelDelete()"
+  >
+</swal>
+
+<swal
+  #deleteSuccess
+  title="Category deleted ?"
+  icon="success"
+  >
+</swal>
 
 <ng-template #editModal let-e="dismiss">
- <div class="modal-header">
+ <div class="modal-header p-4">
    <h4 class="modal-title" id="modal-basic-title">Update State</h4>
    <button
      type="button"
@@ -134,30 +116,84 @@
      <span aria-hidden="true">&times;</span>
    </button>
  </div>
- <div class="modal-body">
-   <p *ngIf="loading">
-     <ngb-progressbar
-       type="primary"
-       [value]="100"
-       [striped]="true"
-       [animated]="true"
-     >Loading...</ngb-progressbar
-     >
-   </p>
-   <form [formGroup]="updateForm">
-     <div class="form-group">
-       <label for="update_city_name">Name :</label>
-       <input
-         formControlName="name"
-         type="text"
-         class="form-control"
-         id="update_city_name"
-         placeholder="Enter name"
-       />
-       <small class="form-text text-danger"></small>
-     </div>
+ <div class="modal-body p-4">  
+   <form [formGroup]="updateForm" (ngSubmit)="updateCategory()">
+    <div class="form-group">
+      <label for="category_name_new">Name :</label>
+      <input
+        formControlName="name"
+        type="text"
+        class="form-control mb-0"
+        id="category_name_new"
+        placeholder="Enter name"
+      />
+      <small
+        *ngIf="updateCategoryErrors.name"
+        class="form-text text-danger"
+        >{{ updateCategoryErrors.name }}</small
+      >
+    </div>
 
-     <button type="submit" class="btn-lg btn-primary">Submit</button>
+    <div class="form-group">
+      <label>Description :</label>
+      <textarea class="form-control" formControlName="description"></textarea>
+      <small
+        *ngIf="updateCategoryErrors.description"
+        class="form-text text-danger"
+        >{{ updateCategoryErrors.description }}</small
+      >
+    </div>
+
+    <div class="row">
+      <div *ngIf="selectedItem.icon" class="col-md-4">
+        <img src="{{selectedItem.icon}}" alt="" class="border rounded" style="max-width: 63%; height: auto; padding:5px">
+      </div>
+      <div class="col-md-8">
+        <div class="form-group">
+      
+          <label>Icon : (optional)</label>
+          <input
+            accept="image/*"
+            type="file"
+            class="form-control-file mb-0"
+            (change)="patchUpdateImageValue($event)"
+            style="line-height: unset; padding: 0; height: 100%"
+          />
+          <small
+            *ngIf="updateCategoryErrors.icon"
+            class="form-text text-danger"
+            >{{ updateCategoryErrors.icon }}</small
+          >
+        </div>
+      </div>
+      
+    </div>
+
+    
+    <div class="form-group">
+      <label>Parent Category : (optional)</label>
+      <select2
+        [data]="parentCategory"
+        [value]="selectedItem.parent"
+        formControlName="parent"
+        placeholder="Select Parent Category"
+      >
+      </select2>
+      <small
+        *ngIf="updateCategoryErrors.parent"
+        class="form-text text-danger"
+      >{{ updateCategoryErrors.parent }}</small
+      >
+    </div>
+
+    <button type="submit" class="btn-lg btn-danger btn-block" [disabled]="loading">
+      <ng-container *ngIf="loading; else submitText">
+        <div class="spinner-border" role="status">
+
+        </div>
+      </ng-container>
+      <ng-template #submitText>Update</ng-template>
+    </button>
    </form>
  </div>
 </ng-template>
@@ -165,12 +201,12 @@
 <div id="titlebar" class="dashboard_gradient">
   <div class="row">
     <div class="col-md-12">
-      <h2>All Cities</h2>
+      <h2>Classified Category</h2>
       <nav id="breadcrumbs">
         <ul>
           <li><a [routerLink]="['/']">Home</a></li>
           <li><a [routerLink]="['/dashboard']">Dashboard</a></li>
-          <li>City</li>
+          <li>Classified Category</li>
         </ul>
       </nav>
 
@@ -213,16 +249,16 @@
               </div>
               <div class="utf_list_box_listing_item_content">
                 <div class="inner">
-                  <h3>{{ category.name }}</h3>
+                  <h3 class="text-capitalize">{{ category.name }}</h3>
                   <span>Slug : {{ category.slug }}</span>
                   <span>{{ category.description }}</span>
                 </div>
               </div>
             </div>
             <div class="buttons-to-right">
-              <a  *ngIf="category.children" class="button gray"><i class="fa fa-eye"></i> View Child</a>
+              <a [routerLink]="[ '/dashboard/admin-dashboard/classified_category/child', category.id ]"  *ngIf="category.children" class="button gray"><i class="fa fa-eye"></i> View Child</a>
               <a  (click)="openCategoryEditModal(editModal, category)" class="button gray"><i class="fa fa-pencil"></i> Edit</a>
-              <a (click)="openDeleteModal(delete_category , category)" class="button gray"><i class="fa fa-trash-o"></i> Delete</a>
+              <a (click)="openDeleteAlert(category)" class="button gray"><i class="fa fa-trash-o"></i> Delete</a>
             </div>
           </li>
         </ng-container>
@@ -231,7 +267,7 @@
     <div class="clearfix"></div>
 
     <div class="utf_pagination_container_part margin-top-30 margin-bottom-30">
-      <pagination-controls screenReaderCurrentLabel=".." nextLabel="" previousLabel="" class="pagination" (pageChange)="pageChange( $event)"></pagination-controls>
+      <pagination-controls (pageBoundsCorrection)="pageChange( $event)" screenReaderCurrentLabel=".." nextLabel="" previousLabel="" class="pagination" (pageChange)="pageChange( $event)"></pagination-controls>
     </div>
 
   </div>

@@ -45,6 +45,17 @@
         </ul>
       </li>
 
+      <li *ngIf="isAdmin" #directory_menu (click)="toggleMobileMenu(directory_menu)">
+        <a><i class="sl sl-icon-layers"></i> Directory</a>
+        <ul>
+          <li *ngIf="isAdmin">
+            <a [routerLink]="[ '/dashboard/admin-dashboard/directory_category' ]"
+            ><i class="sl sl-icon-envelope-open"></i> Category</a
+            >
+          </li>
+        </ul>
+      </li>
+
       <li>
         <a (click)="logout()"><i class="sl sl-icon-power"></i> Logout</a>
       </li>

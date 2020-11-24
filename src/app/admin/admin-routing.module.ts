@@ -8,6 +8,7 @@ import { StatesComponent } from './admin/state/states/states.component';
 import { AdminDashboardComponent } from './dashboard/dashboard.component';
 import { AdminLayoutComponent } from './include/admin-layout/admin-layout.component';
 import {ClassifiedCategoryComponent} from './admin/classified-category/classified-category.component';
+import { DirectoryCategoryComponent } from './admin/directory-category/directory-category.component';
 
 const routes: Routes = [
     {
@@ -39,11 +40,24 @@ const routes: Routes = [
                         path: 'brands',
                         component: BrandComponent
                     },
-                  {
-                    path: 'classified_category',
-                    component: ClassifiedCategoryComponent,
-                    data: ['classified']
-                  }
+                    {
+                        path: 'classified_category',
+                        component: ClassifiedCategoryComponent
+                        
+                    },
+                    {
+                        path: 'classified_category/child/:parent',
+                        component: ClassifiedCategoryComponent
+                    },
+                    {
+                        path: 'directory_category',
+                        component: DirectoryCategoryComponent
+                    },
+                    {
+                        path: 'directory_category/child/:parent',
+                        component: DirectoryCategoryComponent
+                    }
+                    
                 ]
             }
         ]
