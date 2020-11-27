@@ -53,6 +53,11 @@
             ><i class="sl sl-icon-envelope-open"></i> Category</a
             >
           </li>
+          <li *ngIf="isAdmin">
+            <a [routerLink]="[ '/dashboard/admin-dashboard/directory_item' ]"
+            ><i class="sl sl-icon-envelope-open"></i> Item</a
+            >
+          </li>
         </ul>
       </li>
 

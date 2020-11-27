@@ -17,6 +17,8 @@ import {Select2Module} from 'ng-select2-component';
 import {NgxPaginationModule} from 'ngx-pagination';
 import { SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
 import { DirectoryCategoryComponent } from './admin/directory-category/directory-category.component';
+import { DirectoryItemComponent } from './admin/directory-item/directory-item.component';
+import {ImageUploadModule} from 'angular2-image-upload';
 
 @NgModule({
   declarations: [
@@ -31,6 +33,7 @@ import { DirectoryCategoryComponent } from './admin/directory-category/directory
     BrandComponent,
     ClassifiedCategoryComponent,
     DirectoryCategoryComponent,
+    DirectoryItemComponent,
   ],
   imports: [
     CommonModule,
@@ -40,7 +43,8 @@ import { DirectoryCategoryComponent } from './admin/directory-category/directory
     NgbProgressbarModule,
     Select2Module,
     NgxPaginationModule,
-    SweetAlert2Module.forRoot()
+    SweetAlert2Module.forRoot(),
+    ImageUploadModule.forRoot()
   ],
 })
 export class AdminModule {}
