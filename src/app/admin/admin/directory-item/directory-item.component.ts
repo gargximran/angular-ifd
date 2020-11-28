@@ -51,8 +51,7 @@ export class DirectoryItemComponent implements OnInit {
     address: new FormControl(''),
     state: new FormControl(''),
     city: new FormControl(''),
-    category: new FormControl(''),
-    image: new FormControl(''),
+    category: new FormControl('')
   });
 
   categories = [];
@@ -87,8 +86,28 @@ export class DirectoryItemComponent implements OnInit {
   });
 
   // tslint:disable-next-line:typedef
-  create_new_category() {
-   console.log(this.directoryCreateForm.value);
+  create_new_directory(): void{
+    this.loading = true;
+   let form = new FormData();
+   form.append('title', this.directoryCreateForm.get('title').value);
+   form.append('description', this.directoryCreateForm.get('description').value);
+   form.append('address', this.directoryCreateForm.get('address').value);
+   form.append('city', this.directoryCreateForm.get('city').value);
+   form.append('state', this.directoryCreateForm.get('state').value);
+   form.append('image', this.uploadedImages[0])
+   form.append('category', String(this.directoryCreateForm.get('category').value))
+   this.api.post('/directory_item/create', form).subscribe(
+     res => {
+       console.log(res);
+       this.loading = false;
+     },
+     err => {
+       console.log(err);
+       this.loading = false;
+     }
+   )
+
+
   }
 
   ngOnInit(): void {
