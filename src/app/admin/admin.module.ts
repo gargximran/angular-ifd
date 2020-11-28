@@ -19,6 +19,7 @@ import { SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
 import { DirectoryCategoryComponent } from './admin/directory-category/directory-category.component';
 import { DirectoryItemComponent } from './admin/directory-item/directory-item.component';
 import {ImageUploadModule} from 'angular2-image-upload';
+import {ReadMoreModule} from 'ng-readmore';
 
 @NgModule({
   declarations: [
@@ -35,16 +36,17 @@ import {ImageUploadModule} from 'angular2-image-upload';
     DirectoryCategoryComponent,
     DirectoryItemComponent,
   ],
-  imports: [
-    CommonModule,
-    AdminRoutingModule,
-    ReactiveFormsModule,
-    NgbModule,
-    NgbProgressbarModule,
-    Select2Module,
-    NgxPaginationModule,
-    SweetAlert2Module.forRoot(),
-    ImageUploadModule.forRoot()
-  ],
+    imports: [
+        CommonModule,
+        AdminRoutingModule,
+        ReactiveFormsModule,
+        NgbModule,
+        NgbProgressbarModule,
+        Select2Module,
+        NgxPaginationModule,
+        SweetAlert2Module.forRoot(),
+        ImageUploadModule.forRoot(),
+        ReadMoreModule
+    ],
 })
 export class AdminModule {}

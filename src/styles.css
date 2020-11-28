@@ -28,6 +28,14 @@
   position: absolute;
 }
 
+app-read-more small a{
+  color: red !important;
+  font-size: 14px !important;
+  font-style: italic !important;
+  text-decoration: underline !important;
+}
+
+
 
 
 

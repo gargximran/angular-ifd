@@ -26,6 +26,7 @@
     "bootstrap": "^4.5.0",
     "ng-animate": "^0.3.4",
     "ng-modals": "^1.0.4",
+    "ng-readmore": "^1.0.0",
     "ng-select2-component": "^7.1.11",
     "ngx-pagination": "^5.0.0",
     "ngx-toastr": "^13.1.0",

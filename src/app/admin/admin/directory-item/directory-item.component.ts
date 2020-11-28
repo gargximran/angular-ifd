@@ -54,24 +54,19 @@ export class DirectoryItemComponent implements OnInit {
     address: new FormControl(''),
     state: new FormControl(''),
     city: new FormControl(''),
-    category: new FormControl('')
+    category: new FormControl(''),
+    email: new FormControl(''),
+    phone: new FormControl('')
   });
 
-  categories = [];
+  directories = [];
 
   selectedItem: any = {
     id: '',
     name: '',
     icon: '',
     description: '',
-    parent: '',
-    clear: () => {
-      this.selectedItem.id = '';
-      this.selectedItem.name = '';
-      this.selectedItem.icon = '';
-      this.selectedItem.description = '';
-      this.selectedItem.parent = '';
-    },
+    parent: ''
   };
 
   updateCategoryErrors: any = {
@@ -105,7 +100,7 @@ export class DirectoryItemComponent implements OnInit {
         ];
       },
       err => {
-        this.toastr.warning('Something went wrong!');
+
       }
     );
   }
@@ -120,7 +115,9 @@ export class DirectoryItemComponent implements OnInit {
       address: '',
       city: '',
       state: '',
-      image: ''
+      image: '',
+      phone: '',
+      email: ''
     };
     this.loading = true;
     const form = new FormData();
@@ -130,13 +127,13 @@ export class DirectoryItemComponent implements OnInit {
     form.append('city', this.directoryCreateForm.get('city').value || '');
     form.append('state', this.directoryCreateForm.get('state').value || '');
     form.append('image', this.uploadedImages[0] || '');
+    form.append('email', this.directoryCreateForm.get('email').value || '');
+    form.append('phone', this.directoryCreateForm.get('phone').value || '');
     form.append('category', String(this.directoryCreateForm.get('category').value) || '');
     this.api.post('/directory_item/create', form).subscribe(
        res => {
          this.loading = false;
-         this.directoryCreateForm.reset();
          this.toastr.success('Directory created successfully!');
-         this.modalService.dismissAll();
          this.ngOnInit();
       },
        err => {
@@ -150,36 +147,22 @@ export class DirectoryItemComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.fetchDirectory();
     this.initAllCategory();
     this.initialize_all_states();
     this.directoryCreateForm.reset();
+    this.modalService.dismissAll();
   }
 
-  // tslint:disable-next-line:use-lifecycle-interface
-  ngDoCheck(): void {
-    this.route.paramMap.subscribe(
-      d => {
-        // tslint:disable-next-line:variable-name
-        const parent_id = d.get('parent');
-        if (parent_id){
-          if (this.parentValue !== parent_id){
-            this.parentValue = parent_id;
-            this.ngOnInit();
-          }
-        }
-      }
-    );
-  }
+
 
   addImage(e: FileHolder): void{
     this.uploadedImages.push(e.file);
-    console.log(this.uploadedImages);
   }
 
   removeImage(e: FileHolder): void{
     // tslint:disable-next-line:triple-equals
     this.uploadedImages = this.uploadedImages.filter(value => value != e.file);
-    console.log(this.uploadedImages);
   }
 
   open(content): void {
@@ -206,7 +189,7 @@ export class DirectoryItemComponent implements OnInit {
         ];
       },
       (err) => {
-        this.toastr.error('Something went wrong!');
+
       }
     );
   }
@@ -228,31 +211,21 @@ export class DirectoryItemComponent implements OnInit {
 
       },
       err => {
-        this.toastr.warning('Something went wrong!');
+
       }
     );
   }
 
-  fetchCategories(): any {
+  fetchDirectory(): any {
     const form = new FormData();
     form.append('itemPerPage', String(this.itemPerPage));
     form.append('pageNumber', String(this.currentPageNumber));
 
-    let url = '';
-    this.route.paramMap.subscribe((d) => {
-      // tslint:disable-next-line:variable-name
-      const parent_id = d.get('parent');
-      if (parent_id) {
-        url = '/classified_category/get_child/' + parent_id;
-      } else {
-        url = '/classified_category/get_parent';
-      }
-    });
-
-    this.api.post(url, form).subscribe(
+    this.api.post('/directory_item/get_directories', form).subscribe(
       (res) => {
         this.totalVolume = res.data.count;
-        this.categories = res.data.collections;
+        this.directories = res.data.collections;
+        console.log(this.directories);
       },
       (err) => {
         this.toastr.error('Something went wrong!');
@@ -262,11 +235,11 @@ export class DirectoryItemComponent implements OnInit {
 
   pageChange(event): any {
     this.currentPageNumber = event;
-    this.fetchCategories();
+    this.fetchDirectory();
   }
   ChangeItemPerPageSize(event): void {
     this.itemPerPage = event.target.value;
-    this.fetchCategories();
+    this.fetchDirectory();
   }
 
   openDeleteAlert(data): void{
@@ -311,38 +284,6 @@ export class DirectoryItemComponent implements OnInit {
     this.open(content);
   }
 
-  updateCategory(): any {
-    this.updateCategoryErrors = {
-      name: '',
-      description: '',
-      icon: '',
-      parent: '',
-    };
-    this.loading = true;
-    const form = new FormData();
-    form.append('name', this.updateForm.get('name').value || '');
-    form.append('parent', this.updateForm.get('parent').value || '');
-    form.append('description', this.updateForm.get('description').value || '');
-    form.append('icon', this.updateForm.get('icon').value || '');
-    this.api
-      .post('/classified_category/update/' + this.selectedItem.id, form)
-      .subscribe(
-        (res) => {
-          this.loading = false;
-          this.toastr.success('Category Updated!');
-          this.ngOnInit();
-          this.modalService.dismissAll();
-          this.selectedItem.clear();
-          this.updateForm.reset();
-        },
-        (err) => {
-          this.loading = false;
-          this.toastr.error('Something went wrong!');
-          if (err.errors) {
-            this.updateCategoryErrors = err.errors;
-          }
-        }
-      );
-  }
+
 
 }
