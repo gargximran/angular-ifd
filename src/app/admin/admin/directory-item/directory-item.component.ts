@@ -29,11 +29,14 @@ export class DirectoryItemComponent implements OnInit {
 
   uploadedImages: File[] = [];
 
-  createNewCategoryErrors: any = {
-    name: '',
+  createNewDirectoryErrors: any = {
+    title: '',
     description: '',
-    icon: '',
-    parent: '',
+    category: '',
+    address: '',
+    city: '',
+    state: '',
+    image: ''
   };
 
   currentPageNumber = 1;
@@ -85,27 +88,63 @@ export class DirectoryItemComponent implements OnInit {
     icon: new FormControl(''),
   });
 
+  getCity(e): void{
+    this.directoryCreateForm.get('city').reset();
+    this.api.get('/state/view/' + e.value + '/cities').subscribe(
+      res => {
+        const datas = [];
+        res.data.forEach((element) => {
+          const data = { label: element.name.toUpperCase(), value: element.id };
+          datas.push(data);
+        });
+        this.cityDataForFormSelector = [
+          {
+            label: 'Select City',
+            options: datas
+          }
+        ];
+      },
+      err => {
+        this.toastr.warning('Something went wrong!');
+      }
+    );
+  }
+
+
   // tslint:disable-next-line:typedef
   create_new_directory(): void{
+    this.createNewDirectoryErrors = {
+      title: '',
+      description: '',
+      category: '',
+      address: '',
+      city: '',
+      state: '',
+      image: ''
+    };
     this.loading = true;
-   let form = new FormData();
-   form.append('title', this.directoryCreateForm.get('title').value);
-   form.append('description', this.directoryCreateForm.get('description').value);
-   form.append('address', this.directoryCreateForm.get('address').value);
-   form.append('city', this.directoryCreateForm.get('city').value);
-   form.append('state', this.directoryCreateForm.get('state').value);
-   form.append('image', this.uploadedImages[0])
-   form.append('category', String(this.directoryCreateForm.get('category').value))
-   this.api.post('/directory_item/create', form).subscribe(
-     res => {
-       console.log(res);
-       this.loading = false;
-     },
-     err => {
-       console.log(err);
-       this.loading = false;
-     }
-   )
+    const form = new FormData();
+    form.append('title', this.directoryCreateForm.get('title').value || '');
+    form.append('description', this.directoryCreateForm.get('description').value || '');
+    form.append('address', this.directoryCreateForm.get('address').value || '');
+    form.append('city', this.directoryCreateForm.get('city').value || '');
+    form.append('state', this.directoryCreateForm.get('state').value || '');
+    form.append('image', this.uploadedImages[0] || '');
+    form.append('category', String(this.directoryCreateForm.get('category').value) || '');
+    this.api.post('/directory_item/create', form).subscribe(
+       res => {
+         this.loading = false;
+         this.directoryCreateForm.reset();
+         this.toastr.success('Directory created successfully!');
+         this.modalService.dismissAll();
+         this.ngOnInit();
+      },
+       err => {
+         this.loading = false;
+         this.createNewDirectoryErrors = {...this.createNewDirectoryErrors, ...err.errors};
+         this.toastr.warning('Please check input again!');
+       }
+   );
 
 
   }
@@ -138,6 +177,7 @@ export class DirectoryItemComponent implements OnInit {
   }
 
   removeImage(e: FileHolder): void{
+    // tslint:disable-next-line:triple-equals
     this.uploadedImages = this.uploadedImages.filter(value => value != e.file);
     console.log(this.uploadedImages);
   }

@@ -25,9 +25,9 @@
           placeholder="Enter name"
         />
         <small
-          *ngIf="createNewCategoryErrors.name"
+          *ngIf="createNewDirectoryErrors.title"
           class="form-text text-danger"
-        >{{ createNewCategoryErrors.name }}</small
+        >{{ createNewDirectoryErrors.title }}</small
         >
       </div>
 
@@ -35,9 +35,9 @@
         <label>Description :</label>
         <textarea class="form-control" formControlName="description" placeholder="Description text.."></textarea>
         <small
-          *ngIf="createNewCategoryErrors.description"
+          *ngIf="createNewDirectoryErrors.description"
           class="form-text text-danger"
-        >{{ createNewCategoryErrors.description }}</small
+        >{{ createNewDirectoryErrors.description }}</small
         >
       </div>
       <div class="row">
@@ -48,13 +48,14 @@
               [data]="stateDataForFormSelector"
               formControlName="state"
               placeholder="Select State"
+              (update)="getCity($event)"
               [hideSelectedItems]="true"
             >
             </select2>
             <small
-              *ngIf="createNewCategoryErrors.parent"
+              *ngIf="createNewDirectoryErrors.state"
               class="form-text text-danger"
-            >{{ createNewCategoryErrors.parent }}</small
+            >{{ createNewDirectoryErrors.state }}</small
             >
           </div>
         </div>
@@ -70,9 +71,9 @@
             >
             </select2>
             <small
-              *ngIf="createNewCategoryErrors.parent"
+              *ngIf="createNewDirectoryErrors.city"
               class="form-text text-danger"
-            >{{ createNewCategoryErrors.parent }}</small
+            >{{ createNewDirectoryErrors.city }}</small
             >
           </div>
         </div>
@@ -87,9 +88,9 @@
           placeholder="Enter address"
         />
         <small
-          *ngIf="createNewCategoryErrors.name"
+          *ngIf="createNewDirectoryErrors.address"
           class="form-text text-danger"
-        >{{ createNewCategoryErrors.name }}</small
+        >{{ createNewDirectoryErrors.address }}</small
         >
       </div>
 
@@ -106,9 +107,9 @@
             >
             </select2>
             <small
-              *ngIf="createNewCategoryErrors.parent"
+              *ngIf="createNewDirectoryErrors.category"
               class="form-text text-danger"
-            >{{ createNewCategoryErrors.parent }}</small
+            >{{ createNewDirectoryErrors.category }}</small
             >
           </div>
         </div>

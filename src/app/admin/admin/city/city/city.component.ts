@@ -11,15 +11,15 @@ import { ApiService } from 'src/app/service/api.service';
   styleUrls: ['./city.component.css']
 })
 export class CityComponent implements OnInit {
- 
-  
-  constructor(config: NgbModalConfig, private modalService: NgbModal, private toastr: ToastrService, private api: ApiService, private route: ActivatedRoute) { 
+
+
+  constructor(config: NgbModalConfig, private modalService: NgbModal, private toastr: ToastrService, private api: ApiService, private route: ActivatedRoute) {
     config.backdrop = 'static';
     config.keyboard = false;
   }
 
   selected_item: any = {
- 
+
 
   }
   loading = false
@@ -44,9 +44,9 @@ export class CityComponent implements OnInit {
   ngAfterViewInit(): void {
     //Called after ngAfterContentInit when the component's view has been initialized. Applies to components only.
     //Add 'implements AfterViewInit' to the class.
-    
-  
-    
+
+
+
   }
 
   cities:any = []
@@ -80,7 +80,7 @@ export class CityComponent implements OnInit {
       err => {
         this.loading = false
         this.add_city_errors = {...err.errors}
-        
+
       }
     )
   }
@@ -115,7 +115,7 @@ export class CityComponent implements OnInit {
     this.selected_item = {...this.cities[index]}
     this.updateForm.setValue({"name": this.selected_item.name, 'state': this.selected_item.state.id})
     this.open(content)
-    
+
   }
 
 
@@ -139,7 +139,7 @@ export class CityComponent implements OnInit {
         }
         this.toastr.success('City Deleted Successful!')
         this.modalService.dismissAll()
-        
+
       },
       err => {
         this.loading = false
@@ -155,17 +155,17 @@ export class CityComponent implements OnInit {
   initialize_all_cities(){
     this.route.paramMap.subscribe(
       d => {
-        let state = d.get('state')
+        let state = d.get('state');
         if(state){
           this.api.get('/state/view/'+ state + "/cities").subscribe(
             res => {
-              this.cities = res.data
+              this.cities = res.data;
             },
             err => {
-              this.cities = []
-              this.toastr.warning('Someting went wrong!')
+              this.cities = [];
+              this.toastr.warning('Someting went wrong!');
             }
-          )
+          );
         }else{
           this.api.get('/city/view').subscribe(
             res => {
@@ -176,12 +176,12 @@ export class CityComponent implements OnInit {
               this.toastr.warning('Someting went wrong!')
             }
           )
-          
+
         }
 
       }
     )
-    
+
   }
 
 
