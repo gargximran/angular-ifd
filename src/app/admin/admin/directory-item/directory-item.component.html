@@ -175,6 +175,196 @@
 </ng-template>
 
 
+
+
+<!--update modal-->
+<ng-template #updateModal let-d="dismiss">
+  <div class="modal-header p-4">
+    <h4 class="modal-title" id="modal-basic-title">New Directory</h4>
+    <button
+      type="button"
+      class="close text-danger"
+      aria-label="Close"
+      (click)="d('Cross click')"
+    >
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body p-4">
+    <form
+      [formGroup]="updateForm"
+      (ngSubmit)="submitUpdateForm()"
+    >
+      <div class="form-group">
+        <label for="directory_title_new">Title :</label>
+        <input
+          formControlName="title"
+          type="text"
+          class="form-control mb-0"
+          id="directory_title_new"
+          placeholder="Enter name"
+        />
+        <small
+          *ngIf="updateDirectoryErrors.title"
+          class="form-text text-danger"
+        >{{ updateDirectoryErrors.title }}</small
+        >
+      </div>
+
+      <div class="form-group">
+        <label>Description :</label>
+        <textarea class="form-control mb-0" formControlName="description" placeholder="Description text.."></textarea>
+        <small
+          *ngIf="updateDirectoryErrors.description"
+          class="form-text text-danger"
+        >{{ updateDirectoryErrors.description }}</small
+        >
+      </div>
+      <div class="row">
+        <div class="col-md-6">
+          <div class="form-group">
+            <label>State :</label>
+            <select2
+              [data]="stateDataForFormSelector"
+              formControlName="state"
+              placeholder="Select State"
+              (update)="getCity($event)"
+              [hideSelectedItems]="true"
+            >
+            </select2>
+            <small
+              *ngIf="updateDirectoryErrors.state"
+              class="form-text text-danger"
+            >{{ updateDirectoryErrors.state }}</small
+            >
+          </div>
+        </div>
+
+        <div class="col-md-6">
+          <div class="form-group">
+            <label>City :</label>
+            <select2
+              [data]="cityDataForFormSelector"
+              formControlName="city"
+              placeholder="Select City"
+              [hideSelectedItems]="true"
+            >
+            </select2>
+            <small
+              *ngIf="updateDirectoryErrors.city"
+              class="form-text text-danger"
+            >{{ updateDirectoryErrors.city }}</small
+            >
+          </div>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label>Address :</label>
+        <input
+          formControlName="address"
+          type="text"
+          class="form-control mb-0"
+          placeholder="Enter address"
+        />
+        <small
+          *ngIf="updateDirectoryErrors.address"
+          class="form-text text-danger"
+        >{{ updateDirectoryErrors.address }}</small
+        >
+      </div>
+
+      <div class="row">
+        <div class="col-md-6">
+          <div class="form-group">
+            <label>Categories :</label>
+            <select2
+              [data]="categoryDataForFormSelector"
+              formControlName="category"
+              placeholder="Select Categories"
+              [multiple]="true"
+              [hideSelectedItems]="true"
+            >
+            </select2>
+            <small
+              *ngIf="updateDirectoryErrors.category"
+              class="form-text text-danger"
+            >{{ updateDirectoryErrors.category }}</small
+            >
+          </div>
+        </div>
+
+        <div class="col-md-6">
+          <div class="form-group">
+            <label>Image :</label>
+            <div class="row" *ngIf="existingImageUrl && !uploadedUpdateImage">
+              <div class="col-6">
+                <img class="img-fluid" src="{{existingImageUrl}}" >
+              </div>
+            </div>
+
+            <image-upload (uploadFinished)="addUpdateImage($event)" (removed)="removeUpdateImage($event)" [max]="1"
+                          [extensions]="['jpeg', 'jpg', 'png']" [maxFileSize]="358400" [buttonCaption]="'Upload Image'"
+                          [fileTooLargeMessage]="'Image too large,  maximum file size is 350 KiB'"></image-upload>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-md-6">
+          <div class="form-group">
+            <label>Email :</label>
+            <input
+              formControlName="email"
+              type="email"
+              class="form-control mb-0"
+              placeholder="Enter valid email"
+            />
+            <small
+              *ngIf="updateDirectoryErrors.email"
+              class="form-text text-danger"
+            >{{ updateDirectoryErrors.email }}</small
+            >
+          </div>
+        </div>
+
+        <div class="col-md-6">
+          <div class="form-group">
+            <label>Phone :</label>
+            <input
+              formControlName="phone"
+              type="text"
+              class="form-control mb-0"
+              placeholder="Enter valid phone number"
+            />
+            <small
+              *ngIf="updateDirectoryErrors.phone"
+              class="form-text text-danger"
+            >{{ updateDirectoryErrors.phone }}</small
+            >
+          </div>
+        </div>
+      </div>
+
+
+      <button type="submit" class="btn-lg btn-danger btn-block" [disabled]="loading">
+        <ng-container *ngIf="loading; else submitText">
+          <div class="spinner-border" role="status">
+
+          </div>
+        </ng-container>
+        <ng-template #submitText>Submit</ng-template>
+      </button>
+      <button type="reset" class="btn-lg btn-warning btn-block">Reset</button>
+    </form>
+  </div>
+</ng-template>
+<!--update modal end-->
+
+
+
+
+
 <swal
   #deleteSwal
   text="This cannot be undone"
@@ -277,11 +467,11 @@
               </div>
             </div>
             <div class="buttons-to-right">
-              <a href="#" class="button gray"><i class="fa fa-pencil"></i> Edit</a>
-              <a href="#" class="button gray"><i class="fa fa-trash-o"></i> Delete</a>
+              <a (click)="openCategoryEditModal(updateModal, directory)" class="button gray"><i class="fa fa-pencil"></i> Edit</a>
+              <a (click)="openDeleteAlert(directory)" class="button gray"><i class="fa fa-trash-o"></i> Delete</a>
             </div>
             <pre class="p-2 border">
-                    <app-read-more class="lead" [maxLength]="10" [text]="directory.description"></app-read-more>
+              <app-read-more class="lead" [maxLength]="15" [text]="directory.description"></app-read-more>
             </pre>
           </li>
         </ng-container>

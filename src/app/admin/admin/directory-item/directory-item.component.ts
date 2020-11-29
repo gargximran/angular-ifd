@@ -28,6 +28,8 @@ export class DirectoryItemComponent implements OnInit {
   parentValue = '';
 
   uploadedImages: File[] = [];
+  existingImageUrl = '';
+  uploadedUpdateImage: File = null;
 
   createNewDirectoryErrors: any = {
     title: '',
@@ -62,25 +64,28 @@ export class DirectoryItemComponent implements OnInit {
   directories = [];
 
   selectedItem: any = {
-    id: '',
-    name: '',
-    icon: '',
-    description: '',
-    parent: ''
+    id: ''
   };
 
-  updateCategoryErrors: any = {
-    name: '',
+  updateDirectoryErrors: any = {
+    title: '',
     description: '',
-    icon: '',
-    parent: '',
+    category: '',
+    address: '',
+    city: '',
+    state: '',
+    image: ''
   };
 
   updateForm = new FormGroup({
-    name: new FormControl(''),
+    title: new FormControl(''),
     description: new FormControl(''),
-    parent: new FormControl(''),
-    icon: new FormControl(''),
+    address: new FormControl(''),
+    state: new FormControl(''),
+    city: new FormControl(''),
+    category: new FormControl(''),
+    email: new FormControl(''),
+    phone: new FormControl('')
   });
 
   getCity(e): void{
@@ -150,8 +155,10 @@ export class DirectoryItemComponent implements OnInit {
     this.fetchDirectory();
     this.initAllCategory();
     this.initialize_all_states();
-    this.directoryCreateForm.reset();
     this.modalService.dismissAll();
+    this.directoryCreateForm.reset();
+    this.updateForm.reset();
+    this.loading = false;
   }
 
 
@@ -159,10 +166,18 @@ export class DirectoryItemComponent implements OnInit {
   addImage(e: FileHolder): void{
     this.uploadedImages.push(e.file);
   }
+  addUpdateImage(e: FileHolder): void{
+    this.uploadedUpdateImage = e.file;
+  }
 
   removeImage(e: FileHolder): void{
     // tslint:disable-next-line:triple-equals
     this.uploadedImages = this.uploadedImages.filter(value => value != e.file);
+  }
+
+  removeUpdateImage(e: FileHolder): void{
+    // tslint:disable-next-line:triple-equals
+    this.uploadedUpdateImage = null;
   }
 
   open(content): void {
@@ -225,7 +240,6 @@ export class DirectoryItemComponent implements OnInit {
       (res) => {
         this.totalVolume = res.data.count;
         this.directories = res.data.collections;
-        console.log(this.directories);
       },
       (err) => {
         this.toastr.error('Something went wrong!');
@@ -243,19 +257,18 @@ export class DirectoryItemComponent implements OnInit {
   }
 
   openDeleteAlert(data): void{
-    this.selectedItem.name = data.name;
     this.selectedItem.id = data.id;
-    this.deleteSwal.title = `Delete ${data.name} ?`;
+    this.deleteSwal.title = `Delete directory ?`;
     this.deleteSwal.fire();
   }
 
   deleteCategory(): void {
     this.api
-      .post('/classified_category/delete/' + this.selectedItem.id, {})
+      .post('/directory_item/delete/' + this.selectedItem.id, {})
       .subscribe(
         (res) => {
           this.deleteSuccess.fire();
-          this.selectedItem.clear();
+          this.selectedItem.id = '';
           this.ngOnInit();
         },
         (err) => {
@@ -263,25 +276,63 @@ export class DirectoryItemComponent implements OnInit {
             icon: 'error',
             title: 'Something went wrong!',
           });
-          this.selectedItem.clear();
+          this.selectedItem.id = '';
           this.ngOnInit();
         }
       );
   }
 
   cancelDelete(): void {
-    this.selectedItem.clear();
+    this.selectedItem.id = '';
   }
 
   openCategoryEditModal(content, data): void {
+    this.updateForm.reset();
+    const category = data.category.map(value => value.id);
+    console.log(category);
     this.selectedItem.id = data.id;
-    this.selectedItem.icon = data.icon;
     this.updateForm.patchValue({
-      name: data.name,
+      title: data.title || '',
       description: data.description || '',
-      parent: data.parent || ''
+      state: data.state.id || '',
+      city: data.city.id || '',
+      category: category || '',
+      email: data.email || '',
+      phone: data.phone || '',
+      address: data.address || ''
     });
+    this.existingImageUrl = data.image || 'assets/images/dumylogo.png';
     this.open(content);
+  }
+
+  submitUpdateForm(): void {
+    this.loading = true;
+    const form = new FormData();
+    form.append('title', this.updateForm.get('title').value);
+    form.append('description', this.updateForm.get('description').value);
+    form.append('address', this.updateForm.get('address').value);
+    form.append('state', this.updateForm.get('state').value);
+    form.append('city', this.updateForm.get('city').value);
+    form.append('image', this.uploadedUpdateImage || '');
+    form.append('category', String(this.updateForm.get('category').value));
+    form.append('email', this.updateForm.get('email').value);
+    form.append('phone', this.updateForm.get('phone').value);
+
+    this.api.post('/directory_item/update/' + this.selectedItem.id, form).subscribe(
+      res => {
+        this.loading = false;
+        this.toastr.success('Directory updated!');
+        this.modalService.dismissAll();
+        this.selectedItem = '';
+        this.uploadedUpdateImage = null;
+        this.ngOnInit();
+      },
+      err => {
+        this.loading = false;
+        this.updateDirectoryErrors = {...this.createNewDirectoryErrors, ...err.errors};
+        this.toastr.warning('Please check input again!');
+      }
+    );
   }
 
 
