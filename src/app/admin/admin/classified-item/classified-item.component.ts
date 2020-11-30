@@ -49,7 +49,7 @@ export class ClassifiedItemComponent implements OnInit {
   stateDataForFormSelector: Select2Data = [];
   cityDataForFormSelector: Select2Data = [];
   categoryDataForFormSelector: Select2Data = [];
-  parentCategory: Select2Data = [];
+  brandDataForFormSelector: Select2Data = [];
 
   directoryCreateForm = new FormGroup({
     title: new FormControl(''),
@@ -156,6 +156,7 @@ export class ClassifiedItemComponent implements OnInit {
     this.fetchDirectory();
     this.initAllCategory();
     this.initialize_all_states();
+    this.initialize_all_brands();
     this.modalService.dismissAll();
     this.directoryCreateForm.reset();
     this.updateForm.reset();
@@ -192,7 +193,7 @@ export class ClassifiedItemComponent implements OnInit {
   }
 
   initAllCategory(): any {
-    this.api.get('/directory_category/get_categories').subscribe(
+    this.api.get('/classified_category/get_categories').subscribe(
       (res) => {
         const datas = [];
 
@@ -224,6 +225,28 @@ export class ClassifiedItemComponent implements OnInit {
         this.stateDataForFormSelector = [
           {
             label: 'Select State',
+            options: datas
+          }
+        ];
+
+      },
+      err => {
+
+      }
+    );
+  }
+
+  initialize_all_brands(): void{
+    this.api.get('/classified_brand/all').subscribe(
+      res => {
+        const datas = [];
+        res.data.forEach(value => {
+          const data = {label: value.name.toUpperCase(), value: value.id};
+          datas.push(data);
+        });
+        this.brandDataForFormSelector = [
+          {
+            label: 'Select brand',
             options: datas
           }
         ];

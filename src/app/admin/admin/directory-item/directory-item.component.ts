@@ -48,7 +48,6 @@ export class DirectoryItemComponent implements OnInit {
   stateDataForFormSelector: Select2Data = [];
   cityDataForFormSelector: Select2Data = [];
   categoryDataForFormSelector: Select2Data = [];
-  parentCategory: Select2Data = [];
 
   directoryCreateForm = new FormGroup({
     title: new FormControl(''),
