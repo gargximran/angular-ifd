@@ -10,6 +10,7 @@ import {AdminLayoutComponent} from './include/admin-layout/admin-layout.componen
 import {ClassifiedCategoryComponent} from './admin/classified-category/classified-category.component';
 import {DirectoryCategoryComponent} from './admin/directory-category/directory-category.component';
 import {DirectoryItemComponent} from './admin/directory-item/directory-item.component';
+import { ClassifiedItemComponent } from './admin/classified-item/classified-item.component';
 
 const routes: Routes = [
   {
@@ -60,6 +61,10 @@ const routes: Routes = [
           {
             path: 'directory_item',
             component: DirectoryItemComponent
+          },
+          {
+            path: 'classified_item',
+            component: ClassifiedItemComponent
           }
         ]
       }
