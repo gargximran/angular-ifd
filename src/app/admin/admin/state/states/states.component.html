@@ -148,12 +148,16 @@
           <div class="utf_list_box_listing_item">
             <div class="utf_list_box_listing_item_content">
               <div class="inner">
-                <h3>Name : <a class="text-primary" [routerLink]="[ '/dashboard/admin-dashboard/cities/', state.id ]">{{ state.name }}</a> </h3>
+                <h3>Name : {{ state.name }} </h3>
                 <span>Slug : {{ state.slug }}</span>
               </div>
             </div>
           </div>
           <div class="buttons-to-right">
+
+            <a [routerLink]="[ '/dashboard/admin-dashboard/cities/', state.id ]" class="button gray"
+              ><i class="fa fa-eye"></i> View City</a
+            >
             <a (click)='open_update_modal(update_state, i)' class="button gray"
               ><i class="fa fa-pencil"></i> Edit</a
             >

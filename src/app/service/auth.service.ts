@@ -30,12 +30,16 @@ export class AuthService {
     return this.token;
   }
 
-  public logout(): void{
-    localStorage.removeItem('__auth_session__');
-
-
-    this.toastr.error('Logged Out!');
-    this.router.navigateByUrl('/');
+  public logout(): void{    
+    if (this.isLoggedIn){
+      localStorage.removeItem('__auth_session__');
+      this.toastr.error('Logged Out!');
+      this.router.navigateByUrl('/');
+    }else {
+      localStorage.removeItem('__auth_session__');
+      this.router.navigateByUrl('/');
+    }
+    
   }
 
   public isAdmin(): boolean{

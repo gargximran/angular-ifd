@@ -1,6 +1,6 @@
 <ng-template #content let-c="close" let-d="dismiss">
 	<div class="modal-header p-4">
-	  <h4 class="modal-title" id="modal-basic-title">New Classified Item</h4>
+	  <h2 class="modal-title font-weight-bold" id="modal-basic-title">New Classified Item</h2>
 	  <button
 		type="button"
 		class="close text-danger"
@@ -12,22 +12,27 @@
 	</div>
 	<div class="modal-body p-4">
 	  <form
-		[formGroup]="directoryCreateForm"
-		(ngSubmit)="create_new_directory()"
+		[formGroup]="createForm"
+		(ngSubmit)="create_new_submit()"
 	  >
+	  <div class="row">
+		<div class="col-12  bg-secondary">
+			<h4 class="text-white">Product information :</h4>
+		</div>			
+	</div>
 		<div class="form-group">
-		  <label for="directory_title_new">Title :</label>
+		  <label for="directory_title_new">Product Name :</label>
 		  <input
-			formControlName="title"
+			formControlName="name"
 			type="text"
 			class="form-control mb-0"
 			id="directory_title_new"
-			placeholder="Enter name"
+			placeholder="Ex: Samsung s9 plus"
 		  />
 		  <small
-			*ngIf="createNewDirectoryErrors.title"
+			*ngIf="createNewErrors.name"
 			class="form-text text-danger"
-		  >{{ createNewDirectoryErrors.title }}</small
+		  >{{ createNewErrors.name }}</small
 		  >
 		</div>
   
@@ -35,64 +40,12 @@
 		  <label>Description :</label>
 		  <textarea class="form-control mb-0" formControlName="description" placeholder="Description text.."></textarea>
 		  <small
-			*ngIf="createNewDirectoryErrors.description"
+			*ngIf="createNewErrors.description"
 			class="form-text text-danger"
-		  >{{ createNewDirectoryErrors.description }}</small
+		  >{{ createNewErrors.description }}</small
 		  >
 		</div>
-		<div class="row">
-		  <div class="col-md-6">
-			<div class="form-group">
-			  <label>State :</label>
-			  <select2
-				[data]="stateDataForFormSelector"
-				formControlName="state"
-				placeholder="Select State"
-				(update)="getCity($event)"
-				[hideSelectedItems]="true"
-			  >
-			  </select2>
-			  <small
-				*ngIf="createNewDirectoryErrors.state"
-				class="form-text text-danger"
-			  >{{ createNewDirectoryErrors.state }}</small
-			  >
-			</div>
-		  </div>
-  
-		  <div class="col-md-6">
-			<div class="form-group">
-			  <label>City :</label>
-			  <select2
-				[data]="cityDataForFormSelector"
-				formControlName="city"
-				placeholder="Select City"
-				[hideSelectedItems]="true"
-			  >
-			  </select2>
-			  <small
-				*ngIf="createNewDirectoryErrors.city"
-				class="form-text text-danger"
-			  >{{ createNewDirectoryErrors.city }}</small
-			  >
-			</div>
-		  </div>
-		</div>
-  
-		<div class="form-group">
-		  <label>Address :</label>
-		  <input
-			formControlName="address"
-			type="text"
-			class="form-control mb-0"
-			placeholder="Enter address"
-		  />
-		  <small
-			*ngIf="createNewDirectoryErrors.address"
-			class="form-text text-danger"
-		  >{{ createNewDirectoryErrors.address }}</small
-		  >
-		</div>
+		
   
 		<div class="row">
 		  <div class="col-md-6">
@@ -107,9 +60,9 @@
 			  >
 			  </select2>
 			  <small
-				*ngIf="createNewDirectoryErrors.category"
+				*ngIf="createNewErrors.category"
 				class="form-text text-danger"
-			  >{{ createNewDirectoryErrors.category }}</small
+			  >{{ createNewErrors.category }}</small
 			  >
 			</div>
 		  </div>
@@ -123,6 +76,150 @@
 			</div>
 		  </div>
 		</div>
+		<div class="row">
+			<div class="col-md-4">
+				<div class="form-group">
+					<label>Brand :</label>
+					<select2
+					  [data]="brandDataForFormSelector"
+					  formControlName="brand"
+					  placeholder="Select Brand"
+					  [multiple]="false"
+
+					>
+					</select2>
+					<small
+					  *ngIf="createNewErrors.brand"
+					  class="form-text text-danger"
+					>{{ createNewErrors.brand }}</small
+					>
+				  </div>
+			</div>
+
+			<div class="col-md-4">
+				<div class="form-group">
+					<label>Condition :</label>
+					<select2
+					  [data]="conditionSelectorForForm"
+					  formControlName="condition"
+					  placeholder="Select Condition"
+					  [multiple]="false"
+
+					>
+					</select2>
+					<small
+					  *ngIf="createNewErrors.condition"
+					  class="form-text text-danger"
+					>{{ createNewErrors.condition }}</small
+					>
+				  </div>
+			</div>
+
+			<div class="col-md-4">
+				<div class="form-group">
+					<label>Age (by month):</label>
+					<input type="number" formControlName="age" class="form-control mb-0">
+					<small
+					  *ngIf="createNewErrors.age"
+					  class="form-text text-danger"
+					>{{ createNewErrors.age }}</small
+					>
+				  </div>
+			</div>
+
+			
+		</div>
+
+		<div class="row">
+			<div class="col-md-6">
+				<div class="form-group">
+					<label>Price (inr):</label>
+					<input type="number" class="form-control mb-0" formControlName="price">
+					<small
+					  *ngIf="createNewErrors.price"
+					  class="form-text text-danger"
+					>{{ createNewErrors.price }}</small
+					>
+				</div>
+			</div>
+
+			<div class="col-md-6">
+				<div class="form-group">
+					<label>Price type :</label>
+					<select2
+					  [data]="priceTypeSelectorForForm"
+					  formControlName="price_type"
+					  placeholder="Price Type"
+					  [multiple]="false"
+
+					>
+					</select2>
+					<small
+					  *ngIf="createNewErrors.price_type"
+					  class="form-text text-danger"
+					>{{ createNewErrors.price_type }}</small
+					>
+				  </div>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-12  bg-secondary">
+				<h4 class="text-white">Location & Contact Information :</h4>
+			</div>			
+		</div>
+		<div class="row">
+			<div class="col-md-6">
+			  <div class="form-group">
+				<label>State :</label>
+				<select2
+				  [data]="stateDataForFormSelector"
+				  formControlName="state"
+				  placeholder="Select State"
+				  (update)="getCity($event)"
+				  [hideSelectedItems]="true"
+				>
+				</select2>
+				<small
+				  *ngIf="createNewErrors.state"
+				  class="form-text text-danger"
+				>{{ createNewErrors.state }}</small
+				>
+			  </div>
+			</div>
+	
+			<div class="col-md-6">
+			  <div class="form-group">
+				<label>City :</label>
+				<select2
+				  [data]="cityDataForFormSelector"
+				  formControlName="city"
+				  placeholder="Select City"
+				  [hideSelectedItems]="true"
+				>
+				</select2>
+				<small
+				  *ngIf="createNewErrors.city"
+				  class="form-text text-danger"
+				>{{ createNewErrors.city }}</small
+				>
+			  </div>
+			</div>
+		  </div>
+	
+		  <div class="form-group">
+			<label>Address :</label>
+			<input
+			  formControlName="address"
+			  type="text"
+			  class="form-control mb-0"
+			  placeholder="Enter address"
+			/>
+			<small
+			  *ngIf="createNewErrors.address"
+			  class="form-text text-danger"
+			>{{ createNewErrors.address }}</small
+			>
+		  </div>
   
 		<div class="row">
 		  <div class="col-md-6">
@@ -135,9 +232,9 @@
 				placeholder="Enter valid email"
 			  />
 			  <small
-				*ngIf="createNewDirectoryErrors.email"
+				*ngIf="createNewErrors.email"
 				class="form-text text-danger"
-			  >{{ createNewDirectoryErrors.email }}</small
+			  >{{ createNewErrors.email }}</small
 			  >
 			</div>
 		  </div>
@@ -152,16 +249,16 @@
 				placeholder="Enter valid phone number"
 			  />
 			  <small
-				*ngIf="createNewDirectoryErrors.phone"
+				*ngIf="createNewErrors.phone"
 				class="form-text text-danger"
-			  >{{ createNewDirectoryErrors.phone }}</small
+			  >{{ createNewErrors.phone }}</small
 			  >
 			</div>
 		  </div>
 		</div>
   
   
-		<button type="submit" class="btn-lg btn-danger btn-block" [disabled]="loading">
+		<button type="submit" class="btn-lg btn-danger btn-block mt-3" [disabled]="loading">
 		  <ng-container *ngIf="loading; else submitText">
 			<div class="spinner-border" role="status">
   
@@ -417,11 +514,22 @@
 			  <option value="200">200 items per page</option>
 			</select>
 		  </div>
+
+		  <div class="utf_sort_by_select_item ml-2">
+			<select (change)="ChangePostStatus($event)"
+					class="utf_chosen_select_single"
+			>
+			  <option value="all">All</option>
+			  <option value="active">Active</option>
+			  <option value="pending">Pending</option>
+			</select>
+		  </div>
 		</div>
+		
 		<h4><i class="sl sl-icon-list"></i> Classified List</h4>
 		<ul class="border-left">
 		  <ng-container
-			*ngFor="let directory of directories | paginate: { currentPage: currentPageNumber, totalItems: totalVolume, itemsPerPage: itemPerPage}">
+			*ngFor="let directory of products | paginate: { currentPage: currentPageNumber, totalItems: totalVolume, itemsPerPage: itemPerPage}">
 			<li>
 			  <div class="utf_list_box_listing_item">
 				<div class="utf_list_box_listing_item-img">

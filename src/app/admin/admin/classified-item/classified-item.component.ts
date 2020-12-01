@@ -32,8 +32,8 @@ export class ClassifiedItemComponent implements OnInit {
   existingImageUrl = '';
   uploadedUpdateImage: File = null;
 
-  createNewDirectoryErrors: any = {
-    title: '',
+  createNewErrors: any = {
+    name: '',
     description: '',
     category: '',
     address: '',
@@ -45,24 +45,49 @@ export class ClassifiedItemComponent implements OnInit {
   currentPageNumber = 1;
   totalVolume = 0;
   itemPerPage = 10;
+  postStatus = 'all';
 
   stateDataForFormSelector: Select2Data = [];
   cityDataForFormSelector: Select2Data = [];
   categoryDataForFormSelector: Select2Data = [];
   brandDataForFormSelector: Select2Data = [];
+  conditionSelectorForForm: Select2Data = [
+    {
+      label: 'Select Condition',
+      options: [
+        {label: 'New', value: 'new'},
+        {label: 'Used', value: 'used'}
+      ]
+    }
+  ];
+  priceTypeSelectorForForm: Select2Data =[
+    {
+      label: "Select Price Type",
+      options: [
+        {label: 'Negotiable', value: 'negotiable'},
+        {label: 'Fixed', value: 'fixed'}
+      ]
+    }
+  ]
 
-  directoryCreateForm = new FormGroup({
-    title: new FormControl(''),
+  createForm = new FormGroup({
+    name: new FormControl(''),   
     description: new FormControl(''),
     address: new FormControl(''),
     state: new FormControl(''),
     city: new FormControl(''),
     category: new FormControl(''),
     email: new FormControl(''),
-    phone: new FormControl('')
+    phone: new FormControl(''),
+    brand: new FormControl(''),
+    condition: new FormControl(''),
+    age: new FormControl(''),
+    price_type: new FormControl(''),
+    price: new FormControl(''),
+    status: new FormControl('')
   });
 
-  directories = [];
+  products = [];
 
   selectedItem: any = {
     id: ''
@@ -90,7 +115,7 @@ export class ClassifiedItemComponent implements OnInit {
   });
 
   getCity(e): void{
-    this.directoryCreateForm.get('city').reset();
+    this.createForm.get('city').reset();
     this.api.get('/state/view/' + e.value + '/cities').subscribe(
       res => {
         const datas = [];
@@ -113,9 +138,9 @@ export class ClassifiedItemComponent implements OnInit {
 
 
   // tslint:disable-next-line:typedef
-  create_new_directory(): void{
-    this.createNewDirectoryErrors = {
-      title: '',
+  create_new_submit(): void{
+    this.createNewErrors = {
+      name: '',
       description: '',
       category: '',
       address: '',
@@ -123,28 +148,40 @@ export class ClassifiedItemComponent implements OnInit {
       state: '',
       image: '',
       phone: '',
-      email: ''
+      email: '',
+      brand: '',
+      condition: '',
+      age: '',
+      price_type: '',
+      price: '',
+      status: ''  
     };
     this.loading = true;
     const form = new FormData();
-    form.append('title', this.directoryCreateForm.get('title').value || '');
-    form.append('description', this.directoryCreateForm.get('description').value || '');
-    form.append('address', this.directoryCreateForm.get('address').value || '');
-    form.append('city', this.directoryCreateForm.get('city').value || '');
-    form.append('state', this.directoryCreateForm.get('state').value || '');
-    form.append('image', this.uploadedImages[0] || '');
-    form.append('email', this.directoryCreateForm.get('email').value || '');
-    form.append('phone', this.directoryCreateForm.get('phone').value || '');
-    form.append('category', String(this.directoryCreateForm.get('category').value) || '');
-    this.api.post('/directory_item/create', form).subscribe(
+    form.append('name', this.createForm.get('name').value || '');
+    form.append('brand', this.createForm.get('brand').value || '');
+    form.append('description', this.createForm.get('description').value || '');
+    form.append('condition', this.createForm.get('condition').value || '');
+    form.append('age', this.createForm.get('age').value || '');
+    form.append('price_type', this.createForm.get('price_type').value || '');
+    form.append('price', this.createForm.get('price').value || '');
+    this.uploadedImages.forEach(value => {
+      form.append('images[]', value);
+    })
+    form.append('address', this.createForm.get('address').value || '');
+    form.append('category', String(this.createForm.get('category').value) || '');
+    form.append('state', String(this.createForm.get('state').value) || '');
+    form.append('city', String(this.createForm.get('city').value) || '');
+
+    this.api.post('/classified_product/create', form).subscribe(
        res => {
          this.loading = false;
-         this.toastr.success('Directory created successfully!');
+         this.toastr.success('Classified Listed Successfully!');
          this.ngOnInit();
       },
        err => {
          this.loading = false;
-         this.createNewDirectoryErrors = {...this.createNewDirectoryErrors, ...err.errors};
+         this.createNewErrors = {...this.createNewErrors, ...err.errors}
          this.toastr.warning('Please check input again!');
        }
    );
@@ -153,12 +190,13 @@ export class ClassifiedItemComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.fetchDirectory();
+    this.fetchData();
     this.initAllCategory();
     this.initialize_all_states();
     this.initialize_all_brands();
     this.modalService.dismissAll();
-    this.directoryCreateForm.reset();
+    this.createForm.reset();
+    this.uploadedImages = []
     this.updateForm.reset();
     this.loading = false;
   }
@@ -167,8 +205,6 @@ export class ClassifiedItemComponent implements OnInit {
 
   addImage(e: FileHolder): void{
     this.uploadedImages.push(e.file);
-    console.log(e)
-    console.log(this.uploadedImages)
   }
   addUpdateImage(e: FileHolder): void{
     this.uploadedUpdateImage = e.file;
@@ -258,15 +294,17 @@ export class ClassifiedItemComponent implements OnInit {
     );
   }
 
-  fetchDirectory(): any {
+  fetchData(): any {
     const form = new FormData();
     form.append('itemPerPage', String(this.itemPerPage));
     form.append('pageNumber', String(this.currentPageNumber));
+    form.append('status', this.postStatus || 'all')
 
-    this.api.post('/directory_item/get_directories', form).subscribe(
+    this.api.post('/classified_product/get_products', form).subscribe(
       (res) => {
+        console.log(res)
         this.totalVolume = res.data.count;
-        this.directories = res.data.collections;
+        this.products = res.data.collections;
       },
       (err) => {
         this.toastr.error('Something went wrong!');
@@ -276,17 +314,22 @@ export class ClassifiedItemComponent implements OnInit {
 
   pageChange(event): any {
     this.currentPageNumber = event;
-    this.fetchDirectory();
+    this.fetchData();
   }
   ChangeItemPerPageSize(event): void {
     this.itemPerPage = event.target.value;
-    this.fetchDirectory();
+    this.fetchData();
   }
 
   openDeleteAlert(data): void{
     this.selectedItem.id = data.id;
     this.deleteSwal.title = `Delete directory ?`;
     this.deleteSwal.fire();
+  }
+
+  ChangePostStatus(event): void{
+    this.postStatus = event.target.value
+    this.fetchData();
   }
 
   deleteCategory(): void {
@@ -356,7 +399,6 @@ export class ClassifiedItemComponent implements OnInit {
       },
       err => {
         this.loading = false;
-        this.updateDirectoryErrors = {...this.createNewDirectoryErrors, ...err.errors};
         this.toastr.warning('Please check input again!');
       }
     );
