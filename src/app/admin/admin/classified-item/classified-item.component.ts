@@ -39,7 +39,15 @@ export class ClassifiedItemComponent implements OnInit {
     address: '',
     city: '',
     state: '',
-    image: ''
+    image: '',
+    phone: '',
+    email: '',
+    brand: '',
+    condition: '',
+    age: '',
+    price_type: '',
+    price: '',
+    status: ''
   };
 
   currentPageNumber = 1;
@@ -60,18 +68,18 @@ export class ClassifiedItemComponent implements OnInit {
       ]
     }
   ];
-  priceTypeSelectorForForm: Select2Data =[
+  priceTypeSelectorForForm: Select2Data = [
     {
-      label: "Select Price Type",
+      label: 'Select Price Type',
       options: [
         {label: 'Negotiable', value: 'negotiable'},
         {label: 'Fixed', value: 'fixed'}
       ]
     }
-  ]
+  ];
 
   createForm = new FormGroup({
-    name: new FormControl(''),   
+    name: new FormControl(''),
     description: new FormControl(''),
     address: new FormControl(''),
     state: new FormControl(''),
@@ -93,25 +101,41 @@ export class ClassifiedItemComponent implements OnInit {
     id: ''
   };
 
-  updateDirectoryErrors: any = {
-    title: '',
+  updateErrors: any = {
+    name: '',
     description: '',
     category: '',
     address: '',
     city: '',
     state: '',
-    image: ''
+    image: '',
+    phone: '',
+    email: '',
+    brand: '',
+    condition: '',
+    age: '',
+    price_type: '',
+    price: '',
+    status: ''
   };
 
+  updateImagesLink: any = [];
+
   updateForm = new FormGroup({
-    title: new FormControl(''),
+    name: new FormControl(''),
     description: new FormControl(''),
     address: new FormControl(''),
     state: new FormControl(''),
     city: new FormControl(''),
     category: new FormControl(''),
     email: new FormControl(''),
-    phone: new FormControl('')
+    phone: new FormControl(''),
+    brand: new FormControl(''),
+    condition: new FormControl(''),
+    age: new FormControl(''),
+    price_type: new FormControl(''),
+    price: new FormControl(''),
+    status: new FormControl('')
   });
 
   getCity(e): void{
@@ -154,7 +178,7 @@ export class ClassifiedItemComponent implements OnInit {
       age: '',
       price_type: '',
       price: '',
-      status: ''  
+      status: ''
     };
     this.loading = true;
     const form = new FormData();
@@ -167,11 +191,13 @@ export class ClassifiedItemComponent implements OnInit {
     form.append('price', this.createForm.get('price').value || '');
     this.uploadedImages.forEach(value => {
       form.append('images[]', value);
-    })
+    });
     form.append('address', this.createForm.get('address').value || '');
     form.append('category', String(this.createForm.get('category').value) || '');
     form.append('state', String(this.createForm.get('state').value) || '');
     form.append('city', String(this.createForm.get('city').value) || '');
+    form.append('email', String(this.createForm.get('email').value) || '');
+    form.append('phone', String(this.createForm.get('phone').value) || '');
 
     this.api.post('/classified_product/create', form).subscribe(
        res => {
@@ -181,7 +207,7 @@ export class ClassifiedItemComponent implements OnInit {
       },
        err => {
          this.loading = false;
-         this.createNewErrors = {...this.createNewErrors, ...err.errors}
+         this.createNewErrors = {...this.createNewErrors, ...err.errors};
          this.toastr.warning('Please check input again!');
        }
    );
@@ -196,7 +222,7 @@ export class ClassifiedItemComponent implements OnInit {
     this.initialize_all_brands();
     this.modalService.dismissAll();
     this.createForm.reset();
-    this.uploadedImages = []
+    this.uploadedImages = [];
     this.updateForm.reset();
     this.loading = false;
   }
@@ -298,11 +324,11 @@ export class ClassifiedItemComponent implements OnInit {
     const form = new FormData();
     form.append('itemPerPage', String(this.itemPerPage));
     form.append('pageNumber', String(this.currentPageNumber));
-    form.append('status', this.postStatus || 'all')
+    form.append('status', this.postStatus || 'all');
 
     this.api.post('/classified_product/get_products', form).subscribe(
       (res) => {
-        console.log(res)
+        console.log(res);
         this.totalVolume = res.data.count;
         this.products = res.data.collections;
       },
@@ -323,18 +349,18 @@ export class ClassifiedItemComponent implements OnInit {
 
   openDeleteAlert(data): void{
     this.selectedItem.id = data.id;
-    this.deleteSwal.title = `Delete directory ?`;
+    this.deleteSwal.title = `Delete Classified Product?`;
     this.deleteSwal.fire();
   }
 
   ChangePostStatus(event): void{
-    this.postStatus = event.target.value
+    this.postStatus = event.target.value;
     this.fetchData();
   }
 
   deleteCategory(): void {
     this.api
-      .post('/directory_item/delete/' + this.selectedItem.id, {})
+      .post('/classified_product/delete/' + this.selectedItem.id, {})
       .subscribe(
         (res) => {
           this.deleteSuccess.fire();
@@ -356,13 +382,22 @@ export class ClassifiedItemComponent implements OnInit {
     this.selectedItem.id = '';
   }
 
-  openCategoryEditModal(content, data): void {
+
+  openEditModal(content, data): void {
     this.updateForm.reset();
+    this.updateImagesLink = [];
+    if (data.images){
+      this.updateImagesLink = data.images;
+    }
     const category = data.category.map(value => value.id);
-    console.log(category);
     this.selectedItem.id = data.id;
     this.updateForm.patchValue({
-      title: data.title || '',
+      name: data.name || '',
+      age: data.age || '',
+      brand: data.brand.id || '',
+      condition: data.condition || '',
+      price: data.price || '',
+      price_type: data.price_type || '',
       description: data.description || '',
       state: data.state.id || '',
       city: data.city.id || '',
@@ -371,8 +406,36 @@ export class ClassifiedItemComponent implements OnInit {
       phone: data.phone || '',
       address: data.address || ''
     });
-    this.existingImageUrl = data.image || 'assets/images/dumylogo.png';
     this.open(content);
+  }
+
+  delete_image(index): void{
+    this.api.post('/classified_product/delete_image/' + index + '/product/' + this.selectedItem.id, {}).subscribe(
+      res => {
+        this.fetchData();
+        this.updateImagesLink = res.data.images || [];
+        this.toastr.error('Image Deleted!');
+      },
+      err => {}
+    );
+  }
+
+  uploadNewImage(file: FileHolder): void{
+    this.loading = true;
+    const form = new FormData();
+    form.append('image', file.file);
+    this.api.post('/classified_product/add_image/' + this.selectedItem.id, form).subscribe(
+      res => {
+        this.loading = false;
+        this.updateImagesLink = res.data.images || [];
+        this.fetchData();
+        this.toastr.success('New Image added!');
+      },
+      err => {
+        this.loading = false;
+        this.toastr.warning('Something went wrong!');
+      }
+    );
   }
 
   submitUpdateForm(): void {
