@@ -140,24 +140,27 @@ export class ClassifiedItemComponent implements OnInit {
 
   getCity(e): void{
     this.createForm.get('city').reset();
-    this.api.get('/state/view/' + e.value + '/cities').subscribe(
-      res => {
-        const datas = [];
-        res.data.forEach((element) => {
-          const data = { label: element.name.toUpperCase(), value: element.id };
-          datas.push(data);
-        });
-        this.cityDataForFormSelector = [
-          {
-            label: 'Select City',
-            options: datas
-          }
-        ];
-      },
-      err => {
-
-      }
-    );
+    if (e.value){
+      this.api.get('/state/view/' + e.value + '/cities').subscribe(
+        res => {
+          const datas = [];
+          res.data.forEach((element) => {
+            const data = { label: element.name.toUpperCase(), value: element.id };
+            datas.push(data);
+          });
+          this.cityDataForFormSelector = [
+            {
+              label: 'Select City',
+              options: datas
+            }
+          ];
+        },
+        err => {
+  
+        }
+      );
+    }
+    
   }
 
 
@@ -439,29 +442,52 @@ export class ClassifiedItemComponent implements OnInit {
   }
 
   submitUpdateForm(): void {
+    this.updateErrors = {
+      name: '',
+      description: '',
+      category: '',
+      address: '',
+      city: '',
+      state: '',
+      image: '',
+      phone: '',
+      email: '',
+      brand: '',
+      condition: '',
+      age: '',
+      price_type: '',
+      price: '',
+      status: ''
+    };
     this.loading = true;
     const form = new FormData();
-    form.append('title', this.updateForm.get('title').value);
-    form.append('description', this.updateForm.get('description').value);
-    form.append('address', this.updateForm.get('address').value);
+    form.append('name', this.updateForm.get('name').value || '');
+    form.append('brand', this.updateForm.get('brand').value || '');
+    form.append('description', this.updateForm.get('description').value || '');
+    form.append('condition', this.updateForm.get('condition').value || '');
+    form.append('age', this.updateForm.get('age').value || '');
+    form.append('price_type', this.updateForm.get('price_type').value || '');
+    form.append('price', this.updateForm.get('price').value || '');
+    form.append('address', this.updateForm.get('address').value || '');
     form.append('state', this.updateForm.get('state').value);
-    form.append('city', this.updateForm.get('city').value);
-    form.append('image', this.uploadedUpdateImage || '');
-    form.append('category', String(this.updateForm.get('category').value));
-    form.append('email', this.updateForm.get('email').value);
-    form.append('phone', this.updateForm.get('phone').value);
+    form.append('city', this.updateForm.get('city').value || '');
+    form.append('category', String(this.updateForm.get('category').value) || '');
+    form.append('email', this.updateForm.get('email').value || '')
+    form.append('phone', this.updateForm.get('phone').value || '');
 
-    this.api.post('/directory_item/update/' + this.selectedItem.id, form).subscribe(
+    this.api.post('/classified_product/update/' + this.selectedItem.id, form).subscribe(
       res => {
-        this.loading = false;
-        this.toastr.success('Directory updated!');
-        this.modalService.dismissAll();
-        this.selectedItem = '';
-        this.uploadedUpdateImage = null;
+        this.toastr.success('Category Updated!');
+        this.selectedItem = {
+          id: null
+        };
         this.ngOnInit();
       },
       err => {
         this.loading = false;
+        this.updateErrors = {
+          ...this.updateErrors, ...err.errors
+        };
         this.toastr.warning('Please check input again!');
       }
     );

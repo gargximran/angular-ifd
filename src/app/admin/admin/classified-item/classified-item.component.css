@@ -12,3 +12,7 @@ button.delete-button{
   z-index: 1000;
   opacity: 1;
 }
+
+.utf_list_box_listing_item-img a{
+  height: unset !important;
+}
