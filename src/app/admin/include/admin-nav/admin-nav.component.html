@@ -67,6 +67,18 @@
         </ul>
       </li>
 
+
+      <li *ngIf="isAdmin" #job_menu (click)="toggleMobileMenu(job_menu)">
+        <a><i class="sl sl-icon-layers"></i> Job</a>
+        <ul>
+          <li *ngIf="isAdmin">
+            <a [routerLink]="[ '/dashboard/admin-dashboard/job_category' ]"
+            ><i class="sl sl-icon-envelope-open"></i> Category</a
+            >
+          </li>
+        </ul>
+      </li>
+
       <li>
         <a (click)="logout()"><i class="sl sl-icon-power"></i> Logout</a>
       </li>

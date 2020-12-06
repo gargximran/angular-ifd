@@ -21,6 +21,7 @@ import { DirectoryItemComponent } from './admin/directory-item/directory-item.co
 import {ImageUploadModule} from 'angular2-image-upload';
 import {ReadMoreModule} from 'ng-readmore';
 import { ClassifiedItemComponent } from './admin/classified-item/classified-item.component';
+import { JobCategoryComponent } from './admin/job-category/job-category.component';
 
 @NgModule({
   declarations: [
@@ -37,6 +38,7 @@ import { ClassifiedItemComponent } from './admin/classified-item/classified-item
     DirectoryCategoryComponent,
     DirectoryItemComponent,
     ClassifiedItemComponent,
+    JobCategoryComponent,
   ],
     imports: [
         CommonModule,

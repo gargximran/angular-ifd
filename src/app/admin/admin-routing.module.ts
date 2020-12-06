@@ -11,6 +11,7 @@ import {ClassifiedCategoryComponent} from './admin/classified-category/classifie
 import {DirectoryCategoryComponent} from './admin/directory-category/directory-category.component';
 import {DirectoryItemComponent} from './admin/directory-item/directory-item.component';
 import { ClassifiedItemComponent } from './admin/classified-item/classified-item.component';
+import {JobCategoryComponent} from './admin/job-category/job-category.component';
 
 const routes: Routes = [
   {
@@ -65,6 +66,10 @@ const routes: Routes = [
           {
             path: 'classified_item',
             component: ClassifiedItemComponent
+          },
+          {
+            path: 'job_category',
+            component: JobCategoryComponent
           }
         ]
       }
