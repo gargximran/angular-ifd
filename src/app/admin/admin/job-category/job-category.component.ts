@@ -95,7 +95,7 @@ export class JobCategoryComponent implements OnInit {
       this.classifiedCategoryCreateForm.get('parent').value || ''
     );
     form.append('icon', this.classifiedCategoryCreateForm.get('icon').value);
-    this.api.post('/classified_category/create', form).subscribe(
+    this.api.post('/job_category/create', form).subscribe(
       (res) => {
         this.loading = false;
         this.toastr.success('Category created!');
@@ -159,7 +159,7 @@ export class JobCategoryComponent implements OnInit {
   }
 
   initAllCategory(): any {
-    this.api.get('/classified_category/get_categories').subscribe(
+    this.api.get('/job_category/get_categories').subscribe(
       (res) => {
         const datas = [];
 
@@ -190,9 +190,9 @@ export class JobCategoryComponent implements OnInit {
       // tslint:disable-next-line:variable-name
       const parent_id = d.get('parent');
       if (parent_id) {
-        url = '/classified_category/get_child/' + parent_id;
+        url = '/job_category/get_child/' + parent_id;
       } else {
-        url = '/classified_category/get_parent';
+        url = '/job_category/get_parent';
       }
     });
 
@@ -226,7 +226,7 @@ export class JobCategoryComponent implements OnInit {
 
   deleteCategory(): void {
     this.api
-      .post('/classified_category/delete/' + this.selectedItem.id, {})
+      .post('/job_category/delete/' + this.selectedItem.id, {})
       .subscribe(
         (res) => {
           this.deleteSuccess.fire();
@@ -273,7 +273,7 @@ export class JobCategoryComponent implements OnInit {
     form.append('description', this.updateForm.get('description').value || '');
     form.append('icon', this.updateForm.get('icon').value || '');
     this.api
-      .post('/classified_category/update/' + this.selectedItem.id, form)
+      .post('/job_category/update/' + this.selectedItem.id, form)
       .subscribe(
         (res) => {
           this.loading = false;

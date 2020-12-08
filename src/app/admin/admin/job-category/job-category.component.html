@@ -200,12 +200,12 @@
 <div id="titlebar" class="dashboard_gradient">
   <div class="row">
     <div class="col-md-12">
-      <h2>Classified Category</h2>
+      <h2>Job Category</h2>
       <nav id="breadcrumbs">
         <ul>
           <li><a [routerLink]="['/']">Home</a></li>
           <li><a [routerLink]="['/dashboard']">Dashboard</a></li>
-          <li>Classified Category</li>
+          <li>Job Category</li>
         </ul>
       </nav>
 
@@ -255,7 +255,7 @@
               </div>
             </div>
             <div class="buttons-to-right">
-              <a [routerLink]="[ '/dashboard/admin-dashboard/classified_category/child', category.id ]"  *ngIf="category.children" class="button gray"><i class="fa fa-eye"></i> View Child</a>
+              <a [routerLink]="[ '/dashboard/admin-dashboard/job_category/child', category.id ]"  *ngIf="category.children" class="button gray"><i class="fa fa-eye"></i> View Child</a>
               <a  (click)="openCategoryEditModal(editModal, category)" class="button gray"><i class="fa fa-pencil"></i> Edit</a>
               <a (click)="openDeleteAlert(category)" class="button gray"><i class="fa fa-trash-o"></i> Delete</a>
             </div>

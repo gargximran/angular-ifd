@@ -70,6 +70,10 @@ const routes: Routes = [
           {
             path: 'job_category',
             component: JobCategoryComponent
+          },
+          {
+            path: 'job_category/child/:parent',
+            component: JobCategoryComponent
           }
         ]
       }
