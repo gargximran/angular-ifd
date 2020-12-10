@@ -16,9 +16,14 @@ export class AdminNavComponent implements OnInit {
     if(this.auth.isAdmin()){
       this.isAdmin = true
     }
+
+    if(this.auth.isCompany()){
+      this.isCompany = true;
+    }
   }
 
-  isAdmin = false
+  isAdmin = false;
+  isCompany = false;
 
 
   toggleMobileMenu(menu){

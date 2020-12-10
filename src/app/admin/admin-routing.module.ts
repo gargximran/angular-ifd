@@ -12,6 +12,8 @@ import {DirectoryCategoryComponent} from './admin/directory-category/directory-c
 import {DirectoryItemComponent} from './admin/directory-item/directory-item.component';
 import { ClassifiedItemComponent } from './admin/classified-item/classified-item.component';
 import {JobCategoryComponent} from './admin/job-category/job-category.component';
+import { CompanyProfileComponent } from './company-profile/company-profile.component';
+import { CompanyGuard } from '../guard/company.guard';
 
 const routes: Routes = [
   {
@@ -21,6 +23,11 @@ const routes: Routes = [
       {
         path: '',
         component: AdminDashboardComponent
+      },
+      {
+        path:'company',
+        component: CompanyProfileComponent,
+        canActivate: [CompanyGuard]
       },
       {
         path: 'admin-dashboard',

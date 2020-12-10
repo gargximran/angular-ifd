@@ -50,6 +50,21 @@ export class AuthService {
     }
   }
 
+  public isCompany(): boolean{
+    if (this._getUser_()){
+      if (this._getUser_().type.role === 'client' && this._getUser_().type.client_type == 'company'){
+        return true;
+      }
+    }
+  }
+
+  public get CompanyProfile(): any{
+    if(this.isCompany()){
+      return this._getSession_().company_profile;
+    }
+    return null;
+  }
+
   private watchUser(): Observable<any> {
     return of(this._getUser_());
   }

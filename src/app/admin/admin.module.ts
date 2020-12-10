@@ -22,6 +22,7 @@ import {ImageUploadModule} from 'angular2-image-upload';
 import {ReadMoreModule} from 'ng-readmore';
 import { ClassifiedItemComponent } from './admin/classified-item/classified-item.component';
 import { JobCategoryComponent } from './admin/job-category/job-category.component';
+import { CompanyProfileComponent } from './company-profile/company-profile.component';
 
 @NgModule({
   declarations: [
@@ -39,6 +40,7 @@ import { JobCategoryComponent } from './admin/job-category/job-category.componen
     DirectoryItemComponent,
     ClassifiedItemComponent,
     JobCategoryComponent,
+    CompanyProfileComponent,
   ],
     imports: [
         CommonModule,
