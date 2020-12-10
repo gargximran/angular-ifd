@@ -11,21 +11,36 @@ export class CompanyProfileComponent implements OnInit {
 
   constructor(private auth: AuthService) { }
 
+
+  private formData = new FormGroup({
+    name: new FormControl(''),
+    url: new FormControl(''),
+    category: new FormControl(''),
+    description: new FormControl(''),
+    logo: new FormControl(''),
+    city: new FormControl(''),
+    state: new FormControl('')
+  });
+
+  private companyDetail = {
+    name: '',
+    url: '',
+    category: [],
+    description: '',
+    logo: 'assets/images/dumylogo.png',
+    city: {},
+    state: {}
+  };
+
   ngOnInit(): void {
-    if(this.auth.CompanyProfile){
+    if (this.auth.CompanyProfile){
       this.formData.patchValue({
         name: this.auth.CompanyProfile.name
-      })
-      this.companyLogo = this.auth.CompanyProfile.logo || 'assets/images/dumylogo.png';
-      console.log(this.auth.CompanyProfile)
+      });
+      this.companyDetail.logo = this.auth.CompanyProfile.logo || 'assets/images/dumylogo.png';
+      console.log(this.auth.CompanyProfile);
     }
   }
 
-  companyLogo: string = 'assets/images/dumylogo.png';
-
-
-  formData = new FormGroup({
-    name: new FormControl('')
-  });
 
 }
