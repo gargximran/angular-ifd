@@ -35,6 +35,27 @@ app-read-more small a{
   text-decoration: underline !important;
 }
 
+.company-profile-category{
+  background: red !important;
+  margin: 5px !important;
+  border-radius: 15px !important;
+  font-weight: bold !important;
+  color: white !important;
+  text-transform: capitalize;
+}
+
+.company-profile-category[aria-selected='true']{
+  background: indianred !important;
+  color: black !important;
+}
+
+.select2-selection__choice{
+  background: red !important;
+  border-radius: 20px !important;
+  font-weight: bold !important;
+  color: white !important;
+  text-transform: capitalize;
+}
 
 
 

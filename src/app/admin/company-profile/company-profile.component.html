@@ -20,60 +20,72 @@
 		<h4 class="gray"><i class="im im-icon-Office"></i> Company Details</h4>
 		<div class="utf_dashboard_list_box-static">
 			<div class="edit-profile-photo company_profile_image"> <img src="{{companyDetail.logo}}" alt="">
-			  <div class="change-photo-btn">
-				<div class="photoUpload"> <span><i class="fa fa-upload"></i> Upload Photo</span>
-				  <input type="file" class="upload">
-				</div>
+			  <div *ngIf="!editMode" class="change-photo-btn">
+          <div  class="photoUpload"> <span><i class="fa fa-upload"></i> Upload Photo</span>
+            <input type="file" class="upload">
+          </div>
 			  </div>
 			</div>
 
 			<form [formGroup]="formData" class="my-profile">
 
 			  <div class="row with-forms">
-				  <div class="col-md-4">
-					  <label>Company Name</label>
-					  <input type="text" class="input-text" formControlName="name">
-				  </div>
-				  <div class="col-md-4">
-					  <label>Phone</label>
-					  <input type="text" class="input-text" placeholder="(123) 123-456" value="">
-				  </div>
-				  <div class="col-md-4">
-					  <label>Company</label>
-					  <input type="text" class="input-text" placeholder="ABC Company" value="">
-				  </div>
-				  <div class="col-md-4">
-					  <label>Email</label>
-					  <input type="text" class="input-text" placeholder="test@example.com" value="">
-				  </div>
-				  <div class="col-md-4">
-					  <label>Designation</label>
-					  <input type="text" class="input-text" placeholder="Account Manager" value="">
-				  </div>
-				  <div class="col-md-4">
-					  <label>State</label>
-					  <input type="text" class="input-text" placeholder="London" value="">
-				  </div>
-				  <div class="col-md-4">
-					  <label>Birth</label>
-					  <input type="text" class="input-text" placeholder="20 March 2000" value="">
-				  </div>
-				  <div class="col-md-4">
-					  <label>Country</label>
-					  <input type="text" class="input-text" placeholder="England" value="">
-				  </div>
-				  <div class="col-md-4">
-					  <label>Age</label>
-					  <input type="text" class="input-text" placeholder="18 Year" value="">
-				  </div>
 				  <div class="col-md-12">
-					  <label>Address</label>
-					  <textarea name="notes" cols="30" rows="10">At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti.</textarea>
+					  <label>Company Name : </label>
+					  <input type="text" placeholder="Company Name" class="input-text" formControlName="name" [attr.disabled]="editMode ? true : null">
 				  </div>
+          <div class="col-md-12">
+            <label>Description :</label>
+            <textarea formControlName="description" placeholder="Company description..." cols="30" rows="10" [attr.disabled]="editMode ? true : null"></textarea>
+          </div>
+          <div class="col-md-12">
+            <label>Company Website :</label>
+            <input type="text" class="input-text" formControlName="url" [attr.disabled]="editMode ? true : null" placeholder="Company url...">
+          </div>
 				  <div class="col-md-12">
-					  <label>Notes</label>
-					  <textarea name="notes" cols="30" rows="10">At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti.</textarea>
+					  <label>Category :</label>
+            <select2
+              [data]="categoryDataForFormSelector"
+              formControlName="category"
+              placeholder="Select categories"
+              [multiple]="true"
+              [disabled]="editMode"
+
+            >
+            </select2>
 				  </div>
+
+          <div class="col-md-6">
+            <label>State :</label>
+            <select2
+              [data]="stateDataForFormSelector"
+              formControlName="state"
+              placeholder="Select state"
+              [multiple]="false"
+              (update)="getCity($event)"
+              [disabled]="editMode"
+
+            >
+            </select2>
+          </div>
+          <div class="col-md-6">
+            <label>City :</label>
+            <select2
+              [data]="cityDataForFormSelector"
+              formControlName="city"
+              placeholder="Select City"
+              [multiple]="false"
+              [disabled]="editMode"
+
+            >
+            </select2>
+          </div>
+
+				  <div class="col-md-12">
+					  <label>Company Address :</label>
+					  <textarea formControlName="address" placeholder="Company address...." cols="15" rows="3" [attr.disabled]="editMode ? true : null"></textarea>
+				  </div>
+
 				</div>
 				<button class="button preview btn_center_item margin-top-15">Save Changes</button>
 			</form>

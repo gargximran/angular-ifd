@@ -155,12 +155,9 @@ export class ClassifiedItemComponent implements OnInit {
             }
           ];
         },
-        err => {
-  
-        }
+        err => {}
       );
     }
-    
   }
 
 
