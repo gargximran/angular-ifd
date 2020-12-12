@@ -39,7 +39,7 @@
               <input *ngIf="!editMode"
                 type="text"
                 placeholder="Company Name"
-                class="input-text"
+                class="input-text mb-0"
                 formControlName="name"
 			  />
 			  <small
@@ -50,13 +50,15 @@
             </div>
             <div class="col-md-12">
 			  <label>Description :</label>
-			  <pre class="input-text ml-3 border p-2" style="white-space: pre-wrap;" *ngIf="editMode" >{{ companyDetail.description }}</pre>
+			  <pre class="input-text ml-3 border p-2" style="white-space: pre-wrap; font-family: 'Nunito';
+			  color: #707070;" *ngIf="editMode" >{{ companyDetail.description }}</pre>
 			  <textarea
 			  	*ngIf="!editMode"
                 formControlName="description"
                 placeholder="Company description..."
                 cols="30"
-                rows="10"
+				rows="10"
+				class="mb-0"
 			  ></textarea>
 			  <small
 				*ngIf="submitErrors.description"
@@ -70,7 +72,7 @@
 			  <input
 			  	*ngIf="!editMode"
                 type="text"
-                class="input-text"
+                class="input-text mb-0"
                 formControlName="url"
                 placeholder="Company url..."
 			  />
@@ -150,7 +152,8 @@
                 formControlName="address"
                 placeholder="Company address...."
                 cols="15"
-                rows="3"
+				rows="3"
+				class="mb-0"
 			  ></textarea>
 			  <small
 				*ngIf="submitErrors.address"
