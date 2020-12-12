@@ -91,6 +91,7 @@ export class CompanyProfileComponent implements OnInit {
       
       this.companyDetail.logo = this.auth.CompanyProfile.logo || 'assets/images/dumylogo.png';
     } else {
+      this.formData.reset();
       this.editMode = false;
       this.formData.enable();
     }
@@ -233,6 +234,24 @@ export class CompanyProfileComponent implements OnInit {
         this.submitErrors = {...this.submitErrors, ...err.errors}
       }
     );
+  }
+
+
+  deleteProfile(): void{
+    this.api.post('/company_profile/delete', {}).subscribe(
+      res => {
+        this.toastr.success("Company Deleted!")
+        this.editMode = false;
+        this.ngOnInit();
+        this.ngAfterContentInit();
+      },
+      err => {
+        this.toastr.error("Something went wrong!")
+        this.editMode = true;
+        this.ngOnInit();
+        this.ngAfterContentInit();
+      }
+    )
   }
 
 

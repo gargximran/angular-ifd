@@ -163,7 +163,7 @@
             </div>
 		  </div>
 		  
-          <button class="button preview btn_center_item margin-top-15" (click)="editMode = false" *ngIf="editMode">
+          <button class="button preview bg-warning margin-top-15" (click)="editMode = false" *ngIf="editMode">
 			  <ng-container *ngIf="companyDetail.name">
 				Edit Detail
 			  </ng-container>
@@ -172,6 +172,13 @@
 			  </ng-container>
             
 		  </button>
+
+		  <button class="button preview margin-top-15 ml-2" (click)="deleteProfile()" *ngIf="editMode">
+			<ng-container *ngIf="companyDetail.name">
+			  Delete company?
+			</ng-container>
+		  
+		</button>
 		  
 		  <button (click)='submitData()' class="button bg-primary preview  margin-top-15" *ngIf="!editMode">
             Save Change
