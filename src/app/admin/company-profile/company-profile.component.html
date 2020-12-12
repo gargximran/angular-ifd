@@ -1,97 +1,183 @@
 <div id="titlebar" class="dashboard_gradient">
-	<div class="row">
-	  <div class="col-md-12">
-		<h2>Company Details</h2>
-		<nav id="breadcrumbs">
-		  <ul>
-			<li><a [routerLink]="['/']">Home</a></li>
-			<li><a [routerLink]="['/dashboard']">Dashboard</a></li>
-			<li>Company</li>
-		  </ul>
-		</nav>
-
-	  </div>
-	</div>
-  </div>
-
   <div class="row">
-	<div class="col-lg-12 col-md-12">
-	  <div class="utf_dashboard_list_box margin-top-0">
-		<h4 class="gray"><i class="im im-icon-Office"></i> Company Details</h4>
-		<div class="utf_dashboard_list_box-static">
-			<div class="edit-profile-photo company_profile_image"> <img src="{{companyDetail.logo}}" alt="">
-			  <div *ngIf="!editMode" class="change-photo-btn">
-          <div  class="photoUpload"> <span><i class="fa fa-upload"></i> Upload Photo</span>
-            <input type="file" class="upload">
-          </div>
-			  </div>
-			</div>
-
-			<form [formGroup]="formData" class="my-profile">
-
-			  <div class="row with-forms">
-				  <div class="col-md-12">
-					  <label>Company Name : </label>
-					  <input type="text" placeholder="Company Name" class="input-text" formControlName="name" [attr.disabled]="editMode ? true : null">
-				  </div>
-          <div class="col-md-12">
-            <label>Description :</label>
-            <textarea formControlName="description" placeholder="Company description..." cols="30" rows="10" [attr.disabled]="editMode ? true : null"></textarea>
-          </div>
-          <div class="col-md-12">
-            <label>Company Website :</label>
-            <input type="text" class="input-text" formControlName="url" [attr.disabled]="editMode ? true : null" placeholder="Company url...">
-          </div>
-				  <div class="col-md-12">
-					  <label>Category :</label>
-            <select2
-              [data]="categoryDataForFormSelector"
-              formControlName="category"
-              placeholder="Select categories"
-              [multiple]="true"
-              [disabled]="editMode"
-
-            >
-            </select2>
-				  </div>
-
-          <div class="col-md-6">
-            <label>State :</label>
-            <select2
-              [data]="stateDataForFormSelector"
-              formControlName="state"
-              placeholder="Select state"
-              [multiple]="false"
-              (update)="getCity($event)"
-              [disabled]="editMode"
-
-            >
-            </select2>
-          </div>
-          <div class="col-md-6">
-            <label>City :</label>
-            <select2
-              [data]="cityDataForFormSelector"
-              formControlName="city"
-              placeholder="Select City"
-              [multiple]="false"
-              [disabled]="editMode"
-
-            >
-            </select2>
-          </div>
-
-				  <div class="col-md-12">
-					  <label>Company Address :</label>
-					  <textarea formControlName="address" placeholder="Company address...." cols="15" rows="3" [attr.disabled]="editMode ? true : null"></textarea>
-				  </div>
-
-				</div>
-				<button class="button preview btn_center_item margin-top-15">Save Changes</button>
-			</form>
-
-		  </div>
-	  </div>
-
-	</div>
+    <div class="col-md-12">
+      <h2>Company Details</h2>
+      <nav id="breadcrumbs">
+        <ul>
+          <li><a [routerLink]="['/']">Home</a></li>
+          <li><a [routerLink]="['/dashboard']">Dashboard</a></li>
+          <li>Company</li>
+        </ul>
+      </nav>
+    </div>
   </div>
+</div>
+
+<div class="row">
+  <div class="col-lg-12 col-md-12">
+    <div class="utf_dashboard_list_box margin-top-0">
+	  <h4 class="gray"><i class="im im-icon-Office"></i> Company Details</h4>
+	  <div class="alert alert-warning" role="alert" *ngIf="!companyDetail.name">
+		Company profile incomplete!
+	  </div>
+      <div class="utf_dashboard_list_box-static">
+        <div class="edit-profile-photo company_profile_image">
+          <img src="{{ companyDetail.logo }}" alt="" />
+          <div *ngIf="!editMode" class="change-photo-btn">
+            <div class="photoUpload">
+              <span><i class="fa fa-upload"></i> Upload Photo</span>
+              <input type="file" accept="image/*" class="upload" (change)="uploadImage($event)" />
+            </div>
+          </div>
+        </div>
+
+        <form [formGroup]="formData" class="my-profile">
+          <div class="row with-forms">
+            <div class="col-md-12">
+			  <label>Company Name : </label>
+			  <p class="input-text pl-3" *ngIf="editMode" >{{ companyDetail.name}}</p>
+              <input *ngIf="!editMode"
+                type="text"
+                placeholder="Company Name"
+                class="input-text"
+                formControlName="name"
+			  />
+			  <small
+				*ngIf="submitErrors.name"
+				class="form-text text-danger"
+				>{{ submitErrors.name }}</small
+				>
+            </div>
+            <div class="col-md-12">
+			  <label>Description :</label>
+			  <pre class="input-text ml-3 border p-2" style="white-space: pre-wrap;" *ngIf="editMode" >{{ companyDetail.description }}</pre>
+			  <textarea
+			  	*ngIf="!editMode"
+                formControlName="description"
+                placeholder="Company description..."
+                cols="30"
+                rows="10"
+			  ></textarea>
+			  <small
+				*ngIf="submitErrors.description"
+				class="form-text text-danger"
+				>{{ submitErrors.description }}</small
+				>
+            </div>
+            <div class="col-md-12">
+			  <label>Company Website :</label>
+			  <p class="input-text pl-3" *ngIf="editMode" >{{ companyDetail.url }}</p>
+			  <input
+			  	*ngIf="!editMode"
+                type="text"
+                class="input-text"
+                formControlName="url"
+                placeholder="Company url..."
+			  />
+			  <small
+				*ngIf="submitErrors.url"
+				class="form-text text-danger"
+				>{{ submitErrors.url }}</small
+				>
+            </div>
+            <div class="col-md-12">
+			  <label>Category :</label>
+			  <p class="input-text pl-3" *ngIf="editMode" >
+				<span class="m-1 badge badge-pill badge-warning p-2" *ngFor="let category of companyDetail.category">{{ category.name }}</span>
+			  </p>
+			  <select2
+			  	*ngIf="!editMode"
+                [data]="categoryDataForFormSelector"
+                formControlName="category"
+                placeholder="Select categories"
+				[multiple]="true"
+              >
+			  </select2>
+			  <small
+				*ngIf="submitErrors.category"
+				class="form-text text-danger"
+				>{{ submitErrors.category }}</small
+				>
+            </div>
+
+            <div class="col-md-6">
+			  <label>State :</label>
+			  <p class="input-text pl-3" *ngIf="editMode" >
+				<span class="m-1 badge badge-pill badge-warning p-2" >{{ companyDetail.state.name }}</span>
+			  </p>
+			  <select2
+			  	*ngIf="!editMode"
+                [data]="stateDataForFormSelector"
+                formControlName="state"
+                placeholder="Select state"
+                [multiple]="false"
+                (update)="getCity($event)"
+              >
+			  </select2>
+			  <small
+				*ngIf="submitErrors.state"
+				class="form-text text-danger"
+				>{{ submitErrors.state }}</small
+				>
+            </div>
+            <div class="col-md-6">
+			  <label>City :</label>
+			  <p class="input-text pl-3" *ngIf="editMode" >
+				<span class="m-1 badge badge-pill badge-warning p-2" >{{ companyDetail.city.name }}</span>
+			  </p>
+			  <select2
+			  	*ngIf="!editMode"
+                [data]="cityDataForFormSelector"
+                formControlName="city"
+                placeholder="Select City"
+                [multiple]="false"
+              >
+			  </select2>
+			  <small
+				*ngIf="submitErrors.city"
+				class="form-text text-danger"
+				>{{ submitErrors.city }}</small
+				>
+            </div>
+
+            <div class="col-md-12">
+			  <label>Company Address :</label>
+			  <p class="input-text pl-3" *ngIf="editMode" >
+				{{ companyDetail.address }}
+			  </p>
+			  <textarea
+			  	*ngIf="!editMode"
+                formControlName="address"
+                placeholder="Company address...."
+                cols="15"
+                rows="3"
+			  ></textarea>
+			  <small
+				*ngIf="submitErrors.address"
+				class="form-text text-danger"
+				>{{ submitErrors.address }}</small
+				>
+            </div>
+		  </div>
+		  
+          <button class="button preview btn_center_item margin-top-15" (click)="editMode = false" *ngIf="editMode">
+			  <ng-container *ngIf="companyDetail.name">
+				Edit Detail
+			  </ng-container>
+			  <ng-container *ngIf="!companyDetail.name">
+				Add Detail
+			  </ng-container>
+            
+		  </button>
+		  
+		  <button (click)='submitData()' class="button bg-primary preview  margin-top-15" *ngIf="!editMode">
+            Save Change
+		  </button>
+		  <button class="button preview ml-2 margin-top-15" (click)="editMode = true" *ngIf="!editMode">
+            Cancel
+		  </button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
