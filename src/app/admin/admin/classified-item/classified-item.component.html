@@ -1,299 +1,21 @@
 <ng-template #content let-c="close" let-d="dismiss">
-	<div class="modal-header p-4">
-	  <h2 class="modal-title font-weight-bold" id="modal-basic-title">New Classified Item</h2>
-	  <button
-		type="button"
-		class="close text-danger"
-		aria-label="Close"
-		(click)="d('Cross click')"
-	  >
-		<span aria-hidden="true">&times;</span>
-	  </button>
-	</div>
-	<div class="modal-body p-4">
-	  <form
-		[formGroup]="createForm"
-		(ngSubmit)="create_new_submit()"
-	  >
-	  <div class="row">
-		<div class="col-12  bg-secondary">
-			<h4 class="text-white">Product information :</h4>
-		</div>
-	</div>
-		<div class="form-group">
-		  <label for="directory_title_new">Product Name :</label>
-		  <input
-			formControlName="name"
-			type="text"
-			class="form-control mb-0"
-			id="directory_title_new"
-			placeholder="Ex: Samsung s9 plus"
-		  />
-		  <small
-			*ngIf="createNewErrors.name"
-			class="form-text text-danger"
-		  >{{ createNewErrors.name }}</small
-		  >
-		</div>
-
-		<div class="form-group">
-		  <label>Description :</label>
-		  <textarea class="form-control mb-0" formControlName="description" placeholder="Description text.."></textarea>
-		  <small
-			*ngIf="createNewErrors.description"
-			class="form-text text-danger"
-		  >{{ createNewErrors.description }}</small
-		  >
-		</div>
-
-
-		<div class="row">
-		  <div class="col-md-6">
-			<div class="form-group">
-			  <label>Categories :</label>
-			  <select2
-				[data]="categoryDataForFormSelector"
-				formControlName="category"
-				placeholder="Select Categories"
-				[multiple]="true"
-				[hideSelectedItems]="true"
-			  >
-			  </select2>
-			  <small
-				*ngIf="createNewErrors.category"
-				class="form-text text-danger"
-			  >{{ createNewErrors.category }}</small
-			  >
-			</div>
-		  </div>
-
-		  <div class="col-md-6">
-			<div class="form-group">
-			  <label>Image :</label>
-			  <image-upload (uploadFinished)="addImage($event)" (removed)="removeImage($event)" [max]="25"
-							[extensions]="['jpeg', 'jpg', 'png']" [maxFileSize]="358400" [buttonCaption]="'Upload Image'"
-							[fileTooLargeMessage]="'Image too large,  maximum file size is 350 KiB'"></image-upload>
-			</div>
-		  </div>
-		</div>
-		<div class="row">
-			<div class="col-md-4">
-				<div class="form-group">
-					<label>Brand :</label>
-					<select2
-					  [data]="brandDataForFormSelector"
-					  formControlName="brand"
-					  placeholder="Select Brand"
-					  [multiple]="false"
-
-					>
-					</select2>
-					<small
-					  *ngIf="createNewErrors.brand"
-					  class="form-text text-danger"
-					>{{ createNewErrors.brand }}</small
-					>
-				  </div>
-			</div>
-
-			<div class="col-md-4">
-				<div class="form-group">
-					<label>Condition :</label>
-					<select2
-					  [data]="conditionSelectorForForm"
-					  formControlName="condition"
-					  placeholder="Select Condition"
-					  [multiple]="false"
-
-					>
-					</select2>
-					<small
-					  *ngIf="createNewErrors.condition"
-					  class="form-text text-danger"
-					>{{ createNewErrors.condition }}</small
-					>
-				  </div>
-			</div>
-
-			<div class="col-md-4">
-				<div class="form-group">
-					<label>Age (by month):</label>
-					<input type="number" formControlName="age" class="form-control mb-0">
-					<small
-					  *ngIf="createNewErrors.age"
-					  class="form-text text-danger"
-					>{{ createNewErrors.age }}</small
-					>
-				  </div>
-			</div>
-
-
-		</div>
-
-		<div class="row">
-			<div class="col-md-6">
-				<div class="form-group">
-					<label>Price (inr):</label>
-					<input type="number" class="form-control mb-0" formControlName="price">
-					<small
-					  *ngIf="createNewErrors.price"
-					  class="form-text text-danger"
-					>{{ createNewErrors.price }}</small
-					>
-				</div>
-			</div>
-
-			<div class="col-md-6">
-				<div class="form-group">
-					<label>Price type :</label>
-					<select2
-					  [data]="priceTypeSelectorForForm"
-					  formControlName="price_type"
-					  placeholder="Price Type"
-					  [multiple]="false"
-
-					>
-					</select2>
-					<small
-					  *ngIf="createNewErrors.price_type"
-					  class="form-text text-danger"
-					>{{ createNewErrors.price_type }}</small
-					>
-				  </div>
-			</div>
-		</div>
-		<div class="row">
-			<div class="col-12  bg-secondary">
-				<h4 class="text-white">Location & Contact Information :</h4>
-			</div>
-		</div>
-		<div class="row">
-			<div class="col-md-6">
-			  <div class="form-group">
-				<label>State :</label>
-				<select2
-				  [data]="stateDataForFormSelector"
-				  formControlName="state"
-				  placeholder="Select State"
-				  (update)="getCity($event)"
-				  [hideSelectedItems]="true"
-				>
-				</select2>
-				<small
-				  *ngIf="createNewErrors.state"
-				  class="form-text text-danger"
-				>{{ createNewErrors.state }}</small
-				>
-			  </div>
-			</div>
-
-			<div class="col-md-6">
-			  <div class="form-group">
-				<label>City :</label>
-				<select2
-				  [data]="cityDataForFormSelector"
-				  formControlName="city"
-				  placeholder="Select City"
-				  [hideSelectedItems]="true"
-				>
-				</select2>
-				<small
-				  *ngIf="createNewErrors.city"
-				  class="form-text text-danger"
-				>{{ createNewErrors.city }}</small
-				>
-			  </div>
-			</div>
-		  </div>
-
-		  <div class="form-group">
-			<label>Address :</label>
-			<input
-			  formControlName="address"
-			  type="text"
-			  class="form-control mb-0"
-			  placeholder="Enter address"
-			/>
-			<small
-			  *ngIf="createNewErrors.address"
-			  class="form-text text-danger"
-			>{{ createNewErrors.address }}</small
-			>
-		  </div>
-
-		<div class="row">
-		  <div class="col-md-6">
-			<div class="form-group">
-			  <label>Email :</label>
-			  <input
-				formControlName="email"
-				type="email"
-				class="form-control mb-0"
-				placeholder="Enter valid email"
-			  />
-			  <small
-				*ngIf="createNewErrors.email"
-				class="form-text text-danger"
-			  >{{ createNewErrors.email }}</small
-			  >
-			</div>
-		  </div>
-
-		  <div class="col-md-6">
-			<div class="form-group">
-			  <label>Phone :</label>
-			  <input
-				formControlName="phone"
-				type="text"
-				class="form-control mb-0"
-				placeholder="Enter valid phone number"
-			  />
-			  <small
-				*ngIf="createNewErrors.phone"
-				class="form-text text-danger"
-			  >{{ createNewErrors.phone }}</small
-			  >
-			</div>
-		  </div>
-		</div>
-
-
-		<button type="submit" class="btn-lg btn-danger btn-block mt-3" [disabled]="loading">
-		  <ng-container *ngIf="loading; else submitText">
-			<div class="spinner-border" role="status">
-
-			</div>
-		  </ng-container>
-		  <ng-template #submitText>Submit</ng-template>
-		</button>
-		<button type="reset" class="btn-lg btn-warning btn-block">Reset</button>
-	  </form>
-	</div>
-  </ng-template>
-
-
-
-
-  <!--update modal-->
-  <ng-template #updateModal let-d="dismiss">
-	<div class="modal-header p-4">
-	  <h4 class="modal-title" id="modal-basic-title">Update Classified</h4>
-	  <button
-		type="button"
-		class="close text-danger"
-		aria-label="Close"
-		(click)="d('Cross click')"
-	  >
-		<span aria-hidden="true">&times;</span>
-	  </button>
-	</div>
-	<div class="modal-body p-4">
-	  <form
-		[formGroup]="updateForm"
-		(ngSubmit)="submitUpdateForm()"
-	  >
+  <div class="modal-header p-4">
+    <h2 class="modal-title font-weight-bold" id="modal-basic-title">
+      New Classified Item
+    </h2>
+    <button
+      type="button"
+      class="close text-danger"
+      aria-label="Close"
+      (click)="d('Cross click')"
+    >
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body p-4">
+    <form [formGroup]="createForm" (ngSubmit)="create_new_submit()">
       <div class="row">
-        <div class="col-12  bg-secondary">
+        <div class="col-12 bg-secondary">
           <h4 class="text-white">Product information :</h4>
         </div>
       </div>
@@ -306,23 +28,24 @@
           id="directory_title_new"
           placeholder="Ex: Samsung s9 plus"
         />
-        <small
-          *ngIf="updateErrors.name"
-          class="form-text text-danger"
-        >{{ updateErrors.name }}</small
-        >
+        <small *ngIf="createNewErrors.name" class="form-text text-danger">{{
+          createNewErrors.name
+        }}</small>
       </div>
 
       <div class="form-group">
         <label>Description :</label>
-        <textarea class="form-control mb-0" formControlName="description" placeholder="Description text.."></textarea>
+        <textarea
+          class="form-control mb-0"
+          formControlName="description"
+          placeholder="Description text.."
+        ></textarea>
         <small
-          *ngIf="updateErrors.description"
+          *ngIf="createNewErrors.description"
           class="form-text text-danger"
-        >{{ updateErrors.description }}</small
+          >{{ createNewErrors.description }}</small
         >
       </div>
-
 
       <div class="row">
         <div class="col-md-6">
@@ -337,28 +60,27 @@
             >
             </select2>
             <small
-              *ngIf="updateErrors.category"
+              *ngIf="createNewErrors.category"
               class="form-text text-danger"
-            >{{ updateErrors.category }}</small
+              >{{ createNewErrors.category }}</small
             >
           </div>
         </div>
 
         <div class="col-md-6">
-
           <div class="form-group">
             <label>Image :</label>
-            <div class="row">
-
-              <div *ngFor="let imageLInk of updateImagesLink; let i = index" class="image-block col-md-3 col-sm-2 position-relative">
-                <img [src]="imageLInk"  class="img-fluid">
-                <button type="button" (click)="delete_image(i)" class="position-absolute btn-lg btn-danger delete-button">Delete</button>
-              </div>
-
-            </div>
-            <image-upload *ngIf="!loading" (uploadFinished)='uploadNewImage($event)' [max]="1" [preview]="false"
-                          [extensions]="['jpeg', 'jpg', 'png']" [maxFileSize]="358400" [buttonCaption]="'Add Image'"
-                          [fileTooLargeMessage]="'Image too large,  maximum file size is 350 KiB'"></image-upload>
+            <image-upload
+              (uploadFinished)="addImage($event)"
+              (removed)="removeImage($event)"
+              [max]="25"
+              [extensions]="['jpeg', 'jpg', 'png']"
+              [maxFileSize]="358400"
+              [buttonCaption]="'Upload Image'"
+              [fileTooLargeMessage]="
+                'Image too large,  maximum file size is 350 KiB'
+              "
+            ></image-upload>
           </div>
         </div>
       </div>
@@ -371,13 +93,12 @@
               formControlName="brand"
               placeholder="Select Brand"
               [multiple]="false"
-
             >
             </select2>
             <small
-              *ngIf="updateErrors.brand"
+              *ngIf="createNewErrors.brand"
               class="form-text text-danger"
-            >{{ updateErrors.brand }}</small
+              >{{ createNewErrors.brand }}</small
             >
           </div>
         </div>
@@ -390,13 +111,12 @@
               formControlName="condition"
               placeholder="Select Condition"
               [multiple]="false"
-
             >
             </select2>
             <small
-              *ngIf="updateErrors.condition"
+              *ngIf="createNewErrors.condition"
               class="form-text text-danger"
-            >{{ updateErrors.condition }}</small
+              >{{ createNewErrors.condition }}</small
             >
           </div>
         </div>
@@ -404,27 +124,31 @@
         <div class="col-md-4">
           <div class="form-group">
             <label>Age (by month):</label>
-            <input type="number" formControlName="age" class="form-control mb-0">
-            <small
-              *ngIf="updateErrors.age"
-              class="form-text text-danger"
-            >{{ updateErrors.age }}</small
-            >
+            <input
+              type="number"
+              formControlName="age"
+              class="form-control mb-0"
+            />
+            <small *ngIf="createNewErrors.age" class="form-text text-danger">{{
+              createNewErrors.age
+            }}</small>
           </div>
         </div>
-
-
       </div>
 
       <div class="row">
         <div class="col-md-6">
           <div class="form-group">
             <label>Price (inr):</label>
-            <input type="number" class="form-control mb-0" formControlName="price">
+            <input
+              type="number"
+              class="form-control mb-0"
+              formControlName="price"
+            />
             <small
-              *ngIf="updateErrors.price"
+              *ngIf="createNewErrors.price"
               class="form-text text-danger"
-            >{{ updateErrors.price }}</small
+              >{{ createNewErrors.price }}</small
             >
           </div>
         </div>
@@ -437,19 +161,18 @@
               formControlName="price_type"
               placeholder="Price Type"
               [multiple]="false"
-
             >
             </select2>
             <small
-              *ngIf="updateErrors.price_type"
+              *ngIf="createNewErrors.price_type"
               class="form-text text-danger"
-            >{{ updateErrors.price_type }}</small
+              >{{ createNewErrors.price_type }}</small
             >
           </div>
         </div>
       </div>
       <div class="row">
-        <div class="col-12  bg-secondary">
+        <div class="col-12 bg-secondary">
           <h4 class="text-white">Location & Contact Information :</h4>
         </div>
       </div>
@@ -466,9 +189,9 @@
             >
             </select2>
             <small
-              *ngIf="updateErrors.state"
+              *ngIf="createNewErrors.state"
               class="form-text text-danger"
-            >{{ updateErrors.state }}</small
+              >{{ createNewErrors.state }}</small
             >
           </div>
         </div>
@@ -483,11 +206,9 @@
               [hideSelectedItems]="true"
             >
             </select2>
-            <small
-              *ngIf="updateErrors.city"
-              class="form-text text-danger"
-            >{{ updateErrors.city }}</small
-            >
+            <small *ngIf="createNewErrors.city" class="form-text text-danger">{{
+              createNewErrors.city
+            }}</small>
           </div>
         </div>
       </div>
@@ -500,11 +221,9 @@
           class="form-control mb-0"
           placeholder="Enter address"
         />
-        <small
-          *ngIf="updateErrors.address"
-          class="form-text text-danger"
-        >{{ updateErrors.address }}</small
-        >
+        <small *ngIf="createNewErrors.address" class="form-text text-danger">{{
+          createNewErrors.address
+        }}</small>
       </div>
 
       <div class="row">
@@ -518,9 +237,9 @@
               placeholder="Enter valid email"
             />
             <small
-              *ngIf="updateErrors.email"
+              *ngIf="createNewErrors.email"
               class="form-text text-danger"
-            >{{ updateErrors.email }}</small
+              >{{ createNewErrors.email }}</small
             >
           </div>
         </div>
@@ -535,192 +254,509 @@
               placeholder="Enter valid phone number"
             />
             <small
-              *ngIf="updateErrors.phone"
+              *ngIf="createNewErrors.phone"
               class="form-text text-danger"
-            >{{ updateErrors.phone }}</small
+              >{{ createNewErrors.phone }}</small
             >
           </div>
         </div>
       </div>
 
-
-		<button type="submit" class="btn-lg btn-danger btn-block" [disabled]="loading">
-		  <ng-container *ngIf="loading; else submitText">
-			<div class="spinner-border" role="status">
-
-			</div>
-		  </ng-container>
-		  <ng-template #submitText>Submit</ng-template>
-		</button>
-		<button type="reset" class="btn-lg btn-warning btn-block">Reset</button>
-	  </form>
-	</div>
-  </ng-template>
-  <!--update modal end-->
-
-
-
-
-
-  <swal
-	#deleteSwal
-	text="This cannot be undone"
-	icon="question"
-	title=""
-	[showCancelButton]="true"
-	(confirm)="deleteCategory()"
-	(cancel)="cancelDelete()"
-  >
-  </swal>
-
-  <swal
-	#deleteSuccess
-	title="Category deleted ?"
-	icon="success"
-  >
-  </swal>
-
-
-  <div id="titlebar" class="dashboard_gradient">
-	<div class="row">
-	  <div class="col-md-12">
-		<h2>Classified</h2>
-		<nav id="breadcrumbs">
-		  <ul>
-			<li><a [routerLink]="['/']">Home</a></li>
-			<li><a [routerLink]="['/dashboard']">Dashboard</a></li>
-			<li>Classified</li>
-		  </ul>
-		</nav>
-
-		<button class="btn btn-lg btn-danger" (click)="open(content)">
-		  Add New Classified
-		</button>
-	  </div>
-	</div>
+      <button
+        type="submit"
+        class="btn-lg btn-danger btn-block mt-3"
+        [disabled]="loading"
+      >
+        <ng-container *ngIf="loading; else submitText">
+          <div class="spinner-border" role="status"></div>
+        </ng-container>
+        <ng-template #submitText>Submit</ng-template>
+      </button>
+      <button type="reset" class="btn-lg btn-warning btn-block">Reset</button>
+    </form>
   </div>
+</ng-template>
 
+<!--update modal-->
+<ng-template #updateModal let-d="dismiss">
+  <div class="modal-header p-4">
+    <h4 class="modal-title" id="modal-basic-title">Update Classified</h4>
+    <button
+      type="button"
+      class="close text-danger"
+      aria-label="Close"
+      (click)="d('Cross click')"
+    >
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body p-4">
+    <form [formGroup]="updateForm" (ngSubmit)="submitUpdateForm()">
+      <div class="row">
+        <div class="col-12 bg-secondary">
+          <h4 class="text-white">Product information :</h4>
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="directory_title_new">Product Name :</label>
+        <input
+          formControlName="name"
+          type="text"
+          class="form-control mb-0"
+          id="directory_title_new"
+          placeholder="Ex: Samsung s9 plus"
+        />
+        <small *ngIf="updateErrors.name" class="form-text text-danger">{{
+          updateErrors.name
+        }}</small>
+      </div>
+
+      <div class="form-group">
+        <label>Description :</label>
+        <textarea
+          class="form-control mb-0"
+          formControlName="description"
+          placeholder="Description text.."
+        ></textarea>
+        <small *ngIf="updateErrors.description" class="form-text text-danger">{{
+          updateErrors.description
+        }}</small>
+      </div>
+
+      <div class="row">
+        <div class="col-md-6">
+          <div class="form-group">
+            <label>Categories :</label>
+            <select2
+              [data]="categoryDataForFormSelector"
+              formControlName="category"
+              placeholder="Select Categories"
+              [multiple]="true"
+              [hideSelectedItems]="true"
+            >
+            </select2>
+            <small
+              *ngIf="updateErrors.category"
+              class="form-text text-danger"
+              >{{ updateErrors.category }}</small
+            >
+          </div>
+        </div>
+
+        <div class="col-md-6">
+          <div class="form-group">
+            <label>Image :</label>
+            <div class="row">
+              <div
+                *ngFor="let imageLInk of updateImagesLink; let i = index"
+                class="image-block col-md-3 col-sm-2 position-relative"
+              >
+                <img [src]="imageLInk" class="img-fluid" />
+                <button
+                  type="button"
+                  (click)="delete_image(i)"
+                  class="position-absolute btn-lg btn-danger delete-button"
+                >
+                  Delete
+                </button>
+              </div>
+            </div>
+            <image-upload
+              *ngIf="!loading"
+              (uploadFinished)="uploadNewImage($event)"
+              [max]="1"
+              [preview]="false"
+              [extensions]="['jpeg', 'jpg', 'png']"
+              [maxFileSize]="358400"
+              [buttonCaption]="'Add Image'"
+              [fileTooLargeMessage]="
+                'Image too large,  maximum file size is 350 KiB'
+              "
+            ></image-upload>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-4">
+          <div class="form-group">
+            <label>Brand :</label>
+            <select2
+              [data]="brandDataForFormSelector"
+              formControlName="brand"
+              placeholder="Select Brand"
+              [multiple]="false"
+            >
+            </select2>
+            <small *ngIf="updateErrors.brand" class="form-text text-danger">{{
+              updateErrors.brand
+            }}</small>
+          </div>
+        </div>
+
+        <div class="col-md-4">
+          <div class="form-group">
+            <label>Condition :</label>
+            <select2
+              [data]="conditionSelectorForForm"
+              formControlName="condition"
+              placeholder="Select Condition"
+              [multiple]="false"
+            >
+            </select2>
+            <small
+              *ngIf="updateErrors.condition"
+              class="form-text text-danger"
+              >{{ updateErrors.condition }}</small
+            >
+          </div>
+        </div>
+
+        <div class="col-md-4">
+          <div class="form-group">
+            <label>Age (by month):</label>
+            <input
+              type="number"
+              formControlName="age"
+              class="form-control mb-0"
+            />
+            <small *ngIf="updateErrors.age" class="form-text text-danger">{{
+              updateErrors.age
+            }}</small>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-md-6">
+          <div class="form-group">
+            <label>Price (inr):</label>
+            <input
+              type="number"
+              class="form-control mb-0"
+              formControlName="price"
+            />
+            <small *ngIf="updateErrors.price" class="form-text text-danger">{{
+              updateErrors.price
+            }}</small>
+          </div>
+        </div>
+
+        <div class="col-md-6">
+          <div class="form-group">
+            <label>Price type :</label>
+            <select2
+              [data]="priceTypeSelectorForForm"
+              formControlName="price_type"
+              placeholder="Price Type"
+              [multiple]="false"
+            >
+            </select2>
+            <small
+              *ngIf="updateErrors.price_type"
+              class="form-text text-danger"
+              >{{ updateErrors.price_type }}</small
+            >
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-12 bg-secondary">
+          <h4 class="text-white">Location & Contact Information :</h4>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-6">
+          <div class="form-group">
+            <label>State :</label>
+            <select2
+              [data]="stateDataForFormSelector"
+              formControlName="state"
+              placeholder="Select State"
+              (update)="getCity($event)"
+              [hideSelectedItems]="true"
+            >
+            </select2>
+            <small *ngIf="updateErrors.state" class="form-text text-danger">{{
+              updateErrors.state
+            }}</small>
+          </div>
+        </div>
+
+        <div class="col-md-6">
+          <div class="form-group">
+            <label>City :</label>
+            <select2
+              [data]="cityDataForFormSelector"
+              formControlName="city"
+              placeholder="Select City"
+              [hideSelectedItems]="true"
+            >
+            </select2>
+            <small *ngIf="updateErrors.city" class="form-text text-danger">{{
+              updateErrors.city
+            }}</small>
+          </div>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label>Address :</label>
+        <input
+          formControlName="address"
+          type="text"
+          class="form-control mb-0"
+          placeholder="Enter address"
+        />
+        <small *ngIf="updateErrors.address" class="form-text text-danger">{{
+          updateErrors.address
+        }}</small>
+      </div>
+
+      <div class="row">
+        <div class="col-md-6">
+          <div class="form-group">
+            <label>Email :</label>
+            <input
+              formControlName="email"
+              type="email"
+              class="form-control mb-0"
+              placeholder="Enter valid email"
+            />
+            <small *ngIf="updateErrors.email" class="form-text text-danger">{{
+              updateErrors.email
+            }}</small>
+          </div>
+        </div>
+
+        <div class="col-md-6">
+          <div class="form-group">
+            <label>Phone :</label>
+            <input
+              formControlName="phone"
+              type="text"
+              class="form-control mb-0"
+              placeholder="Enter valid phone number"
+            />
+            <small *ngIf="updateErrors.phone" class="form-text text-danger">{{
+              updateErrors.phone
+            }}</small>
+          </div>
+        </div>
+      </div>
+
+      <button
+        type="submit"
+        class="btn-lg btn-danger btn-block"
+        [disabled]="loading"
+      >
+        <ng-container *ngIf="loading; else submitText">
+          <div class="spinner-border" role="status"></div>
+        </ng-container>
+        <ng-template #submitText>Submit</ng-template>
+      </button>
+      <button type="reset" class="btn-lg btn-warning btn-block">Reset</button>
+    </form>
+  </div>
+</ng-template>
+<!--update modal end-->
+
+<swal
+  #deleteSwal
+  text="This cannot be undone"
+  icon="question"
+  title=""
+  [showCancelButton]="true"
+  (confirm)="deleteCategory()"
+  (cancel)="cancelDelete()"
+>
+</swal>
+
+<swal #deleteSuccess title="Category deleted ?" icon="success"> </swal>
+
+<div id="titlebar" class="dashboard_gradient">
   <div class="row">
-	<div class="col-lg-12 col-md-12">
-	  <div class="utf_dashboard_list_box margin-top-0">
-		<div class="sort-by my_sort_by">
-		  <div class="utf_sort_by_select_item">
-			<select (change)="ChangeItemPerPageSize($event)"
-					class="utf_chosen_select_single"
-			>
-			  <option value="10">10 items per page</option>
-			  <option value="50">50 items per page</option>
-			  <option value="100">100 items per page</option>
-			  <option value="200">200 items per page</option>
-			</select>
-		  </div>
+    <div class="col-md-12">
+      <h2>Classified</h2>
+      <nav id="breadcrumbs">
+        <ul>
+          <li><a [routerLink]="['/']">Home</a></li>
+          <li><a [routerLink]="['/dashboard']">Dashboard</a></li>
+          <li>Classified</li>
+        </ul>
+      </nav>
 
-		  <div class="utf_sort_by_select_item ml-2">
-			<select (change)="ChangePostStatus($event)"
-					class="utf_chosen_select_single"
-			>
-			  <option value="all">All</option>
-			  <option value="active">Active</option>
-			  <option value="pending">Pending</option>
-			</select>
-		  </div>
-		</div>
+      <button class="btn btn-lg btn-danger" (click)="open(content)">
+        Add New Classified
+      </button>
+    </div>
+  </div>
+</div>
 
-		<h4><i class="sl sl-icon-list"></i> Classified List</h4>
-		<ul class="border-left">
-		  <ng-container
-			*ngFor="let product of products | paginate: { currentPage: currentPageNumber, totalItems: totalVolume, itemsPerPage: itemPerPage}">
-			<li>
-			  <div class="utf_list_box_listing_item">
-				<div class="utf_list_box_listing_item-img">
-				  <a>
-					<img *ngIf="product.images" src="{{product.images[0]}}" />
-					<img *ngIf="!product.images" src="assets/images/dumylogo.png" />
-				  </a>
-				</div>
-				<div class="utf_list_box_listing_item_content">
-				  <div class="inner">
-					  <div class="row">
-						  <div class="col-md-6">
-							<h3>{{product.name}}</h3>
-							<div class="row">
-								<div class="col-2">
-									<h5 class='font-weight-bold'>Brand</h5>
-									<h5 class='font-weight-bold'>Condition</h5>
-									<h5 class='font-weight-bold'>Age</h5>
-									<h5 class='font-weight-bold'>Price</h5>
-									<h5 class='font-weight-bold'>Price Type</h5>
-									<h5 class='font-weight-bold'>Categories</h5>
-									<h5 class='font-weight-bold'>Status</h5>
-									<h5 class='font-weight-bold'>Images</h5>
-								</div>
-								<div class="col-10">
-									<h5>: {{product.brand.name}}</h5>
-									<h5>: {{product.condition}}</h5>
-									<h5>: {{product.age}} m</h5>
-									<h5>: {{product.price}} inr</h5>
-									<h5>: {{product.price_type}}</h5>
-									<h5>: <span *ngFor="let category of product.category" class="badge badge-pill badge-canceled d-inline text-white font-weight-bold">{{category.name}}</span></h5>
-									<h5 *ngIf="product.status == 1">: Active</h5>
-									<h5 *ngIf="product.status == 0">: Deactive</h5>
-									<div class="row" *ngIf="product.images">
-										<div class="col-md-3" *ngFor="let product_image of product.images; let ind = index">
-											<img src="{{product_image}}" alt="" class="img-fluid">
-										</div>
-									</div>
-								</div>
-							</div>
-							
-						  </div>
-						  <div class="col-md-6">	
-							<h3>Contact & Location</h3>						  
-							  <div class="row">
-								
-								<div class="col-2">
-									<h5 class='font-weight-bold'>User</h5>
-									<h5 class='font-weight-bold'>Phone</h5>
-									<h5 class='font-weight-bold'>Phone 2</h5>
-									<h5 class='font-weight-bold'>Email</h5>
-									<h5 class='font-weight-bold'>Email 2</h5>
-									<h5 class='font-weight-bold'>Listed Date</h5>
-								</div>
-								<div class="col-10">
-									<h5>: {{product.user.first_name}} {{product.user.last_name}}</h5>
-									<h5>: {{product.user.phone}}</h5>
-									<h5>: {{product.phone}}</h5>
-									<h5>: {{product.user.email}}</h5>
-									<h5>: {{product.email}}</h5>
-									<h5>: {{product.created_at | date : 'h:mm aa , dd-LL-yyyy' }}</h5>
-								</div>
-							  </div>
-						  </div>
-					  </div>
-					
-					
+<div class="row">
+  <div class="col-lg-12 col-md-12">
+    <div class="utf_dashboard_list_box margin-top-0">
+      <div class="sort-by my_sort_by">
+        <div class="utf_sort_by_select_item">
+          <select
+            (change)="ChangeItemPerPageSize($event)"
+            class="utf_chosen_select_single"
+          >
+            <option value="10">10 items per page</option>
+            <option value="50">50 items per page</option>
+            <option value="100">100 items per page</option>
+            <option value="200">200 items per page</option>
+          </select>
+        </div>
 
+        <div class="utf_sort_by_select_item ml-2">
+          <select
+            (change)="ChangePostStatus($event)"
+            class="utf_chosen_select_single"
+          >
+            <option value="all">All</option>
+            <option value="active">Active</option>
+            <option value="pending">Pending</option>
+          </select>
+        </div>
+      </div>
 
-					<hr>
+      <h4><i class="sl sl-icon-list"></i> Classified List</h4>
+      <ul class="border-left">
+        <ng-container
+          *ngFor="
+            let product of products
+              | paginate
+                : {
+                    currentPage: currentPageNumber,
+                    totalItems: totalVolume,
+                    itemsPerPage: itemPerPage
+                  }
+          "
+        >
+          <li>
+            <div class="utf_list_box_listing_item">
+              <div class="utf_list_box_listing_item-img">
+                <a>
+                  <img *ngIf="product.images" src="{{ product.images[0] }}" />
+                  <img
+                    *ngIf="!product.images"
+                    src="assets/images/dumylogo.png"
+                  />
+                </a>
+              </div>
+              <div class="utf_list_box_listing_item_content">
+                <div class="inner">
+                  <div class="row">
+                    <div class="col-md-6">
+                      <h3>{{ product.name }}</h3>
+                      <div class="row">
+                        <div class="col-2">
+                          <h5 class="font-weight-bold">Brand</h5>
+                          <h5 class="font-weight-bold">Condition</h5>
+                          <h5 class="font-weight-bold">Age</h5>
+                          <h5 class="font-weight-bold">Price</h5>
+                          <h5 class="font-weight-bold">Price Type</h5>
+                          <h5 class="font-weight-bold">Categories</h5>
+                          <h5 class="font-weight-bold">Status</h5>
+                          <h5 class="font-weight-bold">Images</h5>
+                        </div>
+                        <div class="col-10">
+                          <h5>: {{ product.brand.name }}</h5>
+                          <h5>: {{ product.condition }}</h5>
+                          <h5>: {{ product.age }} m</h5>
+                          <h5>: {{ product.price }} inr</h5>
+                          <h5>: {{ product.price_type }}</h5>
+                          <h5>
+                            :
+                            <span
+                              *ngFor="let category of product.category"
+                              class="badge badge-pill badge-canceled d-inline text-white font-weight-bold"
+                              >{{ category.name }}</span
+                            >
+                          </h5>
+                          <h5 *ngIf="product.status == 1">: Active</h5>
+                          <h5 *ngIf="product.status == 0">: Deactive</h5>
+                          <div class="row" *ngIf="product.images">
+                            <div
+                              class="col-md-3"
+                              *ngFor="
+                                let product_image of product.images;
+                                let ind = index
+                              "
+                            >
+                              <img
+                                src="{{ product_image }}"
+                                alt=""
+                                class="img-fluid"
+                              />
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-md-6">
+                      <h3>Contact & Location</h3>
+                      <div class="row">
+                        <div class="col-2">
+                          <h5 class="font-weight-bold">User</h5>
+                          <h5 class="font-weight-bold">Phone</h5>
+                          <h5 class="font-weight-bold">Phone 2</h5>
+                          <h5 class="font-weight-bold">Email</h5>
+                          <h5 class="font-weight-bold">Email 2</h5>
+                          <h5 class="font-weight-bold">Listed Date</h5>
+                        </div>
+                        <div class="col-10">
+                          <h5>
+                            : {{ product.user.first_name }}
+                            {{ product.user.last_name }}
+                          </h5>
+                          <h5>: {{ product.user.phone }}</h5>
+                          <h5>: {{ product.phone }}</h5>
+                          <h5>: {{ product.user.email }}</h5>
+                          <h5>: {{ product.email }}</h5>
+                          <h5>
+                            :
+                            {{
+                              product.created_at | date: "h:mm aa , dd-LL-yyyy"
+                            }}
+                          </h5>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
 
-				  </div>
-				</div>
-			  </div>
-			  <div class="buttons-to-right">
-				<a (click)="openEditModal(updateModal, product)" class="button gray"><i class="fa fa-pencil"></i> Edit</a>
-				<a (click)="openDeleteAlert(product)" class="button gray"><i class="fa fa-trash-o"></i> Delete</a>
-			  </div>
-			  <pre class="p-2 border">
+                  <hr />
+                </div>
+              </div>
+            </div>
+            <div class="buttons-to-right">
+              <a
+                (click)="openEditModal(updateModal, product)"
+                class="button gray"
+                ><i class="fa fa-pencil"></i> Edit</a
+              >
+              <a (click)="openDeleteAlert(product)" class="button gray"
+                ><i class="fa fa-trash-o"></i> Delete</a
+              >
+            </div>
+            <pre class="p-2 border">
 				<app-read-more class="lead" [maxLength]="10" [text]="product.description"></app-read-more>				
 			  </pre>
-			</li>
-		  </ng-container>
-		</ul>
-	  </div>
-	  <div class="clearfix"></div>
+          </li>
+        </ng-container>
+      </ul>
+    </div>
+    <div class="clearfix"></div>
 
-	  <div class="utf_pagination_container_part margin-top-30 margin-bottom-30">
-		<pagination-controls (pageBoundsCorrection)="pageChange( $event)" screenReaderCurrentLabel=".." nextLabel=""
-							 previousLabel="" class="pagination" (pageChange)="pageChange( $event)"></pagination-controls>
-	  </div>
-
-	</div>
+    <div class="utf_pagination_container_part margin-top-30 margin-bottom-30">
+      <pagination-controls
+        (pageBoundsCorrection)="pageChange($event)"
+        screenReaderCurrentLabel=".."
+        nextLabel=""
+        previousLabel=""
+        class="pagination"
+        (pageChange)="pageChange($event)"
+      ></pagination-controls>
+    </div>
   </div>
+</div>

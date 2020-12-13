@@ -1,18 +1,44 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { AuthService } from 'src/app/service/auth.service';
-import {Select2Data} from 'ng-select2-component';
-import {ApiService} from '../../service/api.service';
+import { Select2Data } from 'ng-select2-component';
+import { ApiService } from '../../service/api.service';
 import { ToastrService } from 'ngx-toastr';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'app-company-profile',
   templateUrl: './company-profile.component.html',
-  styleUrls: ['./company-profile.component.css']
+  styleUrls: ['./company-profile.component.css'],
 })
 export class CompanyProfileComponent implements OnInit {
+  constructor(
+    private auth: AuthService,
+    private api: ApiService,
+    private toastr: ToastrService,
+    private ModalService: NgbModal
+  ) {}
 
-  constructor(private auth: AuthService, private api: ApiService, private toastr: ToastrService) { }
+  @ViewChild('deleteSwal') deleteSwal;
+  @ViewChild('deleteSuccess') deleteSuccess;
+  @ViewChild('deleteJob') deleteJobSwal;
+
+  forDelete = '';
+
+  currentPageNumber = 1;
+  totalVolume = 0;
+  itemPerPage = 10;
+
+  jobs: any = [];
+  
+  loading = false;
+
+  jobPostForm = new FormGroup({
+    id: new FormControl(),
+    title: new FormControl(),
+    description: new FormControl(),
+    category: new FormControl()
+  });
 
   editMode = true;
   categoryDataForFormSelector: Select2Data = [];
@@ -27,7 +53,7 @@ export class CompanyProfileComponent implements OnInit {
     logo: new FormControl(''),
     city: new FormControl(''),
     state: new FormControl(''),
-    address: new FormControl('')
+    address: new FormControl(''),
   });
 
   companyDetail = {
@@ -38,64 +64,73 @@ export class CompanyProfileComponent implements OnInit {
     logo: 'assets/images/dumylogo.png',
     city: {},
     state: {},
-    address: ''
+    address: '',
   };
 
   submitErrors = {
     name: '',
     url: '',
     category: '',
-    descriptio: '',
+    description: '',
     logo: '',
     city: '',
     state: '',
-    address: ''
-  }
+    address: '',
+  };
 
-  ngOnInit(): void {
+  ngOnInit(): void {    
     this.initAllCategory();
     this.initialize_all_states();
-
-
+    this.fetchData();
   }
 
-
-  ngAfterContentInit(): void{
-    if (this.auth.CompanyProfile){   
-      
+  ngAfterContentInit(): void {
+    if (this.auth.CompanyProfile) {
       this.companyDetail.name = this.auth.CompanyProfile.name;
       this.companyDetail.url = this.auth.CompanyProfile.url || '';
-      this.companyDetail.description = this.auth.CompanyProfile.description || '';
+      this.companyDetail.description =
+        this.auth.CompanyProfile.description || '';
       this.companyDetail.category = this.auth.CompanyProfile.category || '';
-      this.companyDetail.logo = this.auth.CompanyProfile.logo || 'assets/images/dumylogo.png';
+      this.companyDetail.logo =
+        this.auth.CompanyProfile.logo || 'assets/images/dumylogo.png';
       this.companyDetail.city = this.auth.CompanyProfile.city || '';
       this.companyDetail.state = this.auth.CompanyProfile.state || '';
       this.companyDetail.address = this.auth.CompanyProfile.address || '';
 
-   
       this.formData.patchValue({
         name: this.auth.CompanyProfile.name,
         url: this.auth.CompanyProfile.url || '',
         description: this.auth.CompanyProfile.description || '',
         city: this.auth.CompanyProfile.city.id || '',
         state: this.auth.CompanyProfile.state.id || '',
-        address: this.auth.CompanyProfile.address || ''
+        address: this.auth.CompanyProfile.address || '',
       });
 
-      const categories = this.auth.CompanyProfile.category.map(value => value.id);
-      
+      const categories = this.auth.CompanyProfile.category.map(
+        (value) => value.id
+      );
+
       this.formData.patchValue({
         category: categories || '',
-
       });
-      
-      this.companyDetail.logo = this.auth.CompanyProfile.logo || 'assets/images/dumylogo.png';
+
+      this.companyDetail.logo =
+        this.auth.CompanyProfile.logo || 'assets/images/dumylogo.png';
     } else {
+      this.companyDetail = {
+        name: '',
+        url: '',
+        category: [],
+        description: '',
+        logo: 'assets/images/dumylogo.png',
+        city: {},
+        state: {},
+        address: '',
+      };
       this.formData.reset();
       this.editMode = false;
       this.formData.enable();
     }
-    
   }
 
   initAllCategory(): any {
@@ -104,7 +139,11 @@ export class CompanyProfileComponent implements OnInit {
         const datas = [];
 
         res.data.forEach((element) => {
-          const data = { label: element.name, value: element.id, classes: 'company-profile-category' };
+          const data = {
+            label: element.name,
+            value: element.id,
+            classes: 'company-profile-category',
+          };
           datas.push(data);
         });
         this.categoryDataForFormSelector = [
@@ -112,104 +151,106 @@ export class CompanyProfileComponent implements OnInit {
             label: 'Select Categories',
             options: datas,
           },
-        ];        
+        ];
       },
       (err) => {}
     );
   }
 
-  initialize_all_states(): void{
+  initialize_all_states(): void {
     this.api.get('/state/view').subscribe(
-      res => {
+      (res) => {
         const datas = [];
-        res.data.forEach(value => {
-          const data = {label: value.name, value: value.id, classes: 'company-profile-category'};
+        res.data.forEach((value) => {
+          const data = {
+            label: value.name,
+            value: value.id,
+            classes: 'company-profile-category',
+          };
           datas.push(data);
         });
         this.stateDataForFormSelector = [
           {
             label: 'Select State',
-            options: datas
-          }
+            options: datas,
+          },
         ];
-
       },
-      err => {
-
-      }
+      (err) => {}
     );
   }
 
-  getCity(e): void{
+  getCity(e): void {
     this.formData.get('city').reset();
-    if (e.value){
+    if (e.value) {
       this.api.get('/state/view/' + e.value + '/cities').subscribe(
-        res => {
+        (res) => {
           const datas = [];
           res.data.forEach((element) => {
-            const data = { label: element.name, value: element.id, classes: 'company-profile-category' };
+            const data = {
+              label: element.name,
+              value: element.id,
+              classes: 'company-profile-category',
+            };
             datas.push(data);
           });
           this.cityDataForFormSelector = [
             {
               label: 'Select City',
-              options: datas
-            }
+              options: datas,
+            },
           ];
 
-          if(this.auth.CompanyProfile) {
+          if (this.auth.CompanyProfile) {
             this.formData.patchValue({
-              city: this.auth.CompanyProfile.city.id || ''
-            })
+              city: this.auth.CompanyProfile.city.id || '',
+            });
           }
         },
-        err => {}
+        (err) => {}
       );
     }
   }
 
-  uploadImage($event): void{
-    if($event.target.files[0]){
+  uploadImage($event): void {
+    if ($event.target.files[0]) {
       this.formData.patchValue({
-        logo: $event.target.files[0]
+        logo: $event.target.files[0],
       });
       const reader = new FileReader();
       reader.readAsDataURL($event.target.files[0]);
       reader.onloadend = () => {
         this.companyDetail.logo = String(reader.result);
       };
-    }else{
-
+    } else {
       this.formData.patchValue({
-        logo: ''
+        logo: '',
       });
-      if(this.auth.CompanyProfile.logo){
+      if (this.auth.CompanyProfile.logo) {
         this.companyDetail.logo = this.auth.CompanyProfile.logo;
-      }else{
+      } else {
         this.companyDetail.logo = 'assets/images/dumylogo.png';
       }
-      
     }
-    
-  };
+  }
 
-  submitData(): void{
+  submitData(): void {
     this.submitErrors = {
       name: '',
       url: '',
       category: '',
-      descriptio: '',
+      description: '',
       logo: '',
       city: '',
       state: '',
-      address: ''
+      address: '',
     };
 
-    let url = ''
-    if(this.auth.CompanyProfile){
-      url = '/company_profile/update'
-    }else{
-      url = '/company_profile/create'
+    let url = '';
+    if (this.auth.CompanyProfile) {
+      url = '/company_profile/update';
+    } else {
+      url = '/company_profile/create';
     }
 
     const form = new FormData();
@@ -223,36 +264,150 @@ export class CompanyProfileComponent implements OnInit {
     form.append('logo', this.formData.get('logo').value || '');
 
     this.api.post(url, form).subscribe(
-      res => {
+      (res) => {
         this.editMode = true;
         this.ngOnInit();
         this.ngAfterContentInit();
-        this.toastr.success('Change done!')
+        this.toastr.success('Change done!');
       },
-      err => {
-        this.toastr.error('Please check data again!')
-        this.submitErrors = {...this.submitErrors, ...err.errors}
+      (err) => {
+        this.toastr.error('Please check data again!');
+        this.submitErrors = { ...this.submitErrors, ...err.errors };
+      }
+    );
+  }
+
+  openDeleteSwal(): void {
+    if (this.auth.CompanyProfile) {
+      this.deleteSwal.fire();
+    }
+  }
+
+  deleteProfile(): void {
+    this.api.post('/company_profile/delete', {}).subscribe(
+      (res) => {
+        this.deleteSuccess.fire();
+        this.editMode = false;
+        this.ngOnInit();
+        this.ngAfterContentInit();
+      },
+      (err) => {
+        this.toastr.error('Something went wrong!');
+        this.editMode = true;
+        this.ngOnInit();
+        this.ngAfterContentInit();
       }
     );
   }
 
 
-  deleteProfile(): void{
-    this.api.post('/company_profile/delete', {}).subscribe(
+  deleteJobSwalOpen(data): void{
+    this.forDelete = '';
+    this.deleteJobSwal.fire();
+    this.forDelete = data;
+  }
+
+  deleteJobConfirm(): void{
+    this.api.post('/job/delete/' + this.forDelete, {}).subscribe(
       res => {
-        this.toastr.success("Company Deleted!")
-        this.editMode = false;
-        this.ngOnInit();
-        this.ngAfterContentInit();
+        this.forDelete = '';
+        this.deleteSuccess.fire();
+        this.fetchData();
       },
       err => {
-        this.toastr.error("Something went wrong!")
-        this.editMode = true;
-        this.ngOnInit();
-        this.ngAfterContentInit();
+        this.forDelete = '';
+        this.fetchData();
       }
     )
+    
+  }
+
+  create_new_job_modal(value): void{
+    this.jobPostForm.reset();
+    this.open_modal(value);    
   }
 
 
+  submitJobForm(): void{
+    this.loading = true;
+    let url = ''
+    if (this.jobPostForm.get('id').value){
+      url = '/job/update/' + this.jobPostForm.get('id').value
+    }else{
+      url = '/job/create'
+    }
+    const form = new FormData();
+    form.append('title', this.jobPostForm.get('title').value || '');
+    form.append('description', this.jobPostForm.get('description').value || '');
+    form.append('category', String(this.jobPostForm.get('category').value) || '');
+
+    this.api.post(url, form).subscribe(
+      res => {
+        if (this.jobPostForm.get('id').value){
+          url = ''
+        }else{
+          this.toastr.success('New Job Posted!');          
+        }
+        this.loading = false;        
+        this.ModalService.dismissAll()
+        this.jobPostForm.reset();
+        this.fetchData();
+      },
+      err => {
+        this.toastr.error('Check input data!')
+        this.loading = false;
+        this.jobPostForm.setErrors({
+          ...err.errors
+        });
+      }
+    )
+
+  }
+
+
+  fetchData(): any {
+    const form = new FormData();
+    form.append('itemPerPage', String(this.itemPerPage));
+    form.append('pageNumber', String(this.currentPageNumber));
+
+    this.api.post('/job/get_jobs', form).subscribe(
+      (res) => {
+        this.totalVolume = res.data.count;
+        this.jobs = res.data.collections;
+      },
+      (err) => {
+        this.toastr.error('Something went wrong!');
+      }
+    );
+  }
+
+
+  pageChange(event): any {
+    this.currentPageNumber = event;
+    this.fetchData();
+  }
+  ChangeItemPerPageSize(event): void {
+    this.itemPerPage = event.target.value;
+    this.fetchData();
+  }
+
+
+  openEditModal(content, data): void{
+    this.jobPostForm.reset();
+    const categories = data.category.map(value => value.id);
+    this.jobPostForm.patchValue({
+      id: data.id,
+      title: data.title,
+      category: categories,
+      description: data.description
+    });
+    this.open_modal(content);
+  }
+
+  open_modal(value): void{
+    this.ModalService.open(value, {
+      centered: true,
+      size:'xl'
+    })
+  }
 }
