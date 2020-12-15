@@ -18,6 +18,13 @@
         >
       </li>
 
+      <li *ngIf="isProfessional">
+        <a [routerLinkActiveOptions]="{exact:
+            true}" [routerLink]="[ '/dashboard/professional' ]" routerLinkActive="active"
+        ><i class="sl sl-icon-layers"></i> Professional</a
+        >
+      </li>
+
       <li *ngIf="isAdmin" #classified_menu (click)="toggleMobileMenu(classified_menu)">
         <a><i class="sl sl-icon-layers"></i> Classified</a>
         <ul>

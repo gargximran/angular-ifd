@@ -12,6 +12,10 @@ export class AdminNavComponent implements OnInit {
 
   constructor(private api: ApiService, private auth: AuthService) { }
 
+  isAdmin = false;
+  isCompany = false;
+  isProfessional = false;
+
   ngOnInit(): void {
     if(this.auth.isAdmin()){
       this.isAdmin = true
@@ -20,10 +24,13 @@ export class AdminNavComponent implements OnInit {
     if(this.auth.isCompany()){
       this.isCompany = true;
     }
+
+    if(this.auth.isProfessional()){
+      this.isProfessional = true;
+    }
   }
 
-  isAdmin = false;
-  isCompany = false;
+  
 
 
   toggleMobileMenu(menu){

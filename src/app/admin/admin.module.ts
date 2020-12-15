@@ -23,6 +23,7 @@ import {ReadMoreModule} from 'ng-readmore';
 import { ClassifiedItemComponent } from './admin/classified-item/classified-item.component';
 import { JobCategoryComponent } from './admin/job-category/job-category.component';
 import { CompanyProfileComponent } from './company-profile/company-profile.component';
+import { ProfessionalProfileComponent } from './professional-profile/professional-profile.component';
 
 @NgModule({
   declarations: [
@@ -41,6 +42,7 @@ import { CompanyProfileComponent } from './company-profile/company-profile.compo
     ClassifiedItemComponent,
     JobCategoryComponent,
     CompanyProfileComponent,
+    ProfessionalProfileComponent,
   ],
     imports: [
         CommonModule,

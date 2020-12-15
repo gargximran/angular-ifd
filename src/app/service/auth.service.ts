@@ -58,9 +58,24 @@ export class AuthService {
     }
   }
 
+  public isProfessional(): boolean{
+    if (this._getUser_()){
+      if (this._getUser_().type.role === 'client' && this._getUser_().type.client_type == 'professional'){
+        return true;
+      }
+    }
+  }
+
   public get CompanyProfile(): any{
     if(this.isCompany()){
       return this._getSession_().company_profile;
+    }
+    return null;
+  }
+
+  public get ProfessionalProfile(): any{
+    if(this.isProfessional()){
+      return this._getSession_().professional_profile;
     }
     return null;
   }

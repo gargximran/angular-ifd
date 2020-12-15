@@ -1,0 +1,13 @@
+.company_profile_image{
+	position: relative;
+    display: block;
+    margin-bottom: 35px;
+    text-align: center;
+}
+
+.company_profile_image img{
+	max-width: 200px;
+	border-radius: 5px !important;
+	width: unset !important;
+    border: 10px solid rgba(0, 0, 0, 0.08);
+}

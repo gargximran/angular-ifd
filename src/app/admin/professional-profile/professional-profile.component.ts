@@ -1,20 +1,22 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
-import { AuthService } from 'src/app/service/auth.service';
+import { NgbModal, NgbDateStruct } from '@ng-bootstrap/ng-bootstrap';
 import { Select2Data } from 'ng-select2-component';
-import { ApiService } from '../../service/api.service';
 import { ToastrService } from 'ngx-toastr';
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { last } from 'rxjs/operators';
+import { ApiService } from 'src/app/service/api.service';
+import { AuthService } from 'src/app/service/auth.service';
 
 @Component({
-  selector: 'app-company-profile',
-  templateUrl: './company-profile.component.html',
-  styleUrls: ['./company-profile.component.css'],
+  selector: 'app-professional-profile',
+  templateUrl: './professional-profile.component.html',
+  styleUrls: ['./professional-profile.component.css']
 })
-export class CompanyProfileComponent implements OnInit {
+export class ProfessionalProfileComponent implements OnInit {
+
   constructor(
     private auth: AuthService,
-    private api: ApiService,
+    private api:ApiService,
     private toastr: ToastrService,
     private ModalService: NgbModal
   ) {}
@@ -44,88 +46,252 @@ export class CompanyProfileComponent implements OnInit {
   categoryDataForFormSelector: Select2Data = [];
   stateDataForFormSelector: Select2Data = [];
   cityDataForFormSelector: Select2Data = [];
+  genderDataForFormSelector: Select2Data = [
+    {
+      label: 'Select Gender',
+      options: [
+        {
+          label: 'Male',
+          value: 'male',
+          classes: 'company-profile-category'
+        },
+        {
+          label: 'Female',
+          value: 'female',
+          classes: 'company-profile-category'
+        },
+        {
+          label: 'Other',
+          value: 'other',
+          classes: 'company-profile-category'
+        }
+      ]
+    }
+  ];
+
+
+  religionDataForFormSelector: Select2Data = [
+    {
+      label: 'Select Gender',
+      options: [
+        {
+          label: 'African Traditional & Diasporic',
+          value: 'african traditional & diasporic',
+          classes: 'company-profile-category'
+        },
+        {
+          label: 'Agnostic',
+          value: 'agnostic',
+          classes: 'company-profile-category'
+        },
+        {
+          label: 'Atheist',
+          value: 'atheist',
+          classes: 'company-profile-category'
+        },
+        {
+          label: 'Buddhism',
+          value: 'Buddhism',
+          classes: 'company-profile-category'
+        },
+        {
+          label: 'Cao Dai',
+          value: 'Cao Dai',
+          classes: 'company-profile-category'
+        },
+        {
+          label: 'Chinese traditional religion',
+          value: 'Chinese traditional religion',
+          classes: 'company-profile-category'
+        },
+        {
+          label: 'Christianity',
+          value: 'Christianity',
+          classes: 'company-profile-category'
+        },
+        {
+          label: 'Hinduism',
+          value: 'Hinduism',
+          classes: 'company-profile-category'
+        },
+        {
+          label: 'Islam',
+          value: 'Islam',
+          classes: 'company-profile-category'
+        },
+        {
+          label: 'Jainism',
+          value: 'Jainism',
+          classes: 'company-profile-category'
+        },
+        {
+          label: 'Juche',
+          value: 'Juche',
+          classes: 'company-profile-category'
+        },
+        {
+          label: 'Judaism',
+          value: 'Judaism',
+          classes: 'company-profile-category'
+        },
+        {
+          label: 'Neo-Paganism',
+          value: 'Neo-Paganism',
+          classes: 'company-profile-category'
+        },
+        {
+          label: 'Non-religious',
+          value: 'Non-religious',
+          classes: 'company-profile-category'
+        },
+        {
+          label: 'Rastafarianism',
+          value: 'Rastafarianism',
+          classes: 'company-profile-category'
+        },
+        {
+          label: 'Secular',
+          value: 'Secular',
+          classes: 'company-profile-category'
+        },
+        {
+          label: 'Shinto',
+          value: 'Shinto',
+          classes: 'company-profile-category'
+        },
+        {
+          label: 'Sikhism',
+          value: 'Sikhism',
+          classes: 'company-profile-category'
+        },
+        {
+          label: 'Spiritism',
+          value: 'Spiritism',
+          classes: 'company-profile-category'
+        },
+        {
+          label: 'Tenrikyo',
+          value: 'Tenrikyo',
+          classes: 'company-profile-category'
+        },
+        {
+          label: 'Unitarian-Universalism',
+          value: 'Unitarian-Universalism',
+          classes: 'company-profile-category'
+        },
+        {
+          label: 'Zoroastrianism',
+          value: 'Zoroastrianism',
+          classes: 'company-profile-category'
+        },
+        {
+          label: 'Primal-indigenous',
+          value: 'Primal-indigenous',
+          classes: 'company-profile-category'
+        },
+        {
+          label: 'Other',
+          value: 'Other',
+          classes: 'company-profile-category'
+        }
+      ]
+    }
+  ];
+
+  maritialStatusDataForFormSelector: Select2Data = [
+    {
+      label: 'Select Gender',
+      options: [
+        {
+          label: 'Married',
+          value: 'married',
+          classes: 'company-profile-category'
+        },
+        {
+          label: 'Unmarried',
+          value: 'unmarried',
+          classes: 'company-profile-category'
+        },
+        {
+          label: 'Divorced',
+          value: 'divorced',
+          classes: 'company-profile-category'
+        }       
+        
+      ]
+    }
+  ];
 
   formData = new FormGroup({
-    name: new FormControl(''),
-    url: new FormControl(''),
+    father: new FormControl(''),
+    mother: new FormControl(''),
     category: new FormControl(''),
     description: new FormControl(''),
-    logo: new FormControl(''),
+    image: new FormControl(''),
     city: new FormControl(''),
     state: new FormControl(''),
     address: new FormControl(''),
+    gender: new FormControl(''),
+    birthday: new FormControl(''),
+    religion: new FormControl(''),
+    nationality: new FormControl(''),
+    maritial_status: new FormControl(''),
+    alternate_phone: new FormControl(''),
+    alternate_email: new FormControl(''),
+    career_summary: new FormControl('')
   });
 
-  companyDetail = {
+  dataSelector: NgbDateStruct;
+
+  ProfessionalDetail = {
     name: '',
-    url: '',
+    father: '',
     category: [],
     description: '',
-    logo: 'assets/images/dumylogo.png',
+    image: 'assets/images/dumylogo.png',
     city: {},
     state: {},
     address: '',
+    gender: '',
+    birthday: '',
+    religion: '',
+    nationality: '',
+    meritial_status: '',
+    alternate_phone: '',
+    alternate_email: '',
+    career_summary: '',
+    user: {}
   };
 
-  submitErrors = {
-    name: '',
-    url: '',
-    category: '',
-    description: '',
-    logo: '',
-    city: '',
-    state: '',
-    address: '',
-  };
 
   ngOnInit(): void {    
     this.initAllCategory();
     this.initialize_all_states();
-    this.fetchData();
+    // this.fetchData();
   }
 
   ngAfterContentInit(): void {
-    if (this.auth.CompanyProfile) {
-      this.companyDetail.name = this.auth.CompanyProfile.name;
-      this.companyDetail.url = this.auth.CompanyProfile.url || '';
-      this.companyDetail.description =
-        this.auth.CompanyProfile.description || '';
-      this.companyDetail.category = this.auth.CompanyProfile.category || '';
-      this.companyDetail.logo =
-        this.auth.CompanyProfile.logo || 'assets/images/dumylogo.png';
-      this.companyDetail.city = this.auth.CompanyProfile.city || '';
-      this.companyDetail.state = this.auth.CompanyProfile.state || '';
-      this.companyDetail.address = this.auth.CompanyProfile.address || '';
-
-      this.formData.patchValue({
-        name: this.auth.CompanyProfile.name,
-        url: this.auth.CompanyProfile.url || '',
-        description: this.auth.CompanyProfile.description || '',
-        city: this.auth.CompanyProfile.city.id || '',
-        state: this.auth.CompanyProfile.state.id || '',
-        address: this.auth.CompanyProfile.address || '',
-      });
-
-      const categories = this.auth.CompanyProfile.category.map(
-        (value) => value.id
-      );
-
-      this.formData.patchValue({
-        category: categories || '',
-      });
-
-      this.companyDetail.logo =
-        this.auth.CompanyProfile.logo || 'assets/images/dumylogo.png';
+    if (this.auth.ProfessionalProfile) {
+        this.ProfessionalDetail = {...this.ProfessionalDetail,...this.auth.ProfessionalProfile, image: this.auth.CompanyProfile.image || 'assets/images/dumylogo.png'};
     } else {
-      this.companyDetail = {
+      this.ProfessionalDetail = {
         name: '',
-        url: '',
+        father: '',
         category: [],
         description: '',
-        logo: 'assets/images/dumylogo.png',
+        image: 'assets/images/dumylogo.png',
         city: {},
         state: {},
         address: '',
+        gender: '',
+        birthday: '',
+        religion: '',
+        nationality: '',
+        meritial_status: '',
+        alternate_phone: '',
+        alternate_email: '',
+        career_summary: '',
+        user: {}
       };
       this.formData.reset();
       this.editMode = false;
@@ -148,7 +314,7 @@ export class CompanyProfileComponent implements OnInit {
         });
         this.categoryDataForFormSelector = [
           {
-            label: 'Select Categories',
+            label: 'Select Field\'s',
             options: datas,
           },
         ];
@@ -215,53 +381,51 @@ export class CompanyProfileComponent implements OnInit {
   uploadImage($event): void {
     if ($event.target.files[0]) {
       this.formData.patchValue({
-        logo: $event.target.files[0],
+        image: $event.target.files[0],
       });
       const reader = new FileReader();
       reader.readAsDataURL($event.target.files[0]);
       reader.onloadend = () => {
-        this.companyDetail.logo = String(reader.result);
+        this.ProfessionalDetail.image = String(reader.result);
       };
     } else {
       this.formData.patchValue({
-        logo: '',
+        image: '',
       });
-      if (this.auth.CompanyProfile.logo) {
-        this.companyDetail.logo = this.auth.CompanyProfile.logo;
+      if (this.auth.ProfessionalProfile.image) {
+        this.ProfessionalDetail.image = this.auth.ProfessionalProfile.image;
       } else {
-        this.companyDetail.logo = 'assets/images/dumylogo.png';
+        this.ProfessionalDetail.image = 'assets/images/dumylogo.png';
       }
     }
   }
 
   submitData(): void {
-    this.submitErrors = {
-      name: '',
-      url: '',
-      category: '',
-      description: '',
-      logo: '',
-      city: '',
-      state: '',
-      address: '',
-    };
-
     let url = '';
-    if (this.auth.CompanyProfile) {
-      url = '/company_profile/update';
+    if (this.auth.ProfessionalProfile) {
+      url = '/professional_profile/update';
     } else {
-      url = '/company_profile/create';
+      url = '/professional_profile/create';
     }
 
     const form = new FormData();
-    form.append('name', this.formData.get('name').value || '');
+    form.append('father', this.formData.get('father').value || '');
     form.append('description', this.formData.get('description').value || '');
-    form.append('url', this.formData.get('url').value || '');
+    form.append('mother', this.formData.get('mother').value || '');
+    form.append('gender', this.formData.get('gender').value || '');
+    form.append('birthday', this.formData.get('birthday').value || '');
+    form.append('religion', this.formData.get('religion').value || '');
+    form.append('nationality', this.formData.get('nationality').value || '');
+    form.append('marital_status', this.formData.get('marital_status').value || '');
+    form.append('alternate_phone', this.formData.get('alternate_phone').value || '');
+    form.append('alternate_email', this.formData.get('alternate_email').value || '');
+    form.append('alternate_email', this.formData.get('alternate_email').value || '');
     form.append('address', this.formData.get('address').value || '');
     form.append('city', this.formData.get('city').value || '');
     form.append('state', this.formData.get('state').value || '');
     form.append('category', String(this.formData.get('category').value) || '');
-    form.append('logo', this.formData.get('logo').value || '');
+    form.append('image', this.formData.get('image').value || '');
+    form.append('career_summary', this.formData.get('career_summary').value || '');
 
     this.api.post(url, form).subscribe(
       (res) => {
@@ -272,7 +436,9 @@ export class CompanyProfileComponent implements OnInit {
       },
       (err) => {
         this.toastr.error('Please check data again!');
-        this.submitErrors = { ...this.submitErrors, ...err.errors };
+        this.formData.setErrors({
+          ...err.errors
+        });
       }
     );
   }
@@ -408,4 +574,9 @@ export class CompanyProfileComponent implements OnInit {
       size:'xl'
     })
   }
+
+  con(){
+    console.log(this.formData)
+  }
+
 }

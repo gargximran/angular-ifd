@@ -237,8 +237,16 @@
       </li>
       <li
         #registerTabBtn
+        (click)="
+          toggleInModalAction(
+            registerTabBtn,
+            signInTabBtn,
+            registerTab,
+            signInTab            
+          )
+        "
       >
-        <a (click)="modal.close('close')" [routerLink]="[ '/register' ]">Register</a>
+        <a>Register</a>
   
       </li>
     </ul>
@@ -294,7 +302,7 @@
       </div>
 
       <div class="tab_content" #registerTab style="display: none">
-        <!-- <form>
+        <form [formGroup]="loginForm1">
           <p class="utf_row_form utf_form_wide_block">
             <label for="username2">
               <input
@@ -347,7 +355,7 @@
             name="register"
             value="Register"
           />
-        </form> -->
+        </form>
       </div>
     </div>
   </div>
