@@ -16,7 +16,7 @@ export class ProfessionalProfileComponent implements OnInit {
 
   constructor(
     private auth: AuthService,
-    private api:ApiService,
+    private api: ApiService,
     private toastr: ToastrService,
     private ModalService: NgbModal
   ) {}
@@ -32,7 +32,7 @@ export class ProfessionalProfileComponent implements OnInit {
   itemPerPage = 10;
 
   jobs: any = [];
-  
+
   loading = false;
 
   jobPostForm = new FormGroup({
@@ -216,8 +216,7 @@ export class ProfessionalProfileComponent implements OnInit {
           label: 'Divorced',
           value: 'divorced',
           classes: 'company-profile-category'
-        }       
-        
+        }
       ]
     }
   ];
@@ -235,7 +234,7 @@ export class ProfessionalProfileComponent implements OnInit {
     birthday: new FormControl(''),
     religion: new FormControl(''),
     nationality: new FormControl(''),
-    maritial_status: new FormControl(''),
+    marital_status: new FormControl(''),
     alternate_phone: new FormControl(''),
     alternate_email: new FormControl(''),
     career_summary: new FormControl('')
@@ -244,6 +243,7 @@ export class ProfessionalProfileComponent implements OnInit {
   dataSelector: NgbDateStruct;
 
   ProfessionalDetail = {
+    mother: '',
     name: '',
     father: '',
     category: [],
@@ -256,7 +256,7 @@ export class ProfessionalProfileComponent implements OnInit {
     birthday: '',
     religion: '',
     nationality: '',
-    meritial_status: '',
+    marital_status: '',
     alternate_phone: '',
     alternate_email: '',
     career_summary: '',
@@ -264,17 +264,19 @@ export class ProfessionalProfileComponent implements OnInit {
   };
 
 
-  ngOnInit(): void {    
+  ngOnInit(): void {
     this.initAllCategory();
     this.initialize_all_states();
     // this.fetchData();
   }
 
+  // tslint:disable-next-line:use-lifecycle-interface
   ngAfterContentInit(): void {
     if (this.auth.ProfessionalProfile) {
-        this.ProfessionalDetail = {...this.ProfessionalDetail,...this.auth.ProfessionalProfile, image: this.auth.CompanyProfile.image || 'assets/images/dumylogo.png'};
+        this.ProfessionalDetail = {...this.auth.ProfessionalProfile, image: this.auth.ProfessionalProfile.image || 'assets/images/dumylogo.png'};
     } else {
       this.ProfessionalDetail = {
+        mother: '',
         name: '',
         father: '',
         category: [],
@@ -287,7 +289,7 @@ export class ProfessionalProfileComponent implements OnInit {
         birthday: '',
         religion: '',
         nationality: '',
-        meritial_status: '',
+        marital_status: '',
         alternate_phone: '',
         alternate_email: '',
         career_summary: '',
@@ -401,6 +403,7 @@ export class ProfessionalProfileComponent implements OnInit {
   }
 
   submitData(): void {
+    const supperThis = this;
     let url = '';
     if (this.auth.ProfessionalProfile) {
       url = '/professional_profile/update';
@@ -408,12 +411,21 @@ export class ProfessionalProfileComponent implements OnInit {
       url = '/professional_profile/create';
     }
 
+    function getBirthday(): any{
+      let result = '';
+      const bday = supperThis.formData.get('birthday').value;
+      if (bday){
+        result = `${bday.year}/${bday.month}/${bday.day}`;
+      }
+      return result;
+    }
+
     const form = new FormData();
     form.append('father', this.formData.get('father').value || '');
     form.append('description', this.formData.get('description').value || '');
     form.append('mother', this.formData.get('mother').value || '');
     form.append('gender', this.formData.get('gender').value || '');
-    form.append('birthday', this.formData.get('birthday').value || '');
+    form.append('birthday', getBirthday());
     form.append('religion', this.formData.get('religion').value || '');
     form.append('nationality', this.formData.get('nationality').value || '');
     form.append('marital_status', this.formData.get('marital_status').value || '');
@@ -484,23 +496,23 @@ export class ProfessionalProfileComponent implements OnInit {
         this.forDelete = '';
         this.fetchData();
       }
-    )
-    
+    );
+
   }
 
   create_new_job_modal(value): void{
     this.jobPostForm.reset();
-    this.open_modal(value);    
+    this.open_modal(value);
   }
 
 
   submitJobForm(): void{
     this.loading = true;
-    let url = ''
+    let url = '';
     if (this.jobPostForm.get('id').value){
-      url = '/job/update/' + this.jobPostForm.get('id').value
+      url = '/job/update/' + this.jobPostForm.get('id').value;
     }else{
-      url = '/job/create'
+      url = '/job/create';
     }
     const form = new FormData();
     form.append('title', this.jobPostForm.get('title').value || '');
@@ -510,23 +522,23 @@ export class ProfessionalProfileComponent implements OnInit {
     this.api.post(url, form).subscribe(
       res => {
         if (this.jobPostForm.get('id').value){
-          url = ''
+          url = '';
         }else{
-          this.toastr.success('New Job Posted!');          
+          this.toastr.success('New Job Posted!');
         }
-        this.loading = false;        
-        this.ModalService.dismissAll()
+        this.loading = false;
+        this.ModalService.dismissAll();
         this.jobPostForm.reset();
         this.fetchData();
       },
       err => {
-        this.toastr.error('Check input data!')
+        this.toastr.error('Check input data!');
         this.loading = false;
         this.jobPostForm.setErrors({
           ...err.errors
         });
       }
-    )
+    );
 
   }
 
@@ -571,12 +583,12 @@ export class ProfessionalProfileComponent implements OnInit {
   open_modal(value): void{
     this.ModalService.open(value, {
       centered: true,
-      size:'xl'
-    })
+      size: 'xl'
+    });
   }
 
   con(){
-    console.log(this.formData)
+    console.log(this.formData);
   }
 
 }

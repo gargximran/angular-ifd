@@ -155,14 +155,14 @@
         <form [formGroup]="formData" class="my-profile">
           <div class="row with-forms">
             <div class="col-md-12" *ngIf="ProfessionalDetail.name">
-              <label>Name : </label>
-              <p class="input-text pl-3">
+              <label class="text-center">Name : </label>
+              <p class="input-text text-center text-capitalize">
                 {{ ProfessionalDetail.name }}
               </p>
             </div>
             <div class="col-md-6">
               <label>Father Name :</label>
-              <p class="input-text pl-3" *ngIf="editMode">
+              <p class="input-text pl-3 text-capitalize" *ngIf="editMode">
                 {{ ProfessionalDetail.father }}
               </p>
               <input
@@ -181,7 +181,7 @@
 
             <div class="col-md-6">
               <label>Mother Name :</label>
-              <p class="input-text pl-3" *ngIf="editMode">
+              <p class="input-text pl-3 text-capitalize" *ngIf="editMode">
                 {{ ProfessionalDetail.mother }}
               </p>
               <input
@@ -201,27 +201,13 @@
             <div class="col-md-4">
               <div class="form-group">
                 <label>Birthday :</label>
-                <div class="input-group">
-                  <div class="input-group-prepend">
-                    <button
-                      class="button bg-secondary mb-0"
-                      style="border-radius: 0"
-                      (click)="d.toggle()"
-                      type="button"
-                    >
-                      <span class="im im-icon-Calendar-4"></span>
-                    </button>
-                  </div>
-                  <input
-                    (dateSelect)="con()"
-                    class="input-text mb-0"
-                    style="width: unset"
-                    placeholder="yyyy-mm-dd"
-                    formControlName="birthday"
-                    [(ngModel)]="dataSelector"
-                    ngbDatepicker
-                    #d="ngbDatepicker"
-                  />
+                <p class="input-text pl-3 text-capitalize" *ngIf="editMode">
+                  {{ ProfessionalDetail.birthday }}
+                </p>
+                <div class="input-group" *ngIf="!editMode">
+
+                  <ngb-datepicker [startDate]="{year: 1980, month: 7}"  formControlName="birthday" [(ngModel)]="dataSelector" ></ngb-datepicker>
+
                 </div>
                 <small
                   *ngIf="formData.errors && formData.errors.birthday"
@@ -233,18 +219,18 @@
 
             <div class="col-md-4">
               <label>Gender :</label>
-              <p class="input-text pl-3" *ngIf="editMode">
+              <p class="input-text pl-3 text-capitalize" *ngIf="editMode">
                 {{ ProfessionalDetail.gender }}
-			  </p>
-			  
-			  <select2
+			        </p>
+
+			        <select2
                 *ngIf="!editMode"
                 [data]="genderDataForFormSelector"
                 formControlName="gender"
                 placeholder="Select Gender"
                 [multiple]="false"
               >
-              </select2>              
+              </select2>
               <small
                 *ngIf="formData.errors && formData.errors.gender"
                 class="form-text text-danger"
@@ -253,10 +239,10 @@
 			</div>
 			<div class="col-md-4">
 				<label>Religion :</label>
-				<p class="input-text pl-3" *ngIf="editMode">
+				<p class="input-text pl-3 text-capitalize" *ngIf="editMode">
 				  {{ ProfessionalDetail.religion }}
 				</p>
-				
+
 				<select2
 				  *ngIf="!editMode"
 				  [data]="religionDataForFormSelector"
@@ -264,7 +250,7 @@
 				  placeholder="Select One"
 				  [multiple]="false"
 				>
-				</select2>              
+				</select2>
 				<small
 				  *ngIf="formData.errors && formData.errors.religion"
 				  class="form-text text-danger"
@@ -293,22 +279,22 @@
 
 			  <div class="col-md-4">
 				<label>Maritial Status :</label>
-				<p class="input-text pl-3" *ngIf="editMode">
-				  {{ ProfessionalDetail.maritial_status }}
+				<p class="input-text pl-3 text-capitalize" *ngIf="editMode">
+				  {{ ProfessionalDetail.marital_status }}
 				</p>
-				
+
 				<select2
 				  *ngIf="!editMode"
 				  [data]="maritialStatusDataForFormSelector"
-				  formControlName="maritial_status"
+				  formControlName="marital_status"
 				  placeholder="Select One"
 				  [multiple]="false"
 				>
-				</select2>              
+				</select2>
 				<small
-				  *ngIf="formData.errors && formData.errors.maritial_status"
+				  *ngIf="formData.errors && formData.errors.marital_status"
 				  class="form-text text-danger"
-				  >{{ formData.errors.maritial_status }}</small
+				  >{{ formData.errors.marital_status }}</small
 				>
 			  </div>
             <div class="col-md-12">
@@ -337,7 +323,7 @@
                 >{{ formData.errors.description }}</small
               >
 			</div>
-			
+
 			<div class="col-md-12">
 				<label>Career Summary :</label>
 				<pre
@@ -392,7 +378,7 @@
             <div class="col-md-6">
               <label>State :</label>
               <p class="input-text pl-3" *ngIf="editMode">
-                <span class="m-1 badge badge-pill badge-warning p-2">{{
+                <span class="m-1 badge badge-pill badge-warning p-2 text-capitalize">{{
                   ProfessionalDetail.state.name
                 }}</span>
               </p>
@@ -414,7 +400,7 @@
             <div class="col-md-6">
               <label>City :</label>
               <p class="input-text pl-3" *ngIf="editMode">
-                <span class="m-1 badge badge-pill badge-warning p-2">{{
+                <span class="m-1 badge badge-pill badge-warning p-2 text-capitalize">{{
                   ProfessionalDetail.city.name
                 }}</span>
               </p>
@@ -450,11 +436,17 @@
                 >{{ formData.errors.address }}</small
               >
 			</div>
-			
+
 			<div class="col-md-6">
 				<label>Alternate Phone :</label>
 				<p class="input-text pl-3" *ngIf="editMode">
-				  {{ ProfessionalDetail.alternate_phone }}
+          <ng-container *ngIf="ProfessionalDetail.alternate_phone">
+            {{ ProfessionalDetail.alternate_phone }}
+          </ng-container>
+          <ng-container *ngIf="!ProfessionalDetail.alternate_phone">
+            No Number!
+          </ng-container>
+
 				</p>
 				<input
 				  *ngIf="!editMode"
@@ -473,7 +465,13 @@
 			  <div class="col-md-6">
 				<label>Alternate Email :</label>
 				<p class="input-text pl-3" *ngIf="editMode">
-				  {{ ProfessionalDetail.alternate_email }}
+          <ng-container *ngIf="ProfessionalDetail.alternate_email">
+            {{ ProfessionalDetail.alternate_email }}
+          </ng-container>
+          <ng-container *ngIf="!ProfessionalDetail.alternate_email">
+            No Email!
+          </ng-container>
+
 				</p>
 				<input
 				  *ngIf="!editMode"
@@ -577,7 +575,7 @@
 
                   <div class="row">
                     <pre class="p-2">
-Description :      <app-read-more title="Description" class="lead" [maxLength]="10" [text]="job.description"></app-read-more>				
+Description :      <app-read-more title="Description" class="lead" [maxLength]="10" [text]="job.description"></app-read-more>
                     </pre>
                   </div>
                 </div>

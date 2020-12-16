@@ -30,7 +30,7 @@ export class CompanyProfileComponent implements OnInit {
   itemPerPage = 10;
 
   jobs: any = [];
-  
+
   loading = false;
 
   jobPostForm = new FormGroup({
@@ -78,7 +78,7 @@ export class CompanyProfileComponent implements OnInit {
     address: '',
   };
 
-  ngOnInit(): void {    
+  ngOnInit(): void {
     this.initAllCategory();
     this.initialize_all_states();
     this.fetchData();
@@ -319,12 +319,12 @@ export class CompanyProfileComponent implements OnInit {
         this.fetchData();
       }
     )
-    
+
   }
 
   create_new_job_modal(value): void{
     this.jobPostForm.reset();
-    this.open_modal(value);    
+    this.open_modal(value);
   }
 
 
@@ -346,9 +346,9 @@ export class CompanyProfileComponent implements OnInit {
         if (this.jobPostForm.get('id').value){
           url = ''
         }else{
-          this.toastr.success('New Job Posted!');          
+          this.toastr.success('New Job Posted!');
         }
-        this.loading = false;        
+        this.loading = false;
         this.ModalService.dismissAll()
         this.jobPostForm.reset();
         this.fetchData();
