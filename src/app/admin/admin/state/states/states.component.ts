@@ -22,122 +22,132 @@ export class StatesComponent implements OnInit {
     config.keyboard = false;
   }
 
+  // tslint:disable-next-line:variable-name
   delete_item: any = {
     id: '',
     name: '',
     slug: '',
     created_at: '',
     index: ''
-  }
+  };
 
+  // tslint:disable-next-line:variable-name
   edit_item = {
     id: '',
     name: '',
     slug: '',
     created_at: '',
     index: ''
-  }
+  };
 
-  new_state_error = ' '
-  update_state_error = ''
-  loading = false
+  // tslint:disable-next-line:variable-name
+  new_state_error = ' ';
+  // tslint:disable-next-line:variable-name
+  update_state_error = '';
+  loading = false;
 
   newState = new FormGroup({
     name: new FormControl('')
-  })
+  });
 
   updateStateForm = new FormGroup({
     name: new FormControl(this.edit_item.name)
-  })
+  });
 
+
+  states = [];
+
+  // tslint:disable-next-line:typedef
   open_update_modal(content, index){
-    this.edit_item = this.states[index]
-    this.updateStateForm.patchValue({"name": this.edit_item.name})
-    this.open(content)
+    this.edit_item = this.states[index];
+    this.updateStateForm.patchValue({name: this.edit_item.name});
+    this.open(content);
   }
 
+  // tslint:disable-next-line:typedef
   open_delete_modal(content, index){
-    this.delete_item = this.states[index]
-    this.open(content)
+    this.delete_item = this.states[index];
+    this.open(content);
   }
 
+  // tslint:disable-next-line:typedef
   delete_state_(){
-    this.api.post("/state/delete/"+ this.delete_item.id, {}).subscribe(
+    this.api.post('/state/delete/' + this.delete_item.id, {}).subscribe(
       res => {
-        this.toastr.info("State Deleted!")
-        this.modalService.dismissAll()
-        this.states.splice(parseInt(this.delete_item.index), 1)
+        this.toastr.info('State Deleted!');
+        this.modalService.dismissAll();
+        // tslint:disable-next-line:radix
+        this.states.splice(parseInt(this.delete_item.index), 1);
 
-        this.initialize_all_states()
+        this.initialize_all_states();
       },
       err => {
-        this.toastr.error('Something went wrong!')
-        this.modalService.dismissAll()
+        this.toastr.error('Something went wrong!');
+        this.modalService.dismissAll();
       }
-    )
+    );
   }
 
+  // tslint:disable-next-line:typedef
   updateState(){
-    let formdata = new FormData()
-    formdata.append('name', this.updateStateForm.get('name').value)
-    this.loading = true
-    this.update_state_error = ''
+    const formdata = new FormData();
+    formdata.append('name', this.updateStateForm.get('name').value);
+    this.loading = true;
+    this.update_state_error = '';
     this.api.post(`/state/update/${this.edit_item.id}`, formdata).subscribe(
       res => {
-        this.toastr.success('State updated successfuly!')
-        this.loading = false
-        this.modalService.dismissAll()
-        this.initialize_all_states()
+        this.toastr.success('State updated successfuly!');
+        this.loading = false;
+        this.modalService.dismissAll();
+        this.initialize_all_states();
       },
       err => {
-        this.loading = false
-        this.update_state_error = err.errors.name
-        this.toastr.error('Something went wrong!')
+        this.loading = false;
+        this.update_state_error = err.errors.name;
+        this.toastr.error('Something went wrong!');
       }
-    )
+    );
   }
 
-  open(content) {
-    this.modalService.open(content, {centered:true, backdropClass: 'dark-backdrop'});
+  open(content): void {
+    this.modalService.open(content, {centered: true, backdropClass: 'dark-backdrop'});
   }
 
+  // tslint:disable-next-line:typedef
   createState(){
-    this.loading = true
-    this.new_state_error = ' '
-    let stateForm = new FormData()
-    stateForm.append('name', this.newState.get('name').value)
+    this.loading = true;
+    this.new_state_error = ' ';
+    const stateForm = new FormData();
+    stateForm.append('name', this.newState.get('name').value);
     this.api.post('/state/create', stateForm).subscribe(res => {
-      this.loading = false
-      this.toastr.success('State added successfully!')
-      this.modalService.dismissAll()
-      this.states.push(res.data)
+      this.loading = false;
+      this.toastr.success('State added successfully!');
+      this.modalService.dismissAll();
+      this.states.push(res.data);
     },
     err => {
-      if(err.errors){
-        this.loading = false
+      if (err.errors){
+        this.loading = false;
 
-        this.toastr.error('Invalid Input!')
-        this.new_state_error = err.errors.name
+        this.toastr.error('Invalid Input!');
+        this.new_state_error = err.errors.name;
       }
-    })
+    });
   }
 
-
-  states = []
-
-  initialize_all_states(){
+  initialize_all_states(): void{
     this.api.get('/state/view').subscribe(
-      res=> {
-        this.states = res.data
+      res => {
+        this.states = res.data;
       },
       err => {
-        this.toastr.warning('Something went wrong!')
+        this.toastr.warning('Something went wrong!');
       }
-    )
+    );
   }
 
   ngOnInit(): void {
-   this.initialize_all_states()
+   this.initialize_all_states();
   }
 
 }

@@ -328,7 +328,6 @@ export class ClassifiedItemComponent implements OnInit {
 
     this.api.post('/classified_product/get_products', form).subscribe(
       (res) => {
-        console.log(res);
         this.totalVolume = res.data.count;
         this.products = res.data.collections;
       },
