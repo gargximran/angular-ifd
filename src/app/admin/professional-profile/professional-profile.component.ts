@@ -3,7 +3,6 @@ import { FormControl, FormGroup } from '@angular/forms';
 import { NgbModal, NgbDateStruct } from '@ng-bootstrap/ng-bootstrap';
 import { Select2Data } from 'ng-select2-component';
 import { ToastrService } from 'ngx-toastr';
-import { last } from 'rxjs/operators';
 import { ApiService } from 'src/app/service/api.service';
 import { AuthService } from 'src/app/service/auth.service';
 
@@ -25,22 +24,15 @@ export class ProfessionalProfileComponent implements OnInit {
   @ViewChild('deleteSuccess') deleteSuccess;
   @ViewChild('deleteJob') deleteJobSwal;
 
-  forDelete = '';
 
   currentPageNumber = 1;
   totalVolume = 0;
   itemPerPage = 10;
 
-  jobs: any = [];
 
   loading = false;
 
-  jobPostForm = new FormGroup({
-    id: new FormControl(),
-    title: new FormControl(),
-    description: new FormControl(),
-    category: new FormControl()
-  });
+
 
   editMode = true;
   categoryDataForFormSelector: Select2Data = [];
@@ -249,8 +241,8 @@ export class ProfessionalProfileComponent implements OnInit {
     category: [],
     description: '',
     image: 'assets/images/dumylogo.png',
-    city: {},
-    state: {},
+    city: {id: '', name: ''},
+    state: {id: '', name: ''},
     address: '',
     gender: '',
     birthday: '',
@@ -274,6 +266,25 @@ export class ProfessionalProfileComponent implements OnInit {
   ngAfterContentInit(): void {
     if (this.auth.ProfessionalProfile) {
         this.ProfessionalDetail = {...this.auth.ProfessionalProfile, image: this.auth.ProfessionalProfile.image || 'assets/images/dumylogo.png'};
+    
+        this.formData.patchValue({
+          father: this.ProfessionalDetail.father,
+          mother: this.ProfessionalDetail.mother,
+          category: this.ProfessionalDetail.category.map(value => value.id),
+          description: this.ProfessionalDetail.description || '',
+          image: this.ProfessionalDetail.image,
+          city: this.ProfessionalDetail.city.id,
+          state: this.ProfessionalDetail.state.id,
+          address: this.ProfessionalDetail.address || '',
+          gender: this.ProfessionalDetail.gender,
+          birthday: this.ProfessionalDetail.birthday,
+          religion: this.ProfessionalDetail.religion || '',
+          nationality: this.ProfessionalDetail.nationality || '',
+          marital_status: this.ProfessionalDetail.marital_status || '',
+          alternate_phone: this.ProfessionalDetail.alternate_phone || '',
+          alternate_email: this.ProfessionalDetail.alternate_email || '',
+          career_summary: this.ProfessionalDetail.career_summary || ''
+        });
     } else {
       this.ProfessionalDetail = {
         mother: '',
@@ -282,8 +293,8 @@ export class ProfessionalProfileComponent implements OnInit {
         category: [],
         description: '',
         image: 'assets/images/dumylogo.png',
-        city: {},
-        state: {},
+        city: {id: '', name: ''},
+        state: {id: '', name: ''},
         address: '',
         gender: '',
         birthday: '',
@@ -403,6 +414,7 @@ export class ProfessionalProfileComponent implements OnInit {
   }
 
   submitData(): void {
+    this.loading = true;
     const supperThis = this;
     let url = '';
     if (this.auth.ProfessionalProfile) {
@@ -414,8 +426,10 @@ export class ProfessionalProfileComponent implements OnInit {
     function getBirthday(): any{
       let result = '';
       const bday = supperThis.formData.get('birthday').value;
-      if (bday){
-        result = `${bday.year}/${bday.month}/${bday.day}`;
+      if (typeof bday == 'object'){
+        result = `${bday.year}-${bday.month.length == 2 ? bday.month : "0"+bday.month}-${bday.day}`;
+      } else if(typeof bday == 'string'){
+        result = bday;
       }
       return result;
     }
@@ -441,12 +455,14 @@ export class ProfessionalProfileComponent implements OnInit {
 
     this.api.post(url, form).subscribe(
       (res) => {
+        this.loading = false;
         this.editMode = true;
         this.ngOnInit();
         this.ngAfterContentInit();
         this.toastr.success('Change done!');
       },
       (err) => {
+        this.loading = false;
         this.toastr.error('Please check data again!');
         this.formData.setErrors({
           ...err.errors
@@ -456,13 +472,13 @@ export class ProfessionalProfileComponent implements OnInit {
   }
 
   openDeleteSwal(): void {
-    if (this.auth.CompanyProfile) {
+    if (this.auth.ProfessionalProfile) {
       this.deleteSwal.fire();
     }
   }
 
   deleteProfile(): void {
-    this.api.post('/company_profile/delete', {}).subscribe(
+    this.api.post('/professional_profile/delete', {}).subscribe(
       (res) => {
         this.deleteSuccess.fire();
         this.editMode = false;
@@ -476,119 +492,6 @@ export class ProfessionalProfileComponent implements OnInit {
         this.ngAfterContentInit();
       }
     );
-  }
-
-
-  deleteJobSwalOpen(data): void{
-    this.forDelete = '';
-    this.deleteJobSwal.fire();
-    this.forDelete = data;
-  }
-
-  deleteJobConfirm(): void{
-    this.api.post('/job/delete/' + this.forDelete, {}).subscribe(
-      res => {
-        this.forDelete = '';
-        this.deleteSuccess.fire();
-        this.fetchData();
-      },
-      err => {
-        this.forDelete = '';
-        this.fetchData();
-      }
-    );
-
-  }
-
-  create_new_job_modal(value): void{
-    this.jobPostForm.reset();
-    this.open_modal(value);
-  }
-
-
-  submitJobForm(): void{
-    this.loading = true;
-    let url = '';
-    if (this.jobPostForm.get('id').value){
-      url = '/job/update/' + this.jobPostForm.get('id').value;
-    }else{
-      url = '/job/create';
-    }
-    const form = new FormData();
-    form.append('title', this.jobPostForm.get('title').value || '');
-    form.append('description', this.jobPostForm.get('description').value || '');
-    form.append('category', String(this.jobPostForm.get('category').value) || '');
-
-    this.api.post(url, form).subscribe(
-      res => {
-        if (this.jobPostForm.get('id').value){
-          url = '';
-        }else{
-          this.toastr.success('New Job Posted!');
-        }
-        this.loading = false;
-        this.ModalService.dismissAll();
-        this.jobPostForm.reset();
-        this.fetchData();
-      },
-      err => {
-        this.toastr.error('Check input data!');
-        this.loading = false;
-        this.jobPostForm.setErrors({
-          ...err.errors
-        });
-      }
-    );
-
-  }
-
-
-  fetchData(): any {
-    const form = new FormData();
-    form.append('itemPerPage', String(this.itemPerPage));
-    form.append('pageNumber', String(this.currentPageNumber));
-
-    this.api.post('/job/get_jobs', form).subscribe(
-      (res) => {
-        this.totalVolume = res.data.count;
-        this.jobs = res.data.collections;
-      },
-      (err) => {}
-    );
-  }
-
-
-  pageChange(event): any {
-    this.currentPageNumber = event;
-    this.fetchData();
-  }
-  ChangeItemPerPageSize(event): void {
-    this.itemPerPage = event.target.value;
-    this.fetchData();
-  }
-
-
-  openEditModal(content, data): void{
-    this.jobPostForm.reset();
-    const categories = data.category.map(value => value.id);
-    this.jobPostForm.patchValue({
-      id: data.id,
-      title: data.title,
-      category: categories,
-      description: data.description
-    });
-    this.open_modal(content);
-  }
-
-  open_modal(value): void{
-    this.ModalService.open(value, {
-      centered: true,
-      size: 'xl'
-    });
-  }
-
-  con(){
-    console.log(this.formData);
   }
 
 }

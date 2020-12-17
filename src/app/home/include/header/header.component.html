@@ -201,10 +201,16 @@
       </div>
       <div class="utf_right_side">
         <div class="header_widget">
-          <a
+          <a *ngIf="!isLogged"
             (click)="openVerticallyCentered(content)"
             class="button border sign-in popup-with-zoom-anim"
             ><i class="fa fa-sign-in"></i> Sign In</a
+          >
+
+          <a *ngIf="isLogged"
+            [routerLink]="[ '/dashboard' ]"
+            class="button border sign-in popup-with-zoom-anim"
+            ><i class="sl sl-icon-layers"></i> Dashboard</a
           >
           <a href="dashboard_add_listing.html" class="button border with-icon"
             ><i class="sl sl-icon-user"></i> Add Listing</a
@@ -252,8 +258,6 @@
     </ul>
     <div class="tab_container alt">
       <div class="tab_content" #signInTab>
-          <p *ngIf="loading" ><ngb-progressbar type="primary" [value]="100" [striped]="true" [animated]="true">Loading...</ngb-progressbar></p>
-          <p *ngIf="loginSuccess != ' '" class="text-success" @zoom_in>{{loginSuccess}}</p>
           <p *ngIf="loginError != ' '" class="text-danger" @zoom_in>{{loginError}}</p>
         <form [formGroup]="loginForm1" (ngSubmit)="login()" class="login">
           <p class="utf_row_form utf_form_wide_block">
@@ -292,69 +296,150 @@
             </div>
           </div>
           <div class="utf_row_form">
-            <input
-              type="submit"
-              class="button border margin-top-5"
-              value="Login"
-            />
+            <button
+            type="submit"
+            class="button border margin-top-5"
+            [disabled]="loading"
+          >
+            <ng-container *ngIf="loading; else submitText">
+              <div class="spinner-border" role="status"></div>
+            </ng-container>
+            <ng-template #submitText>Login</ng-template>
+          </button>
+           
           </div>
         </form>
       </div>
 
       <div class="tab_content" #registerTab style="display: none">
-        <form [formGroup]="loginForm1">
-          <p class="utf_row_form utf_form_wide_block">
-            <label for="username2">
-              <input
-                type="text"
-                class="input-text"
-                name="username"
-                id="username2"
-                value=""
-                placeholder="Username"
-              />
-            </label>
-          </p>
+        <form [formGroup]="registrationForm" (ngSubmit)="registration()">
+          <div class="row">
+            <div class="col-6 pr-1">
+              <p class="utf_row_form utf_form_wide_block">
+                <label for="first_name">
+                  <input
+                    type="text"
+                    class="input-text mb-0"
+                    formControlName='first_name'
+                    id="first_name"
+                    value=""
+                    placeholder="First Name"
+                  />
+                </label>
+                <small  
+                *ngIf="registrationForm.errors && registrationForm.errors.first_name"             
+                class="form-text text-danger"
+                >{{registrationForm.errors.first_name}}</small
+              >
+              </p>
+            </div>
+
+            <div class="col-6 pl-1">
+              <p class="utf_row_form utf_form_wide_block">
+                <label for="last_name">
+                  <input
+                    type="text"
+                    class="input-text mb-0"
+                    formControlName='last_name'
+                    id="last_name"
+                    value=""
+                    placeholder="Last Name"
+                  />
+                </label>
+                <small  
+                *ngIf="registrationForm.errors && registrationForm.errors.last_name"             
+                class="form-text text-danger"
+                >{{registrationForm.errors.last_name}}</small
+              >
+              </p>
+            </div>
+          </div>
+          
           <p class="utf_row_form utf_form_wide_block">
             <label for="email2">
               <input
                 type="text"
-                class="input-text"
-                name="email"
+                class="input-text mb-0"
+                formControlName='email'
                 id="email2"
-                value=""
                 placeholder="Email"
               />
             </label>
+            <small  
+                *ngIf="registrationForm.errors && registrationForm.errors.email"             
+                class="form-text text-danger"
+                >{{registrationForm.errors.email}}</small
+              >
           </p>
           <p class="utf_row_form utf_form_wide_block">
-            <label for="password1">
+            <label for="username2">
               <input
-                class="input-text"
+                type="text"
+                class="input-text mb-0"
+                formControlName='username'
+                id="username2"
+                placeholder="Username"
+              />
+            </label>
+            <small  
+                *ngIf="registrationForm.errors && registrationForm.errors.username"             
+                class="form-text text-danger"
+                >{{registrationForm.errors.username}}</small
+              >
+          </p>
+
+          <p class="utf_row_form utf_form_wide_block">
+            <label for="phone2">
+              <input
+                type="text"
+                class="input-text mb-0"
+                formControlName='phone'
+                id="phone2"
+                placeholder="Phone"
+              />
+            </label>
+            <small  
+                *ngIf="registrationForm.errors && registrationForm.errors.phone"             
+                class="form-text text-danger"
+                >{{registrationForm.errors.phone}}</small
+              >
+          </p>
+          <p class="utf_row_form utf_form_wide_block">
+            <label for="password4">
+              <input
+                class="input-text mb-0"
                 type="password"
-                name="password1"
-                id="password1"
+                formControlName='password'
+                id="password4"
                 placeholder="Password"
               />
             </label>
+            <small  
+                *ngIf="registrationForm.errors && registrationForm.errors.password"             
+                class="form-text text-danger"
+                >{{registrationForm.errors.password}}</small
+              >
           </p>
-          <p class="utf_row_form utf_form_wide_block">
-            <label for="password2">
-              <input
-                class="input-text"
-                type="password"
-                name="password2"
-                id="password2"
-                placeholder="Confirm Password"
-              />
-            </label>
-          </p>
-          <input
+          <div class="row">
+            <div class="col-6 pr-1">
+              <button (click)="registrationType = 'company'" [class]="registrationType == 'company' ? 'bg-secondary' : 'bg-white text-dark'" class="button border fw margin-top-10">Company</button>
+            </div>
+
+            <div class="col-6 pl-1">
+              <button (click)="registrationType = 'professional'" [class]="registrationType == 'professional' ? 'bg-secondary' : 'bg-white text-dark'" class="button border fw margin-top-10">Professional</button>
+            </div>
+          </div>
+          <button
             type="submit"
             class="button border fw margin-top-10"
-            name="register"
-            value="Register"
-          />
+            [disabled]="loading"
+          >
+            <ng-container *ngIf="loading; else submitText">
+              <div class="spinner-border" role="status"></div>
+            </ng-container>
+            <ng-template #submitText>Register</ng-template>
+          </button>
+          
         </form>
       </div>
     </div>

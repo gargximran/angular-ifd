@@ -16,6 +16,7 @@ import { CompanyProfileComponent } from './company-profile/company-profile.compo
 import { CompanyGuard } from '../guard/company.guard';
 import { ProfessionalProfileComponent } from './professional-profile/professional-profile.component';
 import { ProfessionalGuard } from '../guard/professional.guard';
+import { ClassifiedProductComponent } from './classified-product/classified-product.component';
 
 const routes: Routes = [
   {
@@ -35,6 +36,10 @@ const routes: Routes = [
         path: 'professional',
         component: ProfessionalProfileComponent,
         canActivate: [ProfessionalGuard]
+      },
+      {
+        path: 'classified',
+        component: ClassifiedProductComponent
       },
       {
         path: 'admin-dashboard',

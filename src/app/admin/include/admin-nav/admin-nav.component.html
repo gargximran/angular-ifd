@@ -25,6 +25,13 @@
         >
       </li>
 
+      <li>
+        <a [routerLinkActiveOptions]="{exact:
+            true}" [routerLink]="[ '/dashboard/classified' ]" routerLinkActive="active"
+        ><i class="sl sl-icon-list"></i>My Listing</a
+        >
+      </li>
+
       <li *ngIf="isAdmin" #classified_menu (click)="toggleMobileMenu(classified_menu)">
         <a><i class="sl sl-icon-layers"></i> Classified</a>
         <ul>

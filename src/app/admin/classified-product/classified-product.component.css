@@ -1,0 +1,18 @@
+.image-block
+button.delete-button{
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: -1000;
+  opacity: 0;
+  transition: 0.3s;
+}
+
+.image-block:hover button.delete-button{
+  z-index: 1000;
+  opacity: 1;
+}
+
+.utf_list_box_listing_item-img a{
+  height: unset !important;
+}

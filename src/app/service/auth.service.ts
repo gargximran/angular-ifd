@@ -84,7 +84,7 @@ export class AuthService {
     return of(this._getUser_());
   }
 
-  private _getUser_(): any{
+  public _getUser_(): any{
     if (this._getSession_()){
       return this._getSession_().user;
     }

@@ -2,7 +2,7 @@
   #deleteSwal
   text="This cannot be undone"
   icon="question"
-  title="Delete Company?"
+  title="Delete Profile?"
   [showCancelButton]="true"
   (confirm)="deleteProfile()"
 >
@@ -10,91 +10,6 @@
 
 <swal #deleteSuccess title="Delete Success?" icon="success"> </swal>
 
-<swal
-  #deleteJob
-  text="This cannot be undone"
-  icon="question"
-  title="Delete Job?"
-  [showCancelButton]="true"
-  (confirm)="deleteJobConfirm()"
->
-</swal>
-
-<ng-template #create_new_job let-c="close" let-d="dismiss">
-  <div class="modal-header p-4">
-    <h4 class="modal-title" id="modal-basic-title">New Job</h4>
-    <button
-      type="button"
-      class="close text-danger"
-      aria-label="Close"
-      (click)="d('Cross click')"
-    >
-      <span aria-hidden="true">&times;</span>
-    </button>
-  </div>
-  <div class="modal-body p-4">
-    <form [formGroup]="jobPostForm" (ngSubmit)="submitJobForm()">
-      <div class="form-group">
-        <label for="directory_title_new">Job Title :</label>
-        <input
-          formControlName="title"
-          type="text"
-          class="form-control mb-0"
-          id="directory_title_new"
-          placeholder="Ex. Vacancy for musical artist."
-        />
-        <small
-          *ngIf="jobPostForm.errors && jobPostForm.errors.title"
-          class="form-text text-danger"
-          >{{ jobPostForm.errors.title }}</small
-        >
-      </div>
-
-      <div class="form-group">
-        <label for="directory_title_new">Job Description :</label>
-        <textarea
-          formControlName="description"
-          class="form-control mb-0"
-          cols="30"
-          rows="10"
-          placeholder="Requirement, Experience, Responsibility, Salary, Job Type etc...."
-        ></textarea>
-        <small
-          *ngIf="jobPostForm.errors && jobPostForm.errors.description"
-          class="form-text text-danger"
-          >{{ jobPostForm.errors.description }}</small
-        >
-      </div>
-
-      <div class="form-group">
-        <label>Category :</label>
-        <select2
-          [data]="categoryDataForFormSelector"
-          formControlName="category"
-          placeholder="Select categories"
-          [multiple]="true"
-        >
-        </select2>
-        <small
-          *ngIf="jobPostForm.errors && jobPostForm.errors.category"
-          class="form-text text-danger"
-          >{{ jobPostForm.errors.category }}</small
-        >
-      </div>
-
-      <button
-        type="submit"
-        class="button preview btn-block"
-        [disabled]="loading"
-      >
-        <ng-container *ngIf="loading; else submitText">
-          <div class="spinner-border" role="status"></div>
-        </ng-container>
-        <ng-template #submitText>Submit</ng-template>
-      </button>
-    </form>
-  </div>
-</ng-template>
 
 <div id="titlebar" class="dashboard_gradient">
   <div class="row">
@@ -125,16 +40,6 @@
         Profile is incomplete ! Please complete with proper details.
       </div>
 
-      <div class="row" *ngIf="ProfessionalDetail.name">
-        <div class="col-12 text-right">
-          <button
-            class="button bg-primary preview m-4"
-            (click)="create_new_job_modal(create_new_job)"
-          >
-            Post a Job
-          </button>
-        </div>
-      </div>
       <div class="utf_dashboard_list_box-static">
         <div class="edit-profile-photo company_profile_image">
           <img src="{{ ProfessionalDetail.image }}" alt="" />
@@ -155,16 +60,18 @@
         <form [formGroup]="formData" class="my-profile">
           <div class="row with-forms">
             <div class="col-md-12" *ngIf="ProfessionalDetail.name">
-              <label class="text-center">Name : </label>
-              <p class="input-text text-center text-capitalize">
+              <label class="">Name : 
+              <p class="text-capitalize d-inline">
                 {{ ProfessionalDetail.name }}
               </p>
+            </label>
             </div>
-            <div class="col-md-6">
-              <label>Father Name :</label>
-              <p class="input-text pl-3 text-capitalize" *ngIf="editMode">
+            <div [class.col-md-4]="editMode" [class.col-md-6]="!editMode">
+              <label>Father Name :
+              <p class="text-capitalize d-inline" *ngIf="editMode">
                 {{ ProfessionalDetail.father }}
               </p>
+            </label>
               <input
                 *ngIf="!editMode"
                 type="text"
@@ -180,10 +87,11 @@
             </div>
 
             <div class="col-md-6">
-              <label>Mother Name :</label>
-              <p class="input-text pl-3 text-capitalize" *ngIf="editMode">
+              <label>Mother Name :
+              <p class="d-inline text-capitalize" *ngIf="editMode">
                 {{ ProfessionalDetail.mother }}
               </p>
+            </label>
               <input
                 *ngIf="!editMode"
                 type="text"
@@ -200,14 +108,17 @@
 
             <div class="col-md-4">
               <div class="form-group">
-                <label>Birthday :</label>
-                <p class="input-text pl-3 text-capitalize" *ngIf="editMode">
+                <label>Birthday :
+                <p class="d-inline text-capitalize" *ngIf="editMode">
                   {{ ProfessionalDetail.birthday }}
                 </p>
+              </label>
                 <div class="input-group" *ngIf="!editMode">
-
-                  <ngb-datepicker [startDate]="{year: 1980, month: 7}"  formControlName="birthday" [(ngModel)]="dataSelector" ></ngb-datepicker>
-
+                  <ngb-datepicker
+                    [startDate]="{ year: 1980, month: 7 }"
+                    formControlName="birthday"
+                    [(ngModel)]="dataSelector"
+                  ></ngb-datepicker>
                 </div>
                 <small
                   *ngIf="formData.errors && formData.errors.birthday"
@@ -218,12 +129,13 @@
             </div>
 
             <div class="col-md-4">
-              <label>Gender :</label>
-              <p class="input-text pl-3 text-capitalize" *ngIf="editMode">
+              <label>Gender :
+              <p class="d-inline text-capitalize" *ngIf="editMode">
                 {{ ProfessionalDetail.gender }}
-			        </p>
+              </p>
+            </label>
 
-			        <select2
+              <select2
                 *ngIf="!editMode"
                 [data]="genderDataForFormSelector"
                 formControlName="gender"
@@ -236,71 +148,74 @@
                 class="form-text text-danger"
                 >{{ formData.errors.gender }}</small
               >
-			</div>
-			<div class="col-md-4">
-				<label>Religion :</label>
-				<p class="input-text pl-3 text-capitalize" *ngIf="editMode">
-				  {{ ProfessionalDetail.religion }}
-				</p>
+            </div>
+            <div class="col-md-4">
+              <label>Religion :
+              <p class="d-inline text-capitalize" *ngIf="editMode">
+                {{ ProfessionalDetail.religion }}
+              </p>
+            </label>
 
-				<select2
-				  *ngIf="!editMode"
-				  [data]="religionDataForFormSelector"
-				  formControlName="religion"
-				  placeholder="Select One"
-				  [multiple]="false"
-				>
-				</select2>
-				<small
-				  *ngIf="formData.errors && formData.errors.religion"
-				  class="form-text text-danger"
-				  >{{ formData.errors.religion }}</small
-				>
-			  </div>
+              <select2
+                *ngIf="!editMode"
+                [data]="religionDataForFormSelector"
+                formControlName="religion"
+                placeholder="Select One"
+                [multiple]="false"
+              >
+              </select2>
+              <small
+                *ngIf="formData.errors && formData.errors.religion"
+                class="form-text text-danger"
+                >{{ formData.errors.religion }}</small
+              >
+            </div>
 
-			  <div class="col-md-4">
-				<label>Nationality :</label>
-				<p class="input-text pl-3" *ngIf="editMode">
-				  {{ ProfessionalDetail.nationality }}
-				</p>
-				<input
-				  *ngIf="!editMode"
-				  type="text"
-				  class="input-text mb-0"
-				  formControlName="nationality"
-				  placeholder="Ex. Indian"
-				/>
-				<small
-				  *ngIf="formData.errors && formData.errors.nationality"
-				  class="form-text text-danger"
-				  >{{ formData.errors.nationality }}</small
-				>
-			  </div>
+            <div class="col-md-4">
+              <label>Nationality :
+              <p class="d-inline text-capitalize" *ngIf="editMode">
+                {{ ProfessionalDetail.nationality }}
+              </p>
+            </label>
+              <input
+                *ngIf="!editMode"
+                type="text"
+                class="input-text mb-0"
+                formControlName="nationality"
+                placeholder="Ex. Indian"
+              />
+              <small
+                *ngIf="formData.errors && formData.errors.nationality"
+                class="form-text text-danger"
+                >{{ formData.errors.nationality }}</small
+              >
+            </div>
 
-			  <div class="col-md-4">
-				<label>Maritial Status :</label>
-				<p class="input-text pl-3 text-capitalize" *ngIf="editMode">
-				  {{ ProfessionalDetail.marital_status }}
-				</p>
+            <div class="col-md-4">
+              <label>Maritial Status :
+              <p class="d-inline text-capitalize" *ngIf="editMode">
+                {{ ProfessionalDetail.marital_status }}
+              </p>
+            </label>
 
-				<select2
-				  *ngIf="!editMode"
-				  [data]="maritialStatusDataForFormSelector"
-				  formControlName="marital_status"
-				  placeholder="Select One"
-				  [multiple]="false"
-				>
-				</select2>
-				<small
-				  *ngIf="formData.errors && formData.errors.marital_status"
-				  class="form-text text-danger"
-				  >{{ formData.errors.marital_status }}</small
-				>
-			  </div>
+              <select2
+                *ngIf="!editMode"
+                [data]="maritialStatusDataForFormSelector"
+                formControlName="marital_status"
+                placeholder="Select One"
+                [multiple]="false"
+              >
+              </select2>
+              <small
+                *ngIf="formData.errors && formData.errors.marital_status"
+                class="form-text text-danger"
+                >{{ formData.errors.marital_status }}</small
+              >
+            </div>
             <div class="col-md-12">
               <label>Description :</label>
               <pre
-                class="input-text ml-3 border p-2"
+                class="input-text ml-3 p-2"
                 style="
                   white-space: pre-wrap;
                   font-family: 'Nunito';
@@ -309,6 +224,7 @@
                 *ngIf="editMode"
                 >{{ ProfessionalDetail.description }}</pre
               >
+              <hr *ngIf="editMode">
               <textarea
                 *ngIf="!editMode"
                 formControlName="description"
@@ -322,35 +238,36 @@
                 class="form-text text-danger"
                 >{{ formData.errors.description }}</small
               >
-			</div>
+            </div>
 
-			<div class="col-md-12">
-				<label>Career Summary :</label>
-				<pre
-				  class="input-text ml-3 border p-2"
-				  style="
-					white-space: pre-wrap;
-					font-family: 'Nunito';
-					color: #707070;
-				  "
-				  *ngIf="editMode"
-				  >{{ ProfessionalDetail.career_summary }}</pre
-				>
-				<textarea
-				  *ngIf="!editMode"
-				  formControlName="career_summary"
-				  placeholder="Sort summary"
-				  cols="30"
-				  rows="10"
-				  class="mb-0"
-				></textarea>
-				<small
-				  *ngIf="formData.errors && formData.errors.career_summary"
-				  class="form-text text-danger"
-				  >{{ formData.errors.career_summary }}</small
-				>
-			  </div>
-
+            <div class="col-md-12">
+              <label>Career Summary :</label>
+              <pre
+                class="input-text ml-3 p-2"
+                style="
+                  white-space: pre-wrap;
+                  font-family: 'Nunito';
+                  color: #707070;
+                "
+                *ngIf="editMode"
+                >{{ ProfessionalDetail.career_summary }}</pre
+              >
+              <hr *ngIf="editMode">
+              <textarea
+                *ngIf="!editMode"
+                formControlName="career_summary"
+                placeholder="Sort summary"
+                cols="30"
+                rows="10"
+                class="mb-0"
+              ></textarea>
+              <small
+                *ngIf="formData.errors && formData.errors.career_summary"
+                class="form-text text-danger"
+                >{{ formData.errors.career_summary }}</small
+              >
+            </div>
+ 
             <div class="col-md-12">
               <label>Preferred fields :</label>
               <p class="input-text pl-3" *ngIf="editMode">
@@ -376,12 +293,14 @@
             </div>
 
             <div class="col-md-6">
-              <label>State :</label>
-              <p class="input-text pl-3" *ngIf="editMode">
-                <span class="m-1 badge badge-pill badge-warning p-2 text-capitalize">{{
-                  ProfessionalDetail.state.name
-                }}</span>
+              <label>State :
+              <p class="d-inline" *ngIf="editMode">
+                <span
+                  class="m-1 badge badge-pill badge-warning p-2 text-capitalize"
+                  >{{ ProfessionalDetail.state.name }}</span
+                >
               </p>
+            </label>
               <select2
                 *ngIf="!editMode"
                 [data]="stateDataForFormSelector"
@@ -398,12 +317,14 @@
               >
             </div>
             <div class="col-md-6">
-              <label>City :</label>
-              <p class="input-text pl-3" *ngIf="editMode">
-                <span class="m-1 badge badge-pill badge-warning p-2 text-capitalize">{{
-                  ProfessionalDetail.city.name
-                }}</span>
+              <label>City :
+              <p class="d-inline" *ngIf="editMode">
+                <span
+                  class="m-1 badge badge-pill badge-warning p-2 text-capitalize"
+                  >{{ ProfessionalDetail.city.name }}</span
+                >
               </p>
+            </label>
               <select2
                 *ngIf="!editMode"
                 [data]="cityDataForFormSelector"
@@ -435,57 +356,55 @@
                 class="form-text text-danger"
                 >{{ formData.errors.address }}</small
               >
-			</div>
+            </div>
 
-			<div class="col-md-6">
-				<label>Alternate Phone :</label>
-				<p class="input-text pl-3" *ngIf="editMode">
-          <ng-container *ngIf="ProfessionalDetail.alternate_phone">
-            {{ ProfessionalDetail.alternate_phone }}
-          </ng-container>
-          <ng-container *ngIf="!ProfessionalDetail.alternate_phone">
-            No Number!
-          </ng-container>
+            <div class="col-md-6">
+              <label>Alternate Phone :</label>
+              <p class="input-text pl-3" *ngIf="editMode">
+                <ng-container *ngIf="ProfessionalDetail.alternate_phone">
+                  {{ ProfessionalDetail.alternate_phone }}
+                </ng-container>
+                <ng-container *ngIf="!ProfessionalDetail.alternate_phone">
+                  No Number!
+                </ng-container>
+              </p>
+              <input
+                *ngIf="!editMode"
+                type="text"
+                class="input-text mb-0"
+                formControlName="alternate_phone"
+                placeholder="ex. 91010000000"
+              />
+              <small
+                *ngIf="formData.errors && formData.errors.alternate_phone"
+                class="form-text text-danger"
+                >{{ formData.errors.alternate_phone }}</small
+              >
+            </div>
 
-				</p>
-				<input
-				  *ngIf="!editMode"
-				  type="text"
-				  class="input-text mb-0"
-				  formControlName="alternate_phone"
-				  placeholder="ex. 91010000000"
-				/>
-				<small
-				  *ngIf="formData.errors && formData.errors.alternate_phone"
-				  class="form-text text-danger"
-				  >{{ formData.errors.alternate_phone }}</small
-				>
-			  </div>
-
-			  <div class="col-md-6">
-				<label>Alternate Email :</label>
-				<p class="input-text pl-3" *ngIf="editMode">
-          <ng-container *ngIf="ProfessionalDetail.alternate_email">
-            {{ ProfessionalDetail.alternate_email }}
-          </ng-container>
-          <ng-container *ngIf="!ProfessionalDetail.alternate_email">
-            No Email!
-          </ng-container>
-
-				</p>
-				<input
-				  *ngIf="!editMode"
-				  type="text"
-				  class="input-text mb-0"
-				  formControlName="alternate_email"
-				  placeholder="ex. example@email.com"
-				/>
-				<small
-				  *ngIf="formData.errors && formData.errors.alternate_email"
-				  class="form-text text-danger"
-				  >{{ formData.errors.alternate_email }}</small
-				>
-			  </div>
+            <div class="col-md-6">
+              <label>Alternate Email :</label>
+              <p class="input-text pl-3" *ngIf="editMode">
+                <ng-container *ngIf="ProfessionalDetail.alternate_email">
+                  {{ ProfessionalDetail.alternate_email }}
+                </ng-container>
+                <ng-container *ngIf="!ProfessionalDetail.alternate_email">
+                  No Email!
+                </ng-container>
+              </p>
+              <input
+                *ngIf="!editMode"
+                type="text"
+                class="input-text mb-0"
+                formControlName="alternate_email"
+                placeholder="ex. example@email.com"
+              />
+              <small
+                *ngIf="formData.errors && formData.errors.alternate_email"
+                class="form-text text-danger"
+                >{{ formData.errors.alternate_email }}</small
+              >
+            </div>
           </div>
 
           <button
@@ -511,11 +430,17 @@
 
           <button
             (click)="submitData()"
+            type="submit"
             class="button bg-primary preview margin-top-15"
+            [disabled]="loading"
             *ngIf="!editMode"
           >
-            Save Change
+            <ng-container *ngIf="loading; else submitText">
+              <div class="spinner-border" role="status"></div>
+            </ng-container>
+            <ng-template #submitText>Save Change</ng-template>
           </button>
+          
           <button
             class="button preview ml-2 margin-top-15"
             (click)="editMode = true"
@@ -529,83 +454,4 @@
   </div>
 </div>
 
-<div class="row" *ngIf="ProfessionalDetail.name">
-  <div class="col-lg-12 col-md-12">
-    <div class="utf_dashboard_list_box margin-top-0">
-      <div class="sort-by my_sort_by">
-        <div class="utf_sort_by_select_item">
-          <select
-            (change)="ChangeItemPerPageSize($event)"
-            class="utf_chosen_select_single"
-          >
-            <option value="10">10 items per page</option>
-            <option value="50">50 items per page</option>
-            <option value="100">100 items per page</option>
-            <option value="200">200 items per page</option>
-          </select>
-        </div>
-      </div>
 
-      <h4><i class="sl sl-icon-list"></i> Job Posted By This Company</h4>
-      <ul class="border-left">
-        <ng-container
-          *ngFor="
-            let job of jobs
-              | paginate
-                : {
-                    currentPage: currentPageNumber,
-                    totalItems: totalVolume,
-                    itemsPerPage: itemPerPage
-                  }
-          "
-        >
-          <li>
-            <div class="utf_list_box_listing_item">
-              <div class="utf_list_box_listing_item_content">
-                <div class="inner">
-                  <h3>Title : {{ job.title }}</h3>
-                  <h5>
-                    Category :
-                    <span
-                      class="m-1 badge badge-pill badge-warning p-2 d-inline"
-                      *ngFor="let cat of job.category"
-                      >{{ cat.name }}</span
-                    >
-                  </h5>
-
-                  <div class="row">
-                    <pre class="p-2">
-Description :      <app-read-more title="Description" class="lead" [maxLength]="10" [text]="job.description"></app-read-more>
-                    </pre>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div class="buttons-to-right">
-              <a
-                (click)="openEditModal(create_new_job, job)"
-                class="button gray"
-                ><i class="fa fa-pencil"></i> Edit</a
-              >
-              <a (click)="deleteJobSwalOpen(job.id)" class="button gray"
-                ><i class="fa fa-trash-o"></i> Delete</a
-              >
-            </div>
-          </li>
-        </ng-container>
-      </ul>
-    </div>
-    <div class="clearfix"></div>
-
-    <div class="utf_pagination_container_part margin-top-30 margin-bottom-30">
-      <pagination-controls
-        (pageBoundsCorrection)="pageChange($event)"
-        screenReaderCurrentLabel=".."
-        nextLabel=""
-        previousLabel=""
-        class="pagination"
-        (pageChange)="pageChange($event)"
-      ></pagination-controls>
-    </div>
-  </div>
-</div>
