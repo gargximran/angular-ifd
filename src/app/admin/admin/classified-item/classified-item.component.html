@@ -656,9 +656,9 @@
                           <h5 class="font-weight-bold">Age</h5>
                           <h5 class="font-weight-bold">Price</h5>
                           <h5 class="font-weight-bold">Price Type</h5>
-                          <h5 class="font-weight-bold">Categories</h5>
+                          
                           <h5 class="font-weight-bold">Status</h5>
-                          <h5 class="font-weight-bold">Images</h5>
+                          <h5 class="font-weight-bold">Categories</h5>
                         </div>
                         <div class="col-10">
                           <h5>: {{ product.brand.name }}</h5>
@@ -666,16 +666,17 @@
                           <h5>: {{ product.age }} m</h5>
                           <h5>: {{ product.price }} inr</h5>
                           <h5>: {{ product.price_type }}</h5>
-                          <h5>
+                          <h5 *ngIf="product.status == 1">: Active</h5>
+                          <h5 *ngIf="product.status == 0">: Deactive</h5>
+                          <p>
                             :
                             <span
                               *ngFor="let category of product.category"
-                              class="badge badge-pill badge-canceled d-inline text-white font-weight-bold"
+                              class="badge badge-pill badge-canceled d-inline-block text-white font-weight-bold"
                               >{{ category.name }}</span
                             >
-                          </h5>
-                          <h5 *ngIf="product.status == 1">: Active</h5>
-                          <h5 *ngIf="product.status == 0">: Deactive</h5>
+                          </p>
+                          
                           <div class="row" *ngIf="product.images">
                             <div
                               class="col-md-3"
