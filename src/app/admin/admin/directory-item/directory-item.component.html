@@ -118,8 +118,8 @@
           <div class="form-group">
             <label>Image :</label>
             <image-upload (uploadFinished)="addImage($event)" (removed)="removeImage($event)" [max]="1"
-                          [extensions]="['jpeg', 'jpg', 'png']" [maxFileSize]="358400" [buttonCaption]="'Upload Image'"
-                          [fileTooLargeMessage]="'Image too large,  maximum file size is 350 KiB'"></image-upload>
+                          [extensions]="['jpeg', 'jpg', 'png']" [buttonCaption]="'Upload Image'"
+                          ></image-upload>
           </div>
         </div>
       </div>
@@ -304,8 +304,7 @@
             </div>
 
             <image-upload (uploadFinished)="addUpdateImage($event)" (removed)="removeUpdateImage($event)" [max]="1"
-                          [extensions]="['jpeg', 'jpg', 'png']" [maxFileSize]="358400" [buttonCaption]="'Upload Image'"
-                          [fileTooLargeMessage]="'Image too large,  maximum file size is 350 KiB'"></image-upload>
+                          [extensions]="['jpeg', 'jpg', 'png']"  [buttonCaption]="'Upload Image'"></image-upload>
           </div>
         </div>
       </div>
