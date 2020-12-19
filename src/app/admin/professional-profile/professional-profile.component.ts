@@ -266,7 +266,6 @@ export class ProfessionalProfileComponent implements OnInit {
   ngAfterContentInit(): void {
     if (this.auth.ProfessionalProfile) {
         this.ProfessionalDetail = {...this.auth.ProfessionalProfile, image: this.auth.ProfessionalProfile.image || 'assets/images/dumylogo.png'};
-    
         this.formData.patchValue({
           father: this.ProfessionalDetail.father,
           mother: this.ProfessionalDetail.mother,
@@ -427,7 +426,7 @@ export class ProfessionalProfileComponent implements OnInit {
       let result = '';
       const bday = supperThis.formData.get('birthday').value;
       if (typeof bday == 'object'){
-        result = `${bday.year}-${bday.month.length == 2 ? bday.month : "0"+bday.month}-${bday.day}`;
+        result = `${bday.year}-${bday.month.length == 2 ? bday.month : '0' + bday.month}-${bday.day}`;
       } else if(typeof bday == 'string'){
         result = bday;
       }

@@ -9,13 +9,14 @@ import { HomeLayoutComponent } from './layout/layout.component';
 import { NgxTypedJsModule } from 'ngx-typed-js';
 import { ReactiveFormsModule } from '@angular/forms';
 import { NgbModalModule, NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import {NgxPaginationModule} from 'ngx-pagination';
 
 @NgModule({
   declarations: [
     HomeHeaderComponent,
     HomeComponent,
     HomeFooterComponent,
-    HomeLayoutComponent,
+    HomeLayoutComponent
   ],
   imports: [
     CommonModule,
@@ -24,6 +25,7 @@ import { NgbModalModule, NgbModule } from '@ng-bootstrap/ng-bootstrap';
     ReactiveFormsModule,
     NgbModalModule,
     NgbModule,
+    NgxPaginationModule
   ],
 })
 export class HomeModule {}
