@@ -51,8 +51,11 @@
 			">
           <div class="utf_listing_item-container list-layout">
             <a class="utf_listing_item" [routerLink]="['/single', product.slug]">
-              <div class="utf_listing_item-image">
-                <img alt="" src="{{product.images[0] || 'assets/images/dumylogo.png'}}">
+              <div class="utf_listing_item-image" *ngIf="product.images">
+                <img alt="" src="{{product.images[0]}}">
+              </div>
+              <div class="utf_listing_item-image" *ngIf="!product.images">
+                <img alt="" src="{{'assets/images/dumylogo.png'}}">
               </div>
               <div class="utf_listing_item_content">
                 <div class="utf_listing_item-inner">
@@ -61,7 +64,7 @@
                   <span><i class="sl sl-icon-directions"></i> {{product.city.name}}</span>
                   <span><i class="sl sl-icon-map"></i> {{product.state.name}}</span>
                   <span><i class="sl sl-icon-flag"></i> <span class=" text-white badge badge-pill badge-dark d-inline-block mx-1" *ngFor="let category of product.category">{{category.name}}</span></span>
-                 
+
                   <p>{{product.description.slice(0, 100)}}...</p>
                 </div>
               </div>

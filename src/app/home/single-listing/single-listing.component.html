@@ -1,13 +1,31 @@
+<div class="utf_listing_section" id="utf_listing_gallery_part">
+  <div class="utf_listing_slider utf_gallery_container margin-bottom-0 slick-initialized slick-slider">
+    <div aria-live="polite" class="slick-list bg-secondary padding-for-pc">
+      <ngb-carousel *ngIf="post.images">
+          <ng-template ngbSlide *ngFor="let im of post.images">
+            <div class="image-holder">
+              <img [src]="im" class="single_image_car">
+            </div>
+          </ng-template>
+      </ngb-carousel>
+      <div class="image-holder" *ngIf="!post.images">
+        <img  class="single_image_car" src="{{'assets/images/dumylogo.png'}}">
+      </div>
+    </div>
+  </div>
+</div>
+
 <div class="container">
   <div class="row utf_sticky_main_wrapper">
     <div class="col-lg-8 col-md-8">
-      <div id="titlebar" class="utf_listing_titlebar">
+      <div class="utf_listing_titlebar pt-0" id="titlebar">
         <div class="utf_listing_titlebar_title">
           <h2>
             {{ post.name }}
-		  </h2>
-		  <span class="call_now"
-            ><i class="sl sl-icon-phone"></i> Price : {{post.price}} inr <sup class="badge badge-primary">{{post.price_type}}</sup></span
+          </h2>
+          <span class="call_now"
+          ><i class="sl sl-icon-phone"></i> Price : {{post.price}} inr <sup
+            class="badge badge-primary">{{post.price_type}}</sup></span
           >
           <span>
             <a class="listing-address">
@@ -15,11 +33,11 @@
             </a>
           </span>
           <span class="call_now text-capitalize"
-            ><i class="sl sl-icon-phone"></i> Condition : {{post.condition}}</span
-		  >
-		  
-		  <span class="call_now text-capitalize"
-            ><i class="sl sl-icon-phone"></i> Age : {{post.age}} month</span
+          ><i class="sl sl-icon-phone"></i> Condition : {{post.condition}}</span
+          >
+
+          <span class="call_now text-capitalize"
+          ><i class="sl sl-icon-phone"></i> Age : {{post.age}} month</span
           >
           <ul class="listing_item_social">
             <li *ngFor="let category of post.category" class="m-1">
@@ -28,16 +46,16 @@
           </ul>
         </div>
       </div>
-      <div id="utf_listing_overview" class="utf_listing_section">
+      <div class="utf_listing_section" id="utf_listing_overview">
         <h3 class="utf_listing_headline_part margin-top-30 margin-bottom-30">
           Description
         </h3>
         <pre
-          >{{ post.description }}
+        >{{ post.description }}
         </pre>
       </div>
 
-      <div id="utf_listing_location" class="utf_listing_section">
+      <div class="utf_listing_section" id="utf_listing_location">
         <h3 class="utf_listing_headline_part margin-top-60 margin-bottom-40">
           Location
         </h3>
@@ -59,22 +77,24 @@
         <h3><i class="sl sl-icon-phone"></i> Contact Info</h3>
         <div class="utf_hosted_by_user_title pl-0">
           <h4>
-            <a class="text-capitalize">{{post.user.first_name}} {{post.user.last_name}}</a><span>Posted {{post.created_at | amDifference : today : 'days' : false }} days Ago</span>
+            <a
+              class="text-capitalize">{{post.user.first_name}} {{post.user.last_name}}</a><span>Posted {{post.created_at | amDifference : today : 'day' : false }}
+            days Ago</span>
             <span
-              ><i class="sl sl-icon-location"></i> {{post.address}}</span
+            ><i class="sl sl-icon-location"></i> {{post.address}}</span
             >
           </h4>
         </div>
 
-        <ul class="utf_listing_detail_sidebar" *ngIf="isLoggedIn">
-          <li><i class="sl sl-icon-phone"></i> +(012) 1123-254-456</li>
+        <ul *ngIf="isLoggedIn" class="utf_listing_detail_sidebar">
+          <li><i class="sl sl-icon-phone"></i> {{post.user.phone}}</li>
           <li>
-            <i class="sl sl-icon-globe"></i> <a href="#">www.example.com</a>
+            <i class="sl sl-icon-globe"></i>{{post.user.email}}
           </li>
-          <li>
-            <i class="fa fa-envelope-o"></i>
-            <a href="mailto:info@example.com">info@example.com</a>
-          </li>
+        </ul>
+        <ul *ngIf="!isLoggedIn" class="utf_listing_detail_sidebar">
+          <li>Please sign in to see contact!</li>
+
         </ul>
       </div>
     </div>

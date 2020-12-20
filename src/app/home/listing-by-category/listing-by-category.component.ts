@@ -48,24 +48,24 @@ export class ListingByCategoryComponent implements OnInit {
       }
     },
     nav: true
-  }
+  };
 
   constructor(private api: ApiService, private route: ActivatedRoute, private router: Router) { }
 
-  ngOnInit(): void {    
+  ngOnInit(): void {
     this.fetchData();
     this.fetchCategories();
     this.initialize_all_states();
 
-    
+
   }
-  
+
 
   ngDoCheck(): void {
     this.route.paramMap.subscribe(
       d => {
-        let slug = d.get('slug')        
-        if (slug){          
+        let slug = d.get('slug')
+        if (slug){
           if (this.params == slug){
           }else {
             this.currentPageNumber = 1;
@@ -93,8 +93,8 @@ export class ListingByCategoryComponent implements OnInit {
         (err) => {}
       );
     }
- 
-    
+
+
   }
 
   change_route(slug): void{
@@ -111,7 +111,7 @@ export class ListingByCategoryComponent implements OnInit {
   }
 
   fetchCategories(): any {
-    let url = '/classified_category/get_all_parent';   
+    let url = '/classified_category/get_all_parent';
 
     this.api.post(url, {}).subscribe(
       (res) => {
@@ -119,7 +119,7 @@ export class ListingByCategoryComponent implements OnInit {
       },
       (err) => {}
     );
-    
+
   }
 
 

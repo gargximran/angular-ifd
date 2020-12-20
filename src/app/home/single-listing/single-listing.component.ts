@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { ApiService } from 'src/app/service/api.service';
 import { AuthService } from 'src/app/service/auth.service';
+import {OwlOptions} from 'ngx-owl-carousel-o';
 
 @Component({
   selector: 'app-single-listing',
@@ -13,7 +14,7 @@ export class SingleListingComponent implements OnInit {
   constructor(private route: ActivatedRoute, private auth: AuthService, private api: ApiService) { }
   postSlug = '';
   isLoggedIn = false;
-
+  today = new Date().toISOString();
   post = {
     state: {
       name: ''
@@ -38,6 +39,7 @@ export class SingleListingComponent implements OnInit {
       email: '',
       phone: '',
     },
+    images: [],
     created_at: ''
   };
 
@@ -59,7 +61,7 @@ export class SingleListingComponent implements OnInit {
         err => {}
       )
     }
-    
+
   }
 
 

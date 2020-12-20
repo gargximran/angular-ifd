@@ -8,7 +8,7 @@ import { HomeFooterComponent } from './include/footer/footer.component';
 import { HomeLayoutComponent } from './layout/layout.component';
 import { NgxTypedJsModule } from 'ngx-typed-js';
 import { ReactiveFormsModule } from '@angular/forms';
-import { NgbModalModule, NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import {NgbCarouselModule, NgbModalModule, NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import {NgxPaginationModule} from 'ngx-pagination';
 import { ListingByCategoryComponent } from './listing-by-category/listing-by-category.component';
 import { CarouselModule } from 'ngx-owl-carousel-o';
@@ -41,7 +41,8 @@ import { MomentModule } from 'ngx-moment';
     NgbModule,
     NgxPaginationModule,
     CarouselModule,
-    MomentModule
+    MomentModule,
+    NgbCarouselModule
   ],
 })
 export class HomeModule {}
