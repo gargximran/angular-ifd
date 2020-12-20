@@ -37,6 +37,23 @@
 
 
 <div class="container mt-3">
+	<div class="row my-2">
+		<div class="col-12">
+
+			<owl-carousel-o [options]="customOptions">
+ 
+				<ng-container *ngFor="let child of childCategories">
+				  <ng-template carouselSlide [id]="child.id">
+					  <span style="cursor: default;" (dblclick)="change_route(child.slug)" class="badge badge-pill badge-dark">{{child.name}}</span>
+					
+				  </ng-template>
+				</ng-container>
+			 
+			  </owl-carousel-o>
+		
+			
+		</div>
+	</div>
   <div class="row">
     <div class="col-lg-8 col-md-8">
       <div class="row">
@@ -94,14 +111,13 @@
           <h3 (click)="collapseLocation.toggle()" style="cursor: pointer;"><i class="sl sl-icon-folder-alt"></i> States
           </h3>
           <ul #collapseLocation="ngbCollapse" [(ngbCollapse)]="isCollapsedLocation" class="utf_listing_detail_sidebar">
-            <li *ngFor="let state of states" class="text-capitalize"><i class="fa fa-angle-double-right"></i> <a [routerLink]="[ '/state', state.slug]">{{state.name}}</a></li>
+            <li *ngFor="let state of states" class="text-capitalize"><i class="fa fa-angle-double-right"></i> <a [routerLink]="['/category', params, 'state', state.slug]">{{state.name}}</a></li>
           </ul>
         </div>
         <div class="utf_box_widget margin-top-35 margin-bottom-75">
           <h3 (click)="collapseCategory.toggle()" style="cursor: pointer;"><i class="sl sl-icon-folder-alt"></i>
             Categories</h3>
           <ul #collapseCategory="ngbCollapse" [(ngbCollapse)]="isCollapsed" class="utf_listing_detail_sidebar">
-      
             <li *ngFor="let category of parentCategories" class="text-capitalize"><i class="fa fa-angle-double-right"></i> <a [routerLink]="[ '/category', category.slug]">{{category.name}}</a></li>
           </ul>
         </div>

@@ -10,13 +10,24 @@ import { NgxTypedJsModule } from 'ngx-typed-js';
 import { ReactiveFormsModule } from '@angular/forms';
 import { NgbModalModule, NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import {NgxPaginationModule} from 'ngx-pagination';
+import { ListingByCategoryComponent } from './listing-by-category/listing-by-category.component';
+import { CarouselModule } from 'ngx-owl-carousel-o';
+import { ListByStateComponent } from './list-by-state/list-by-state.component';
+import { ListByCityComponent } from './list-by-city/list-by-city.component';
+import { ListByCategoryStateComponent } from './list-by-category-state/list-by-category-state.component';
+import { ListByCategoryCityComponent } from './list-by-category-city/list-by-category-city.component';
 
 @NgModule({
   declarations: [
     HomeHeaderComponent,
     HomeComponent,
     HomeFooterComponent,
-    HomeLayoutComponent
+    HomeLayoutComponent,
+    ListingByCategoryComponent,
+    ListByStateComponent,
+    ListByCityComponent,
+    ListByCategoryStateComponent,
+    ListByCategoryCityComponent
   ],
   imports: [
     CommonModule,
@@ -25,7 +36,8 @@ import {NgxPaginationModule} from 'ngx-pagination';
     ReactiveFormsModule,
     NgbModalModule,
     NgbModule,
-    NgxPaginationModule
+    NgxPaginationModule,
+    CarouselModule
   ],
 })
 export class HomeModule {}

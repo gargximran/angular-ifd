@@ -18,11 +18,15 @@ export class HomeComponent implements OnInit {
   postStatus = 'active';
 
   products = [];
+  parentCategories = [];
+  states = [];
 
   constructor(private api: ApiService) { }
 
   ngOnInit(): void {
     this.fetchData();
+    this.fetchCategories();
+    this.initialize_all_states();
   }
 
   fetchData(): any {
@@ -47,6 +51,28 @@ export class HomeComponent implements OnInit {
   ChangeItemPerPageSize(event): void {
     this.itemPerPage = event.target.value;
     this.fetchData();
+  }
+
+  fetchCategories(): any {
+    const form = new FormData();
+    let url = '/classified_category/get_all_parent';   
+
+    this.api.post(url, form).subscribe(
+      (res) => {
+        this.parentCategories = res.data
+      },
+      (err) => {}
+    );
+  }
+
+
+  initialize_all_states(): void{
+    this.api.get('/state/view').subscribe(
+      res => {
+        this.states = res.data;
+      },
+      err => {}
+    );
   }
 
 }

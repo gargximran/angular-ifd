@@ -91,18 +91,17 @@
     <div class="col-lg-4 col-md-4">
       <div class="sidebar">
         <div class="utf_box_widget margin-top-35 margin-bottom-75">
-          <h3 (click)="collapseLocation.toggle()" style="cursor: pointer;"><i class="sl sl-icon-folder-alt"></i> States
+          <h3 (click)="collapseLocation.toggle()" style="cursor: pointer;"><i class="sl sl-icon-folder-alt"></i> Cities of {{currentState.name}}
           </h3>
           <ul #collapseLocation="ngbCollapse" [(ngbCollapse)]="isCollapsedLocation" class="utf_listing_detail_sidebar">
-            <li *ngFor="let state of states" class="text-capitalize"><i class="fa fa-angle-double-right"></i> <a [routerLink]="[ '/state', state.slug]">{{state.name}}</a></li>
+            <li *ngFor="let city of cities" class="text-capitalize"><i class="fa fa-angle-double-right"></i> <a [routerLink]="[ '/city', city.slug]">{{city.name}}</a></li>
           </ul>
         </div>
         <div class="utf_box_widget margin-top-35 margin-bottom-75">
           <h3 (click)="collapseCategory.toggle()" style="cursor: pointer;"><i class="sl sl-icon-folder-alt"></i>
             Categories</h3>
           <ul #collapseCategory="ngbCollapse" [(ngbCollapse)]="isCollapsed" class="utf_listing_detail_sidebar">
-      
-            <li *ngFor="let category of parentCategories" class="text-capitalize"><i class="fa fa-angle-double-right"></i> <a [routerLink]="[ '/category', category.slug]">{{category.name}}</a></li>
+            <li *ngFor="let category of parentCategories" class="text-capitalize"><i class="fa fa-angle-double-right"></i> <a [routerLink]="[ '/category', category.slug, 'state', params]">{{category.name}}</a></li>
           </ul>
         </div>
       </div>
