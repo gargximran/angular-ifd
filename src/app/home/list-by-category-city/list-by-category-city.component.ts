@@ -25,15 +25,17 @@ export class ListByCategoryCityComponent implements OnInit {
 
   products = [];
   childCategories = [];
-  state = {};
+  state = {
+    name: ''
+  };
   cities = []
 
   customOptions: OwlOptions = {
-    loop: true,
-    mouseDrag: true,
+    loop: false,
+    mouseDrag: false,
     touchDrag: true,
     pullDrag: false,
-    dots: false,
+    dots: true,
     navSpeed: 2000,
     navText: ['', ''],
     responsive: {
@@ -50,7 +52,7 @@ export class ListByCategoryCityComponent implements OnInit {
         items: 8
       }
     },
-    nav: false
+    nav: true
   }
 
   constructor(private api: ApiService, private route:ActivatedRoute, private router: Router) { }

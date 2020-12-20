@@ -16,6 +16,8 @@ import { ListByStateComponent } from './list-by-state/list-by-state.component';
 import { ListByCityComponent } from './list-by-city/list-by-city.component';
 import { ListByCategoryStateComponent } from './list-by-category-state/list-by-category-state.component';
 import { ListByCategoryCityComponent } from './list-by-category-city/list-by-category-city.component';
+import { SingleListingComponent } from './single-listing/single-listing.component';
+import { MomentModule } from 'ngx-moment';
 
 @NgModule({
   declarations: [
@@ -27,7 +29,8 @@ import { ListByCategoryCityComponent } from './list-by-category-city/list-by-cat
     ListByStateComponent,
     ListByCityComponent,
     ListByCategoryStateComponent,
-    ListByCategoryCityComponent
+    ListByCategoryCityComponent,
+    SingleListingComponent
   ],
   imports: [
     CommonModule,
@@ -37,7 +40,8 @@ import { ListByCategoryCityComponent } from './list-by-category-city/list-by-cat
     NgbModalModule,
     NgbModule,
     NgxPaginationModule,
-    CarouselModule
+    CarouselModule,
+    MomentModule
   ],
 })
 export class HomeModule {}

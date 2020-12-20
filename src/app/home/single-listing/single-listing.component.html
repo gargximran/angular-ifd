@@ -1,0 +1,82 @@
+<div class="container">
+  <div class="row utf_sticky_main_wrapper">
+    <div class="col-lg-8 col-md-8">
+      <div id="titlebar" class="utf_listing_titlebar">
+        <div class="utf_listing_titlebar_title">
+          <h2>
+            {{ post.name }}
+		  </h2>
+		  <span class="call_now"
+            ><i class="sl sl-icon-phone"></i> Price : {{post.price}} inr <sup class="badge badge-primary">{{post.price_type}}</sup></span
+          >
+          <span>
+            <a class="listing-address">
+              <i class="sl sl-icon-location"></i> Brand : {{post.brand.name}}
+            </a>
+          </span>
+          <span class="call_now text-capitalize"
+            ><i class="sl sl-icon-phone"></i> Condition : {{post.condition}}</span
+		  >
+		  
+		  <span class="call_now text-capitalize"
+            ><i class="sl sl-icon-phone"></i> Age : {{post.age}} month</span
+          >
+          <ul class="listing_item_social">
+            <li *ngFor="let category of post.category" class="m-1">
+              <a> {{ category.name }}</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+      <div id="utf_listing_overview" class="utf_listing_section">
+        <h3 class="utf_listing_headline_part margin-top-30 margin-bottom-30">
+          Description
+        </h3>
+        <pre
+          >{{ post.description }}
+        </pre>
+      </div>
+
+      <div id="utf_listing_location" class="utf_listing_section">
+        <h3 class="utf_listing_headline_part margin-top-60 margin-bottom-40">
+          Location
+        </h3>
+        <ul class="utf_listing_detail_sidebar">
+          <li>
+            <i class="sl sl-icon-directions pr-2"></i> City:
+            {{ post.city.name }}
+          </li>
+          <li>
+            <i class="sl sl-icon-map pr-2"></i> State: {{ post.state.name }}
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Sidebar -->
+    <div class="col-lg-4 col-md-4 margin-top-75 sidebar-search">
+      <div class="utf_box_widget margin-top-35">
+        <h3><i class="sl sl-icon-phone"></i> Contact Info</h3>
+        <div class="utf_hosted_by_user_title pl-0">
+          <h4>
+            <a class="text-capitalize">{{post.user.first_name}} {{post.user.last_name}}</a><span>Posted {{post.created_at | amDifference : today : 'days' : false }} days Ago</span>
+            <span
+              ><i class="sl sl-icon-location"></i> {{post.address}}</span
+            >
+          </h4>
+        </div>
+
+        <ul class="utf_listing_detail_sidebar" *ngIf="isLoggedIn">
+          <li><i class="sl sl-icon-phone"></i> +(012) 1123-254-456</li>
+          <li>
+            <i class="sl sl-icon-globe"></i> <a href="#">www.example.com</a>
+          </li>
+          <li>
+            <i class="fa fa-envelope-o"></i>
+            <a href="mailto:info@example.com">info@example.com</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>

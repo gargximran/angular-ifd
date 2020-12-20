@@ -44,7 +44,7 @@
  
 				<ng-container *ngFor="let child of childCategories">
 				  <ng-template carouselSlide [id]="child.id">
-					  <span style="cursor: default;" (dblclick)="change_route(child.slug)" class="badge badge-pill badge-dark">{{child.name}}</span>
+					  <span style="cursor: pointer;" (click)="change_route(child.slug)" class="badge badge-pill badge-dark p-1">{{child.name}}</span>
 					
 				  </ng-template>
 				</ng-container>
@@ -67,20 +67,19 @@
 					}
 			">
           <div class="utf_listing_item-container list-layout">
-            <a class="utf_listing_item">
+            <a class="utf_listing_item" [routerLink]="['/single', product.slug]">
               <div class="utf_listing_item-image">
                 <img alt="" src="{{product.images[0] || 'assets/images/dumylogo.png'}}">
               </div>
               <div class="utf_listing_item_content">
                 <div class="utf_listing_item-inner">
                   <h3>{{product.name}}</h3>
-                  <span><i class="sl sl-icon-location"></i> The Ritz-Carlton, Hong Kong</span>
-                  <span><i class="sl sl-icon-phone"></i> (415) 796-3633</span>
-                  <div class="utf_star_rating_section" data-rating="4.5">
-                    <div class="utf_counter_star_rating">(4.5)</div>
-                    <span class="star"></span><span class="star"></span><span class="star"></span><span
-                    class="star"></span><span class="star half"></span></div>
-                  <p>{{product.description.slice(0, 60)}}</p>
+                  <span><i class="sl sl-icon-location"></i> {{product.address}}</span>
+                  <span><i class="sl sl-icon-directions"></i> {{product.city.name}}</span>
+                  <span><i class="sl sl-icon-map"></i> {{product.state.name}}</span>
+                  <span><i class="sl sl-icon-flag"></i> <span class=" text-white badge badge-pill badge-dark d-inline-block mx-1" *ngFor="let category of product.category">{{category.name}}</span></span>
+                 
+                  <p>{{product.description.slice(0, 100)}}...</p>
                 </div>
               </div>
             </a>

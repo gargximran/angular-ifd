@@ -26,11 +26,11 @@ export class ListingByCategoryComponent implements OnInit {
   states = [];
 
   customOptions: OwlOptions = {
-    loop: true,
-    mouseDrag: true,
+    loop: false,
+    mouseDrag: false,
     touchDrag: true,
     pullDrag: false,
-    dots: false,
+    dots: true,
     navSpeed: 2000,
     navText: ['', ''],
     responsive: {
@@ -47,7 +47,7 @@ export class ListingByCategoryComponent implements OnInit {
         items: 8
       }
     },
-    nav: false
+    nav: true
   }
 
   constructor(private api: ApiService, private route: ActivatedRoute, private router: Router) { }

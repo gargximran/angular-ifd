@@ -80,7 +80,11 @@ app-read-more small a{
 }
 
 
-
+pre{
+  font-family: 'Nunito', sans-serif;
+  text-transform: none;
+  white-space: pre-wrap;
+}
 
 
 

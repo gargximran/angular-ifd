@@ -23,7 +23,9 @@ export class ListByStateComponent implements OnInit {
   products = [];
   parentCategories = [];
   cities = [];
-  currentState = {};
+  currentState = {
+    name: ''
+  };
 
 
   constructor(private api: ApiService, private route: ActivatedRoute, private router: Router) { }
