@@ -23,10 +23,11 @@
             <div class="main_input_search_part_item">
               <input
                 placeholder="What are you looking for?"
+                #searchInput
                 type="text"
               />
             </div>
-            <button class="button">Search</button>
+            <button class="button" (click)="search(searchInput)">Search</button>
           </div>
 
         </div>
@@ -37,6 +38,14 @@
 
 
 <div class="container mt-3">
+  <div class="row">
+    <div class="col-md-12">
+      <div class="alert alert-info" *ngIf="searchText">
+        Searching for : {{searchText}}
+      </div>
+    </div>
+  </div>
+
   <div class="row">
     <div class="col-lg-8 col-md-8">
       <div class="row">

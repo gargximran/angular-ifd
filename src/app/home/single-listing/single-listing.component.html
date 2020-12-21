@@ -1,7 +1,7 @@
 <div class="utf_listing_section" id="utf_listing_gallery_part">
   <div class="utf_listing_slider utf_gallery_container margin-bottom-0 slick-initialized slick-slider">
     <div aria-live="polite" class="slick-list bg-secondary padding-for-pc">
-      <ngb-carousel *ngIf="post.images">
+      <ngb-carousel *ngIf="post.images && post.images[1]">
           <ng-template ngbSlide *ngFor="let im of post.images">
             <div class="image-holder">
               <img [src]="im" class="single_image_car">
@@ -10,6 +10,9 @@
       </ngb-carousel>
       <div class="image-holder" *ngIf="!post.images">
         <img  class="single_image_car" src="{{'assets/images/dumylogo.png'}}">
+      </div>
+      <div class="image-holder" *ngIf="post.images && !post.images[1]">
+        <img  class="single_image_car" src="{{post.images[0]}}">
       </div>
     </div>
   </div>

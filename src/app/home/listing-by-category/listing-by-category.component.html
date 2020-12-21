@@ -24,9 +24,10 @@
               <input
                 placeholder="What are you looking for?"
                 type="text"
+                #inputValue
               />
             </div>
-            <button class="button">Search</button>
+            <button class="button" (click)='search(inputValue)'>Search</button>
           </div>
 
         </div>

@@ -56,7 +56,6 @@ export class SingleListingComponent implements OnInit {
       this.api.post('/classified_product/get_post/' + this.postSlug, {}).subscribe(
         res => {
           this.post = res.data;
-          console.log(res.data)
         },
         err => {}
       )

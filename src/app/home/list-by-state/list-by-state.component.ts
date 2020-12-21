@@ -98,6 +98,16 @@ export class ListByStateComponent implements OnInit {
     
   }
 
+  search(value): void{
+    if (value.value){
+      this.router.navigate(['/'], {
+        queryParams: {
+          search: value.value
+        }
+      })
+    }
+  }
+
 
 
 
