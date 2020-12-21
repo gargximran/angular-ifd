@@ -23,7 +23,7 @@ export class ListByCategoryCityComponent implements OnInit {
 
   parentCategories = [];
 
-  directories: any = [];
+  products: any = [];
   childCategories: any = [];
   state: any = {
     name: ''
@@ -94,7 +94,7 @@ export class ListByCategoryCityComponent implements OnInit {
       this.api.post(url, form).subscribe(
         (res) => {
           this.totalVolume = res.data.count;
-          this.directories = res.data.collections;
+          this.products = res.data.collections;
           this.childCategories = res.data.child_category;
           this.cities = res.data.cities;
           this.state = res.data.state;

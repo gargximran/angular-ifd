@@ -1,0 +1,68 @@
+.single_image_car{
+  height: 100%;
+  display: block;
+  margin: 0 auto;
+}
+
+.image-holder{
+  height: 450px !important;
+  width: 100%;
+  overflow: hidden;
+}
+.padding-for-pc{
+  padding: 0px 15%;
+}
+
+
+
+@media (min-width: 768px) and (max-width: 1024px) {
+
+  .image-holder {
+    height: 400px !important;
+  }
+
+  .padding-for-pc{
+    padding: 0px 0;
+  }
+  .utf_listing_slider, .utf_listing_slider .item{
+    min-height: 400px !important;
+  }
+
+}
+
+
+
+@media (min-width: 481px) and (max-width: 767px) {
+
+  .image-holder {
+    height: 250px !important;
+  }
+
+  .padding-for-pc{
+    padding: 0px 0;
+  }
+  .utf_listing_slider, .utf_listing_slider .item{
+    min-height: 250px !important;
+  }
+
+}
+
+/*
+  ##Device = Most of the Smartphones Mobiles (Portrait)
+  ##Screen = B/w 320px to 479px
+*/
+
+@media (min-width: 320px) and (max-width: 480px) {
+
+  .image-holder {
+    height: 250px !important;
+  }
+
+  .padding-for-pc{
+    padding: 0px 0;
+  }
+  .utf_listing_slider, .utf_listing_slider .item{
+    min-height: 250px !important;
+  }
+
+}
