@@ -1,0 +1,135 @@
+<div class="clearfix"></div>
+
+<div
+  class="search_container_block home_main_search_part main_search_block"
+  style="background-image: url('assets/images/city_search_background.jpg');"
+>
+  <div class="main_inner_search_block">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-12">
+          <h2>
+            <ngx-typed-js [backDelay]="1050" [backSpeed]="80" [loop]="true"
+                          [startDelay]="1000" [strings]="['Hotels', 'Restaurants', 'Attractions']" [typeSpeed]="80">
+              Find Your Nearby
+              <span class="typing typed-words"></span>
+            </ngx-typed-js>
+          </h2>
+          <h4>
+            Find some of the best tips from around the city from our partners
+            and friends.
+          </h4>
+          <div class="main_input_search_part">
+            <div class="main_input_search_part_item">
+              <input
+                placeholder="What are you looking for?"
+                type="text"
+                #inputValue
+              />
+            </div>
+            <button class="button" (click)='search(inputValue)'>Search</button>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<div class="container mt-3">
+  <div class="row my-2">
+    <div class="col-12">
+
+      <owl-carousel-o [options]="customOptions">
+
+        <ng-container *ngFor="let child of childCategories">
+          <ng-template [id]="child.id" carouselSlide>
+            <span (click)="change_route(child.slug)" class="badge badge-pill badge-dark p-1"
+                  style="cursor: pointer;">{{child.name}}</span>
+
+          </ng-template>
+        </ng-container>
+
+      </owl-carousel-o>
+
+
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-lg-8 col-md-8">
+      <div class="row">
+        <div class="col-lg-12 col-md-12" *ngFor="
+			  let directory of directories
+				| paginate
+				  : {
+					  currentPage: currentPageNumber,
+					  totalItems: totalVolume,
+					  itemsPerPage: itemPerPage
+					}
+			">
+          <div class="utf_listing_item-container list-layout">
+            <a class="utf_listing_item" [routerLink]="['/directory/single', directory.slug]">
+              <div class="utf_listing_item-image" *ngIf="directory.image">
+                <img alt="" src="{{directory.image}}">
+              </div>
+              <div class="utf_listing_item-image" *ngIf="!directory.image">
+                <img alt="" src="{{'assets/images/dumylogo.png'}}">
+              </div>
+              <div class="utf_listing_item_content">
+                <div class="utf_listing_item-inner">
+                  <h3>{{directory.title}}</h3>
+                  <span><i class="sl sl-icon-location"></i> {{directory.address}}</span>
+                  <span><i class="sl sl-icon-directions"></i> {{directory.city.name}}</span>
+                  <span><i class="sl sl-icon-map"></i> {{directory.state.name}}</span>
+                  <span><i class="sl sl-icon-flag"></i> <span class=" text-white badge badge-pill badge-dark d-inline-block mx-1" *ngFor="let category of directory.category">{{category.name}}</span></span>
+
+                  <p>{{directory.description.slice(0, 100)}}...</p>
+                </div>
+              </div>
+            </a>
+          </div>
+        </div>
+      </div>
+      <div class="clearfix"></div>
+      <div class="row">
+        <div class="col-md-12">
+          <div class="utf_pagination_container_part margin-top-20 margin-bottom-70">
+            <pagination-controls
+              (pageBoundsCorrection)="pageChange($event)"
+              (pageChange)="pageChange($event)"
+              class="pagination"
+              nextLabel=""
+              previousLabel=""
+              screenReaderCurrentLabel=".."
+            ></pagination-controls>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Sidebar -->
+    <div class="col-lg-4 col-md-4">
+      <div class="sidebar">
+        <div class="utf_box_widget margin-top-35 margin-bottom-75">
+          <h3 (click)="collapseLocation.toggle()" style="cursor: pointer;"><i class="sl sl-icon-folder-alt"></i> City
+            of {{state.name}}
+          </h3>
+          <ul #collapseLocation="ngbCollapse" [(ngbCollapse)]="isCollapsedLocation" class="utf_listing_detail_sidebar">
+            <li *ngFor="let city of cities" class="text-capitalize"><i class="fa fa-angle-double-right"></i> <a
+              [routerLink]="['/directory/category', categorySlug, 'city', city.slug]">{{city.name}}</a></li>
+          </ul>
+        </div>
+        <div class="utf_box_widget margin-top-35 margin-bottom-75">
+          <h3 (click)="collapseCategory.toggle()" style="cursor: pointer;"><i class="sl sl-icon-folder-alt"></i>
+            Categories</h3>
+          <ul #collapseCategory="ngbCollapse" [(ngbCollapse)]="isCollapsed" class="utf_listing_detail_sidebar">
+            <li *ngFor="let category of parentCategories" class="text-capitalize"><i
+              class="fa fa-angle-double-right"></i> <a
+              [routerLink]="['/directory/category', category.slug, 'state', stateSlug]">{{category.name}}</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

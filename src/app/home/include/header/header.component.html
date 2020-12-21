@@ -3,7 +3,7 @@
     <div class="container">
       <div class="utf_left_side">
         <div id="logo">
-          <a href="index_1.html"><img src="assets/images/logo.png" alt="" /></a>
+          <a [routerLink]="['/']"><img src="assets/images/logo.png" alt="" /></a>
         </div>
         <div class="mmenu-trigger">
           <button class="hamburger utfbutton_collapse" type="button">
@@ -14,15 +14,15 @@
         </div>
         <nav id="navigation" class="style_one">
           <ul id="responsive">
-            
+
             <li>
               <a routerLinkActive="current" [routerLink]="[ '/' ]">Listings</a>
             </li>
             <li>
-              <a href="#">Directory</a>
+              <a routerLinkActive="current" [routerLink]="['/directory']">Directory</a>
             </li>
             <li>
-              <a href="#">Job</a>       
+              <a href="#">Job</a>
             </li>
           </ul>
         </nav>
@@ -74,12 +74,12 @@
             registerTabBtn,
             signInTabBtn,
             registerTab,
-            signInTab            
+            signInTab
           )
         "
       >
         <a>Register</a>
-  
+
       </li>
     </ul>
     <div class="tab_container alt">
@@ -132,7 +132,7 @@
             </ng-container>
             <ng-template #submitText>Login</ng-template>
           </button>
-           
+
           </div>
         </form>
       </div>
@@ -152,8 +152,8 @@
                     placeholder="First Name"
                   />
                 </label>
-                <small  
-                *ngIf="registrationForm.errors && registrationForm.errors.first_name"             
+                <small
+                *ngIf="registrationForm.errors && registrationForm.errors.first_name"
                 class="form-text text-danger"
                 >{{registrationForm.errors.first_name}}</small
               >
@@ -172,15 +172,15 @@
                     placeholder="Last Name"
                   />
                 </label>
-                <small  
-                *ngIf="registrationForm.errors && registrationForm.errors.last_name"             
+                <small
+                *ngIf="registrationForm.errors && registrationForm.errors.last_name"
                 class="form-text text-danger"
                 >{{registrationForm.errors.last_name}}</small
               >
               </p>
             </div>
           </div>
-          
+
           <p class="utf_row_form utf_form_wide_block">
             <label for="email2">
               <input
@@ -191,8 +191,8 @@
                 placeholder="Email"
               />
             </label>
-            <small  
-                *ngIf="registrationForm.errors && registrationForm.errors.email"             
+            <small
+                *ngIf="registrationForm.errors && registrationForm.errors.email"
                 class="form-text text-danger"
                 >{{registrationForm.errors.email}}</small
               >
@@ -207,8 +207,8 @@
                 placeholder="Username"
               />
             </label>
-            <small  
-                *ngIf="registrationForm.errors && registrationForm.errors.username"             
+            <small
+                *ngIf="registrationForm.errors && registrationForm.errors.username"
                 class="form-text text-danger"
                 >{{registrationForm.errors.username}}</small
               >
@@ -224,8 +224,8 @@
                 placeholder="Phone"
               />
             </label>
-            <small  
-                *ngIf="registrationForm.errors && registrationForm.errors.phone"             
+            <small
+                *ngIf="registrationForm.errors && registrationForm.errors.phone"
                 class="form-text text-danger"
                 >{{registrationForm.errors.phone}}</small
               >
@@ -240,8 +240,8 @@
                 placeholder="Password"
               />
             </label>
-            <small  
-                *ngIf="registrationForm.errors && registrationForm.errors.password"             
+            <small
+                *ngIf="registrationForm.errors && registrationForm.errors.password"
                 class="form-text text-danger"
                 >{{registrationForm.errors.password}}</small
               >
@@ -265,7 +265,7 @@
             </ng-container>
             <ng-template #submitText>Register</ng-template>
           </button>
-          
+
         </form>
       </div>
     </div>

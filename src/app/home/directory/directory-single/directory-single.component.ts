@@ -1,0 +1,39 @@
+import { Component, OnInit } from '@angular/core';
+import {ActivatedRoute} from '@angular/router';
+import {AuthService} from '../../../service/auth.service';
+import {ApiService} from '../../../service/api.service';
+
+@Component({
+  selector: 'app-directory-single',
+  templateUrl: './directory-single.component.html',
+  styleUrls: ['./directory-single.component.css']
+})
+export class DirectorySingleComponent implements OnInit {
+
+  constructor(private route: ActivatedRoute, private auth: AuthService, private api: ApiService) { }
+  postSlug = '';
+  isLoggedIn = false;
+  today = new Date().toISOString();
+  post: any;
+
+  ngOnInit(): void {
+    this.route.paramMap.subscribe(d => {
+      this.postSlug = d.get('post_slug');
+    });
+    this.isLoggedIn = this.auth.isLoggedIn;
+    this.fetchPost();
+  }
+
+  fetchPost(): void{
+    if (this.postSlug){
+      this.api.post('/directory_item/get_directory/' + this.postSlug, {}).subscribe(
+        res => {
+          this.post = res.data;
+        },
+        err => {}
+      );
+    }
+
+  }
+
+}

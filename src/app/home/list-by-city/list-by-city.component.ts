@@ -11,7 +11,7 @@ export class ListByCityComponent implements OnInit {
 
   isCollapsed = false;
   isCollapsedLocation = false;
-  params = ''
+  params = '';
 
   // pagination objects
   currentPageNumber = 1;
@@ -29,19 +29,18 @@ export class ListByCityComponent implements OnInit {
 
   constructor(private api: ApiService, private route: ActivatedRoute, private router: Router) { }
 
-  ngOnInit(): void {    
+  ngOnInit(): void {
     this.fetchData();
     this.fetchCategories();
-
-    
   }
-  
 
+
+  // tslint:disable-next-line:use-lifecycle-interface
   ngDoCheck(): void {
     this.route.paramMap.subscribe(
       d => {
-        let slug = d.get('slug')        
-        if (slug){          
+        const slug = d.get('slug');
+        if (slug){
           if (this.params == slug){
           }else {
             this.currentPageNumber = 1;
@@ -50,7 +49,7 @@ export class ListByCityComponent implements OnInit {
           }
         }
       }
-    )
+    );
   }
 
   fetchData(): any {
@@ -59,20 +58,17 @@ export class ListByCityComponent implements OnInit {
     form.append('pageNumber', String(this.currentPageNumber));
 
     if (this.params){
-      let url = '/classified_product/get_products/city/'+ this.params;
+      const url = '/classified_product/get_products/city/' + this.params;
       this.api.post(url, form).subscribe(
         (res) => {
           this.totalVolume = res.data.count;
           this.products = res.data.collections;
           this.cities = res.data.cities;
           this.currentState = res.data.state;
-          
         },
         (err) => {}
       );
     }
- 
-    
   }
 
 
@@ -86,24 +82,23 @@ export class ListByCityComponent implements OnInit {
   }
 
   fetchCategories(): any {
-    let url = '/classified_category/get_all_parent';   
+    const url = '/classified_category/get_all_parent';
 
     this.api.post(url, {}).subscribe(
       (res) => {
-        this.parentCategories = res.data
+        this.parentCategories = res.data;
       },
       (err) => {}
     );
-    
   }
 
   search(value): void{
     if (value.value){
-      this.router.navigate(['/'], {
+      this.router.navigate(['/directory'], {
         queryParams: {
           search: value.value
         }
-      })
+      });
     }
   }
 

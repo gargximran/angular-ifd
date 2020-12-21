@@ -1,13 +1,13 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
-import {ApiService} from '../../service/api.service';
+import {ApiService} from '../../../service/api.service';
+import {ActivatedRoute, Router} from '@angular/router';
 
 @Component({
-  selector: 'app-home',
-  templateUrl: './home.component.html',
-  styleUrls: ['./home.component.css']
+  selector: 'app-directory-home',
+  templateUrl: './directory-home.component.html',
+  styleUrls: ['./directory-home.component.css']
 })
-export class HomeComponent implements OnInit {
+export class DirectoryHomeComponent implements OnInit {
 
   isCollapsed = false;
   isCollapsedLocation = false;
@@ -18,11 +18,10 @@ export class HomeComponent implements OnInit {
   currentPageNumber = 1;
   totalVolume = 0;
   itemPerPage = 20;
-  postStatus = 'active';
 
-  products = [];
-  parentCategories = [];
-  states = [];
+  directories: any = [];
+  parentCategories: any = [];
+  states: any = [];
 
   constructor(private api: ApiService, private route: ActivatedRoute, private router: Router) { }
 
@@ -36,21 +35,20 @@ export class HomeComponent implements OnInit {
     const form = new FormData();
     form.append('itemPerPage', String(this.itemPerPage));
     form.append('pageNumber', String(this.currentPageNumber));
-    form.append('status', 'active');
 
-    let url = '/classified_product/get_products'
+    let url = '/directory_item/get_directories';
 
     this.route.queryParamMap.subscribe(d => {
       if (d.get('search')){
-        form.append('search', d.get('search'))
-        url = '/classified_product/search'
+        form.append('search', d.get('search'));
+        url = '/directory_item/search';
       }
     });
 
     this.api.post(url, form).subscribe(
       (res) => {
         this.totalVolume = res.data.count;
-        this.products = res.data.collections;
+        this.directories = res.data.collections;
       },
       (err) => {}
     );
@@ -67,7 +65,7 @@ export class HomeComponent implements OnInit {
 
   fetchCategories(): any {
     const form = new FormData();
-    let url = '/classified_category/get_all_parent';
+    let url = '/directory_category/get_all_parent';
 
     this.api.post(url, form).subscribe(
       (res) => {
@@ -79,13 +77,13 @@ export class HomeComponent implements OnInit {
 
   search(value): void{
     if (value.value){
-      this.router.navigate(['/'], {
+      this.router.navigate(['/directory'], {
         queryParams: {
           search: value.value
         }
       });
     } else {
-      this.router.navigate(['/']);
+      this.router.navigate(['/directory']);
     }
   }
 
@@ -96,7 +94,7 @@ export class HomeComponent implements OnInit {
         this.searchText = d.get('search');
         this.ngOnInit();
       }
-    })
+    });
   }
 
 

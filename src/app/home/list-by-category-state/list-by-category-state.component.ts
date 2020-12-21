@@ -23,12 +23,12 @@ export class ListByCategoryStateComponent implements OnInit {
 
   parentCategories = [];
 
-  products = [];
-  childCategories = [];
-  state = {
+  directories: any = [];
+  childCategories: any = [];
+  state: any = {
     name: ''
   };
-  cities = []
+  cities: any = [];
 
   customOptions: OwlOptions = {
     loop: false,
@@ -53,22 +53,25 @@ export class ListByCategoryStateComponent implements OnInit {
       }
     },
     nav: true
-  }
+  };
 
-  constructor(private api: ApiService, private route:ActivatedRoute, private router: Router) { }
+  constructor(private api: ApiService, private route: ActivatedRoute, private router: Router) { }
 
-  ngOnInit(): void {    
+  ngOnInit(): void {
     this.fetchData();
-    this.fetchCategories();    
+    this.fetchCategories();
   }
-  
 
+
+  // tslint:disable-next-line:use-lifecycle-interface
   ngDoCheck(): void {
     this.route.paramMap.subscribe(
       d => {
-        let cat_slug = d.get('cat_slug');
-        let state_slug = d.get('state_slug');     
-        if (cat_slug && state_slug){          
+        // tslint:disable-next-line:variable-name
+        const cat_slug = d.get('cat_slug');
+        // tslint:disable-next-line:variable-name
+        const state_slug = d.get('state_slug');
+        if (cat_slug && state_slug){
           if (this.stateSlug == state_slug && this.categorySlug == cat_slug){
           }else {
             this.currentPageNumber = 1;
@@ -78,7 +81,7 @@ export class ListByCategoryStateComponent implements OnInit {
           }
         }
       }
-    )
+    );
   }
 
   fetchData(): any {
@@ -87,11 +90,11 @@ export class ListByCategoryStateComponent implements OnInit {
     form.append('pageNumber', String(this.currentPageNumber));
 
     if (this.stateSlug && this.categorySlug){
-      let url = '/classified_product/get_products/category/'+ this.categorySlug + '/state/' + this.stateSlug;
+      const url = '/classified_product/get_products/category/'+ this.categorySlug + '/state/' + this.stateSlug;
       this.api.post(url, form).subscribe(
         (res) => {
           this.totalVolume = res.data.count;
-          this.products = res.data.collections;
+          this.directories = res.data.collections;
           this.childCategories = res.data.child_category;
           this.cities = res.data.cities;
           this.state = res.data.state;
@@ -99,12 +102,10 @@ export class ListByCategoryStateComponent implements OnInit {
         (err) => {}
       );
     }
- 
-    
   }
 
   change_route(slug): void{
-    this.router.navigateByUrl('/category/' + slug + '/state/' + this.stateSlug);
+    this.router.navigateByUrl('/directory/category/' + slug + '/state/' + this.stateSlug);
   }
 
   pageChange(event): any {
@@ -117,15 +118,14 @@ export class ListByCategoryStateComponent implements OnInit {
   }
 
   fetchCategories(): any {
-    let url = '/classified_category/get_all_parent';   
+    const url = '/classified_category/get_all_parent';
 
     this.api.post(url, {}).subscribe(
       (res) => {
-        this.parentCategories = res.data
+        this.parentCategories = res.data;
       },
       (err) => {}
     );
-    
   }
 
   search(value): void{
@@ -134,7 +134,7 @@ export class ListByCategoryStateComponent implements OnInit {
         queryParams: {
           search: value.value
         }
-      })
+      });
     }
   }
 

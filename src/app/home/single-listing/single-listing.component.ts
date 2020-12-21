@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { ApiService } from 'src/app/service/api.service';
 import { AuthService } from 'src/app/service/auth.service';
-import {OwlOptions} from 'ngx-owl-carousel-o';
 
 @Component({
   selector: 'app-single-listing',
@@ -46,19 +45,19 @@ export class SingleListingComponent implements OnInit {
   ngOnInit(): void {
     this.route.paramMap.subscribe(d => {
       this.postSlug = d.get('post_slug');
-    })
+    });
     this.isLoggedIn = this.auth.isLoggedIn;
     this.fetchPost();
   }
 
   fetchPost(): void{
-    if(this.postSlug){
+    if (this.postSlug){
       this.api.post('/classified_product/get_post/' + this.postSlug, {}).subscribe(
         res => {
           this.post = res.data;
         },
         err => {}
-      )
+      );
     }
 
   }

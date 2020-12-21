@@ -18,6 +18,14 @@ import { ListByCategoryStateComponent } from './list-by-category-state/list-by-c
 import { ListByCategoryCityComponent } from './list-by-category-city/list-by-category-city.component';
 import { SingleListingComponent } from './single-listing/single-listing.component';
 import { MomentModule } from 'ngx-moment';
+import { DirectoryPlaceholderComponent } from './directory/directory-placeholder/directory-placeholder.component';
+import { DirectoryHomeComponent } from './directory/directory-home/directory-home.component';
+import { DirectoryByCategoryComponent } from './directory/directory-by-category/directory-by-category.component';
+import { DirectoryByStateComponent } from './directory/directory-by-state/directory-by-state.component';
+import { DirectoryByCityComponent } from './directory/directory-by-city/directory-by-city.component';
+import { DirectoryByCategoryStateComponent } from './directory/directory-by-category-state/directory-by-category-state.component';
+import { DirectoryByCategoryCityComponent } from './directory/directory-by-category-city/directory-by-category-city.component';
+import { DirectorySingleComponent } from './directory/directory-single/directory-single.component';
 
 @NgModule({
   declarations: [
@@ -30,7 +38,15 @@ import { MomentModule } from 'ngx-moment';
     ListByCityComponent,
     ListByCategoryStateComponent,
     ListByCategoryCityComponent,
-    SingleListingComponent
+    SingleListingComponent,
+    DirectoryPlaceholderComponent,
+    DirectoryHomeComponent,
+    DirectoryByCategoryComponent,
+    DirectoryByStateComponent,
+    DirectoryByCityComponent,
+    DirectoryByCategoryStateComponent,
+    DirectoryByCategoryCityComponent,
+    DirectorySingleComponent
   ],
   imports: [
     CommonModule,

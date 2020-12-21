@@ -1,14 +1,13 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
-import { OwlOptions } from 'ngx-owl-carousel-o';
-import { ApiService } from 'src/app/service/api.service';
+import {ApiService} from '../../../service/api.service';
+import {ActivatedRoute, Router} from '@angular/router';
 
 @Component({
-  selector: 'app-listing-by-category',
-  templateUrl: './listing-by-category.component.html',
-  styleUrls: ['./listing-by-category.component.css']
+  selector: 'app-directory-by-city',
+  templateUrl: './directory-by-city.component.html',
+  styleUrls: ['./directory-by-city.component.css']
 })
-export class ListingByCategoryComponent implements OnInit {
+export class DirectoryByCityComponent implements OnInit {
 
   isCollapsed = false;
   isCollapsedLocation = false;
@@ -18,47 +17,22 @@ export class ListingByCategoryComponent implements OnInit {
   currentPageNumber = 1;
   totalVolume = 0;
   itemPerPage = 20;
-  postStatus = 'active';
 
-  products = [];
-  parentCategories = [];
-  childCategories = [];
-  states = [];
-
-  customOptions: OwlOptions = {
-    loop: false,
-    mouseDrag: false,
-    touchDrag: true,
-    pullDrag: false,
-    dots: true,
-    navSpeed: 2000,
-    navText: ['', ''],
-    responsive: {
-      0: {
-        items: 2
-      },
-      400: {
-        items: 5
-      },
-      740: {
-        items: 7
-      },
-      940: {
-        items: 8
-      }
-    },
-    nav: true
+  directories: any = [];
+  parentCategories: any = [];
+  cities: any = [];
+  currentState: any = {
+    name: ''
   };
+
 
   constructor(private api: ApiService, private route: ActivatedRoute, private router: Router) { }
 
   ngOnInit(): void {
     this.fetchData();
     this.fetchCategories();
-    this.initialize_all_states();
-
-
   }
+
 
   // tslint:disable-next-line:use-lifecycle-interface
   ngDoCheck(): void {
@@ -83,23 +57,19 @@ export class ListingByCategoryComponent implements OnInit {
     form.append('pageNumber', String(this.currentPageNumber));
 
     if (this.params){
-      let url = '/classified_product/get_products/' + this.params;
+      const url = '/directory_item/get_directory/city/' + this.params;
       this.api.post(url, form).subscribe(
         (res) => {
           this.totalVolume = res.data.count;
-          this.products = res.data.collections;
-          this.childCategories = res.data.child_category;
+          this.directories = res.data.collections;
+          this.cities = res.data.cities;
+          this.currentState = res.data.state;
         },
         (err) => {}
       );
     }
-
-
   }
 
-  change_route(slug): void{
-    this.router.navigateByUrl('/category/' + slug);
-  }
 
   pageChange(event): any {
     this.currentPageNumber = event;
@@ -111,37 +81,25 @@ export class ListingByCategoryComponent implements OnInit {
   }
 
   fetchCategories(): any {
-    const url = '/classified_category/get_all_parent';
+    const form = new FormData();
+    const url = '/directory_category/get_all_parent';
 
-    this.api.post(url, {}).subscribe(
+    this.api.post(url, form).subscribe(
       (res) => {
         this.parentCategories = res.data;
       },
       (err) => {}
     );
-
   }
 
   search(value): void{
     if (value.value){
-      this.router.navigate(['/'], {
+      this.router.navigate(['/directory'], {
         queryParams: {
           search: value.value
         }
       });
     }
-  }
-
-
-
-
-  initialize_all_states(): void{
-    this.api.get('/state/view').subscribe(
-      res => {
-        this.states = res.data;
-      },
-      err => {}
-    );
   }
 
 }

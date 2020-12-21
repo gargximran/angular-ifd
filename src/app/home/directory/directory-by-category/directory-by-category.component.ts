@@ -1,14 +1,14 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
-import { OwlOptions } from 'ngx-owl-carousel-o';
-import { ApiService } from 'src/app/service/api.service';
+import {OwlOptions} from 'ngx-owl-carousel-o';
+import {ApiService} from '../../../service/api.service';
+import {ActivatedRoute, Router} from '@angular/router';
 
 @Component({
-  selector: 'app-listing-by-category',
-  templateUrl: './listing-by-category.component.html',
-  styleUrls: ['./listing-by-category.component.css']
+  selector: 'app-directory-by-category',
+  templateUrl: './directory-by-category.component.html',
+  styleUrls: ['./directory-by-category.component.css']
 })
-export class ListingByCategoryComponent implements OnInit {
+export class DirectoryByCategoryComponent implements OnInit {
 
   isCollapsed = false;
   isCollapsedLocation = false;
@@ -20,10 +20,10 @@ export class ListingByCategoryComponent implements OnInit {
   itemPerPage = 20;
   postStatus = 'active';
 
-  products = [];
-  parentCategories = [];
-  childCategories = [];
-  states = [];
+  directories: any = [];
+  parentCategories: any = [];
+  childCategories: any = [];
+  states: any = [];
 
   customOptions: OwlOptions = {
     loop: false,
@@ -83,11 +83,11 @@ export class ListingByCategoryComponent implements OnInit {
     form.append('pageNumber', String(this.currentPageNumber));
 
     if (this.params){
-      let url = '/classified_product/get_products/' + this.params;
+      const url = '/directory_item/get_items/' + this.params;
       this.api.post(url, form).subscribe(
         (res) => {
           this.totalVolume = res.data.count;
-          this.products = res.data.collections;
+          this.directories = res.data.collections;
           this.childCategories = res.data.child_category;
         },
         (err) => {}
@@ -98,7 +98,7 @@ export class ListingByCategoryComponent implements OnInit {
   }
 
   change_route(slug): void{
-    this.router.navigateByUrl('/category/' + slug);
+    this.router.navigateByUrl('/directory/category/' + slug);
   }
 
   pageChange(event): any {
@@ -111,20 +111,20 @@ export class ListingByCategoryComponent implements OnInit {
   }
 
   fetchCategories(): any {
-    const url = '/classified_category/get_all_parent';
+    const form = new FormData();
+    const url = '/directory_category/get_all_parent';
 
-    this.api.post(url, {}).subscribe(
+    this.api.post(url, form).subscribe(
       (res) => {
         this.parentCategories = res.data;
       },
       (err) => {}
     );
-
   }
 
   search(value): void{
     if (value.value){
-      this.router.navigate(['/'], {
+      this.router.navigate(['/directory'], {
         queryParams: {
           search: value.value
         }
