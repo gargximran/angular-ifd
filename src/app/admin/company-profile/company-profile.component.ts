@@ -84,6 +84,7 @@ export class CompanyProfileComponent implements OnInit {
     this.fetchData();
   }
 
+  // tslint:disable-next-line:use-lifecycle-interface
   ngAfterContentInit(): void {
     if (this.auth.CompanyProfile) {
       this.companyDetail.name = this.auth.CompanyProfile.name;
@@ -318,7 +319,7 @@ export class CompanyProfileComponent implements OnInit {
         this.forDelete = '';
         this.fetchData();
       }
-    )
+    );
 
   }
 
@@ -330,11 +331,11 @@ export class CompanyProfileComponent implements OnInit {
 
   submitJobForm(): void{
     this.loading = true;
-    let url = ''
+    let url = '';
     if (this.jobPostForm.get('id').value){
-      url = '/job/update/' + this.jobPostForm.get('id').value
+      url = '/job/update/' + this.jobPostForm.get('id').value;
     }else{
-      url = '/job/create'
+      url = '/job/create';
     }
     const form = new FormData();
     form.append('title', this.jobPostForm.get('title').value || '');
@@ -344,23 +345,23 @@ export class CompanyProfileComponent implements OnInit {
     this.api.post(url, form).subscribe(
       res => {
         if (this.jobPostForm.get('id').value){
-          url = ''
+          url = '';
         }else{
           this.toastr.success('New Job Posted!');
         }
         this.loading = false;
-        this.ModalService.dismissAll()
+        this.ModalService.dismissAll();
         this.jobPostForm.reset();
         this.fetchData();
       },
       err => {
-        this.toastr.error('Check input data!')
+        this.toastr.error('Check input data!');
         this.loading = false;
         this.jobPostForm.setErrors({
           ...err.errors
         });
       }
-    )
+    );
 
   }
 
@@ -405,7 +406,7 @@ export class CompanyProfileComponent implements OnInit {
   open_modal(value): void{
     this.ModalService.open(value, {
       centered: true,
-      size:'xl'
-    })
+      size: 'xl'
+    });
   }
 }

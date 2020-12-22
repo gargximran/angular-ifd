@@ -116,10 +116,12 @@ export class DirectoryCategoryComponent implements OnInit {
     this.classifiedCategoryCreateForm.reset();
   }
 
+  // tslint:disable-next-line:use-lifecycle-interface
   ngDoCheck(): void {
     this.route.paramMap.subscribe(
       d => {
-        let parent_id = d.get('parent')
+        // tslint:disable-next-line:variable-name
+        const parent_id = d.get('parent');
         if (parent_id){
           if (this.parentValue !== parent_id){
             this.parentValue = parent_id;
@@ -127,7 +129,7 @@ export class DirectoryCategoryComponent implements OnInit {
           }
         }
       }
-    )
+    );
   }
 
   open(content): void {
@@ -185,7 +187,8 @@ export class DirectoryCategoryComponent implements OnInit {
 
     let url = '';
     this.route.paramMap.subscribe((d) => {
-      let parent_id = d.get('parent');
+      // tslint:disable-next-line:variable-name
+      const parent_id = d.get('parent');
       if (parent_id) {
         url = '/directory_category/get_child/' + parent_id;
       } else {
@@ -213,7 +216,7 @@ export class DirectoryCategoryComponent implements OnInit {
     this.fetchCategories();
   }
 
-  openDeleteAlert(data) {
+  openDeleteAlert(data): void{
     this.selectedItem.name = data.name;
     this.selectedItem.id = data.id;
     this.deleteSwal.title = `Delete ${data.name} ?`;

@@ -12,22 +12,22 @@ export class AdminHeaderComponent implements OnInit {
   constructor(private api: ApiService, private auth: AuthService) { }
 
   profile = {
-    created_at: "",
-    email: "",
-    first_name: "",
-    id: "",
-    last_name: "",
-    phone: "",
-  }
+    created_at: '',
+    email: '',
+    first_name: '',
+    id: '',
+    last_name: '',
+    phone: '',
+  };
 
   ngOnInit(): void {
-    if(this.auth._getUser_()){
+    if (this.auth._getUser_()){
       this.profile = this.auth._getUser_();
     }
   }
 
   toggle(content): void{
-    content.classList.toggle("active");
+    content.classList.toggle('active');
   }
 
 
@@ -35,10 +35,10 @@ export class AdminHeaderComponent implements OnInit {
 
   logout(): void{
     this.api.post('/user/logout', {}).subscribe(
-      (res)=> {
-        this.auth.logout()
+      (res) => {
+        this.auth.logout();
       }
-    )
+    );
   }
 
 }

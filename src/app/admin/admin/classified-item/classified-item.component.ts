@@ -193,11 +193,11 @@ export class ClassifiedItemComponent implements OnInit {
       form.append('images[]', value);
     });
     form.append('address', this.createForm.get('address').value || '');
-    form.append('category', String(this.createForm.get('category').value) || '');
-    form.append('state', String(this.createForm.get('state').value) || '');
-    form.append('city', String(this.createForm.get('city').value) || '');
-    form.append('email', String(this.createForm.get('email').value) || '');
-    form.append('phone', String(this.createForm.get('phone').value) || '');
+    form.append('category', String(this.createForm.get('category').value || ''));
+    form.append('state', this.createForm.get('state').value || '');
+    form.append('city', this.createForm.get('city').value || '');
+    form.append('email', this.createForm.get('email').value || '');
+    form.append('phone', this.createForm.get('phone').value || '');
 
     this.api.post('/classified_product/create', form).subscribe(
        res => {
@@ -468,7 +468,7 @@ export class ClassifiedItemComponent implements OnInit {
     form.append('state', this.updateForm.get('state').value);
     form.append('city', this.updateForm.get('city').value || '');
     form.append('category', String(this.updateForm.get('category').value) || '');
-    form.append('email', this.updateForm.get('email').value || '')
+    form.append('email', this.updateForm.get('email').value || '');
     form.append('phone', this.updateForm.get('phone').value || '');
 
     this.api.post('/classified_product/update/' + this.selectedItem.id, form).subscribe(

@@ -425,9 +425,12 @@ export class ProfessionalProfileComponent implements OnInit {
     function getBirthday(): any{
       let result = '';
       const bday = supperThis.formData.get('birthday').value;
+      // tslint:disable-next-line:triple-equals
       if (typeof bday == 'object'){
+        // tslint:disable-next-line:triple-equals
         result = `${bday.year}-${bday.month.length == 2 ? bday.month : '0' + bday.month}-${bday.day}`;
-      } else if(typeof bday == 'string'){
+        // tslint:disable-next-line:triple-equals
+      } else if (typeof bday == 'string'){
         result = bday;
       }
       return result;

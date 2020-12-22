@@ -30,7 +30,7 @@ export class AuthService {
     return this.token;
   }
 
-  public logout(): void{    
+  public logout(): void{
     if (this.isLoggedIn){
       localStorage.removeItem('__auth_session__');
       this.toastr.error('Logged Out!');
@@ -39,7 +39,6 @@ export class AuthService {
       localStorage.removeItem('__auth_session__');
       this.router.navigateByUrl('/');
     }
-    
   }
 
   public isAdmin(): boolean{
@@ -52,6 +51,7 @@ export class AuthService {
 
   public isCompany(): boolean{
     if (this._getUser_()){
+      // tslint:disable-next-line:triple-equals
       if (this._getUser_().type.role === 'client' && this._getUser_().type.client_type == 'company'){
         return true;
       }
@@ -60,6 +60,7 @@ export class AuthService {
 
   public isProfessional(): boolean{
     if (this._getUser_()){
+      // tslint:disable-next-line:triple-equals
       if (this._getUser_().type.role === 'client' && this._getUser_().type.client_type == 'professional'){
         return true;
       }
@@ -67,14 +68,14 @@ export class AuthService {
   }
 
   public get CompanyProfile(): any{
-    if(this.isCompany()){
+    if (this.isCompany()){
       return this._getSession_().company_profile;
     }
     return null;
   }
 
   public get ProfessionalProfile(): any{
-    if(this.isProfessional()){
+    if (this.isProfessional()){
       return this._getSession_().professional_profile;
     }
     return null;

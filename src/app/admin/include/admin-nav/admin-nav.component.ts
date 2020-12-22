@@ -17,32 +17,30 @@ export class AdminNavComponent implements OnInit {
   isProfessional = false;
 
   ngOnInit(): void {
-    if(this.auth.isAdmin()){
-      this.isAdmin = true
+    if (this.auth.isAdmin()){
+      this.isAdmin = true;
     }
 
-    if(this.auth.isCompany()){
+    if (this.auth.isCompany()){
       this.isCompany = true;
     }
 
-    if(this.auth.isProfessional()){
+    if (this.auth.isProfessional()){
       this.isProfessional = true;
     }
   }
 
-  
 
-
-  toggleMobileMenu(menu){
-    menu.classList.toggle('active')
+  toggleMobileMenu(menu): void{
+    menu.classList.toggle('active');
   }
 
-  logout(){
+  logout(): void{
     this.api.post('/user/logout', {}).subscribe(
-      (res)=> {
-        this.auth.logout()
+      (res) => {
+        this.auth.logout();
       }
-    )
+    );
   }
 
 }
