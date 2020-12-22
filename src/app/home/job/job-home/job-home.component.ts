@@ -3,11 +3,11 @@ import {ApiService} from '../../../service/api.service';
 import {ActivatedRoute, Router} from '@angular/router';
 
 @Component({
-  selector: 'app-directory-home',
-  templateUrl: './directory-home.component.html',
-  styleUrls: ['./directory-home.component.css']
+  selector: 'app-job-home',
+  templateUrl: './job-home.component.html',
+  styleUrls: ['./job-home.component.css']
 })
-export class DirectoryHomeComponent implements OnInit {
+export class JobHomeComponent implements OnInit {
 
   isCollapsed = false;
   isCollapsedLocation = false;
@@ -19,7 +19,31 @@ export class DirectoryHomeComponent implements OnInit {
   totalVolume = 0;
   itemPerPage = 20;
 
-  directories: any = [];
+  jobs: any = [
+    {
+      category: [],
+      company: {
+        name: '',
+        logo: '',
+        address: '',
+        url: ''
+      },
+      user: {
+        email: '',
+        phone: ''
+      },
+      city: {
+        name: ''
+      },
+      state: {
+        name: ''
+      },
+      title: '',
+      slug: '',
+      description: ''
+    }
+  ];
+
   parentCategories: any = [];
   states: any = [];
 
@@ -36,19 +60,19 @@ export class DirectoryHomeComponent implements OnInit {
     form.append('itemPerPage', String(this.itemPerPage));
     form.append('pageNumber', String(this.currentPageNumber));
 
-    let url = '/directory_item/get_directories';
+    let url = '/job/get_jobs';
 
     this.route.queryParamMap.subscribe(d => {
       if (d.get('search')){
         form.append('search', d.get('search'));
-        url = '/directory_item/search';
+        url = '/job/search';
       }
     });
 
     this.api.post(url, form).subscribe(
       (res) => {
         this.totalVolume = res.data.count;
-        this.directories = res.data.collections;
+        this.jobs = res.data.collections;
       },
       () => {}
     );
@@ -65,7 +89,7 @@ export class DirectoryHomeComponent implements OnInit {
 
   fetchCategories(): any {
     const form = new FormData();
-    const url = '/directory_category/get_all_parent';
+    const url = '/job_category/get_all_parent';
 
     this.api.post(url, form).subscribe(
       (res) => {
@@ -77,13 +101,13 @@ export class DirectoryHomeComponent implements OnInit {
 
   search(value): void{
     if (value.value){
-      this.router.navigate(['/directory'], {
+      this.router.navigate(['/job'], {
         queryParams: {
           search: value.value
         }
       });
     } else {
-      this.router.navigate(['/directory']);
+      this.router.navigate(['/job']);
     }
   }
 

@@ -4,11 +4,11 @@ import {ApiService} from '../../../service/api.service';
 import {ActivatedRoute, Router} from '@angular/router';
 
 @Component({
-  selector: 'app-directory-by-category-state',
-  templateUrl: './directory-by-category-state.component.html',
-  styleUrls: ['./directory-by-category-state.component.css']
+  selector: 'app-job-by-category-state',
+  templateUrl: './job-by-category-state.component.html',
+  styleUrls: ['./job-by-category-state.component.css']
 })
-export class DirectoryByCategoryStateComponent implements OnInit {
+export class JobByCategoryStateComponent implements OnInit {
 
   isCollapsed = false;
   isCollapsedLocation = false;
@@ -23,7 +23,30 @@ export class DirectoryByCategoryStateComponent implements OnInit {
 
   parentCategories = [];
 
-  directories: any = [];
+  jobs = [
+    {
+      category: [],
+      company: {
+        name: '',
+        logo: '',
+        address: '',
+        url: ''
+      },
+      user: {
+        email: '',
+        phone: ''
+      },
+      city: {
+        name: ''
+      },
+      state: {
+        name: ''
+      },
+      title: '',
+      slug: '',
+      description: ''
+    }
+  ];
   childCategories: any = [];
   state: any = {
     name: ''
@@ -91,11 +114,11 @@ export class DirectoryByCategoryStateComponent implements OnInit {
     form.append('pageNumber', String(this.currentPageNumber));
 
     if (this.stateSlug && this.categorySlug){
-      const url = '/directory_item/get_directory/category/' + this.categorySlug + '/state/' + this.stateSlug;
+      const url = '/job/get_jobs/category/' + this.categorySlug + '/state/' + this.stateSlug;
       this.api.post(url, form).subscribe(
         (res) => {
           this.totalVolume = res.data.count;
-          this.directories = res.data.collections;
+          this.jobs = res.data.collections;
           this.childCategories = res.data.child_category;
           this.cities = res.data.cities;
           this.state = res.data.state;
@@ -106,7 +129,7 @@ export class DirectoryByCategoryStateComponent implements OnInit {
   }
 
   change_route(slug): void{
-    this.router.navigateByUrl('/directory/category/' + slug + '/state/' + this.stateSlug);
+    this.router.navigateByUrl('/job/category/' + slug + '/state/' + this.stateSlug);
   }
 
   pageChange(event): any {
@@ -120,7 +143,7 @@ export class DirectoryByCategoryStateComponent implements OnInit {
 
   fetchCategories(): any {
     const form = new FormData();
-    const url = '/directory_category/get_all_parent';
+    const url = '/job_category/get_all_parent';
 
     this.api.post(url, form).subscribe(
       (res) => {
@@ -132,7 +155,7 @@ export class DirectoryByCategoryStateComponent implements OnInit {
 
   search(value): void{
     if (value.value){
-      this.router.navigate(['/directory'], {
+      this.router.navigate(['/job'], {
         queryParams: {
           search: value.value
         }

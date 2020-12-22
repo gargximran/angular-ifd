@@ -4,15 +4,15 @@ import {ApiService} from '../../../service/api.service';
 import {ActivatedRoute, Router} from '@angular/router';
 
 @Component({
-  selector: 'app-directory-by-category-state',
-  templateUrl: './directory-by-category-state.component.html',
-  styleUrls: ['./directory-by-category-state.component.css']
+  selector: 'app-job-by-category-city',
+  templateUrl: './job-by-category-city.component.html',
+  styleUrls: ['./job-by-category-city.component.css']
 })
-export class DirectoryByCategoryStateComponent implements OnInit {
+export class JobByCategoryCityComponent implements OnInit {
 
   isCollapsed = false;
   isCollapsedLocation = false;
-  stateSlug = '';
+  citySlug = '';
   categorySlug = '';
 
   // pagination objects
@@ -23,7 +23,7 @@ export class DirectoryByCategoryStateComponent implements OnInit {
 
   parentCategories = [];
 
-  directories: any = [];
+  jobs: any = [];
   childCategories: any = [];
   state: any = {
     name: ''
@@ -70,13 +70,13 @@ export class DirectoryByCategoryStateComponent implements OnInit {
         // tslint:disable-next-line:variable-name
         const cat_slug = d.get('cat_slug');
         // tslint:disable-next-line:variable-name
-        const state_slug = d.get('state_slug');
-        if (cat_slug && state_slug){
+        const city_slug = d.get('city_slug');
+        if (cat_slug && city_slug){
           // tslint:disable-next-line:triple-equals
-          if (this.stateSlug == state_slug && this.categorySlug == cat_slug){
+          if (this.citySlug == city_slug && this.categorySlug == cat_slug){
           }else {
             this.currentPageNumber = 1;
-            this.stateSlug = state_slug;
+            this.citySlug = city_slug;
             this.categorySlug = cat_slug;
             this.ngOnInit();
           }
@@ -90,12 +90,12 @@ export class DirectoryByCategoryStateComponent implements OnInit {
     form.append('itemPerPage', String(this.itemPerPage));
     form.append('pageNumber', String(this.currentPageNumber));
 
-    if (this.stateSlug && this.categorySlug){
-      const url = '/directory_item/get_directory/category/' + this.categorySlug + '/state/' + this.stateSlug;
+    if (this.citySlug && this.categorySlug){
+      const url = '/job/get_job/category/' + this.categorySlug + '/city/' + this.citySlug;
       this.api.post(url, form).subscribe(
         (res) => {
           this.totalVolume = res.data.count;
-          this.directories = res.data.collections;
+          this.jobs = res.data.collections;
           this.childCategories = res.data.child_category;
           this.cities = res.data.cities;
           this.state = res.data.state;
@@ -103,10 +103,12 @@ export class DirectoryByCategoryStateComponent implements OnInit {
         () => {}
       );
     }
+
+
   }
 
   change_route(slug): void{
-    this.router.navigateByUrl('/directory/category/' + slug + '/state/' + this.stateSlug);
+    this.router.navigateByUrl('/job/category/' + slug + '/city/' + this.citySlug);
   }
 
   pageChange(event): any {
@@ -120,7 +122,7 @@ export class DirectoryByCategoryStateComponent implements OnInit {
 
   fetchCategories(): any {
     const form = new FormData();
-    const url = '/directory_category/get_all_parent';
+    const url = '/job_category/get_all_parent';
 
     this.api.post(url, form).subscribe(
       (res) => {
@@ -132,13 +134,12 @@ export class DirectoryByCategoryStateComponent implements OnInit {
 
   search(value): void{
     if (value.value){
-      this.router.navigate(['/directory'], {
+      this.router.navigate(['/job'], {
         queryParams: {
           search: value.value
         }
       });
     }
   }
-
 
 }

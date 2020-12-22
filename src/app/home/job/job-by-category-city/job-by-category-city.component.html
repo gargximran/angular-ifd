@@ -60,7 +60,7 @@
     <div class="col-lg-8 col-md-8">
       <div class="row">
         <div class="col-lg-12 col-md-12" *ngFor="
-			  let directory of directories
+			  let job of jobs
 				| paginate
 				  : {
 					  currentPage: currentPageNumber,
@@ -69,22 +69,22 @@
 					}
 			">
           <div class="utf_listing_item-container list-layout">
-            <a class="utf_listing_item" [routerLink]="['/directory/single', directory.slug]">
-              <div class="utf_listing_item-image" *ngIf="directory.image">
-                <img alt="" src="{{directory.image}}">
+            <a class="utf_listing_item" [routerLink]="['/job/single', job.slug]">
+              <div class="utf_listing_item-image" *ngIf="job.company.logo">
+                <img alt="" src="{{job.company.logo}}">
               </div>
-              <div class="utf_listing_item-image" *ngIf="!directory.image">
+              <div class="utf_listing_item-image" *ngIf="!job.company.logo">
                 <img alt="" src="{{'assets/images/dumylogo.png'}}">
               </div>
               <div class="utf_listing_item_content">
                 <div class="utf_listing_item-inner">
-                  <h3>{{directory.title}}</h3>
-                  <span><i class="sl sl-icon-location"></i> {{directory.address}}</span>
-                  <span><i class="sl sl-icon-directions"></i> {{directory.city.name}}</span>
-                  <span><i class="sl sl-icon-map"></i> {{directory.state.name}}</span>
-                  <span><i class="sl sl-icon-flag"></i> <span class=" text-white badge badge-pill badge-dark d-inline-block mx-1" *ngFor="let category of directory.category">{{category.name}}</span></span>
+                  <h3>{{job.title}}</h3>
+                  <span><i class="sl sl-icon-location"></i> {{job.company.address}}</span>
+                  <span><i class="sl sl-icon-directions"></i> {{job.city.name}}</span>
+                  <span><i class="sl sl-icon-map"></i> {{job.state.name}}</span>
+                  <span><i class="sl sl-icon-flag"></i> <span class=" text-white badge badge-pill badge-dark d-inline-block mx-1" *ngFor="let category of job.category">{{category.name}}</span></span>
 
-                  <p>{{directory.description.slice(0, 100)}}...</p>
+                  <p>{{job.description.slice(0, 100)}}...</p>
                 </div>
               </div>
             </a>
@@ -117,7 +117,7 @@
           </h3>
           <ul #collapseLocation="ngbCollapse" [(ngbCollapse)]="isCollapsedLocation" class="utf_listing_detail_sidebar">
             <li *ngFor="let city of cities" class="text-capitalize"><i class="fa fa-angle-double-right"></i> <a
-              [routerLink]="['/directory/category', categorySlug, 'city', city.slug]">{{city.name}}</a></li>
+              [routerLink]="['/job/category', categorySlug, 'city', city.slug]">{{city.name}}</a></li>
           </ul>
         </div>
         <div class="utf_box_widget margin-top-35 margin-bottom-75">
@@ -126,7 +126,7 @@
           <ul #collapseCategory="ngbCollapse" [(ngbCollapse)]="isCollapsed" class="utf_listing_detail_sidebar">
             <li *ngFor="let category of parentCategories" class="text-capitalize"><i
               class="fa fa-angle-double-right"></i> <a
-              [routerLink]="['/directory/category', category.slug, 'city', citySlug]">{{category.name}}</a></li>
+              [routerLink]="['/job/category', category.slug, 'city', citySlug]">{{category.name}}</a></li>
           </ul>
         </div>
       </div>

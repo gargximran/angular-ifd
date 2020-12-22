@@ -4,16 +4,15 @@ import {ApiService} from '../../../service/api.service';
 import {ActivatedRoute, Router} from '@angular/router';
 
 @Component({
-  selector: 'app-directory-by-category-state',
-  templateUrl: './directory-by-category-state.component.html',
-  styleUrls: ['./directory-by-category-state.component.css']
+  selector: 'app-job-by-category',
+  templateUrl: './job-by-category.component.html',
+  styleUrls: ['./job-by-category.component.css']
 })
-export class DirectoryByCategoryStateComponent implements OnInit {
+export class JobByCategoryComponent implements OnInit {
 
   isCollapsed = false;
   isCollapsedLocation = false;
-  stateSlug = '';
-  categorySlug = '';
+  params = '';
 
   // pagination objects
   currentPageNumber = 1;
@@ -21,14 +20,10 @@ export class DirectoryByCategoryStateComponent implements OnInit {
   itemPerPage = 20;
   postStatus = 'active';
 
-  parentCategories = [];
-
-  directories: any = [];
+  jobs: any = [];
+  parentCategories: any = [];
   childCategories: any = [];
-  state: any = {
-    name: ''
-  };
-  cities: any = [];
+  states: any = [];
 
   customOptions: OwlOptions = {
     loop: false,
@@ -60,24 +55,22 @@ export class DirectoryByCategoryStateComponent implements OnInit {
   ngOnInit(): void {
     this.fetchData();
     this.fetchCategories();
-  }
+    this.initialize_all_states();
 
+
+  }
 
   // tslint:disable-next-line:use-lifecycle-interface
   ngDoCheck(): void {
     this.route.paramMap.subscribe(
       d => {
-        // tslint:disable-next-line:variable-name
-        const cat_slug = d.get('cat_slug');
-        // tslint:disable-next-line:variable-name
-        const state_slug = d.get('state_slug');
-        if (cat_slug && state_slug){
+        const slug = d.get('slug');
+        if (slug){
           // tslint:disable-next-line:triple-equals
-          if (this.stateSlug == state_slug && this.categorySlug == cat_slug){
+          if (this.params == slug){
           }else {
             this.currentPageNumber = 1;
-            this.stateSlug = state_slug;
-            this.categorySlug = cat_slug;
+            this.params = slug;
             this.ngOnInit();
           }
         }
@@ -90,23 +83,23 @@ export class DirectoryByCategoryStateComponent implements OnInit {
     form.append('itemPerPage', String(this.itemPerPage));
     form.append('pageNumber', String(this.currentPageNumber));
 
-    if (this.stateSlug && this.categorySlug){
-      const url = '/directory_item/get_directory/category/' + this.categorySlug + '/state/' + this.stateSlug;
+    if (this.params){
+      const url = '/job/get_items/' + this.params;
       this.api.post(url, form).subscribe(
         (res) => {
           this.totalVolume = res.data.count;
-          this.directories = res.data.collections;
+          this.jobs = res.data.collections;
           this.childCategories = res.data.child_category;
-          this.cities = res.data.cities;
-          this.state = res.data.state;
         },
         () => {}
       );
     }
+
+
   }
 
   change_route(slug): void{
-    this.router.navigateByUrl('/directory/category/' + slug + '/state/' + this.stateSlug);
+    this.router.navigateByUrl('/job/category/' + slug);
   }
 
   pageChange(event): any {
@@ -120,7 +113,7 @@ export class DirectoryByCategoryStateComponent implements OnInit {
 
   fetchCategories(): any {
     const form = new FormData();
-    const url = '/directory_category/get_all_parent';
+    const url = '/job_category/get_all_parent';
 
     this.api.post(url, form).subscribe(
       (res) => {
@@ -132,7 +125,7 @@ export class DirectoryByCategoryStateComponent implements OnInit {
 
   search(value): void{
     if (value.value){
-      this.router.navigate(['/directory'], {
+      this.router.navigate(['/job'], {
         queryParams: {
           search: value.value
         }
@@ -140,5 +133,16 @@ export class DirectoryByCategoryStateComponent implements OnInit {
     }
   }
 
+
+
+
+  initialize_all_states(): void{
+    this.api.get('/state/view').subscribe(
+      res => {
+        this.states = res.data;
+      },
+      () => {}
+    );
+  }
 
 }

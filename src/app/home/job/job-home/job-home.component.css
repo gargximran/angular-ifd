@@ -1,0 +1,10 @@
+ngx-typed-js.type_style {
+  display: inline !important;
+  color: red;
+}
+
+
+ngx-typed-js.type_style div{
+  display: inline !important;
+
+}

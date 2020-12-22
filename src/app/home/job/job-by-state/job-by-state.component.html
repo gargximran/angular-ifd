@@ -38,29 +38,11 @@
 
 
 <div class="container mt-3">
-  <div class="row my-2">
-    <div class="col-12">
-
-      <owl-carousel-o [options]="customOptions">
-
-        <ng-container *ngFor="let child of childCategories">
-          <ng-template [id]="child.id" carouselSlide>
-            <span (click)="change_route(child.slug)" class="badge badge-pill badge-dark p-2"
-                  style="cursor: pointer;">{{child.name}}</span>
-
-          </ng-template>
-        </ng-container>
-
-      </owl-carousel-o>
-
-
-    </div>
-  </div>
   <div class="row">
     <div class="col-lg-8 col-md-8">
       <div class="row">
         <div class="col-lg-12 col-md-12" *ngFor="
-			  let directory of directories
+			  let job of jobs
 				| paginate
 				  : {
 					  currentPage: currentPageNumber,
@@ -69,22 +51,22 @@
 					}
 			">
           <div class="utf_listing_item-container list-layout">
-            <a class="utf_listing_item" [routerLink]="['/directory/single', directory.slug]">
-              <div class="utf_listing_item-image" *ngIf="directory.image">
-                <img alt="" src="{{directory.image}}">
+            <a class="utf_listing_item" [routerLink]="['/job/single', job.slug]">
+              <div class="utf_listing_item-image" *ngIf="job.company.logo">
+                <img alt="" src="{{job.company.logo}}">
               </div>
-              <div class="utf_listing_item-image" *ngIf="!directory.image">
+              <div class="utf_listing_item-image" *ngIf="!job.company.logo">
                 <img alt="" src="{{'assets/images/dumylogo.png'}}">
               </div>
               <div class="utf_listing_item_content">
                 <div class="utf_listing_item-inner">
-                  <h3>{{directory.title}}</h3>
-                  <span><i class="sl sl-icon-location"></i> {{directory.address}}</span>
-                  <span><i class="sl sl-icon-directions"></i> {{directory.city.name}}</span>
-                  <span><i class="sl sl-icon-map"></i> {{directory.state.name}}</span>
-                  <span><i class="sl sl-icon-flag"></i> <span class=" text-white badge badge-pill badge-dark d-inline-block mx-1" *ngFor="let category of directory.category">{{category.name}}</span></span>
+                  <h3>{{job.title}}</h3>
+                  <span><i class="sl sl-icon-location"></i> {{job.company.address}}</span>
+                  <span><i class="sl sl-icon-directions"></i> {{job.city.name}}</span>
+                  <span><i class="sl sl-icon-map"></i> {{job.state.name}}</span>
+                  <span><i class="sl sl-icon-flag"></i> <span class=" text-white badge badge-pill badge-dark d-inline-block mx-1" *ngFor="let category of job.category">{{category.name}}</span></span>
 
-                  <p>{{directory.description.slice(0, 100)}}...</p>
+                  <p>{{job.description.slice(0, 100)}}...</p>
                 </div>
               </div>
             </a>
@@ -97,11 +79,11 @@
           <div class="utf_pagination_container_part margin-top-20 margin-bottom-70">
             <pagination-controls
               (pageBoundsCorrection)="pageChange($event)"
-              (pageChange)="pageChange($event)"
-              class="pagination"
+              screenReaderCurrentLabel=".."
               nextLabel=""
               previousLabel=""
-              screenReaderCurrentLabel=".."
+              class="pagination"
+              (pageChange)="pageChange($event)"
             ></pagination-controls>
           </div>
         </div>
@@ -112,25 +94,24 @@
     <div class="col-lg-4 col-md-4">
       <div class="sidebar">
         <div class="utf_box_widget margin-top-35 margin-bottom-75">
-          <h3 (click)="collapseLocation.toggle()" style="cursor: pointer;"><i class="sl sl-icon-folder-alt"></i> City
-            of {{state.name}}
+          <h3 (click)="collapseLocation.toggle()" style="cursor: pointer;"><i class="sl sl-icon-folder-alt"></i> Cities of {{currentState.name}}
           </h3>
           <ul #collapseLocation="ngbCollapse" [(ngbCollapse)]="isCollapsedLocation" class="utf_listing_detail_sidebar">
-            <li *ngFor="let city of cities" class="text-capitalize"><i class="fa fa-angle-double-right"></i> <a
-              [routerLink]="['/directory/category', categorySlug, 'city', city.slug]">{{city.name}}</a></li>
+            <li *ngFor="let city of cities" class="text-capitalize"><i class="fa fa-angle-double-right"></i> <a [routerLink]="[ '/job/city', city.slug]">{{city.name}}</a></li>
           </ul>
         </div>
         <div class="utf_box_widget margin-top-35 margin-bottom-75">
           <h3 (click)="collapseCategory.toggle()" style="cursor: pointer;"><i class="sl sl-icon-folder-alt"></i>
             Categories</h3>
           <ul #collapseCategory="ngbCollapse" [(ngbCollapse)]="isCollapsed" class="utf_listing_detail_sidebar">
-            <li *ngFor="let category of parentCategories" class="text-capitalize"><i
-              class="fa fa-angle-double-right"></i> <a
-              [routerLink]="['/directory/category', category.slug, 'city', citySlug]">{{category.name}}</a></li>
+            <li *ngFor="let category of parentCategories" class="text-capitalize"><i class="fa fa-angle-double-right"></i> <a [routerLink]="[ '/job/category', category.slug, 'state', params]">{{category.name}}</a></li>
           </ul>
         </div>
       </div>
-
     </div>
   </div>
 </div>
+
+
+
+

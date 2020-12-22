@@ -22,7 +22,7 @@
               <a routerLinkActive="current" [routerLink]="['/directory']">Directory</a>
             </li>
             <li>
-              <a href="#">Job</a>
+              <a routerLinkActive="current" [routerLink]="['/job']">Job</a>
             </li>
           </ul>
         </nav>
@@ -260,10 +260,10 @@
             class="button border fw margin-top-10"
             [disabled]="loading"
           >
-            <ng-container *ngIf="loading; else submitText">
+            <ng-container *ngIf="loading; else submitTexta">
               <div class="spinner-border" role="status"></div>
             </ng-container>
-            <ng-template #submitText>Register</ng-template>
+            <ng-template #submitTexta>Register</ng-template>
           </button>
 
         </form>
