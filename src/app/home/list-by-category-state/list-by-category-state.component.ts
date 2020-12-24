@@ -21,7 +21,8 @@ export class ListByCategoryStateComponent implements OnInit {
   itemPerPage = 20;
   postStatus = 'active';
 
-  parentCategories = [];
+  parentCategories: any = [];
+  currentCategory: any = {};
 
   products: any = [];
   childCategories: any = [];
@@ -72,6 +73,7 @@ export class ListByCategoryStateComponent implements OnInit {
         // tslint:disable-next-line:variable-name
         const state_slug = d.get('state_slug');
         if (cat_slug && state_slug){
+          // tslint:disable-next-line:triple-equals
           if (this.stateSlug == state_slug && this.categorySlug == cat_slug){
           }else {
             this.currentPageNumber = 1;
@@ -90,7 +92,7 @@ export class ListByCategoryStateComponent implements OnInit {
     form.append('pageNumber', String(this.currentPageNumber));
 
     if (this.stateSlug && this.categorySlug){
-      const url = '/classified_product/get_products/category/'+ this.categorySlug + '/state/' + this.stateSlug;
+      const url = '/classified_product/get_products/category/' + this.categorySlug + '/state/' + this.stateSlug;
       this.api.post(url, form).subscribe(
         (res) => {
           this.totalVolume = res.data.count;
@@ -98,6 +100,7 @@ export class ListByCategoryStateComponent implements OnInit {
           this.childCategories = res.data.child_category;
           this.cities = res.data.cities;
           this.state = res.data.state;
+          this.currentCategory = res.data.category;
         },
         (err) => {}
       );

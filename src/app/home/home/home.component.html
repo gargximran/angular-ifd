@@ -1,6 +1,6 @@
 <div class="clearfix"></div>
 
-<div id="titlebar" class="gradient">
+<div class="gradient mb-3" id="titlebar">
   <div class="container">
     <div class="row">
       <div class="col-md-12">
@@ -16,10 +16,10 @@
   </div>
 </div>
 
-<div class="container mt-3">
+<div class="container">
   <div class="row">
     <div class="col-md-12">
-      <div class="alert alert-info" *ngIf="searchText">
+      <div *ngIf="searchText" class="alert alert-info">
         Searching for : {{searchText}}
       </div>
     </div>
@@ -27,8 +27,32 @@
 
   <div class="row">
     <div class="col-lg-8 col-md-8">
+      <div class="listing_filter_block">
+        <div class="col-md-2 col-xs-2">
+          <div class="utf_layout_nav">
+            <a class="list"><i class="fa fa-align-justify"></i></a></div>
+        </div>
+        <div class="col-md-10 col-xs-10">
+          <div class="sort-by">
+            <div class="utf_sort_by_select_item sort_by_margin">
+              <div  ngbDropdown
+                class="chosen-container chosen-container-single chosen-container-single-nosearch chosen-with-drop chosen-container-active"
+                style="width: 100%;" title="">
+                <a class="chosen-single" id="dropdownBasic1" ngbDropdownToggle>
+                  <span>Categories</span>
+                </a>
+                <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
+                  <a class="text-capitalize" *ngFor="let category of parentCategories" [routerLink]="[ '/classified/category', category.slug]" ngbDropdownItem>{{category.slug}}</a>
+
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
       <div class="row">
-        <div class="col-lg-12 col-md-12" *ngFor="
+        <div *ngFor="
 			  let product of products
 				| paginate
 				  : {
@@ -36,13 +60,13 @@
 					  totalItems: totalVolume,
 					  itemsPerPage: itemPerPage
 					}
-			">
-          <div class="utf_listing_item-container list-layout">
-            <a class="utf_listing_item" [routerLink]="['/classified/single', product.slug]">
-              <div class="utf_listing_item-image" *ngIf="product.images">
+			" class="col-lg-12 col-md-12 mb-3">
+          <div class="utf_listing_item-container list-layout mb-0">
+            <a [routerLink]="['/classified/single', product.slug]" class="utf_listing_item">
+              <div *ngIf="product.images" class="utf_listing_item-image">
                 <img alt="" src="{{product.images[0]}}">
               </div>
-              <div class="utf_listing_item-image" *ngIf="!product.images">
+              <div *ngIf="!product.images" class="utf_listing_item-image">
                 <img alt="" src="{{'assets/images/dumylogo.png'}}">
               </div>
               <div class="utf_listing_item_content">
@@ -51,7 +75,9 @@
                   <span><i class="sl sl-icon-location"></i> {{product.address}}</span>
                   <span><i class="sl sl-icon-directions"></i> {{product.city.name}}</span>
                   <span><i class="sl sl-icon-map"></i> {{product.state.name}}</span>
-                  <span><i class="sl sl-icon-flag"></i> <span class=" text-white badge badge-pill badge-dark d-inline-block mx-1" *ngFor="let category of product.category">{{category.name}}</span></span>
+                  <span><i class="sl sl-icon-flag"></i> <span
+                    *ngFor="let category of product.category"
+                    class=" text-white badge badge-pill badge-dark d-inline-block mx-1">{{category.name}}</span></span>
 
                   <p>{{product.description.slice(0, 100)}}...</p>
                 </div>
@@ -66,11 +92,11 @@
           <div class="utf_pagination_container_part margin-top-20 margin-bottom-70">
             <pagination-controls
               (pageBoundsCorrection)="pageChange($event)"
-              screenReaderCurrentLabel=".."
+              (pageChange)="pageChange($event)"
+              class="pagination"
               nextLabel=""
               previousLabel=""
-              class="pagination"
-              (pageChange)="pageChange($event)"
+              screenReaderCurrentLabel=".."
             ></pagination-controls>
           </div>
         </div>
@@ -80,19 +106,22 @@
     <!-- Sidebar -->
     <div class="col-lg-4 col-md-4">
       <div class="sidebar">
-        <div class="utf_box_widget margin-top-35 margin-bottom-75">
+        <div class="utf_box_widget margin-bottom-75">
           <h3 (click)="collapseLocation.toggle()" style="cursor: pointer;"><i class="sl sl-icon-folder-alt"></i> States
           </h3>
           <ul #collapseLocation="ngbCollapse" [(ngbCollapse)]="isCollapsedLocation" class="utf_listing_detail_sidebar">
-            <li *ngFor="let state of states" class="text-capitalize"><i class="fa fa-angle-double-right"></i> <a [routerLink]="[ '/classified/state', state.slug]">{{state.name}}</a></li>
+            <li *ngFor="let state of states" class="text-capitalize"><i class="fa fa-angle-double-right"></i> <a
+              [routerLink]="[ '/classified/state', state.slug]">{{state.name}}</a></li>
           </ul>
         </div>
-        <div class="utf_box_widget margin-top-35 margin-bottom-75">
+        <div class="utf_box_widget margin-bottom-75">
           <h3 (click)="collapseCategory.toggle()" style="cursor: pointer;"><i class="sl sl-icon-folder-alt"></i>
             Categories</h3>
           <ul #collapseCategory="ngbCollapse" [(ngbCollapse)]="isCollapsed" class="utf_listing_detail_sidebar">
 
-            <li *ngFor="let category of parentCategories" class="text-capitalize"><i class="fa fa-angle-double-right"></i> <a [routerLink]="[ '/classified/category', category.slug]">{{category.name}}</a></li>
+            <li *ngFor="let category of parentCategories" class="text-capitalize"><i
+              class="fa fa-angle-double-right"></i> <a
+              [routerLink]="[ '/classified/category', category.slug]">{{category.name}}</a></li>
           </ul>
         </div>
       </div>

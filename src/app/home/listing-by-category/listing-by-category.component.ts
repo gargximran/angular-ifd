@@ -20,10 +20,11 @@ export class ListingByCategoryComponent implements OnInit {
   itemPerPage = 20;
   postStatus = 'active';
 
-  products = [];
-  parentCategories = [];
-  childCategories = [];
-  states = [];
+  products: any = [];
+  parentCategories: any = [];
+  childCategories: any = [];
+  states: any = [];
+  currentCategory: any = {};
 
   customOptions: OwlOptions = {
     loop: false,
@@ -83,12 +84,13 @@ export class ListingByCategoryComponent implements OnInit {
     form.append('pageNumber', String(this.currentPageNumber));
 
     if (this.params){
-      let url = '/classified_product/get_products/' + this.params;
+      const url = '/classified_product/get_products/' + this.params;
       this.api.post(url, form).subscribe(
         (res) => {
           this.totalVolume = res.data.count;
           this.products = res.data.collections;
           this.childCategories = res.data.child_category;
+          this.currentCategory = res.data.category;
         },
         (err) => {}
       );

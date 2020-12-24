@@ -21,7 +21,8 @@ export class ListByCategoryCityComponent implements OnInit {
   itemPerPage = 20;
   postStatus = 'active';
 
-  parentCategories = [];
+  parentCategories: any = [];
+  currentCategory: any = {};
 
   products: any = [];
   childCategories: any = [];
@@ -72,6 +73,7 @@ export class ListByCategoryCityComponent implements OnInit {
         // tslint:disable-next-line:variable-name
         const city_slug = d.get('city_slug');
         if (cat_slug && city_slug){
+          // tslint:disable-next-line:triple-equals
           if (this.citySlug == city_slug && this.categorySlug == cat_slug){
           }else {
             this.currentPageNumber = 1;
@@ -98,6 +100,7 @@ export class ListByCategoryCityComponent implements OnInit {
           this.childCategories = res.data.child_category;
           this.cities = res.data.cities;
           this.state = res.data.state;
+          this.currentCategory = res.data.category;
         },
         (err) => {}
       );

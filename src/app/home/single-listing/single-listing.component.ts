@@ -14,33 +14,7 @@ export class SingleListingComponent implements OnInit {
   postSlug = '';
   isLoggedIn = false;
   today = new Date().toISOString();
-  post = {
-    state: {
-      name: ''
-    },
-    city: {
-      name: ''
-    },
-    brand: {
-      name: ''
-    },
-    address: '',
-    description: '',
-    name: '',
-    category: [],
-    condition: '',
-    age: 0,
-    price: '',
-    price_type: '',
-    user: {
-      first_name: '',
-      last_name: '',
-      email: '',
-      phone: '',
-    },
-    images: [],
-    created_at: ''
-  };
+  post: any = {};
 
   ngOnInit(): void {
     this.route.paramMap.subscribe(d => {

@@ -1,4 +1,4 @@
-<div class="utf_listing_section" id="utf_listing_gallery_part">
+<div *ngIf="post && post.images" class="utf_listing_section" id="utf_listing_gallery_part">
   <div class="utf_listing_slider utf_gallery_container margin-bottom-0 slick-initialized slick-slider">
     <div aria-live="polite" class="slick-list bg-secondary padding-for-pc">
       <ngb-carousel *ngIf="post.images && post.images[1]">
@@ -18,9 +18,9 @@
   </div>
 </div>
 
-<div class="container">
+<div class="container" *ngIf="post" >
   <div class="row utf_sticky_main_wrapper">
-    <div class="col-lg-8 col-md-8">
+    <div class="col-lg-8 col-md-8 margin-top-35">
       <div class="utf_listing_titlebar pt-0" id="titlebar">
         <div class="utf_listing_titlebar_title">
           <h2>
@@ -75,7 +75,7 @@
     </div>
 
     <!-- Sidebar -->
-    <div class="col-lg-4 col-md-4 margin-top-75 sidebar-search">
+    <div class="col-lg-4 col-md-4 sidebar-search">
       <div class="utf_box_widget margin-top-35">
         <h3><i class="sl sl-icon-phone"></i> Contact Info</h3>
         <div class="utf_hosted_by_user_title pl-0">
