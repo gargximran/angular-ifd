@@ -1,0 +1,201 @@
+<div class="clearfix"></div>
+
+<div
+  class="search_container_block home_main_search_part main_search_block"
+  style="background-image: url('assets/images/city_search_background.jpg');"
+>
+  <div class="main_inner_search_block">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-12">
+          <h2>
+            <ngx-typed-js [backDelay]="1050" [backSpeed]="80" [loop]="true"
+                          [startDelay]="1000" [strings]="['Directories', 'Jobs', 'Classifieds']" [typeSpeed]="80">
+              Find Your Nearby
+              <span class="typing typed-words"></span>
+            </ngx-typed-js>
+          </h2>
+          <h4>
+            Find some of the best tips from around the city from our partners
+            and friends.
+          </h4>
+          <div class="main_input_search_part">
+            <div class="main_input_search_part_item">
+              <input
+                #searchInput
+                placeholder="What are you looking for?"
+                type="text"
+              />
+            </div>
+            <button class="button">Search</button>
+          </div>
+
+          <div class="main_popular_categories">
+            <h3>Select Your Choice</h3>
+            <ul class="main_popular_categories_list text-white">
+              <li><a>
+                <div class="utf_box"><i aria-hidden="true" class="im im-icon-Chef-Hat"></i>
+                  <p>Classified</p>
+                </div>
+              </a>
+              </li>
+              <li><a>
+                <div class="utf_box"><i aria-hidden="true" class="im im-icon-Dumbbell"></i>
+                  <p>Directory</p>
+                </div>
+              </a>
+              </li>
+              <li><a>
+                <div class="utf_box"><i aria-hidden="true" class="im im-icon-Electric-Guitar"></i>
+                  <p>Job</p>
+                </div>
+              </a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<div class="container padding-bottom-70">
+  <div class="row">
+    <div class="col-md-12">
+      <h3 class="headline_part centered margin-bottom-35 margin-top-70">Most Popular Directories <span>Discover best things to do restaurants, shopping, hotels, cafes and places<br>around the world by categories.</span>
+      </h3>
+    </div>
+    <div class="col-md-4">
+      <a class="img-box">
+        <div class="utf_img_content_box visible">
+          <h4>Nightlife </h4>
+          <span>18 Listings</span>
+        </div>
+        <div class="img-box-background" style="background-image: url('assets/images/popular-location-01.jpg');"></div>
+      </a>
+    </div>
+    <div class="col-md-4">
+      <a class="img-box">
+        <div class="utf_img_content_box visible">
+          <h4>Shops</h4>
+          <span>24 Listings</span>
+        </div>
+        <div class="img-box-background" style="background-image: url('assets/images/popular-location-01.jpg');"></div>
+      </a>
+    </div>
+    <div class="col-md-4">
+      <a class="img-box">
+        <div class="utf_img_content_box visible">
+          <h4>Restaurant</h4>
+          <span>17 Listings</span>
+        </div>
+        <div class="img-box-background" style="background-image: url('assets/images/popular-location-01.jpg');"></div>
+      </a>
+    </div>
+    <div class="col-md-4">
+      <a class="img-box">
+        <div class="utf_img_content_box visible">
+          <h4>Outdoor Activities</h4>
+          <span>12 Listings</span>
+        </div>
+        <div class="img-box-background" style="background-image: url('assets/images/popular-location-01.jpg');"></div>
+      </a>
+    </div>
+    <div class="col-md-4">
+      <a class="img-box">
+        <div class="utf_img_content_box visible">
+          <h4>Hotels</h4>
+          <span>14 Listings</span>
+        </div>
+        <div class="img-box-background" style="background-image: url('assets/images/popular-location-01.jpg');"></div>
+      </a>
+    </div>
+    <div class="col-md-4">
+      <a class="img-box">
+        <div class="utf_img_content_box visible">
+          <h4>New York</h4>
+          <span>9 Listings</span>
+        </div>
+        <div class="img-box-background" style="background-image: url('assets/images/dumylogo.png');"></div>
+      </a>
+    </div>
+    <div class="col-md-12 centered_content"><a [routerLink]="['/directory']" class="button border margin-top-20">View
+      More Directories</a></div>
+  </div>
+</div>
+
+
+<div class="container">
+  <div class="row slick_carousel_slider">
+    <div class="col-md-12">
+      <h3 class="headline_part centered margin-bottom-45"> Recent Listed Classified's <span>Explore the greates places in the city</span>
+      </h3>
+    </div>
+    <div class="row">
+      <div class="col-md-12">
+        <div class="utf_carousel_item container">
+          <div class="row">
+
+            <a class="utf_listing_item-container compact col-md-4" style="background-color: unset; box-shadow: unset;">
+              <div class="utf_listing_item"><img src="assets/images/utf_listing_item-04.jpg"> <span class="tag"><i
+                class="im im-icon-Dumbbell"></i> Fitness</span>
+                <div class="utf_listing_item_content">
+                  <div class="utf_listing_prige_block">
+                    <span class="utf_meta_listing_price"><i class="fa fa-tag"></i> $45 - $70</span>
+                    <span class="utp_approve_item"><i class="utf_approve_listing"></i></span>
+                  </div>
+                  <h3>Ruby Beauty Center</h3>
+                  <span><i class="sl sl-icon-location"></i> The Ritz-Carlton, Hong Kong</span>
+                  <span><i class="sl sl-icon-phone"></i> (415) 796-3633</span>
+                </div>
+              </div>
+              <div class="utf_star_rating_section" data-rating="4.5">
+                <div class="utf_counter_star_rating">(4.5)</div>
+                <span class="utf_view_count"><i class="fa fa-eye"></i> 822+</span>
+                <span class="like-icon"></span>
+                <span class="star"></span><span class="star"></span><span class="star"></span><span class="star"></span><span
+                class="star half"></span></div>
+            </a>
+
+            <div class="col-md-12 centered_content">
+              <a [routerLink]="['/classified']" class="button border margin-top-20">View
+              More Classified's
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+<section class="utf_cta_area_item utf_cta_area2_block">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="utf_subscribe_block clearfix">
+          <div class="col-md-8 col-sm-7">
+            <div class="section-heading">
+              <h2 class="utf_sec_title_item utf_sec_title_item2">Subscribe to Newsletter!</h2>
+              <p class="utf_sec_meta">
+                Subscribe to get latest updates and information.
+              </p>
+            </div>
+          </div>
+          <div class="col-md-4 col-sm-5">
+            <div class="contact-form-action">
+              <form [formGroup]="emailSubmitForm">
+                <span class="la la-envelope-o"></span>
+                <input class="form-control" type="email" placeholder="Enter your email" formControlName="email">
+                <button class="utf_theme_btn" type="submit">Subscribe</button>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

@@ -19,30 +19,7 @@ export class JobHomeComponent implements OnInit {
   totalVolume = 0;
   itemPerPage = 20;
 
-  jobs: any = [
-    {
-      category: [],
-      company: {
-        name: '',
-        logo: '',
-        address: '',
-        url: ''
-      },
-      user: {
-        email: '',
-        phone: ''
-      },
-      city: {
-        name: ''
-      },
-      state: {
-        name: ''
-      },
-      title: '',
-      slug: '',
-      description: ''
-    }
-  ];
+  jobs: any = [];
 
   parentCategories: any = [];
   states: any = [];
@@ -60,7 +37,7 @@ export class JobHomeComponent implements OnInit {
     form.append('itemPerPage', String(this.itemPerPage));
     form.append('pageNumber', String(this.currentPageNumber));
 
-    let url = '/job/get_jobs';
+    let url = '/job/get_items';
 
     this.route.queryParamMap.subscribe(d => {
       if (d.get('search')){

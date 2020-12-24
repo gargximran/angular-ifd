@@ -24,6 +24,8 @@ import {JobByCityComponent} from './job/job-by-city/job-by-city.component';
 import {JobByCategoryStateComponent} from './job/job-by-category-state/job-by-category-state.component';
 import {JobByCategoryCityComponent} from './job/job-by-category-city/job-by-category-city.component';
 import {JobSingleComponent} from './job/job-single/job-single.component';
+import {PlaceholderComponent} from '../admin/admin/placeholder/placeholder.component';
+import {FrontPageComponent} from './front-page/front-page.component';
 
 
 const routes: Routes = [
@@ -33,31 +35,41 @@ const routes: Routes = [
     children: [
       {
         path: '',
-        component: HomeComponent
+        component: FrontPageComponent
       },
       {
-        path: 'category/:slug',
-        component: ListingByCategoryComponent
-      },
-      {
-        path: 'state/:slug',
-        component: ListByStateComponent
-      },
-      {
-        path: 'city/:slug',
-        component: ListByCityComponent
-      },
-      {
-        path: 'category/:cat_slug/state/:state_slug',
-        component: ListByCategoryStateComponent
-      },
-      {
-        path: 'category/:cat_slug/city/:city_slug',
-        component: ListByCategoryCityComponent
-      },
-      {
-        path: 'single/:post_slug',
-        component: SingleListingComponent
+        path: 'classified',
+        component: PlaceholderComponent,
+        children: [
+          {
+            path: '',
+            component: HomeComponent
+          },
+          {
+            path: 'category/:slug',
+            component: ListingByCategoryComponent
+          },
+          {
+            path: 'state/:slug',
+            component: ListByStateComponent
+          },
+          {
+            path: 'city/:slug',
+            component: ListByCityComponent
+          },
+          {
+            path: 'category/:cat_slug/state/:state_slug',
+            component: ListByCategoryStateComponent
+          },
+          {
+            path: 'category/:cat_slug/city/:city_slug',
+            component: ListByCategoryCityComponent
+          },
+          {
+            path: 'single/:post_slug',
+            component: SingleListingComponent
+          }
+        ]
       },
       {
         path: 'directory',

@@ -1,36 +1,16 @@
 <div class="clearfix"></div>
 
-<div
-  class="search_container_block home_main_search_part main_search_block"
-  style="background-image: url('assets/images/city_search_background.jpg');"
->
-  <div class="main_inner_search_block">
-    <div class="container">
-      <div class="row">
-        <div class="col-md-12">
-          <h2>
-            <ngx-typed-js [backDelay]="1050" [backSpeed]="80" [loop]="true"
-                          [startDelay]="1000" [strings]="['Hotels', 'Restaurants', 'Attractions']" [typeSpeed]="80">
-              Find Your Nearby
-              <span class="typing typed-words"></span>
-            </ngx-typed-js>
-          </h2>
-          <h4>
-            Find some of the best tips from around the city from our partners
-            and friends.
-          </h4>
-          <div class="main_input_search_part">
-            <div class="main_input_search_part_item">
-              <input
-                placeholder="What are you looking for?"
-                type="text"
-                #inputValue
-              />
-            </div>
-            <button class="button" (click)="search(inputValue)">Search</button>
-          </div>
-
-        </div>
+<div id="titlebar" class="gradient">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-12">
+        <h2>Jobs</h2>
+        <nav id="breadcrumbs">
+          <ul>
+            <li><a [routerLink]="['/']">Home</a></li>
+            <li>Jobs</li>
+          </ul>
+        </nav>
       </div>
     </div>
   </div>

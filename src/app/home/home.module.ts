@@ -34,6 +34,7 @@ import { JobByCityComponent } from './job/job-by-city/job-by-city.component';
 import { JobByCategoryStateComponent } from './job/job-by-category-state/job-by-category-state.component';
 import { JobByCategoryCityComponent } from './job/job-by-category-city/job-by-category-city.component';
 import { JobSingleComponent } from './job/job-single/job-single.component';
+import { FrontPageComponent } from './front-page/front-page.component';
 
 @NgModule({
   declarations: [
@@ -62,7 +63,8 @@ import { JobSingleComponent } from './job/job-single/job-single.component';
     JobByCityComponent,
     JobByCategoryStateComponent,
     JobByCategoryCityComponent,
-    JobSingleComponent
+    JobSingleComponent,
+    FrontPageComponent
   ],
   imports: [
     CommonModule,

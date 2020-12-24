@@ -1,41 +1,19 @@
 <div class="clearfix"></div>
-
-<div
-  class="search_container_block home_main_search_part main_search_block"
-  style="background-image: url('assets/images/city_search_background.jpg');"
->
-  <div class="main_inner_search_block">
-    <div class="container">
-      <div class="row">
-        <div class="col-md-12">
-          <h2>
-            <ngx-typed-js [backDelay]="1050" [backSpeed]="80" [loop]="true"
-                          [startDelay]="1000" [strings]="['Hotels', 'Restaurants', 'Attractions']" [typeSpeed]="80">
-              Find Your Nearby
-              <span class="typing typed-words"></span>
-            </ngx-typed-js>
-          </h2>
-          <h4>
-            Find some of the best tips from around the city from our partners
-            and friends.
-          </h4>
-          <div class="main_input_search_part">
-            <div class="main_input_search_part_item">
-              <input
-                placeholder="What are you looking for?"
-                type="text"
-                #inputValue
-              />
-            </div>
-            <button class="button" (click)='search(inputValue)'>Search</button>
-          </div>
-
-        </div>
+<div id="titlebar" class="gradient">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-12">
+        <h2>Classified Items</h2>
+        <nav id="breadcrumbs">
+          <ul>
+            <li><a [routerLink]="['/']">Home</a></li>
+            <li>Classified</li>
+          </ul>
+        </nav>
       </div>
     </div>
   </div>
 </div>
-
 
 <div class="container mt-3">
   <div class="row">
@@ -51,7 +29,7 @@
 					}
 			">
           <div class="utf_listing_item-container list-layout">
-            <a class="utf_listing_item" [routerLink]="['/single', product.slug]">
+            <a class="utf_listing_item" [routerLink]="['/classified/single', product.slug]">
               <div class="utf_listing_item-image" *ngIf="product.images">
                 <img alt="" src="{{product.images[0]}}">
               </div>
@@ -97,14 +75,14 @@
           <h3 (click)="collapseLocation.toggle()" style="cursor: pointer;"><i class="sl sl-icon-folder-alt"></i> Cities of {{currentState.name}}
           </h3>
           <ul #collapseLocation="ngbCollapse" [(ngbCollapse)]="isCollapsedLocation" class="utf_listing_detail_sidebar">
-            <li *ngFor="let city of cities" class="text-capitalize"><i class="fa fa-angle-double-right"></i> <a [routerLink]="[ '/city', city.slug]">{{city.name}}</a></li>
+            <li *ngFor="let city of cities" class="text-capitalize"><i class="fa fa-angle-double-right"></i> <a [routerLink]="[ '/classified/city', city.slug]">{{city.name}}</a></li>
           </ul>
         </div>
         <div class="utf_box_widget margin-top-35 margin-bottom-75">
           <h3 (click)="collapseCategory.toggle()" style="cursor: pointer;"><i class="sl sl-icon-folder-alt"></i>
             Categories</h3>
           <ul #collapseCategory="ngbCollapse" [(ngbCollapse)]="isCollapsed" class="utf_listing_detail_sidebar">
-            <li *ngFor="let category of parentCategories" class="text-capitalize"><i class="fa fa-angle-double-right"></i> <a [routerLink]="[ '/category', category.slug, 'state', params]">{{category.name}}</a></li>
+            <li *ngFor="let category of parentCategories" class="text-capitalize"><i class="fa fa-angle-double-right"></i> <a [routerLink]="[ '/classified/category', category.slug, 'state', params]">{{category.name}}</a></li>
           </ul>
         </div>
       </div>
