@@ -15,6 +15,7 @@ export class SingleListingComponent implements OnInit {
   isLoggedIn = false;
   today = new Date().toISOString();
   post: any = {};
+  relatedClassifieds: Array<any>;
 
   ngOnInit(): void {
     this.route.paramMap.subscribe(d => {
@@ -24,13 +25,26 @@ export class SingleListingComponent implements OnInit {
     this.fetchPost();
   }
 
+  // tslint:disable-next-line:use-lifecycle-interface
+  ngDoCheck(): void {
+    this.route.paramMap.subscribe(d => {
+      const slug = d.get('post_slug');
+      // tslint:disable-next-line:triple-equals
+      if (slug == this.postSlug) {
+        this.fetchPost();
+        this.postSlug = '';
+      }
+    });
+  }
+
   fetchPost(): void{
     if (this.postSlug){
       this.api.post('/classified_product/get_post/' + this.postSlug, {}).subscribe(
         res => {
-          this.post = res.data;
+          this.post = res.data.post;
+          this.relatedClassifieds = res.data.related_post;
         },
-        err => {}
+        () => {}
       );
     }
 

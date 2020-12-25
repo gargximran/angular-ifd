@@ -1,4 +1,4 @@
-<div class="container" *ngIf="post">
+<div class="container mt-3" *ngIf="post">
   <div class="row utf_sticky_main_wrapper">
     <div class="col-lg-8 col-md-8">
       <div class="utf_listing_titlebar pt-0" id="titlebar">
@@ -39,8 +39,15 @@
     </div>
 
     <!-- Sidebar -->
-    <div class="col-lg-4 col-md-4 margin-top-75 sidebar-search">
-      <div class="utf_box_widget margin-top-35">
+    <div class="col-lg-4 col-md-4 sidebar-search">
+
+      <div class="opening-hours" *ngIf="post.image">
+        <img class="img-fluid" src="{{post.image}}" >
+
+      </div>
+
+
+      <div class="utf_box_widget" [class.margin-top-35]="!!post.image">
         <h3><i class="sl sl-icon-phone"></i> Contact Info</h3>
         <div class="utf_hosted_by_user_title pl-0">
           <h4>
@@ -63,6 +70,31 @@
 
         </ul>
       </div>
+
+
+    </div>
+  </div>
+</div>
+
+
+<div class="container padding-bottom-70" *ngIf="relatedPosts && relatedPosts[0]">
+  <div class="row">
+    <div class="col-md-12">
+      <h3 class="headline_part centered margin-bottom-35 margin-top-70">Related Directories
+      </h3>
+    </div>
+    <div class="col-md-4" *ngFor="let directory of relatedPosts">
+      <a [routerLink]="['/directory/single', directory.slug]" class="img-box">
+        <div class="utf_img_content_box visible">
+          <h4 class="text-capitalize">{{directory.title}}</h4>
+        </div>
+        <div *ngIf="directory.image" class="img-box-background" style="background-image: url('{{directory.image}}');">
+
+        </div>
+        <div *ngIf="!directory.image" class="img-box-background" style="background-image: url('assets/images/dumylogo.png');">
+
+        </div>
+      </a>
     </div>
   </div>
 </div>

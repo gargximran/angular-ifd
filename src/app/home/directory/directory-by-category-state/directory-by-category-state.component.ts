@@ -25,10 +25,9 @@ export class DirectoryByCategoryStateComponent implements OnInit {
 
   directories: any = [];
   childCategories: any = [];
-  state: any = {
-    name: ''
-  };
+  state: any = {};
   cities: any = [];
+  currentCategory: any = {};
 
   customOptions: OwlOptions = {
     loop: false,
@@ -99,6 +98,7 @@ export class DirectoryByCategoryStateComponent implements OnInit {
           this.childCategories = res.data.child_category;
           this.cities = res.data.cities;
           this.state = res.data.state;
+          this.currentCategory = res.data.category;
         },
         () => {}
       );

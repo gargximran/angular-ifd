@@ -20,10 +20,11 @@ export class DirectoryByCategoryComponent implements OnInit {
   itemPerPage = 20;
   postStatus = 'active';
 
-  directories: any = [];
-  parentCategories: any = [];
-  childCategories: any = [];
-  states: any = [];
+  directories: Array<any> = [];
+  parentCategories: Array<any> = [];
+  childCategories: Array<any> = [];
+  states: Array<any> = [];
+  currentCategory: any = {};
 
   customOptions: OwlOptions = {
     loop: false,
@@ -66,6 +67,7 @@ export class DirectoryByCategoryComponent implements OnInit {
       d => {
         const slug = d.get('slug');
         if (slug){
+          // tslint:disable-next-line:triple-equals
           if (this.params == slug){
           }else {
             this.currentPageNumber = 1;
@@ -89,8 +91,9 @@ export class DirectoryByCategoryComponent implements OnInit {
           this.totalVolume = res.data.count;
           this.directories = res.data.collections;
           this.childCategories = res.data.child_category;
+          this.currentCategory = res.data.category;
         },
-        (err) => {}
+        () => {}
       );
     }
 
@@ -118,7 +121,7 @@ export class DirectoryByCategoryComponent implements OnInit {
       (res) => {
         this.parentCategories = res.data;
       },
-      (err) => {}
+      () => {}
     );
   }
 
@@ -140,7 +143,7 @@ export class DirectoryByCategoryComponent implements OnInit {
       res => {
         this.states = res.data;
       },
-      err => {}
+      () => {}
     );
   }
 

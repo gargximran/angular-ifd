@@ -32,7 +32,7 @@
 			createNewErrors.name
 		  }}</small>
 		</div>
-  
+
 		<div class="form-group">
 		  <label>Description :</label>
 		  <textarea
@@ -46,7 +46,7 @@
 			>{{ createNewErrors.description }}</small
 		  >
 		</div>
-  
+
 		<div class="row">
 		  <div class="col-md-6">
 			<div class="form-group">
@@ -66,7 +66,7 @@
 			  >
 			</div>
 		  </div>
-  
+
 		  <div class="col-md-6">
 			<div class="form-group">
 			  <label>Image :</label>
@@ -99,7 +99,7 @@
 			  >
 			</div>
 		  </div>
-  
+
 		  <div class="col-md-4">
 			<div class="form-group">
 			  <label>Condition :</label>
@@ -117,7 +117,7 @@
 			  >
 			</div>
 		  </div>
-  
+
 		  <div class="col-md-4">
 			<div class="form-group">
 			  <label>Age (by month):</label>
@@ -132,7 +132,7 @@
 			</div>
 		  </div>
 		</div>
-  
+
 		<div class="row">
 		  <div class="col-md-6">
 			<div class="form-group">
@@ -149,7 +149,7 @@
 			  >
 			</div>
 		  </div>
-  
+
 		  <div class="col-md-6">
 			<div class="form-group">
 			  <label>Price type :</label>
@@ -192,7 +192,7 @@
 			  >
 			</div>
 		  </div>
-  
+
 		  <div class="col-md-6">
 			<div class="form-group">
 			  <label>City :</label>
@@ -209,7 +209,7 @@
 			</div>
 		  </div>
 		</div>
-  
+
 		<div class="form-group">
 		  <label>Address :</label>
 		  <input
@@ -222,46 +222,46 @@
 			createNewErrors.address
 		  }}</small>
 		</div>
-  
-		<div class="row">
-		  <div class="col-md-6">
-			<div class="form-group">
-			  <label>Email :</label>
-			  <input
-				formControlName="email"
-				type="email"
-				class="form-control mb-0"
-				placeholder="Enter valid email"
-			  />
-			  <small
-				*ngIf="createNewErrors.email"
-				class="form-text text-danger"
-				>{{ createNewErrors.email }}</small
-			  >
-			</div>
-		  </div>
-  
-		  <div class="col-md-6">
-			<div class="form-group">
-			  <label>Phone :</label>
-			  <input
-				formControlName="phone"
-				type="text"
-				class="form-control mb-0"
-				placeholder="Enter valid phone number"
-			  />
-			  <small
-				*ngIf="createNewErrors.phone"
-				class="form-text text-danger"
-				>{{ createNewErrors.phone }}</small
-			  >
-			</div>
-		  </div>
-		</div>
-  
+
+<!--		<div class="row">-->
+<!--		  <div class="col-md-6">-->
+<!--			<div class="form-group">-->
+<!--			  <label>Email :</label>-->
+<!--			  <input-->
+<!--				formControlName="email"-->
+<!--				type="email"-->
+<!--				class="form-control mb-0"-->
+<!--				placeholder="Enter valid email"-->
+<!--			  />-->
+<!--			  <small-->
+<!--				*ngIf="createNewErrors.email"-->
+<!--				class="form-text text-danger"-->
+<!--				>{{ createNewErrors.email }}</small-->
+<!--			  >-->
+<!--			</div>-->
+<!--		  </div>-->
+
+<!--		  <div class="col-md-6">-->
+<!--			<div class="form-group">-->
+<!--			  <label>Phone :</label>-->
+<!--			  <input-->
+<!--				formControlName="phone"-->
+<!--				type="text"-->
+<!--				class="form-control mb-0"-->
+<!--				placeholder="Enter valid phone number"-->
+<!--			  />-->
+<!--			  <small-->
+<!--				*ngIf="createNewErrors.phone"-->
+<!--				class="form-text text-danger"-->
+<!--				>{{ createNewErrors.phone }}</small-->
+<!--			  >-->
+<!--			</div>-->
+<!--		  </div>-->
+<!--		</div>-->
+
 		<button
 		  type="submit"
-		  class="btn-lg btn-danger btn-block mt-3"
+		  class="button btn-block mt-3"
 		  [disabled]="loading"
 		>
 		  <ng-container *ngIf="loading; else submitText">
@@ -273,7 +273,7 @@
 	  </form>
 	</div>
   </ng-template>
-  
+
   <!--update modal-->
   <ng-template #updateModal let-d="dismiss">
 	<div class="modal-header p-4">
@@ -307,7 +307,7 @@
 			updateErrors.name
 		  }}</small>
 		</div>
-  
+
 		<div class="form-group">
 		  <label>Description :</label>
 		  <textarea
@@ -319,7 +319,7 @@
 			updateErrors.description
 		  }}</small>
 		</div>
-  
+
 		<div class="row">
 		  <div class="col-md-6">
 			<div class="form-group">
@@ -339,7 +339,7 @@
 			  >
 			</div>
 		  </div>
-  
+
 		  <div class="col-md-6">
 			<div class="form-group">
 			  <label>Image :</label>
@@ -386,7 +386,7 @@
 			  }}</small>
 			</div>
 		  </div>
-  
+
 		  <div class="col-md-4">
 			<div class="form-group">
 			  <label>Condition :</label>
@@ -404,7 +404,7 @@
 			  >
 			</div>
 		  </div>
-  
+
 		  <div class="col-md-4">
 			<div class="form-group">
 			  <label>Age (by month):</label>
@@ -419,7 +419,7 @@
 			</div>
 		  </div>
 		</div>
-  
+
 		<div class="row">
 		  <div class="col-md-6">
 			<div class="form-group">
@@ -434,7 +434,7 @@
 			  }}</small>
 			</div>
 		  </div>
-  
+
 		  <div class="col-md-6">
 			<div class="form-group">
 			  <label>Price type :</label>
@@ -475,7 +475,7 @@
 			  }}</small>
 			</div>
 		  </div>
-  
+
 		  <div class="col-md-6">
 			<div class="form-group">
 			  <label>City :</label>
@@ -492,7 +492,7 @@
 			</div>
 		  </div>
 		</div>
-  
+
 		<div class="form-group">
 		  <label>Address :</label>
 		  <input
@@ -505,42 +505,12 @@
 			updateErrors.address
 		  }}</small>
 		</div>
-  
-		<div class="row">
-		  <div class="col-md-6">
-			<div class="form-group">
-			  <label>Email :</label>
-			  <input
-				formControlName="email"
-				type="email"
-				class="form-control mb-0"
-				placeholder="Enter valid email"
-			  />
-			  <small *ngIf="updateErrors.email" class="form-text text-danger">{{
-				updateErrors.email
-			  }}</small>
-			</div>
-		  </div>
-  
-		  <div class="col-md-6">
-			<div class="form-group">
-			  <label>Phone :</label>
-			  <input
-				formControlName="phone"
-				type="text"
-				class="form-control mb-0"
-				placeholder="Enter valid phone number"
-			  />
-			  <small *ngIf="updateErrors.phone" class="form-text text-danger">{{
-				updateErrors.phone
-			  }}</small>
-			</div>
-		  </div>
-		</div>
-  
+
+
+
 		<button
 		  type="submit"
-		  class="btn-lg btn-danger btn-block"
+		  class="button btn-block"
 		  [disabled]="loading"
 		>
 		  <ng-container *ngIf="loading; else submitText">
@@ -553,7 +523,7 @@
 	</div>
   </ng-template>
   <!--update modal end-->
-  
+
   <swal
 	#deleteSwal
 	text="This cannot be undone"
@@ -564,9 +534,9 @@
 	(cancel)="cancelDelete()"
   >
   </swal>
-  
+
   <swal #deleteSuccess title="Category deleted ?" icon="success"> </swal>
-  
+
   <div id="titlebar" class="dashboard_gradient">
 	<div class="row">
 	  <div class="col-md-12">
@@ -578,14 +548,14 @@
 			<li>Classified</li>
 		  </ul>
 		</nav>
-  
+
 		<button class="btn btn-lg btn-danger" (click)="open(content)">
 		  Add New Classified
 		</button>
 	  </div>
 	</div>
   </div>
-  
+
   <div class="row">
 	<div class="col-lg-12 col-md-12">
 	  <div class="utf_dashboard_list_box margin-top-0">
@@ -601,7 +571,7 @@
 			  <option value="200">200 items per page</option>
 			</select>
 		  </div>
-  
+
 		  <div class="utf_sort_by_select_item ml-2">
 			<select
 			  (change)="ChangePostStatus($event)"
@@ -613,7 +583,7 @@
 			</select>
 		  </div>
 		</div>
-  
+
 		<h4><i class="sl sl-icon-list"></i> Classified List</h4>
 		<ul class="border-left">
 		  <ng-container
@@ -650,7 +620,7 @@
 							<h5 class="font-weight-bold">Age</h5>
 							<h5 class="font-weight-bold">Price</h5>
 							<h5 class="font-weight-bold">Price Type</h5>
-							
+
 							<h5 class="font-weight-bold">Status</h5>
 							<h5 class="font-weight-bold">Categories</h5>
 						  </div>
@@ -670,7 +640,7 @@
 								>{{ category.name }}</span
 							  >
 							</p>
-							
+
 							<div class="row" *ngIf="product.images">
 							  <div
 								class="col-md-3"
@@ -723,7 +693,7 @@
 						</div>
 					  </div>
 					</div>
-  
+
 					<hr />
 				  </div>
 				</div>
@@ -746,7 +716,7 @@
 		</ul>
 	  </div>
 	  <div class="clearfix"></div>
-  
+
 	  <div class="utf_pagination_container_part margin-top-30 margin-bottom-30">
 		<pagination-controls
 		  (pageBoundsCorrection)="pageChange($event)"
@@ -759,4 +729,3 @@
 	  </div>
 	</div>
   </div>
-  

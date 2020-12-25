@@ -23,12 +23,11 @@ export class DirectoryByCategoryCityComponent implements OnInit {
 
   parentCategories = [];
 
-  directories: any = [];
-  childCategories: any = [];
-  state: any = {
-    name: ''
-  };
-  cities: any = [];
+  directories: Array<any> = [];
+  childCategories: Array<any> = [];
+  state: any = {};
+  cities: Array<any> = [];
+  currentCategory: any = {};
 
   customOptions: OwlOptions = {
     loop: false,
@@ -72,6 +71,7 @@ export class DirectoryByCategoryCityComponent implements OnInit {
         // tslint:disable-next-line:variable-name
         const city_slug = d.get('city_slug');
         if (cat_slug && city_slug){
+          // tslint:disable-next-line:triple-equals
           if (this.citySlug == city_slug && this.categorySlug == cat_slug){
           }else {
             this.currentPageNumber = 1;
@@ -98,8 +98,9 @@ export class DirectoryByCategoryCityComponent implements OnInit {
           this.childCategories = res.data.child_category;
           this.cities = res.data.cities;
           this.state = res.data.state;
+          this.currentCategory = res.data.category;
         },
-        (err) => {}
+        () => {}
       );
     }
 
@@ -127,7 +128,7 @@ export class DirectoryByCategoryCityComponent implements OnInit {
       (res) => {
         this.parentCategories = res.data;
       },
-      (err) => {}
+      () => {}
     );
   }
 

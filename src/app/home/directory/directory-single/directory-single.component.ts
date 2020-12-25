@@ -15,6 +15,7 @@ export class DirectorySingleComponent implements OnInit {
   isLoggedIn = false;
   today = new Date().toISOString();
   post: any;
+  relatedPosts: Array<any>;
 
   ngOnInit(): void {
     this.route.paramMap.subscribe(d => {
@@ -24,16 +25,30 @@ export class DirectorySingleComponent implements OnInit {
     this.fetchPost();
   }
 
+  // tslint:disable-next-line:use-lifecycle-interface
+  ngDoCheck(): void {
+    this.route.paramMap.subscribe(d => {
+      const slug = d.get('post_slug');
+      // tslint:disable-next-line:triple-equals
+      if (slug == this.postSlug) {
+        this.fetchPost();
+        this.postSlug = '';
+      }
+    });
+  }
+
   fetchPost(): void{
     if (this.postSlug){
       this.api.post('/directory_item/get_directory/' + this.postSlug, {}).subscribe(
         res => {
-          this.post = res.data;
+          this.post = res.data.post;
+          this.relatedPosts = res.data.related_posts;
         },
-        err => {}
+        () => {}
       );
     }
 
   }
+
 
 }

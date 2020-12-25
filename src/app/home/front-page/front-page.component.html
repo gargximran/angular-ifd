@@ -66,60 +66,20 @@
       <h3 class="headline_part centered margin-bottom-35 margin-top-70">Most Popular Directories <span>Discover best things to do restaurants, shopping, hotels, cafes and places<br>around the world by categories.</span>
       </h3>
     </div>
-    <div class="col-md-4">
-      <a class="img-box">
+    <div class="col-md-4" *ngFor="let directory of mostPopularDirectories">
+      <a [routerLink]="['/directory/single', directory.slug]" class="img-box">
         <div class="utf_img_content_box visible">
-          <h4>Nightlife </h4>
-          <span>18 Listings</span>
+          <h4 class="text-capitalize">{{directory.title}}</h4>
         </div>
-        <div class="img-box-background" style="background-image: url('assets/images/popular-location-01.jpg');"></div>
+        <div *ngIf="directory.image" class="img-box-background" style="background-image: url('{{directory.image}}');">
+
+        </div>
+        <div *ngIf="!directory.image" class="img-box-background" style="background-image: url('assets/images/dumylogo.png');">
+
+        </div>
       </a>
     </div>
-    <div class="col-md-4">
-      <a class="img-box">
-        <div class="utf_img_content_box visible">
-          <h4>Shops</h4>
-          <span>24 Listings</span>
-        </div>
-        <div class="img-box-background" style="background-image: url('assets/images/popular-location-01.jpg');"></div>
-      </a>
-    </div>
-    <div class="col-md-4">
-      <a class="img-box">
-        <div class="utf_img_content_box visible">
-          <h4>Restaurant</h4>
-          <span>17 Listings</span>
-        </div>
-        <div class="img-box-background" style="background-image: url('assets/images/popular-location-01.jpg');"></div>
-      </a>
-    </div>
-    <div class="col-md-4">
-      <a class="img-box">
-        <div class="utf_img_content_box visible">
-          <h4>Outdoor Activities</h4>
-          <span>12 Listings</span>
-        </div>
-        <div class="img-box-background" style="background-image: url('assets/images/popular-location-01.jpg');"></div>
-      </a>
-    </div>
-    <div class="col-md-4">
-      <a class="img-box">
-        <div class="utf_img_content_box visible">
-          <h4>Hotels</h4>
-          <span>14 Listings</span>
-        </div>
-        <div class="img-box-background" style="background-image: url('assets/images/popular-location-01.jpg');"></div>
-      </a>
-    </div>
-    <div class="col-md-4">
-      <a class="img-box">
-        <div class="utf_img_content_box visible">
-          <h4>New York</h4>
-          <span>9 Listings</span>
-        </div>
-        <div class="img-box-background" style="background-image: url('assets/images/dumylogo.png');"></div>
-      </a>
-    </div>
+
     <div class="col-md-12 centered_content"><a [routerLink]="['/directory']" class="button border margin-top-20">View
       More Directories</a></div>
   </div>
@@ -137,30 +97,27 @@
         <div class="utf_carousel_item container">
           <div class="row">
 
-            <a class="utf_listing_item-container compact col-md-4" style="background-color: unset; box-shadow: unset;">
-              <div class="utf_listing_item"><img src="assets/images/utf_listing_item-04.jpg"> <span class="tag"><i
-                class="im im-icon-Dumbbell"></i> Fitness</span>
+            <a *ngFor="let classified of recentClassifieds"  [routerLink]="['/classified/single', classified.slug]" class="utf_listing_item-container compact col-md-4" style="background-color: unset; box-shadow: unset;">
+              <div class="utf_listing_item">
+                <img *ngIf="!classified.images" src="assets/images/dumylogo.png">
+                <img *ngIf="classified.images" src="{{classified.images[0]}}">
+                <span class="tag text-capitalize d-inline-block" *ngFor="let category of classified.category">
+                  {{category.name}}
+                </span>
                 <div class="utf_listing_item_content">
                   <div class="utf_listing_prige_block">
-                    <span class="utf_meta_listing_price"><i class="fa fa-tag"></i> $45 - $70</span>
+                    <span class="utf_meta_listing_price"><i class="fa fa-tag"></i> {{classified.price}} inr</span>
                     <span class="utp_approve_item"><i class="utf_approve_listing"></i></span>
                   </div>
-                  <h3>Ruby Beauty Center</h3>
-                  <span><i class="sl sl-icon-location"></i> The Ritz-Carlton, Hong Kong</span>
-                  <span><i class="sl sl-icon-phone"></i> (415) 796-3633</span>
+                  <h3>{{classified.name}}</h3>
+                  <span><i class="sl sl-icon-location"></i> {{classified.address}}</span>
                 </div>
               </div>
-              <div class="utf_star_rating_section" data-rating="4.5">
-                <div class="utf_counter_star_rating">(4.5)</div>
-                <span class="utf_view_count"><i class="fa fa-eye"></i> 822+</span>
-                <span class="like-icon"></span>
-                <span class="star"></span><span class="star"></span><span class="star"></span><span class="star"></span><span
-                class="star half"></span></div>
             </a>
 
             <div class="col-md-12 centered_content">
               <a [routerLink]="['/classified']" class="button border margin-top-20">View
-              More Classified's
+                More Classified's
               </a>
             </div>
           </div>
@@ -169,7 +126,6 @@
     </div>
   </div>
 </div>
-
 
 
 <section class="utf_cta_area_item utf_cta_area2_block">
@@ -189,7 +145,7 @@
             <div class="contact-form-action">
               <form [formGroup]="emailSubmitForm">
                 <span class="la la-envelope-o"></span>
-                <input class="form-control" type="email" placeholder="Enter your email" formControlName="email">
+                <input class="form-control" formControlName="email" placeholder="Enter your email" type="email">
                 <button class="utf_theme_btn" type="submit">Subscribe</button>
               </form>
             </div>

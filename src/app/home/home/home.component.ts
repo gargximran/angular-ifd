@@ -38,12 +38,12 @@ export class HomeComponent implements OnInit {
     form.append('pageNumber', String(this.currentPageNumber));
     form.append('status', 'active');
 
-    let url = '/classified_product/get_products'
+    let url = '/classified_product/get_products';
 
     this.route.queryParamMap.subscribe(d => {
       if (d.get('search')){
-        form.append('search', d.get('search'))
-        url = '/classified_product/search'
+        form.append('search', d.get('search'));
+        url = '/classified_product/search';
       }
     });
 
@@ -52,7 +52,7 @@ export class HomeComponent implements OnInit {
         this.totalVolume = res.data.count;
         this.products = res.data.collections;
       },
-      (err) => {}
+      () => {}
     );
   }
 
@@ -67,13 +67,13 @@ export class HomeComponent implements OnInit {
 
   fetchCategories(): any {
     const form = new FormData();
-    let url = '/classified_category/get_all_parent';
+    const url = '/classified_category/get_all_parent';
 
     this.api.post(url, form).subscribe(
       (res) => {
         this.parentCategories = res.data;
       },
-      (err) => {}
+      () => {}
     );
   }
 
@@ -92,11 +92,12 @@ export class HomeComponent implements OnInit {
   // tslint:disable-next-line:use-lifecycle-interface
   ngDoCheck(): void {
     this.route.queryParamMap.subscribe(d => {
+      // tslint:disable-next-line:triple-equals
       if (this.searchText != d.get('search')){
         this.searchText = d.get('search');
         this.ngOnInit();
       }
-    })
+    });
   }
 
 
@@ -105,7 +106,7 @@ export class HomeComponent implements OnInit {
       res => {
         this.states = res.data;
       },
-      err => {}
+      () => {}
     );
   }
 

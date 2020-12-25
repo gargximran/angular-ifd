@@ -17,11 +17,34 @@
 </div>
 
 
-<div class="container mt-3">
+<div class="container">
   <div class="row">
     <div class="col-lg-8 col-md-8">
+      <div class="listing_filter_block">
+        <div class="col-md-2 col-xs-2">
+          <div class="utf_layout_nav">
+            <a class="list"><i class="fa fa-align-justify"></i></a></div>
+        </div>
+        <div class="col-md-10 col-xs-10">
+          <div class="sort-by">
+            <div class="utf_sort_by_select_item sort_by_margin">
+              <div  ngbDropdown
+                    class="chosen-container chosen-container-single chosen-container-single-nosearch chosen-with-drop chosen-container-active"
+                    style="width: 100%;" title="">
+                <a class="chosen-single" id="dropdownBasic1" ngbDropdownToggle>
+                  <span>Categories</span>
+                </a>
+                <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
+                  <a class="text-capitalize" *ngFor="let category of parentCategories" [routerLink]="[ '/classified/category', category.slug]" ngbDropdownItem>{{category.slug}}</a>
+
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
       <div class="row">
-        <div class="col-lg-12 col-md-12" *ngFor="
+        <div class="col-lg-12 col-md-12 mb-3" *ngFor="
 			  let directory of directories
 				| paginate
 				  : {
@@ -30,7 +53,7 @@
 					  itemsPerPage: itemPerPage
 					}
 			">
-          <div class="utf_listing_item-container list-layout">
+          <div class="utf_listing_item-container list-layout mb-0">
             <a class="utf_listing_item" [routerLink]="['/directory/single', directory.slug]">
               <div class="utf_listing_item-image" *ngIf="directory.image">
                 <img alt="" src="{{directory.image}}">
@@ -73,7 +96,7 @@
     <!-- Sidebar -->
     <div class="col-lg-4 col-md-4">
       <div class="sidebar">
-        <div class="utf_box_widget margin-top-35 margin-bottom-75">
+        <div class="utf_box_widget margin-bottom-75">
           <h3 (click)="collapseLocation.toggle()" style="cursor: pointer;"><i class="sl sl-icon-folder-alt"></i> Cities of {{currentState.name}}
           </h3>
           <ul #collapseLocation="ngbCollapse" [(ngbCollapse)]="isCollapsedLocation" class="utf_listing_detail_sidebar">
