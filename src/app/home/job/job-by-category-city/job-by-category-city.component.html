@@ -18,28 +18,34 @@
 
 
 <div class="container mt-3">
-  <div class="row my-2">
-    <div class="col-12">
-
-      <owl-carousel-o [options]="customOptions">
-
-        <ng-container *ngFor="let child of childCategories">
-          <ng-template [id]="child.id" carouselSlide>
-            <span (click)="change_route(child.slug)" class="badge badge-pill badge-dark p-2"
-                  style="cursor: pointer;">{{child.name}}</span>
-
-          </ng-template>
-        </ng-container>
-
-      </owl-carousel-o>
-
-
-    </div>
-  </div>
   <div class="row">
     <div class="col-lg-8 col-md-8">
+      <div class="listing_filter_block">
+        <div class="col-md-2 col-xs-2">
+          <div class="utf_layout_nav">
+            <small class="text-capitalize text-danger"><span class="font-weight-bold">Category:</span> {{currentCategory.name}}</small>
+          </div>
+        </div>
+        <div class="col-md-10 col-xs-10">
+          <div class="sort-by" *ngIf="childCategories && childCategories[0]">
+            <div class="utf_sort_by_select_item sort_by_margin">
+              <div  ngbDropdown
+                    class="chosen-container chosen-container-single chosen-container-single-nosearch chosen-with-drop chosen-container-active"
+                    style="width: 100%;" title="">
+                <a class="chosen-single" id="dropdownBasic1" ngbDropdownToggle>
+                  <span>Child Categories</span>
+                </a>
+                <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
+                  <a class="text-capitalize" *ngFor="let category of childCategories" [routerLink]="[ '/job/category', category.slug, 'city', citySlug]" ngbDropdownItem>{{category.name}}</a>
+
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
       <div class="row">
-        <div class="col-lg-12 col-md-12" *ngFor="
+        <div class="col-lg-12 col-md-12 mb-3"  *ngFor="
 			  let job of jobs
 				| paginate
 				  : {
@@ -48,7 +54,7 @@
 					  itemsPerPage: itemPerPage
 					}
 			">
-          <div class="utf_listing_item-container list-layout">
+          <div class="utf_listing_item-container list-layout mb-0" [class.applied]="job.applied">
             <a class="utf_listing_item" [routerLink]="['/job/single', job.slug]">
               <div class="utf_listing_item-image" *ngIf="job.company.logo">
                 <img alt="" src="{{job.company.logo}}">
@@ -59,7 +65,8 @@
               <div class="utf_listing_item_content">
                 <div class="utf_listing_item-inner">
                   <h3>{{job.title}}</h3>
-                  <span><i class="sl sl-icon-location"></i> {{job.company.address}}</span>
+                  <span><i class="sl sl-icon-location"></i>Type: {{job.job_type}}</span>
+                  <span *ngIf="job.min_salary"><i class="sl sl-icon-location"></i>Salary Range: {{job.min_salary}} - {{job.max_salary}}</span>
                   <span><i class="sl sl-icon-directions"></i> {{job.city.name}}</span>
                   <span><i class="sl sl-icon-map"></i> {{job.state.name}}</span>
                   <span><i class="sl sl-icon-flag"></i> <span class=" text-white badge badge-pill badge-dark d-inline-block mx-1" *ngFor="let category of job.category">{{category.name}}</span></span>
@@ -91,7 +98,7 @@
     <!-- Sidebar -->
     <div class="col-lg-4 col-md-4">
       <div class="sidebar">
-        <div class="utf_box_widget margin-top-35 margin-bottom-75">
+        <div class="utf_box_widget margin-bottom-75">
           <h3 (click)="collapseLocation.toggle()" style="cursor: pointer;"><i class="sl sl-icon-folder-alt"></i> City
             of {{state.name}}
           </h3>

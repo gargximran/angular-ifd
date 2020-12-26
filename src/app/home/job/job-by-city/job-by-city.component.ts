@@ -18,30 +18,7 @@ export class JobByCityComponent implements OnInit {
   totalVolume = 0;
   itemPerPage = 20;
 
-  jobs = [
-    {
-      category: [],
-      company: {
-        name: '',
-        logo: '',
-        address: '',
-        url: ''
-      },
-      user: {
-        email: '',
-        phone: ''
-      },
-      city: {
-        name: ''
-      },
-      state: {
-        name: ''
-      },
-      title: '',
-      slug: '',
-      description: ''
-    }
-  ];
+  jobs: Array<any> = [];
   parentCategories: any = [];
   cities: any = [];
   currentState: any = {

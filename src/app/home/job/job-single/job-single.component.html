@@ -1,6 +1,48 @@
+<ng-template #content let-c="close" let-d="dismiss">
+  <div class="modal-header p-4">
+    <h2 class="modal-title text-center font-weight-bold" id="modal-basic-title">
+      Apply Now!
+    </h2>
+    <button
+      type="button"
+      class="close text-danger"
+      aria-label="Close"
+      (click)="d('Cross click')"
+    >
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body p-4">
+    <form [formGroup]="applyForm" (ngSubmit)="apply()">
+
+      <div class="form-group">
+        <label>Cover Later : <sup class="text-danger">(optional)</sup></label>
+        <textarea
+          class="form-control mb-0"
+          formControlName="cover_later"
+        ></textarea>
+      </div>
+      <div class="form-group">
+        <label for="exampleFormControlFile1">Attachment: <sup class="text-danger">(optional) - pdf/doc</sup></label>
+        <input (change)="patchCreateFormImageValue($event)" type="file" class="form-control-file pl-0" accept="application/doc, application/pdf, application/docx" id="exampleFormControlFile1" style="height: unset !important;">
+      </div>
+      <button
+        type="submit"
+        class="button btn-block mt-3"
+        [disabled]="loading"
+      >
+        <ng-container *ngIf="loading; else submitText">
+          <div class="spinner-border" role="status"></div>
+        </ng-container>
+        <ng-template #submitText>Apply</ng-template>
+      </button>
+    </form>
+  </div>
+</ng-template>
 
 
-<div class="container mt-3">
+
+<div class="container mt-3 margin-bottom-75">
   <div class="row utf_sticky_main_wrapper">
     <div class="col-lg-8 col-md-8">
       <div class="utf_listing_titlebar pt-0" id="titlebar">
@@ -8,6 +50,8 @@
           <h2 *ngIf="job">
             {{ job.title }}
           </h2>
+          <p *ngIf="job"><b>Job Type:</b> {{job.job_type}}</p>
+          <p *ngIf="job && job.min_salary"><b>Salary Range:</b> {{job.min_salary}} - {{job.max_salary}}</p>
           <ul class="listing_item_social" *ngIf="job">
             <li *ngFor="let category of job.category" class="m-1">
               <a> {{ category.name }}</a>
@@ -41,7 +85,14 @@
     </div>
 
     <!-- Sidebar -->
-    <div class="col-lg-4 col-md-4 margin-top-75 sidebar-search">
+    <div class="col-lg-4 col-md-4 sidebar-search">
+      <div class="verified-badge with-tip margin-bottom-30 bg-secondary" *ngIf="!isProfessional"> Only Professional Can Apply</div>
+      <div class="verified-badge with-tip margin-bottom-30" style="cursor: pointer;" (click)="open(content)" *ngIf="isProfessional && job && !job.applied"> Apply Now!</div>
+      <div class="verified-badge with-tip margin-bottom-30 bg-success" *ngIf="isProfessional && job && job.applied">Already Applied!</div>
+      <div class="opening-hours" *ngIf="job && job.company.logo">
+        <img class="img-fluid" src="{{job.company.logo}}" >
+
+      </div>
       <div class="utf_box_widget margin-top-35">
         <h3><i class="sl sl-icon-phone"></i> Company Info</h3>
         <div class="utf_hosted_by_user_title pl-0">
@@ -49,9 +100,6 @@
             <a class="text-capitalize">{{job.company.name}}</a>
            <span>Posted {{job.created_at | amDifference : today : 'day' : false }}
              days Ago</span>
-            <span
-            ><i class="sl sl-icon-location"></i> {{job.company.address}}</span
-            >
           </h4>
         </div>
 
@@ -64,6 +112,43 @@
         <ul *ngIf="!isLoggedIn" class="utf_listing_detail_sidebar">
           <li>Please sign in to see contact!</li>
         </ul>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+
+<div class="container margin-top-75" *ngIf="relatedJobs && relatedJobs[0]">
+  <div class="row slick_carousel_slider">
+    <div class="col-md-12">
+      <h3 class="headline_part centered margin-bottom-45"> Related Jobs
+      </h3>
+    </div>
+    <div class="row">
+      <div class="col-md-12">
+        <div class="utf_carousel_item container">
+          <div class="row">
+
+            <a *ngFor="let related of relatedJobs"  [routerLink]="['/job/single', related.slug]" class="utf_listing_item-container compact col-md-4" style="background-color: unset; box-shadow: unset;">
+              <div class="utf_listing_item">
+                <img *ngIf="related && !related.company.logo" src="assets/images/dumylogo.png">
+                <img *ngIf="related && related.company.logo" src="{{related.company.logo}}">
+                <span class="tag text-capitalize d-inline-block" *ngFor="let category of related.category">
+                  {{category.name}}
+                </span>
+                <div class="utf_listing_item_content">
+                  <div *ngIf="related.max_salary" class="utf_listing_prige_block">
+                    <span class="utf_meta_listing_price"><i class="fa fa-tag"></i>Salary: {{related.min_salary}} - {{related.max_salary}}</span>
+                  </div>
+                  <h3>{{related.title}}</h3>
+                  <span><i class="sl sl-icon-location"></i>Type: {{related.job_type}}</span>
+                </div>
+              </div>
+            </a>
+          </div>
+        </div>
       </div>
     </div>
   </div>

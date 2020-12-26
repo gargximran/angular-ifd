@@ -36,8 +36,8 @@
                   <span>Categories</span>
                 </a>
                 <div aria-labelledby="dropdownBasic1" ngbDropdownMenu>
-                  <a *ngFor="let category of parentCategories" [routerLink]="[ '/classified/category', category.slug]"
-                     class="text-capitalize" ngbDropdownItem>{{category.slug}}
+                  <a *ngFor="let category of parentCategories" [routerLink]="[ '/classified/category', category.slug, 'state', params]"
+                     class="text-capitalize" ngbDropdownItem>{{category.name}}
                   </a>
                 </div>
               </div>

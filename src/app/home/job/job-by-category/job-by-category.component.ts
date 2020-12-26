@@ -24,31 +24,9 @@ export class JobByCategoryComponent implements OnInit {
   parentCategories: any = [];
   childCategories: any = [];
   states: any = [];
+  currentCategory:any;
 
-  customOptions: OwlOptions = {
-    loop: false,
-    mouseDrag: false,
-    touchDrag: true,
-    pullDrag: false,
-    dots: true,
-    navSpeed: 2000,
-    navText: ['', ''],
-    responsive: {
-      0: {
-        items: 2
-      },
-      400: {
-        items: 5
-      },
-      740: {
-        items: 7
-      },
-      940: {
-        items: 8
-      }
-    },
-    nav: true
-  };
+
 
   constructor(private api: ApiService, private route: ActivatedRoute, private router: Router) { }
 
@@ -90,6 +68,7 @@ export class JobByCategoryComponent implements OnInit {
           this.totalVolume = res.data.count;
           this.jobs = res.data.collections;
           this.childCategories = res.data.child_category;
+          this.currentCategory = res.data.category;
         },
         () => {}
       );

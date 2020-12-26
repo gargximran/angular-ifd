@@ -22,61 +22,14 @@ export class JobByCategoryStateComponent implements OnInit {
   postStatus = 'active';
 
   parentCategories = [];
+  currentCategory: any;
 
-  jobs = [
-    {
-      category: [],
-      company: {
-        name: '',
-        logo: '',
-        address: '',
-        url: ''
-      },
-      user: {
-        email: '',
-        phone: ''
-      },
-      city: {
-        name: ''
-      },
-      state: {
-        name: ''
-      },
-      title: '',
-      slug: '',
-      description: ''
-    }
-  ];
+  jobs: Array<any>;
   childCategories: any = [];
   state: any = {
     name: ''
   };
   cities: any = [];
-
-  customOptions: OwlOptions = {
-    loop: false,
-    mouseDrag: false,
-    touchDrag: true,
-    pullDrag: false,
-    dots: true,
-    navSpeed: 2000,
-    navText: ['', ''],
-    responsive: {
-      0: {
-        items: 2
-      },
-      400: {
-        items: 5
-      },
-      740: {
-        items: 7
-      },
-      940: {
-        items: 8
-      }
-    },
-    nav: true
-  };
 
   constructor(private api: ApiService, private route: ActivatedRoute, private router: Router) { }
 
@@ -122,6 +75,7 @@ export class JobByCategoryStateComponent implements OnInit {
           this.childCategories = res.data.child_category;
           this.cities = res.data.cities;
           this.state = res.data.state;
+          this.currentCategory = res.data.category;
         },
         () => {}
       );
