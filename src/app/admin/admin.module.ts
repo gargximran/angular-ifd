@@ -25,6 +25,7 @@ import { JobCategoryComponent } from './admin/job-category/job-category.componen
 import { CompanyProfileComponent } from './company-profile/company-profile.component';
 import { ProfessionalProfileComponent } from './professional-profile/professional-profile.component';
 import { ClassifiedProductComponent } from './classified-product/classified-product.component';
+import { CompanyJobComponent } from './company-job/company-job.component';
 
 @NgModule({
   declarations: [
@@ -45,6 +46,7 @@ import { ClassifiedProductComponent } from './classified-product/classified-prod
     CompanyProfileComponent,
     ProfessionalProfileComponent,
     ClassifiedProductComponent,
+    CompanyJobComponent,
   ],
     imports: [
         CommonModule,

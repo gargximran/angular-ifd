@@ -18,6 +18,13 @@
         >
       </li>
 
+      <li *ngIf="isCompany">
+        <a [routerLinkActiveOptions]="{exact:
+            true}" [routerLink]="[ '/dashboard/job' ]" routerLinkActive="active"
+        ><i class="sl sl-icon-layers"></i> Job</a
+        >
+      </li>
+
       <li *ngIf="isProfessional">
         <a [routerLinkActiveOptions]="{exact:
             true}" [routerLink]="[ '/dashboard/professional' ]" routerLinkActive="active"

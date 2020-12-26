@@ -1,0 +1,291 @@
+
+
+<swal #deleteSuccess title="Delete Success?" icon="success"> </swal>
+
+
+<swal
+  #deleteJob
+  text="This cannot be undone"
+  icon="question"
+  title="Delete Job?"
+  [showCancelButton]="true"
+  (confirm)="deleteJobConfirm()"
+>
+</swal>
+
+
+<ng-template #create_new_job let-c="close" let-d="dismiss">
+  <div class="modal-header p-4">
+    <h4 class="modal-title" id="modal-basic-title">New Job</h4>
+    <button
+      type="button"
+      class="close text-danger"
+      aria-label="Close"
+      (click)="d('Cross click')"
+    >
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body p-4">
+    <form [formGroup]="jobPostForm" (ngSubmit)="submitJobForm()">
+      <div class="form-group">
+        <label for="directory_title_new">Job Title :</label>
+        <input
+          formControlName="title"
+          type="text"
+          class="form-control mb-0"
+          id="directory_title_new"
+          placeholder="Ex. Vacancy for musical artist."
+        />
+        <small
+          *ngIf="jobPostForm.errors && jobPostForm.errors.title"
+          class="form-text text-danger"
+        >{{ jobPostForm.errors.title }}</small
+        >
+      </div>
+
+      <div class="form-group">
+        <label for="directory_title_new">Job Description :</label>
+        <textarea
+          formControlName="description"
+          class="form-control mb-0"
+          cols="30"
+          rows="10"
+          placeholder="Requirement, Experience, Responsibility, Salary, Job Type etc...."
+        ></textarea>
+        <small
+          *ngIf="jobPostForm.errors && jobPostForm.errors.description"
+          class="form-text text-danger"
+        >{{ jobPostForm.errors.description }}</small
+        >
+      </div>
+
+      <div class="form-group">
+        <label>Category :</label>
+        <select2
+          [data]="categoryDataForFormSelector"
+          formControlName="category"
+          placeholder="Select categories"
+          [multiple]="true"
+        >
+        </select2>
+        <small
+          *ngIf="jobPostForm.errors && jobPostForm.errors.category"
+          class="form-text text-danger"
+        >{{ jobPostForm.errors.category }}</small
+        >
+      </div>
+      <div class="row">
+
+        <div class="col-md-6">
+          <label>State :</label>
+          <select2
+            [data]="stateDataForFormSelector"
+            formControlName="state"
+            placeholder="Select state"
+            [multiple]="false"
+            (update)="getCity($event)"
+          >
+          </select2>
+          <small *ngIf="jobPostForm.errors && jobPostForm.errors.state" class="form-text text-danger">{{
+            jobPostForm.errors.state
+            }}</small>
+        </div>
+        <div class="col-md-6">
+          <label>City :</label>
+          <select2
+            [data]="cityDataForFormSelector"
+            formControlName="city"
+            placeholder="Select City"
+            [multiple]="false"
+          >
+          </select2>
+          <small *ngIf="jobPostForm.errors && jobPostForm.errors.city" class="form-text text-danger">{{
+            jobPostForm.errors.city
+            }}</small>
+        </div>
+      </div>
+
+      <div class="row">
+
+        <div class="col-md-4">
+          <label>Job Type :</label>
+          <select2
+            [data]="jobTypeSelector"
+            formControlName="job_type"
+            placeholder="Select Type"
+            [multiple]="false"
+          >
+          </select2>
+          <small *ngIf="jobPostForm.errors && jobPostForm.errors.job_type" class="form-text text-danger">{{
+            jobPostForm.errors.job_type
+            }}</small>
+        </div>
+
+        <div class="col-8">
+          <div class="row">
+            <div class="col-6">
+              <label>Min Salary :</label>
+              <input
+                formControlName="min_salary"
+                type="number"
+                class="form-control mb-0"
+                placeholder="18000"
+              />
+              <small
+                *ngIf="jobPostForm.errors && jobPostForm.errors.salary_range"
+                class="form-text text-danger"
+              >{{ jobPostForm.errors.salary_range }}</small
+              >
+            </div>
+
+            <div class="col-6">
+              <label>Max Salary :</label>
+              <input
+                formControlName="max_salary"
+                type="number"
+                class="form-control mb-0"
+                placeholder="25000"
+              />
+              <small
+                *ngIf="jobPostForm.errors && jobPostForm.errors.salary_range"
+                class="form-text text-danger"
+              >{{ jobPostForm.errors.salary_range }}</small
+              >
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <button
+        type="submit"
+        class="button preview btn-block"
+        [disabled]="loading"
+      >
+        <ng-container *ngIf="loading; else submitText">
+          <div class="spinner-border" role="status"></div>
+        </ng-container>
+        <ng-template #submitText>Submit</ng-template>
+      </button>
+    </form>
+  </div>
+</ng-template>
+
+<div id="titlebar" class="dashboard_gradient">
+  <div class="row">
+    <div class="col-md-12">
+      <h2>Company Details</h2>
+      <nav id="breadcrumbs">
+        <ul>
+          <li><a [routerLink]="['/']">Home</a></li>
+          <li><a [routerLink]="['/dashboard']">Dashboard</a></li>
+          <li>Company / Job</li>
+        </ul>
+      </nav>
+    </div>
+  </div>
+</div>
+
+<div class="row">
+  <div class="alert alert-warning" role="alert" *ngIf="!company">
+    Company profile incomplete!
+  </div>
+  <div class="col-lg-12 col-md-12" *ngIf="company">
+    <div class="utf_dashboard_list_box margin-top-0">
+
+
+      <div class="row">
+        <div class="col-12 text-right">
+          <button
+            class="button bg-primary preview m-4"
+            (click)="create_new_job_modal(create_new_job)"
+          >
+            Post a Job
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="row" *ngIf="company">
+  <div class="col-lg-12 col-md-12">
+    <div class="utf_dashboard_list_box margin-top-0">
+      <div class="sort-by my_sort_by">
+        <div class="utf_sort_by_select_item">
+          <select
+            (change)="ChangeItemPerPageSize($event)"
+            class="utf_chosen_select_single"
+          >
+            <option value="10">10 items per page</option>
+            <option value="50">50 items per page</option>
+            <option value="100">100 items per page</option>
+            <option value="200">200 items per page</option>
+          </select>
+        </div>
+      </div>
+
+      <h4><i class="sl sl-icon-list"></i> Job Posted By This Company</h4>
+      <ul class="border-left">
+        <ng-container
+          *ngFor="
+            let job of jobs
+              | paginate
+                : {
+                    currentPage: currentPageNumber,
+                    totalItems: totalVolume,
+                    itemsPerPage: itemPerPage
+                  }
+          "
+        >
+          <li>
+            <div class="utf_list_box_listing_item">
+              <div class="utf_list_box_listing_item_content">
+                <div class="inner">
+                  <h3>Title : {{ job.title }}</h3>
+                  <h5 class="text-capitalize">Type : {{ job.job_type }}</h5>
+                  <h5 *ngIf="job.min_salary">Salary Range : {{ job.min_salary }} - {{job.max_salary}}</h5>
+                  <h5 class="text-capitalize">Location : {{ job.state.name}} - {{job.city.name}}</h5>
+                  <h5>
+                    Category :
+                    <span
+                      class="m-1 badge badge-pill badge-warning p-2 d-inline"
+                      *ngFor="let cat of job.category"
+                    >{{ cat.name }}</span
+                    >
+                  </h5>
+
+                  <div class="row">
+                    <pre class="p-2">
+Description :      <app-read-more title="Description" class="lead" [maxLength]="10" [text]="job.description"></app-read-more>
+                    </pre>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="buttons-to-right">
+              <a (click)="openEditModal(create_new_job, job)" class="button gray"
+              ><i class="fa fa-pencil" ></i> Edit</a
+              >
+              <a (click)="deleteJobSwalOpen(job.id)" class="button gray"
+              ><i class="fa fa-trash-o"></i> Delete</a
+              >
+            </div>
+          </li>
+        </ng-container>
+      </ul>
+    </div>
+    <div class="clearfix"></div>
+
+    <div class="utf_pagination_container_part margin-top-30 margin-bottom-30">
+      <pagination-controls
+        (pageBoundsCorrection)="pageChange($event)"
+        screenReaderCurrentLabel=".."
+        nextLabel=""
+        previousLabel=""
+        class="pagination"
+        (pageChange)="pageChange($event)"
+      ></pagination-controls>
+    </div>
+  </div>
+</div>

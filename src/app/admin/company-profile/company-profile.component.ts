@@ -37,7 +37,12 @@ export class CompanyProfileComponent implements OnInit {
     id: new FormControl(),
     title: new FormControl(),
     description: new FormControl(),
-    category: new FormControl()
+    category: new FormControl(),
+    min_salary: new FormControl(),
+    max_salary: new FormControl(),
+    job_type: new FormControl(),
+    state: new FormControl(),
+    city: new FormControl()
   });
 
   editMode = true;
@@ -48,7 +53,6 @@ export class CompanyProfileComponent implements OnInit {
   formData = new FormGroup({
     name: new FormControl(''),
     url: new FormControl(''),
-    category: new FormControl(''),
     description: new FormControl(''),
     logo: new FormControl(''),
     city: new FormControl(''),
@@ -59,7 +63,6 @@ export class CompanyProfileComponent implements OnInit {
   companyDetail = {
     name: '',
     url: '',
-    category: [],
     description: '',
     logo: 'assets/images/dumylogo.png',
     city: {},
@@ -70,7 +73,6 @@ export class CompanyProfileComponent implements OnInit {
   submitErrors = {
     name: '',
     url: '',
-    category: '',
     description: '',
     logo: '',
     city: '',
@@ -79,9 +81,8 @@ export class CompanyProfileComponent implements OnInit {
   };
 
   ngOnInit(): void {
-    this.initAllCategory();
     this.initialize_all_states();
-    this.fetchData();
+    this.initAllCategory();
   }
 
   // tslint:disable-next-line:use-lifecycle-interface
@@ -91,7 +92,6 @@ export class CompanyProfileComponent implements OnInit {
       this.companyDetail.url = this.auth.CompanyProfile.url || '';
       this.companyDetail.description =
         this.auth.CompanyProfile.description || '';
-      this.companyDetail.category = this.auth.CompanyProfile.category || '';
       this.companyDetail.logo =
         this.auth.CompanyProfile.logo || 'assets/images/dumylogo.png';
       this.companyDetail.city = this.auth.CompanyProfile.city || '';
@@ -106,22 +106,12 @@ export class CompanyProfileComponent implements OnInit {
         state: this.auth.CompanyProfile.state.id || '',
         address: this.auth.CompanyProfile.address || '',
       });
-
-      const categories = this.auth.CompanyProfile.category.map(
-        (value) => value.id
-      );
-
-      this.formData.patchValue({
-        category: categories || '',
-      });
-
       this.companyDetail.logo =
         this.auth.CompanyProfile.logo || 'assets/images/dumylogo.png';
     } else {
       this.companyDetail = {
         name: '',
         url: '',
-        category: [],
         description: '',
         logo: 'assets/images/dumylogo.png',
         city: {},
@@ -239,7 +229,6 @@ export class CompanyProfileComponent implements OnInit {
     this.submitErrors = {
       name: '',
       url: '',
-      category: '',
       description: '',
       logo: '',
       city: '',
@@ -261,7 +250,6 @@ export class CompanyProfileComponent implements OnInit {
     form.append('address', this.formData.get('address').value || '');
     form.append('city', this.formData.get('city').value || '');
     form.append('state', this.formData.get('state').value || '');
-    form.append('category', String(this.formData.get('category').value) || '');
     form.append('logo', this.formData.get('logo').value || '');
 
     this.api.post(url, form).subscribe(
@@ -299,114 +287,5 @@ export class CompanyProfileComponent implements OnInit {
         this.ngAfterContentInit();
       }
     );
-  }
-
-
-  deleteJobSwalOpen(data): void{
-    this.forDelete = '';
-    this.deleteJobSwal.fire();
-    this.forDelete = data;
-  }
-
-  deleteJobConfirm(): void{
-    this.api.post('/job/delete/' + this.forDelete, {}).subscribe(
-      res => {
-        this.forDelete = '';
-        this.deleteSuccess.fire();
-        this.fetchData();
-      },
-      err => {
-        this.forDelete = '';
-        this.fetchData();
-      }
-    );
-
-  }
-
-  create_new_job_modal(value): void{
-    this.jobPostForm.reset();
-    this.open_modal(value);
-  }
-
-
-  submitJobForm(): void{
-    this.loading = true;
-    let url = '';
-    if (this.jobPostForm.get('id').value){
-      url = '/job/update/' + this.jobPostForm.get('id').value;
-    }else{
-      url = '/job/create';
-    }
-    const form = new FormData();
-    form.append('title', this.jobPostForm.get('title').value || '');
-    form.append('description', this.jobPostForm.get('description').value || '');
-    form.append('category', String(this.jobPostForm.get('category').value) || '');
-
-    this.api.post(url, form).subscribe(
-      res => {
-        if (this.jobPostForm.get('id').value){
-          url = '';
-        }else{
-          this.toastr.success('New Job Posted!');
-        }
-        this.loading = false;
-        this.ModalService.dismissAll();
-        this.jobPostForm.reset();
-        this.fetchData();
-      },
-      err => {
-        this.toastr.error('Check input data!');
-        this.loading = false;
-        this.jobPostForm.setErrors({
-          ...err.errors
-        });
-      }
-    );
-
-  }
-
-
-  fetchData(): any {
-    const form = new FormData();
-    form.append('itemPerPage', String(this.itemPerPage));
-    form.append('pageNumber', String(this.currentPageNumber));
-
-    this.api.post('/job/get_jobs', form).subscribe(
-      (res) => {
-        this.totalVolume = res.data.count;
-        this.jobs = res.data.collections;
-      },
-      (err) => {}
-    );
-  }
-
-
-  pageChange(event): any {
-    this.currentPageNumber = event;
-    this.fetchData();
-  }
-  ChangeItemPerPageSize(event): void {
-    this.itemPerPage = event.target.value;
-    this.fetchData();
-  }
-
-
-  openEditModal(content, data): void{
-    this.jobPostForm.reset();
-    const categories = data.category.map(value => value.id);
-    this.jobPostForm.patchValue({
-      id: data.id,
-      title: data.title,
-      category: categories,
-      description: data.description
-    });
-    this.open_modal(content);
-  }
-
-  open_modal(value): void{
-    this.ModalService.open(value, {
-      centered: true,
-      size: 'xl'
-    });
   }
 }

@@ -17,6 +17,7 @@ import { CompanyGuard } from '../guard/company.guard';
 import { ProfessionalProfileComponent } from './professional-profile/professional-profile.component';
 import { ProfessionalGuard } from '../guard/professional.guard';
 import { ClassifiedProductComponent } from './classified-product/classified-product.component';
+import {CompanyJobComponent} from './company-job/company-job.component';
 
 const routes: Routes = [
   {
@@ -28,8 +29,13 @@ const routes: Routes = [
         component: AdminDashboardComponent
       },
       {
-        path:'company',
+        path: 'company',
         component: CompanyProfileComponent,
+        canActivate: [CompanyGuard]
+      },
+      {
+        path: 'job',
+        component: CompanyJobComponent,
         canActivate: [CompanyGuard]
       },
       {
