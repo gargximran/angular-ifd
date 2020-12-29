@@ -174,12 +174,12 @@
 <div id="titlebar" class="dashboard_gradient">
   <div class="row">
     <div class="col-md-12">
-      <h2>Company Details</h2>
+      <h2>Job Post</h2>
       <nav id="breadcrumbs">
         <ul>
           <li><a [routerLink]="['/']">Home</a></li>
           <li><a [routerLink]="['/dashboard']">Dashboard</a></li>
-          <li>Company / Job</li>
+          <li> Job Post</li>
         </ul>
       </nav>
     </div>
@@ -188,7 +188,7 @@
 
 <div class="row">
   <div class="alert alert-warning" role="alert" *ngIf="!company">
-    Company profile incomplete!
+    Profile incomplete!
   </div>
   <div class="col-lg-12 col-md-12" *ngIf="company">
     <div class="utf_dashboard_list_box margin-top-0">
@@ -223,9 +223,19 @@
             <option value="200">200 items per page</option>
           </select>
         </div>
+        <div class="utf_sort_by_select_item ml-2">
+          <select
+            (change)="ChangePostStatus($event)"
+            class="utf_chosen_select_single"
+          >
+            <option value="all">All</option>
+            <option value="active">Active</option>
+            <option value="inactive">Pending</option>
+          </select>
+        </div>
       </div>
 
-      <h4><i class="sl sl-icon-list"></i> Job Posted By This Company</h4>
+      <h4><i class="sl sl-icon-list"></i> Posted Job's List</h4>
       <ul class="border-left">
         <ng-container
           *ngFor="
@@ -243,6 +253,7 @@
               <div class="utf_list_box_listing_item_content">
                 <div class="inner">
                   <h3>Title : {{ job.title }}</h3>
+                  <h5 class="text-capitalize">Status : {{ job.status ? 'Active' : 'Pending' }}</h5>
                   <h5 class="text-capitalize">Type : {{ job.job_type }}</h5>
                   <h5 *ngIf="job.min_salary">Salary Range : {{ job.min_salary }} - {{job.max_salary}}</h5>
                   <h5 class="text-capitalize">Location : {{ job.state.name}} - {{job.city.name}}</h5>
@@ -264,6 +275,9 @@ Description :      <app-read-more title="Description" class="lead" [maxLength]="
               </div>
             </div>
             <div class="buttons-to-right">
+              <a class="button gray" [routerLink]="['/dashboard/job/view_applicant/', job.slug]" >
+                <i class="fa fa-eye" ></i>
+                View Applicants</a>
               <a (click)="openEditModal(create_new_job, job)" class="button gray"
               ><i class="fa fa-pencil" ></i> Edit</a
               >

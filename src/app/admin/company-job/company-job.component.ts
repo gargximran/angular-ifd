@@ -31,6 +31,7 @@ export class CompanyJobComponent implements OnInit {
   currentPageNumber = 1;
   totalVolume = 0;
   itemPerPage = 10;
+  status = 'all';
 
   jobs: any = [];
 
@@ -74,7 +75,7 @@ export class CompanyJobComponent implements OnInit {
 
 
   ngOnInit(): void {
-    this.company = !!this.auth.CompanyProfile;
+    this.company = !!this.auth.CompanyProfile || !!this.auth.ProfessionalProfile;
     this.initialize_all_states();
     this.fetchData();
     this.initAllCategory();
@@ -90,7 +91,7 @@ export class CompanyJobComponent implements OnInit {
           const data = {
             label: element.name,
             value: element.id,
-            classes: 'company-profile-category',
+            classes: 'company-profile-category d-inline-block',
           };
           datas.push(data);
         });
@@ -227,14 +228,20 @@ export class CompanyJobComponent implements OnInit {
     const form = new FormData();
     form.append('itemPerPage', String(this.itemPerPage));
     form.append('pageNumber', String(this.currentPageNumber));
+    form.append('status', this.status);
 
     this.api.post('/job/get_jobs', form).subscribe(
       (res) => {
         this.totalVolume = res.data.count;
         this.jobs = res.data.collections;
       },
-      (err) => {}
+      () => {}
     );
+  }
+
+  ChangePostStatus(v): void{
+    this.status = v.target.value;
+    this.fetchData();
   }
 
 

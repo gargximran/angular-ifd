@@ -20,12 +20,12 @@
   <div class="row">
     <div class="col-lg-8 col-md-8">
       <div class="listing_filter_block">
-        <div class="col-md-2 col-xs-2">
+        <div class="col-md-6 col-xs-6">
           <div class="utf_layout_nav">
-            <small class="text-capitalize text-danger"><span class="font-weight-bold d-inline-block">Category:</span> {{currentCategory.name}}</small>
+            <small *ngIf="currentCategory && currentCategory.name" class="text-capitalize text-danger"><span class="font-weight-bold d-inline-block">Category:</span> {{currentCategory.name}}</small>
           </div>
         </div>
-        <div class="col-md-10 col-xs-10">
+        <div class="col-md-6 col-xs-6">
           <div class="sort-by" *ngIf="childCategories && childCategories[0]">
             <div class="utf_sort_by_select_item sort_by_margin">
               <div  ngbDropdown

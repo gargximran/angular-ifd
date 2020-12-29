@@ -16,14 +16,8 @@ export class ProfessionalProfileComponent implements OnInit {
   constructor(
     private auth: AuthService,
     private api: ApiService,
-    private toastr: ToastrService,
-    private ModalService: NgbModal
+    private toastr: ToastrService
   ) {}
-
-  @ViewChild('deleteSwal') deleteSwal;
-  @ViewChild('deleteSuccess') deleteSuccess;
-  @ViewChild('deleteJob') deleteJobSwal;
-
 
   currentPageNumber = 1;
   totalVolume = 0;
@@ -265,7 +259,7 @@ export class ProfessionalProfileComponent implements OnInit {
   // tslint:disable-next-line:use-lifecycle-interface
   ngAfterContentInit(): void {
     if (this.auth.ProfessionalProfile) {
-        this.ProfessionalDetail = {...this.auth.ProfessionalProfile, image: this.auth.ProfessionalProfile.image || 'assets/images/dumylogo.png'};
+        this.ProfessionalDetail = {...this.auth.ProfessionalProfile, image: this.auth.ProfessionalProfile.image || 'assets/images/dumylogo.png', name: this.auth.UserName};
         this.formData.patchValue({
           father: this.ProfessionalDetail.father,
           mother: this.ProfessionalDetail.mother,
@@ -417,9 +411,9 @@ export class ProfessionalProfileComponent implements OnInit {
     const supperThis = this;
     let url = '';
     if (this.auth.ProfessionalProfile) {
-      url = '/professional_profile/update';
+      url = '/user/update-professional-profile';
     } else {
-      url = '/professional_profile/create';
+      url = '/user/create-professional-profile';
     }
 
     function getBirthday(): any{
@@ -469,29 +463,6 @@ export class ProfessionalProfileComponent implements OnInit {
         this.formData.setErrors({
           ...err.errors
         });
-      }
-    );
-  }
-
-  openDeleteSwal(): void {
-    if (this.auth.ProfessionalProfile) {
-      this.deleteSwal.fire();
-    }
-  }
-
-  deleteProfile(): void {
-    this.api.post('/professional_profile/delete', {}).subscribe(
-      (res) => {
-        this.deleteSuccess.fire();
-        this.editMode = false;
-        this.ngOnInit();
-        this.ngAfterContentInit();
-      },
-      (err) => {
-        this.toastr.error('Something went wrong!');
-        this.editMode = true;
-        this.ngOnInit();
-        this.ngAfterContentInit();
       }
     );
   }

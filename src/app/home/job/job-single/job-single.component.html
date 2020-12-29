@@ -42,7 +42,7 @@
 
 
 
-<div class="container mt-3 margin-bottom-75">
+<div class="container mt-3 margin-bottom-75" *ngIf="job">
   <div class="row utf_sticky_main_wrapper">
     <div class="col-lg-8 col-md-8">
       <div class="utf_listing_titlebar pt-0" id="titlebar">
@@ -86,20 +86,31 @@
 
     <!-- Sidebar -->
     <div class="col-lg-4 col-md-4 sidebar-search">
-      <div class="verified-badge with-tip margin-bottom-30 bg-secondary" *ngIf="!isProfessional"> Only Professional Can Apply</div>
-      <div class="verified-badge with-tip margin-bottom-30" style="cursor: pointer;" (click)="open(content)" *ngIf="isProfessional && job && !job.applied"> Apply Now!</div>
+      <div class="verified-badge with-tip margin-bottom-30 bg-secondary" *ngIf="!isLoggedIn"> Login to Apply</div>
+      <div class="verified-badge with-tip margin-bottom-30" style="cursor: pointer;" (click)="open(content)" *ngIf="isLoggedIn"> Apply Now!</div>
       <div class="verified-badge with-tip margin-bottom-30 bg-success" *ngIf="isProfessional && job && job.applied">Already Applied!</div>
-      <div class="opening-hours" *ngIf="job && job.company.logo">
-        <img class="img-fluid" src="{{job.company.logo}}" >
+      <div class="opening-hours border p-2" *ngIf="job.user.type.client_type == 'professional' && job.user.profile.image">
+        <img class="img-fluid" style="margin: 0 auto; display: block;" src="{{job.user.profile.image}}" >
+
+      </div>
+
+      <div class="opening-hours border p-2" *ngIf="job.user.type.client_type == 'company' && job.user.profile.logo">
+        <img class="img-fluid" style="margin: 0 auto; display: block;" src="{{job.user.profile.logo}}" >
 
       </div>
       <div class="utf_box_widget margin-top-35">
-        <h3><i class="sl sl-icon-phone"></i> Company Info</h3>
+        <h3><i class="sl sl-icon-phone"></i> Post by</h3>
         <div class="utf_hosted_by_user_title pl-0">
-          <h4 *ngIf="job">
-            <a class="text-capitalize">{{job.company.name}}</a>
+          <h4 *ngIf="job.user.type.client_type == 'company'">
+            <a class="text-capitalize">{{job.user.profile.name}}</a>
            <span>Posted {{job.created_at | amDifference : today : 'day' : false }}
              days Ago</span>
+          </h4>
+
+          <h4 *ngIf="job.user.type.client_type == 'professional'">
+            <a class="text-capitalize">{{job.user.first_name}} {{job.user.last_name}}</a>
+            <span>Posted {{job.created_at | amDifference : today : 'day' : false }}
+              days Ago</span>
           </h4>
         </div>
 
@@ -110,7 +121,7 @@
           </li>
         </ul>
         <ul *ngIf="!isLoggedIn" class="utf_listing_detail_sidebar">
-          <li>Please sign in to see contact!</li>
+          <li class="button">Please sign in to see contact!</li>
         </ul>
       </div>
     </div>
@@ -133,8 +144,9 @@
 
             <a *ngFor="let related of relatedJobs"  [routerLink]="['/job/single', related.slug]" class="utf_listing_item-container compact col-md-4" style="background-color: unset; box-shadow: unset;">
               <div class="utf_listing_item">
-                <img *ngIf="related && !related.company.logo" src="assets/images/dumylogo.png">
-                <img *ngIf="related && related.company.logo" src="{{related.company.logo}}">
+                <img *ngIf="!related.user.profile.logo && !related.user.profile.image" src="assets/images/dumylogo.png">
+                <img *ngIf="related.user.type.client_type == 'company' && related.user.profile.logo" src="{{related.user.profile.logo}}">
+                <img *ngIf="related.user.type.client_type == 'professional' && related.user.profile.image" src="{{related.user.profile.image}}">
                 <span class="tag text-capitalize d-inline-block" *ngFor="let category of related.category">
                   {{category.name}}
                 </span>

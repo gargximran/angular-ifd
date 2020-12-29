@@ -18,6 +18,10 @@ import { ProfessionalProfileComponent } from './professional-profile/professiona
 import { ProfessionalGuard } from '../guard/professional.guard';
 import { ClassifiedProductComponent } from './classified-product/classified-product.component';
 import {CompanyJobComponent} from './company-job/company-job.component';
+import {ProfessionalJobAppliedComponent} from './professional-job-applied/professional-job-applied.component';
+import {JobApplicantsComponent} from './job-applicants/job-applicants.component';
+import {SingleApplicationJobComponent} from './single-application-job/single-application-job.component';
+import {JobApprovalComponent} from './admin/job-approval/job-approval.component';
 
 const routes: Routes = [
   {
@@ -35,12 +39,24 @@ const routes: Routes = [
       },
       {
         path: 'job',
-        component: CompanyJobComponent,
-        canActivate: [CompanyGuard]
+        component: CompanyJobComponent
+      },
+      {
+        path: 'job/view_applicant/:job_slug',
+        component: JobApplicantsComponent
+      },
+      {
+        path: 'job/view_application/:application',
+        component: SingleApplicationJobComponent
       },
       {
         path: 'professional',
         component: ProfessionalProfileComponent,
+        canActivate: [ProfessionalGuard]
+      },
+      {
+        path: 'my-jobs',
+        component: ProfessionalJobAppliedComponent,
         canActivate: [ProfessionalGuard]
       },
       {
@@ -99,6 +115,10 @@ const routes: Routes = [
           {
             path: 'job_category/child/:parent',
             component: JobCategoryComponent
+          },
+          {
+            path: 'all_job',
+            component: JobApprovalComponent
           }
         ]
       }

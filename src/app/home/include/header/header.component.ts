@@ -1,5 +1,5 @@
 import { HttpClient } from '@angular/common/http';
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit, ViewChild} from '@angular/core';
 import { FormControl, FormGroup, FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
@@ -11,6 +11,7 @@ import { ToastrService } from 'ngx-toastr';
 import { AuthService } from 'src/app/service/auth.service';
 
 @Component({
+  // tslint:disable-next-line:component-selector
   selector: 'home-header',
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.css'],
@@ -20,6 +21,13 @@ import { AuthService } from 'src/app/service/auth.service';
   ],
 })
 export class HomeHeaderComponent implements OnInit {
+
+  forgetPasswordSuccessfully: any;
+  forgetPasswordError: any;
+
+
+  @ViewChild('forgetTab') forgetTabChild;
+  @ViewChild('content') LoginModal;
 
   constructor(
     private modalService: NgbModal,
@@ -50,26 +58,46 @@ export class HomeHeaderComponent implements OnInit {
     username: new FormControl('')
   });
 
+  forgotPasswordForm = new FormGroup({
+    email: new FormControl('')
+  });
+
 
 
   public isModalOpen = false;
   public modalOptions = {
     width: '70',
     height: '70',
-    data: { authors: [{ name: 'Joe Seph', books: 23 }] },
+    data: { authors: [{ name: 'Joe Steph', books: 23 }] },
   };
 
-  toggleModal() {
+  toggleModal(): void{
     this.isModalOpen = !this.isModalOpen;
   }
 
-  
+  submitForgetForm(): void{
+    this.forgetPasswordError = '';
+    this.forgetPasswordSuccessfully = '';
+    this.loading = true;
+    const form = new FormData();
+    form.append('email', this.forgotPasswordForm.get('email').value || '');
+    this.http.post(`${url}/user/forget_password`, form).subscribe(
+      (res: Response) => {
+        this.loading = false;
+        this.forgetPasswordSuccessfully = res.message;
+      },
+      (err: any) => {
+        this.loading = false;
+        this.forgetPasswordError = err.error.message;
+      }
+    );
+  }
 
-  openVerticallyCentered(content) {
+  openVerticallyCentered(content): void{
     this.modalService.open(content, { centered: true });
   }
 
-  toggleInModalAction(buttonActive, buttonClose, open, close) {
+  toggleInModalAction(buttonActive, buttonClose, open, close): void{
     buttonActive.classList.add('active');
     buttonClose.classList.remove('active');
     open.style.display = '';
@@ -83,7 +111,6 @@ export class HomeHeaderComponent implements OnInit {
     }
   }
 
-  
 
   registration(): void{
     this.loading = true;
@@ -102,24 +129,29 @@ export class HomeHeaderComponent implements OnInit {
         localStorage.setItem('__auth_session__', JSON.stringify(res.data));
         this.toastr.success(res.message);
         this.modalService.dismissAll();
-        this.router.navigateByUrl('/dashboard'); 
+        this.router.navigateByUrl('/dashboard');
       },
       (err: any) => {
         this.loading = false;
-        this.toastr.error(err.error.message)
+        this.toastr.error(err.error.message);
         this.registrationForm.setErrors({
           ...err.error.errors
         });
       }
-    )
+    );
 
 
+  }
+
+  openForgetPassword(forgetPassword): void{
+    this.modalService.dismissAll();
+    this.modalService.open(forgetPassword, { centered: true });
   }
 
 
 
   login(): void{
-    let formData = new FormData();
+    const formData = new FormData();
     formData.append('email', this.loginForm1.get('email1').value);
     formData.append('password', this.loginForm1.get('password1').value);
     formData.append('remember', this.loginForm1.get('remember1').value);
@@ -130,11 +162,11 @@ export class HomeHeaderComponent implements OnInit {
       (res: Response) => {
         localStorage.setItem('__auth_session__', JSON.stringify(res.data));
         this.loginError = ' ';
-        let supperthis = this;
+        const supperthis = this;
         supperthis.loading = false;
-        this.toastr.success('Login successfull!')
+        this.toastr.success('Login successfull!');
         supperthis.modalService.dismissAll();
-        supperthis.router.navigateByUrl('/dashboard');  
+        supperthis.router.navigateByUrl('/dashboard');
 
       },
       (error: any) => {

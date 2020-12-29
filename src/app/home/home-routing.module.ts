@@ -26,6 +26,7 @@ import {JobByCategoryCityComponent} from './job/job-by-category-city/job-by-cate
 import {JobSingleComponent} from './job/job-single/job-single.component';
 import {PlaceholderComponent} from '../admin/admin/placeholder/placeholder.component';
 import {FrontPageComponent} from './front-page/front-page.component';
+import {ResetPasswordComponent} from './reset-password/reset-password.component';
 
 
 const routes: Routes = [
@@ -36,6 +37,10 @@ const routes: Routes = [
       {
         path: '',
         component: FrontPageComponent
+      },
+      {
+        path: 'reset/:token',
+        component: ResetPasswordComponent
       },
       {
         path: 'classified',

@@ -1,18 +1,3 @@
-<swal
-  #deleteSwal
-  text="This cannot be undone"
-  icon="question"
-  title="Delete Company?"
-  [showCancelButton]="true"
-  (confirm)="deleteProfile()"
->
-</swal>
-
-<swal #deleteSuccess title="Delete Success?" icon="success"> </swal>
-
-
-
-
 <div id="titlebar" class="dashboard_gradient">
   <div class="row">
     <div class="col-md-12">
@@ -186,14 +171,6 @@
             <ng-container *ngIf="!companyDetail.name">
               Add Detail
             </ng-container>
-          </button>
-
-          <button
-            class="button preview margin-top-15 ml-2"
-            (click)="openDeleteSwal()"
-            *ngIf="editMode && companyDetail.name"
-          >
-            Delete company?
           </button>
 
           <button

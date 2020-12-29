@@ -29,6 +29,7 @@ export class ApiService {
     this.setHeaders();
     return this.http.get<Response>(this.FULL_URL, {params, headers: this.headers}).pipe(
       map((resp) => {
+        window.scroll(0, 0);
         this.auth.setSession = resp;
         return resp;
 
@@ -50,6 +51,7 @@ export class ApiService {
     this.setHeaders();
     return this.http.post<Response>(this.FULL_URL, data, {params, headers: this.headers}).pipe(
       map(resp => {
+        window.scroll(0, 0);
         this.auth.setSession = resp;
         return resp;
       }),

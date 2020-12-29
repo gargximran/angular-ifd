@@ -19,17 +19,11 @@ export class CompanyProfileComponent implements OnInit {
     private ModalService: NgbModal
   ) {}
 
-  @ViewChild('deleteSwal') deleteSwal;
-  @ViewChild('deleteSuccess') deleteSuccess;
-  @ViewChild('deleteJob') deleteJobSwal;
-
-  forDelete = '';
 
   currentPageNumber = 1;
   totalVolume = 0;
   itemPerPage = 10;
 
-  jobs: any = [];
 
   loading = false;
 
@@ -46,7 +40,6 @@ export class CompanyProfileComponent implements OnInit {
   });
 
   editMode = true;
-  categoryDataForFormSelector: Select2Data = [];
   stateDataForFormSelector: Select2Data = [];
   cityDataForFormSelector: Select2Data = [];
 
@@ -82,7 +75,6 @@ export class CompanyProfileComponent implements OnInit {
 
   ngOnInit(): void {
     this.initialize_all_states();
-    this.initAllCategory();
   }
 
   // tslint:disable-next-line:use-lifecycle-interface
@@ -124,29 +116,6 @@ export class CompanyProfileComponent implements OnInit {
     }
   }
 
-  initAllCategory(): any {
-    this.api.get('/job_category/get_categories').subscribe(
-      (res) => {
-        const datas = [];
-
-        res.data.forEach((element) => {
-          const data = {
-            label: element.name,
-            value: element.id,
-            classes: 'company-profile-category',
-          };
-          datas.push(data);
-        });
-        this.categoryDataForFormSelector = [
-          {
-            label: 'Select Categories',
-            options: datas,
-          },
-        ];
-      },
-      (err) => {}
-    );
-  }
 
   initialize_all_states(): void {
     this.api.get('/state/view').subscribe(
@@ -226,6 +195,8 @@ export class CompanyProfileComponent implements OnInit {
   }
 
   submitData(): void {
+    this.loading = false;
+
     this.submitErrors = {
       name: '',
       url: '',
@@ -238,9 +209,9 @@ export class CompanyProfileComponent implements OnInit {
 
     let url = '';
     if (this.auth.CompanyProfile) {
-      url = '/company_profile/update';
+      url = '/user/update-company-profile';
     } else {
-      url = '/company_profile/create';
+      url = '/user/create-company-profile';
     }
 
     const form = new FormData();
@@ -254,38 +225,21 @@ export class CompanyProfileComponent implements OnInit {
 
     this.api.post(url, form).subscribe(
       (res) => {
+        this.loading = false;
         this.editMode = true;
         this.ngOnInit();
         this.ngAfterContentInit();
         this.toastr.success('Change done!');
       },
       (err) => {
+        this.loading = false;
         this.toastr.error('Please check data again!');
         this.submitErrors = { ...this.submitErrors, ...err.errors };
       }
     );
   }
 
-  openDeleteSwal(): void {
-    if (this.auth.CompanyProfile) {
-      this.deleteSwal.fire();
-    }
-  }
 
-  deleteProfile(): void {
-    this.api.post('/company_profile/delete', {}).subscribe(
-      (res) => {
-        this.deleteSuccess.fire();
-        this.editMode = false;
-        this.ngOnInit();
-        this.ngAfterContentInit();
-      },
-      (err) => {
-        this.toastr.error('Something went wrong!');
-        this.editMode = true;
-        this.ngOnInit();
-        this.ngAfterContentInit();
-      }
-    );
-  }
+
+
 }

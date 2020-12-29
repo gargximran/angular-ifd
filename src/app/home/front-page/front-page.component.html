@@ -27,27 +27,27 @@
                 type="text"
               />
             </div>
-            <button class="button">Search</button>
+            <button class="button" (click)="goToSearchPage(searchInput)">Search</button>
           </div>
 
           <div class="main_popular_categories">
             <h3>Select Your Choice</h3>
             <ul class="main_popular_categories_list text-white">
               <li><a>
-                <div class="utf_box"><i aria-hidden="true" class="im im-icon-Chef-Hat"></i>
-                  <p>Classified</p>
+                <div style="cursor: pointer;" [class.bg-danger]="selectedOption == 'classified'" (click)="selectedOption =  'classified'"  class="utf_box"><i class="im im-icon-Chef-Hat"></i>
+                  <p style="cursor: pointer;">Classified</p>
                 </div>
               </a>
               </li>
               <li><a>
-                <div class="utf_box"><i aria-hidden="true" class="im im-icon-Dumbbell"></i>
-                  <p>Directory</p>
+                <div [class.bg-danger]="selectedOption == 'directory'" (click)="selectedOption =  'directory'" style="cursor: pointer;" class="utf_box"><i class="im im-icon-Dumbbell"></i>
+                  <p style="cursor: pointer;">Directory</p>
                 </div>
               </a>
               </li>
               <li><a>
-                <div class="utf_box"><i aria-hidden="true" class="im im-icon-Electric-Guitar"></i>
-                  <p>Job</p>
+                <div [class.bg-danger]="selectedOption == 'job'" (click)="selectedOption =  'job'" style="cursor: pointer;" class="utf_box"><i class="im im-icon-Electric-Guitar"></i>
+                  <p style="cursor: pointer;">Job</p>
                 </div>
               </a>
               </li>

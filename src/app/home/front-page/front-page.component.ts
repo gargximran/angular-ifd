@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {OwlOptions} from 'ngx-owl-carousel-o';
 import {FormControl, FormGroup} from '@angular/forms';
 import {ApiService} from '../../service/api.service';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-front-page',
@@ -10,30 +11,7 @@ import {ApiService} from '../../service/api.service';
 })
 export class FrontPageComponent implements OnInit {
 
-  customOptions: OwlOptions = {
-    loop: true,
-    mouseDrag: true,
-    touchDrag: true,
-    pullDrag: false,
-    dots: true,
-    navSpeed: 2000,
-    navText: ['', ''],
-    responsive: {
-      0: {
-        items: 1
-      },
-      400: {
-        items: 1
-      },
-      740: {
-        items: 2
-      },
-      940: {
-        items: 3
-      }
-    },
-    nav: false
-  };
+  selectedOption: any = 'directory';
 
   emailSubmitForm = new FormGroup({
     email: new FormControl('')
@@ -42,11 +20,19 @@ export class FrontPageComponent implements OnInit {
   mostPopularDirectories: Array<any> = [];
   recentClassifieds: Array<any> = [];
 
-  constructor(private api: ApiService) { }
+  constructor(private api: ApiService, private router: Router) { }
 
   ngOnInit(): void {
     this.fetchMostPopularDirectories();
     this.fetchRecentClassifieds();
+  }
+
+  goToSearchPage(value): void{
+    this.router.navigate(['/' + this.selectedOption], {
+      queryParams: {
+        search: value.value
+      }
+    });
   }
 
   fetchMostPopularDirectories(): void{

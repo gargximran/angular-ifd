@@ -35,6 +35,7 @@ import { JobByCategoryStateComponent } from './job/job-by-category-state/job-by-
 import { JobByCategoryCityComponent } from './job/job-by-category-city/job-by-category-city.component';
 import { JobSingleComponent } from './job/job-single/job-single.component';
 import { FrontPageComponent } from './front-page/front-page.component';
+import { ResetPasswordComponent } from './reset-password/reset-password.component';
 
 @NgModule({
   declarations: [
@@ -64,7 +65,8 @@ import { FrontPageComponent } from './front-page/front-page.component';
     JobByCategoryStateComponent,
     JobByCategoryCityComponent,
     JobSingleComponent,
-    FrontPageComponent
+    FrontPageComponent,
+    ResetPasswordComponent
   ],
   imports: [
     CommonModule,

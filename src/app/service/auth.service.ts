@@ -58,6 +58,13 @@ export class AuthService {
     }
   }
 
+  public get UserName(): string{
+    if (this.isProfessional()){
+      return this._getSession_().user.first_name + ' ' + this._getSession_().user.last_name;
+    }
+    return null;
+  }
+
   public isProfessional(): boolean{
     if (this._getUser_()){
       // tslint:disable-next-line:triple-equals
@@ -69,14 +76,14 @@ export class AuthService {
 
   public get CompanyProfile(): any{
     if (this.isCompany()){
-      return this._getSession_().company_profile;
+      return this._getSession_().user.profile;
     }
     return null;
   }
 
   public get ProfessionalProfile(): any{
     if (this.isProfessional()){
-      return this._getSession_().professional_profile;
+      return this._getSession_().user.profile;
     }
     return null;
   }

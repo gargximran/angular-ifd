@@ -5,12 +5,12 @@
         <div id="logo">
           <a [routerLink]="['/']"><img src="assets/images/logo.png" alt="" /></a>
         </div>
-        <div class="mmenu-trigger">
-          <button class="hamburger utfbutton_collapse" type="button">
-            <span class="utf_inner_button_box">
-              <span class="utf_inner_section"></span>
-            </span>
-          </button>
+        <div class="mmenu-trigger bg-white">
+<!--          <button class="hamburger utfbutton_collapse" type="button">-->
+<!--            <span class="utf_inner_button_box">-->
+<!--              <span class="utf_inner_section"></span>-->
+<!--            </span>-->
+<!--          </button>-->
         </div>
         <nav id="navigation" class="style_one">
           <ul id="responsive">
@@ -110,7 +110,7 @@
           </p>
           <div class="utf_row_form utf_form_wide_block form_forgot_part">
             <span class="lost_password fl_left">
-              <a href="javascript:void(0);">Forgot Password?</a>
+              <a (click)="openForgetPassword(forgetPassword)" href="javascript:void(0);">Forgot Password?</a>
             </span>
             <div class="checkboxes fl_right">
               <input
@@ -270,6 +270,67 @@
       </div>
     </div>
   </div>
+  <button
+    title="Close (Esc)"
+    type="button"
+    class="mfp-close"
+    (click)="modal.close('close')"
+  ></button>
+</ng-template>
+
+<ng-template #forgetPassword let-modal>
+  <div class="small_dialog_header">
+    <h3>Forget Password!</h3>
+  </div>
+  <div class="utf_signin_form style_one padding-custom">
+    <div class="tab_container alt">
+      <div class="tab_content">
+        <h4 class="font-weight-bold pl-2">Enter email address!</h4>
+        <form [formGroup]="forgotPasswordForm" (ngSubmit)="submitForgetForm()" class="login">
+          <p class="utf_row_form utf_form_wide_block">
+            <label for="forgetPasswordEmail">
+              <input
+                type="text"
+                class="input-text mb-0"
+                placeholder="Email Address"
+                id="forgetPasswordEmail"
+                formControlName="email"
+              />
+            </label>
+            <small
+              *ngIf="forgetPasswordSuccessfully"
+              class="form-text text-primary pl-2"
+            >{{forgetPasswordSuccessfully}}</small
+            >
+            <small
+              *ngIf="forgetPasswordError"
+              class="form-text text-danger pl-2"
+            >{{forgetPasswordError}}</small
+            >
+          </p>
+          <div class="utf_row_form utf_form_wide_block form_forgot_part">
+            <span class="lost_password fl_left">
+              <a class="text-danger pl-2" (click)="openVerticallyCentered(content)" href="javascript:void(0);">Sign in ?</a>
+            </span>
+          </div>
+          <div class="utf_row_form">
+            <button
+              type="submit"
+              class="button border margin-top-5"
+              [disabled]="loading"
+            >
+              <ng-container *ngIf="loading; else submitText22">
+                <div class="spinner-border" role="status"></div>
+              </ng-container>
+              <ng-template #submitText22>Send Email</ng-template>
+            </button>
+
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
   <button
     title="Close (Esc)"
     type="button"

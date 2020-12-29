@@ -1,15 +1,3 @@
-<swal
-  #deleteSwal
-  text="This cannot be undone"
-  icon="question"
-  title="Delete Profile?"
-  [showCancelButton]="true"
-  (confirm)="deleteProfile()"
->
-</swal>
-
-<swal #deleteSuccess title="Delete Success?" icon="success"> </swal>
-
 
 <div id="titlebar" class="dashboard_gradient">
   <div class="row">
@@ -60,7 +48,7 @@
         <form [formGroup]="formData" class="my-profile">
           <div class="row with-forms">
             <div class="col-md-12" *ngIf="ProfessionalDetail.name">
-              <label class="">Name : 
+              <label class="">Name :
               <p class="text-capitalize d-inline">
                 {{ ProfessionalDetail.name }}
               </p>
@@ -267,7 +255,7 @@
                 >{{ formData.errors.career_summary }}</small
               >
             </div>
- 
+
             <div class="col-md-12">
               <label>Preferred fields :</label>
               <p class="input-text pl-3" *ngIf="editMode">
@@ -420,13 +408,6 @@
             </ng-container>
           </button>
 
-          <button
-            class="button preview margin-top-15 ml-2"
-            (click)="openDeleteSwal()"
-            *ngIf="editMode && ProfessionalDetail.name"
-          >
-            Delete profile?
-          </button>
 
           <button
             (click)="submitData()"
@@ -440,7 +421,7 @@
             </ng-container>
             <ng-template #submitText>Save Change</ng-template>
           </button>
-          
+
           <button
             class="button preview ml-2 margin-top-15"
             (click)="editMode = true"

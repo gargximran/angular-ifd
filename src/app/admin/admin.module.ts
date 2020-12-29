@@ -26,6 +26,11 @@ import { CompanyProfileComponent } from './company-profile/company-profile.compo
 import { ProfessionalProfileComponent } from './professional-profile/professional-profile.component';
 import { ClassifiedProductComponent } from './classified-product/classified-product.component';
 import { CompanyJobComponent } from './company-job/company-job.component';
+import { ProfessionalJobAppliedComponent } from './professional-job-applied/professional-job-applied.component';
+import { JobApplicantsComponent } from './job-applicants/job-applicants.component';
+import { SingleApplicationJobComponent } from './single-application-job/single-application-job.component';
+import {MomentModule} from 'ngx-moment';
+import { JobApprovalComponent } from './admin/job-approval/job-approval.component';
 
 @NgModule({
   declarations: [
@@ -47,6 +52,10 @@ import { CompanyJobComponent } from './company-job/company-job.component';
     ProfessionalProfileComponent,
     ClassifiedProductComponent,
     CompanyJobComponent,
+    ProfessionalJobAppliedComponent,
+    JobApplicantsComponent,
+    SingleApplicationJobComponent,
+    JobApprovalComponent,
   ],
     imports: [
         CommonModule,
@@ -58,7 +67,8 @@ import { CompanyJobComponent } from './company-job/company-job.component';
         NgxPaginationModule,
         SweetAlert2Module.forRoot(),
         ImageUploadModule.forRoot(),
-        ReadMoreModule
+        ReadMoreModule,
+        MomentModule
     ],
 })
 export class AdminModule {}

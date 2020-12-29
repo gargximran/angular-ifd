@@ -1,10 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import {ActivatedRoute} from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 import {AuthService} from '../../../service/auth.service';
 import {ApiService} from '../../../service/api.service';
 import {FormControl, FormGroup} from '@angular/forms';
 import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 import {ToastrService} from 'ngx-toastr';
+import { HomeHeaderComponent } from '../../include/header/header.component'
 
 @Component({
   selector: 'app-job-single',
@@ -13,8 +14,7 @@ import {ToastrService} from 'ngx-toastr';
 })
 export class JobSingleComponent implements OnInit {
 
-  constructor(private route: ActivatedRoute, private auth: AuthService, private api: ApiService, private modal: NgbModal, private toastr: ToastrService) { }
-
+  constructor(private route: ActivatedRoute, private auth: AuthService, private api: ApiService, private modal: NgbModal, private toastr: ToastrService, private router: Router) { }
   loading: boolean = false;
   postSlug = '';
   postSlug2 = '';
@@ -98,6 +98,7 @@ export class JobSingleComponent implements OnInit {
       size: 'xl'
     });
   }
+
 
 
 }
