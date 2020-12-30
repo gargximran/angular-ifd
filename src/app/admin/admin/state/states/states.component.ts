@@ -22,6 +22,9 @@ export class StatesComponent implements OnInit {
     config.keyboard = false;
   }
 
+  currentPageNumber = 1;
+  itemPerPage = 10;
+
   // tslint:disable-next-line:variable-name
   delete_item: any = {
     id: '',
@@ -58,15 +61,15 @@ export class StatesComponent implements OnInit {
   states = [];
 
   // tslint:disable-next-line:typedef
-  open_update_modal(content, index){
-    this.edit_item = this.states[index];
+  open_update_modal(content, state){
+    this.edit_item = state;
     this.updateStateForm.patchValue({name: this.edit_item.name});
     this.open(content);
   }
 
   // tslint:disable-next-line:typedef
-  open_delete_modal(content, index){
-    this.delete_item = this.states[index];
+  open_delete_modal(content, state){
+    this.delete_item = state;
     this.open(content);
   }
 
@@ -144,6 +147,14 @@ export class StatesComponent implements OnInit {
         this.toastr.warning('Something went wrong!');
       }
     );
+  }
+
+
+  pageChange(event): any {
+    this.currentPageNumber = event;
+  }
+  ChangeItemPerPageSize(event): void {
+    this.itemPerPage = event.target.value;
   }
 
   ngOnInit(): void {

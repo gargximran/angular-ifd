@@ -18,6 +18,11 @@ export class CityComponent implements OnInit {
     config.keyboard = false;
   }
 
+  stateParams: string;
+
+  currentPageNumber = 1;
+  itemPerPage = 10;
+
   // tslint:disable-next-line:variable-name
   selected_item: any = {
 
@@ -67,7 +72,11 @@ export class CityComponent implements OnInit {
     this.add_city_errors = {...this.add_city_errors, name: '', state: ''};
     const form = new FormData();
     form.append('name', this.cityCreateForm.get('name').value);
-    form.append('state', this.cityCreateForm.get('state').value);
+    if (this.stateParams){
+      form.append('state', this.stateParams);
+    } else{
+      form.append('state', this.cityCreateForm.get('state').value || '');
+    }
 
     this.api.post('/city/create', form).subscribe(
       res => {
@@ -91,7 +100,12 @@ export class CityComponent implements OnInit {
     this.loading = true;
     const form = new FormData();
     form.append('name', this.updateForm.get('name').value);
-    form.append('state', this.updateForm.get('state').value);
+    if (this.stateParams){
+      form.append('state', this.stateParams);
+    } else{
+      form.append('state', this.updateForm.get('state').value || '');
+    }
+
 
     this.api.post('/city/update/' + this.selected_item.id, form).subscribe(
       res => {
@@ -114,8 +128,8 @@ export class CityComponent implements OnInit {
   }
 
   // tslint:disable-next-line:typedef
-  openUPdateModal(content, index){
-    this.selected_item = {...this.cities[index]};
+  openUPdateModal(content, city){
+    this.selected_item = {...city};
     this.updateForm.setValue({name: this.selected_item.name, state: this.selected_item.state.id});
     this.open(content);
 
@@ -123,8 +137,8 @@ export class CityComponent implements OnInit {
 
 
 
-  openDeleteModal(content, index): void{
-    this.selected_item = {...this.cities[index]};
+  openDeleteModal(content, city): void{
+    this.selected_item = {...city};
     this.open(content);
   }
 
@@ -157,6 +171,7 @@ export class CityComponent implements OnInit {
       d => {
         const state = d.get('state');
         if (state){
+          this.stateParams = state;
           this.api.get('/state/view/' + state + '/cities').subscribe(
             res => {
               this.cities = res.data;
@@ -167,6 +182,7 @@ export class CityComponent implements OnInit {
             }
           );
         }else{
+          this.stateParams = '';
           this.api.get('/city/view').subscribe(
             res => {
               this.cities = res.data;
@@ -194,6 +210,13 @@ export class CityComponent implements OnInit {
         this.toastr.warning('Something went wrong!');
       }
     );
+  }
+
+  pageChange(event): any {
+    this.currentPageNumber = event;
+  }
+  ChangeItemPerPageSize(event): void {
+    this.itemPerPage = event.target.value;
   }
 
 

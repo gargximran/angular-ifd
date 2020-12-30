@@ -21,6 +21,9 @@ export class BrandComponent implements OnInit {
     icon: new FormControl('')
   });
 
+  currentPageNumber = 1;
+  itemPerPage = 10;
+
 
   brands = [];
 
@@ -176,6 +179,13 @@ export class BrandComponent implements OnInit {
         this.toastr.warning('Something went wrong!');
       }
     );
+  }
+
+  pageChange(event): any {
+    this.currentPageNumber = event;
+  }
+  ChangeItemPerPageSize(event): void {
+    this.itemPerPage = event.target.value;
   }
 
 }

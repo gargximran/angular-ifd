@@ -24,12 +24,12 @@
         <small *ngIf="add_city_errors.name" class="form-text text-danger">{{add_city_errors.name}}</small>
       </div>
 
-      <div class="form-group">
-        <label for="state_name">State :</label>
+      <div class="form-group" *ngIf="!stateParams">
+        <label for="state_name1">State :</label>
         <select
           placeholder="Select State"
           formControlName="state"
-          id="state_name"
+          id="state_name1"
           class="form-control"
         >
 
@@ -54,7 +54,7 @@
 <ng-template #delete_city let-g="dismiss">
   <div class="modal-header">
     <h4 class="modal-title text-danger" id="modal-basic-title">
-      Delete State ?
+      Delete city ?
     </h4>
     <button
       type="button"
@@ -74,7 +74,7 @@
 
 <ng-template #update_city let-e="dismiss">
   <div class="modal-header">
-    <h4 class="modal-title" id="modal-basic-title">Update State</h4>
+    <h4 class="modal-title" id="modal-basic-title">Update City</h4>
     <button
       type="button"
       class="close text-danger"
@@ -98,7 +98,7 @@
         <small *ngIf="update_city_errors.name" class="form-text text-danger">{{update_city_errors.name}}</small>
       </div>
 
-      <div class="form-group">
+      <div class="form-group" *ngIf="!stateParams">
         <label for="state_name">State :</label>
         <select
           placeholder="Select State"
@@ -160,9 +160,21 @@
 <div class="row">
   <div class="col-lg-12 col-md-12">
     <div class="utf_dashboard_list_box margin-top-0">
+      <div class="sort-by my_sort_by">
+        <div class="utf_sort_by_select_item">
+          <select (change)="ChangeItemPerPageSize($event)"
+                  class="utf_chosen_select_single"
+          >
+            <option value="10">10 items per page</option>
+            <option value="50">50 items per page</option>
+            <option value="100">100 items per page</option>
+            <option value="200">200 items per page</option>
+          </select>
+        </div>
+      </div>
       <h4><i class="sl sl-icon-list"></i> My Listings</h4>
       <ul>
-        <li *ngFor="let city of cities; let i = index">
+        <li *ngFor="let city of cities | paginate: { currentPage: currentPageNumber, itemsPerPage: itemPerPage};">
           <div class="utf_list_box_listing_item">
             <div class="utf_list_box_listing_item_content">
               <div class="inner">
@@ -173,12 +185,15 @@
             </div>
           </div>
           <div class="buttons-to-right">
-            <a (click)="openUPdateModal(update_city, i)" class="button gray"><i class="fa fa-pencil"></i> Edit</a>
-            <a (click)="openDeleteModal(delete_city, i)"  class="button gray"><i class="fa fa-trash-o"></i> Delete</a>
+            <a (click)="openUPdateModal(update_city, city)" class="button gray"><i class="fa fa-pencil"></i> Edit</a>
+            <a (click)="openDeleteModal(delete_city, city)"  class="button gray"><i class="fa fa-trash-o"></i> Delete</a>
           </div>
         </li>
       </ul>
     </div>
     <div class="clearfix"></div>
+    <div class="utf_pagination_container_part margin-top-30 margin-bottom-30">
+      <pagination-controls (pageBoundsCorrection)="pageChange( $event)" screenReaderCurrentLabel=".." nextLabel="" previousLabel="" class="pagination" (pageChange)="pageChange( $event)"></pagination-controls>
+    </div>
   </div>
 </div>
