@@ -5,6 +5,7 @@ import { Select2Data } from 'ng-select2-component';
 import { ApiService } from '../../service/api.service';
 import { ToastrService } from 'ngx-toastr';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import {FileHolder} from 'angular2-image-upload';
 
 @Component({
   selector: 'app-company-profile',
@@ -19,6 +20,7 @@ export class CompanyProfileComponent implements OnInit {
     private ModalService: NgbModal
   ) {}
 
+  listingStatus = 3;
 
   currentPageNumber = 1;
   totalVolume = 0;
@@ -27,21 +29,15 @@ export class CompanyProfileComponent implements OnInit {
 
   loading = false;
 
-  jobPostForm = new FormGroup({
-    id: new FormControl(),
-    title: new FormControl(),
-    description: new FormControl(),
-    category: new FormControl(),
-    min_salary: new FormControl(),
-    max_salary: new FormControl(),
-    job_type: new FormControl(),
-    state: new FormControl(),
-    city: new FormControl()
+  requestForm = new FormGroup({
+    image: new FormControl(''),
+    category: new FormControl('')
   });
 
   editMode = true;
   stateDataForFormSelector: Select2Data = [];
   cityDataForFormSelector: Select2Data = [];
+  categoryDataForFormSelector: Select2Data = [];
 
   formData = new FormGroup({
     name: new FormControl(''),
@@ -52,6 +48,8 @@ export class CompanyProfileComponent implements OnInit {
     state: new FormControl(''),
     address: new FormControl(''),
   });
+
+  directorySlug = '';
 
   companyDetail = {
     name: '',
@@ -80,6 +78,7 @@ export class CompanyProfileComponent implements OnInit {
   // tslint:disable-next-line:use-lifecycle-interface
   ngAfterContentInit(): void {
     if (this.auth.CompanyProfile) {
+      this.checkListedStatus();
       this.companyDetail.name = this.auth.CompanyProfile.name;
       this.companyDetail.url = this.auth.CompanyProfile.url || '';
       this.companyDetail.description =
@@ -136,7 +135,7 @@ export class CompanyProfileComponent implements OnInit {
           },
         ];
       },
-      (err) => {}
+      () => {}
     );
   }
 
@@ -167,9 +166,30 @@ export class CompanyProfileComponent implements OnInit {
             });
           }
         },
-        (err) => {}
+        () => {}
       );
     }
+  }
+
+  initAllCategory(): any {
+    this.api.get('/directory_category/get_categories').subscribe(
+      (res) => {
+        const datas = [];
+
+        res.data.forEach((element) => {
+          const data = { label: element.name.toUpperCase(), value: element.id };
+          datas.push(data);
+        });
+        this.categoryDataForFormSelector = [
+          {
+            label: 'Select Parent',
+            options: datas,
+            classes: 'company-profile-category d-inline-block'
+          },
+        ];
+      },
+      () => {}
+    );
   }
 
   uploadImage($event): void {
@@ -237,6 +257,61 @@ export class CompanyProfileComponent implements OnInit {
         this.submitErrors = { ...this.submitErrors, ...err.errors };
       }
     );
+  }
+
+  requestFormSubmit(): void{
+    this.loading = true;
+    const form = new FormData();
+    form.append('category', String(this.requestForm.get('category').value || ''));
+    form.append('image', this.requestForm.get('image').value || '');
+    this.api.post('/directory_item/get_listed_by_company', form).subscribe(
+      res => {
+        this.loading = false;
+        this.toastr.success('Request submitted!');
+        this.ModalService.dismissAll();
+        this.listingStatus = 1;
+      },
+      err => {
+        this.loading = false;
+        this.requestForm.setErrors({
+          ...err.errors
+        });
+        this.toastr.error(err.message);
+      }
+    );
+  }
+
+  checkListedStatus(): void{
+    this.api.post('/directory_item/check_company_request_status', {}).subscribe(
+      res => {
+        if (res.data){
+          this.directorySlug = res.data.slug;
+        }
+        // tslint:disable-next-line:radix
+        this.listingStatus = parseInt(res.message);
+      },
+      () => {}
+    );
+  }
+
+  addImage(e: FileHolder): void{
+    this.requestForm.patchValue({
+      image: e.file
+    });
+  }
+
+  removeImage(e: FileHolder): void{
+    this.requestForm.patchValue({
+        image: ''
+      });
+  }
+
+  open(content): void {
+    this.initAllCategory();
+    this.ModalService.open(content, {
+      centered: true,
+      size: 'md'
+    });
   }
 
 

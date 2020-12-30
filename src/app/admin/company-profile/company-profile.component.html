@@ -1,3 +1,71 @@
+<ng-template #get_listed let-c="close" let-d="dismiss">
+  <div class="modal-header p-4">
+    <h2 class="modal-title font-weight-bold" id="modal-basic-title">
+      Directory Listed Request!
+    </h2>
+    <button
+      type="button"
+      class="close text-danger"
+      aria-label="Close"
+      (click)="d('Cross click')"
+    >
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body p-4">
+    <form [formGroup]="requestForm" (ngSubmit)="requestFormSubmit()">
+
+
+      <div class="row">
+        <div class="col-md-12">
+          <div class="form-group">
+            <label>Select Categories :</label>
+            <select2
+              [data]="categoryDataForFormSelector"
+              formControlName="category"
+              placeholder="Select Categories"
+              [multiple]="true"
+              [hideSelectedItems]="true"
+            >
+            </select2>
+            <small
+              *ngIf="requestForm.errors && requestForm.errors.category"
+              class="form-text text-danger"
+            >{{ requestForm.errors.category }}</small
+            >
+          </div>
+        </div>
+
+        <div class="col-md-12">
+          <div class="form-group">
+            <label>Image :</label>
+            <image-upload
+              (uploadFinished)="addImage($event)"
+              (removed)="removeImage($event)"
+              [max]="1"
+              [extensions]="['jpeg', 'jpg', 'png']"
+              [buttonCaption]="'Upload Image'"
+
+            ></image-upload>
+          </div>
+        </div>
+      </div>
+
+      <button
+        type="submit"
+        class="button btn-block mt-3"
+        [disabled]="loading"
+      >
+        <ng-container *ngIf="loading; else submitText34">
+          <div class="spinner-border" role="status"></div>
+        </ng-container>
+        <ng-template #submitText34>Submit Request</ng-template>
+      </button>
+    </form>
+  </div>
+</ng-template>
+
+
 <div id="titlebar" class="dashboard_gradient">
   <div class="row">
     <div class="col-md-12">
@@ -174,6 +242,13 @@
           </button>
 
           <button
+            class="button preview bg-primary margin-top-15 ml-2" *ngIf="companyDetail.name && !listingStatus"
+            (click)="open(get_listed)"
+          >
+            Request to get listed?
+          </button>
+
+          <button
             (click)="submitData()"
             class="button bg-primary preview margin-top-15"
             *ngIf="!editMode"
@@ -187,6 +262,14 @@
           >
             Cancel
           </button>
+
+          <div class="alert alert-warning mt-3" role="alert" *ngIf="companyDetail.name && listingStatus == 1">
+            Your directory listed request is pending!
+          </div>
+
+          <div class="alert alert-primary mt-3" role="alert" *ngIf="companyDetail.name && listingStatus == 2">
+            Your directory listed request is accepted! Here the link <a class="text-primary" [routerLink]="['/directory/single', directorySlug]">click here</a>
+          </div>
         </form>
       </div>
     </div>

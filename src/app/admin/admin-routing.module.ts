@@ -22,7 +22,8 @@ import {ProfessionalJobAppliedComponent} from './professional-job-applied/profes
 import {JobApplicantsComponent} from './job-applicants/job-applicants.component';
 import {SingleApplicationJobComponent} from './single-application-job/single-application-job.component';
 import {JobApprovalComponent} from './admin/job-approval/job-approval.component';
-import {MyProfileComponent} from './my-profile/my-profile.component';
+import {PendingDirectoriesComponent} from './admin/pending-directories/pending-directories.component';
+// import {MyProfileComponent} from './my-profile/my-profile.component';
 
 const routes: Routes = [
   {
@@ -33,10 +34,10 @@ const routes: Routes = [
         path: '',
         component: AdminDashboardComponent
       },
-      {
-        path: 'profile',
-        component: MyProfileComponent
-      },
+      // {
+      //   path: 'profile',
+      //   component: MyProfileComponent
+      // },
       {
         path: 'company',
         component: CompanyProfileComponent,
@@ -107,6 +108,10 @@ const routes: Routes = [
           {
             path: 'directory_item',
             component: DirectoryItemComponent
+          },
+          {
+            path: 'requested_directory',
+            component: PendingDirectoriesComponent
           },
           {
             path: 'classified_item',

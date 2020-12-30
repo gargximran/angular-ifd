@@ -22,6 +22,9 @@ export class JobCategoryComponent implements OnInit {
 
   @ViewChild('deleteSwal') deleteSwal;
   @ViewChild('deleteSuccess') deleteSuccess;
+  @ViewChild('makeFeaturedSwal') makeFeaturedSwal;
+  @ViewChild('removeFeaturedSwal') removeFeaturedSwal;
+  selectedCategory = '';
 
   loading = false;
   parentValue = '';
@@ -292,5 +295,46 @@ export class JobCategoryComponent implements OnInit {
         }
       );
   }
+
+
+  openMakeFeaturedSwal(category): void{
+    this.selectedCategory = category;
+    this.makeFeaturedSwal.fire();
+  }
+
+  openRemoveFeaturedSwal(category): void{
+    this.selectedCategory = category;
+    this.removeFeaturedSwal.fire();
+  }
+
+  makeFeaturedCategory(): void{
+    if (this.selectedCategory){
+      this.api.post('/job_category/make_featured/' + this.selectedCategory, {}).subscribe(
+        res => {
+          this.toastr.success(res.message);
+          this.fetchCategories();
+        },
+        (err) => {
+          this.toastr.error(err.message);
+        }
+      );
+    }
+
+  }
+
+  removeFeaturedCategory(): void{
+    if (this.selectedCategory){
+      this.api.post('/job_category/remove_featured/' + this.selectedCategory, {}).subscribe(
+        res => {
+          this.toastr.success(res.message);
+          this.fetchCategories();
+        },
+        (err) => {
+          this.toastr.error(err.message);
+        }
+      );
+    }
+  }
+
 
 }

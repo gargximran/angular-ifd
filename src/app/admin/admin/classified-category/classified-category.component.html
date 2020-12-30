@@ -104,6 +104,26 @@
   >
 </swal>
 
+<swal
+  #makeFeaturedSwal
+  text="This category will featured"
+  icon="question"
+  title="Make Featured!"
+  [showCancelButton]="true"
+  (confirm)="makeFeaturedCategory()"
+>
+</swal>
+
+<swal
+  #removeFeaturedSwal
+  text="This category will remove from featured"
+  icon="question"
+  title="Remove Featured!"
+  [showCancelButton]="true"
+  (confirm)="removeFeaturedCategory()"
+>
+</swal>
+
 <ng-template #editModal let-e="dismiss">
  <div class="modal-header p-4">
    <h4 class="modal-title" id="modal-basic-title">Update State</h4>
@@ -256,6 +276,8 @@
             </div>
             <div class="buttons-to-right">
               <a [routerLink]="[ '/dashboard/admin-dashboard/classified_category/child', category.id ]"  *ngIf="category.children" class="button gray"><i class="fa fa-eye"></i> View Child</a>
+              <a  *ngIf="category.highlight == 0" class="button gray" (click)="openMakeFeaturedSwal(category.id)"><i class="fa fa-check"></i> Make Featured</a>
+              <a  *ngIf="category.highlight == 1" class="button gray" (click)="openRemoveFeaturedSwal(category.id)"><i class="fa fa-times"></i> Remove Featured</a>
               <a  (click)="openCategoryEditModal(editModal, category)" class="button gray"><i class="fa fa-pencil"></i> Edit</a>
               <a (click)="openDeleteAlert(category)" class="button gray"><i class="fa fa-trash-o"></i> Delete</a>
             </div>

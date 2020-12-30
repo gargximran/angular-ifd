@@ -17,14 +17,16 @@ export class FrontPageComponent implements OnInit {
     email: new FormControl('')
   });
 
-  mostPopularDirectories: Array<any> = [];
-  recentClassifieds: Array<any> = [];
+  featureDirectoryCategories: Array<any> = [];
+  featureClassifiedCategories: Array<any> = [];
+  featureJobCategories: Array<any> = [];
 
   constructor(private api: ApiService, private router: Router) { }
 
   ngOnInit(): void {
-    this.fetchMostPopularDirectories();
-    this.fetchRecentClassifieds();
+    this.fetchFeaturedDirectoryCategory();
+    this.fetchFeaturedClassifiedCategory();
+    this.fetchFeaturedJobCategory();
   }
 
   goToSearchPage(value): void{
@@ -35,28 +37,30 @@ export class FrontPageComponent implements OnInit {
     });
   }
 
-  fetchMostPopularDirectories(): void{
-    this.api.post('/directory_item/get_most_views', {}).subscribe(
+  fetchFeaturedDirectoryCategory(): void{
+    this.api.post('/directory_category/get_all_featured_category', {}).subscribe(
       res => {
-        this.mostPopularDirectories = res.data;
+        this.featureDirectoryCategories = res.data;
       },
       () => {}
     );
   }
 
-  fetchRecentClassifieds(): void{
-    const form = new FormData();
-    form.append('itemPerPage', '3');
-    form.append('pageNumber', '1');
-    form.append('status', 'active');
-    const url = '/classified_product/get_products';
-
-    this.api.post(url, form).subscribe(
-      (res) => {
-        this.recentClassifieds = res.data.collections;
+  fetchFeaturedJobCategory(): void{
+    this.api.post('/job_category/get_all_featured_category', {}).subscribe(
+      res => {
+        this.featureJobCategories = res.data;
       },
       () => {}
     );
   }
 
+  fetchFeaturedClassifiedCategory(): void {
+    this.api.post('/classified_category/get_all_featured_category', {}).subscribe(
+      res => {
+        this.featureClassifiedCategories = res.data;
+      },
+      () => {}
+    );
+  }
 }

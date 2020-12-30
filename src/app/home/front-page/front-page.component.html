@@ -63,18 +63,18 @@
 <div class="container padding-bottom-70">
   <div class="row">
     <div class="col-md-12">
-      <h3 class="headline_part centered margin-bottom-35 margin-top-70">Most Popular Directories <span>Discover best things to do restaurants, shopping, hotels, cafes and places<br>around the world by categories.</span>
+      <h3 class="headline_part centered margin-bottom-35 margin-top-70">Featured Directory Categories <span>Discover best things to do restaurants, shopping, hotels, cafes and places<br>around the world by categories.</span>
       </h3>
     </div>
-    <div class="col-md-4" *ngFor="let directory of mostPopularDirectories">
-      <a [routerLink]="['/directory/single', directory.slug]" class="img-box">
+    <div class="col-md-4" *ngFor="let directory of featureDirectoryCategories">
+      <a [routerLink]="['/job/category', directory.slug]" class="img-box">
         <div class="utf_img_content_box visible">
-          <h4 class="text-capitalize">{{directory.title}}</h4>
+          <h4 class="text-capitalize">{{directory.name}}</h4>
         </div>
-        <div *ngIf="directory.image" class="img-box-background" style="background-image: url('{{directory.image}}');">
+        <div *ngIf="directory.icon" class="img-box-background" style="background-image: url('{{directory.icon}}');">
 
         </div>
-        <div *ngIf="!directory.image" class="img-box-background" style="background-image: url('assets/images/dumylogo.png');">
+        <div *ngIf="!directory.icon" class="img-box-background" style="background-image: url('assets/images/dumylogo.png');">
 
         </div>
       </a>
@@ -86,10 +86,10 @@
 </div>
 
 
-<div class="container">
+<div class="container margin-top-75">
   <div class="row slick_carousel_slider">
     <div class="col-md-12">
-      <h3 class="headline_part centered margin-bottom-45"> Recent Listed Classified's <span>Explore the greates places in the city</span>
+      <h3 class="headline_part centered margin-bottom-45"> Featured Classified Categories <span>Explore the greates places in the city</span>
       </h3>
     </div>
     <div class="row">
@@ -97,20 +97,16 @@
         <div class="utf_carousel_item container">
           <div class="row">
 
-            <a *ngFor="let classified of recentClassifieds"  [routerLink]="['/classified/single', classified.slug]" class="utf_listing_item-container compact col-md-4" style="background-color: unset; box-shadow: unset;">
+            <a *ngFor="let classified of featureClassifiedCategories"  [routerLink]="['/classified/category', classified.slug]" class="utf_listing_item-container compact col-md-4" style="background-color: unset; box-shadow: unset;">
               <div class="utf_listing_item">
-                <img *ngIf="!classified.images" src="assets/images/dumylogo.png">
-                <img *ngIf="classified.images" src="{{classified.images[0]}}">
-                <span class="tag text-capitalize d-inline-block" *ngFor="let category of classified.category">
-                  {{category.name}}
-                </span>
+                <img *ngIf="!classified.icon" src="assets/images/dumylogo.png">
+                <img *ngIf="classified.icon" src="{{classified.icon}}">
                 <div class="utf_listing_item_content">
                   <div class="utf_listing_prige_block">
-                    <span class="utf_meta_listing_price"><i class="fa fa-tag"></i> {{classified.price}} inr</span>
-                    <span class="utp_approve_item"><i class="utf_approve_listing"></i></span>
                   </div>
-                  <h3>{{classified.name}}</h3>
-                  <span><i class="sl sl-icon-location"></i> {{classified.address}}</span>
+                  <div class="utf_img_content_box visible">
+                    <h4 class="text-capitalize">{{classified.name}}</h4>
+                  </div>
                 </div>
               </div>
             </a>
@@ -118,6 +114,44 @@
             <div class="col-md-12 centered_content">
               <a [routerLink]="['/classified']" class="button border margin-top-20">View
                 More Classified's
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<div class="container margin-top-75">
+  <div class="row slick_carousel_slider">
+    <div class="col-md-12">
+      <h3 class="headline_part centered margin-bottom-45"> Featured Job Categories <span>Explore the greates places in the city</span>
+      </h3>
+    </div>
+    <div class="row">
+      <div class="col-md-12">
+        <div class="utf_carousel_item container">
+          <div class="row">
+
+            <a *ngFor="let category of featureJobCategories"  [routerLink]="['/job/category', category.slug]" class="utf_listing_item-container compact col-md-4" style="background-color: unset; box-shadow: unset;">
+              <div class="utf_listing_item">
+                <img *ngIf="!category.icon" src="assets/images/dumylogo.png">
+                <img *ngIf="category.icon" src="{{category.icon}}">
+                <div class="utf_listing_item_content">
+                  <div class="utf_listing_prige_block">
+                  </div>
+                  <div class="utf_img_content_box visible">
+                    <h4 class="text-capitalize">{{category.name}}</h4>
+                  </div>
+                </div>
+              </div>
+            </a>
+
+            <div class="col-md-12 centered_content">
+              <a [routerLink]="['/job']" class="button border margin-top-20">View
+                More Job's
               </a>
             </div>
           </div>

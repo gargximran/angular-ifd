@@ -1,0 +1,125 @@
+<swal
+  #deleteSwal
+  text="This cannot be undone"
+  icon="question"
+  title=""
+  [showCancelButton]="true"
+  (confirm)="deleteCategory()"
+  (cancel)="cancelDelete()"
+>
+</swal>
+
+<swal
+  #approveSwal
+  text="This directory will be live at website!"
+  icon="question"
+  title="Approve!"
+  [showCancelButton]="true"
+  (confirm)="approveDirectory()"
+>
+</swal>
+
+<swal
+  #deleteSuccess
+  title="Category deleted ?"
+  icon="success"
+>
+</swal>
+
+
+<div id="titlebar" class="dashboard_gradient">
+  <div class="row">
+    <div class="col-md-12">
+      <h2>Directory</h2>
+      <nav id="breadcrumbs">
+        <ul>
+          <li><a [routerLink]="['/']">Home</a></li>
+          <li><a [routerLink]="['/dashboard']">Dashboard</a></li>
+          <li>Requested Directory</li>
+        </ul>
+      </nav>
+
+    </div>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-lg-12 col-md-12">
+    <div class="utf_dashboard_list_box margin-top-0">
+      <div class="sort-by my_sort_by">
+        <div class="utf_sort_by_select_item">
+          <select (change)="ChangeItemPerPageSize($event)"
+                  class="utf_chosen_select_single"
+          >
+            <option value="10">10 items per page</option>
+            <option value="50">50 items per page</option>
+            <option value="100">100 items per page</option>
+            <option value="200">200 items per page</option>
+          </select>
+        </div>
+      </div>
+      <h4><i class="sl sl-icon-list"></i> Directory List</h4>
+      <ul class="border-left">
+        <ng-container
+          *ngFor="let directory of directories | paginate: { currentPage: currentPageNumber, totalItems: totalVolume, itemsPerPage: itemPerPage}">
+          <li>
+            <div class="utf_list_box_listing_item">
+              <div class="utf_list_box_listing_item-img">
+                <a>
+                  <img *ngIf="directory.image" src="{{directory.image}}" />
+                  <img *ngIf="!directory.image" src="assets/images/dumylogo.png" />
+                </a>
+              </div>
+              <div class="utf_list_box_listing_item_content">
+                <div class="inner">
+                  <h3><a class="text-primary" [routerLink]="['/directory/single', directory.slug]">{{directory.title}} </a></h3>
+                  <span>
+                    <i class="sl sl-icon-location"></i>
+                    {{directory.address}}
+
+                    <span class="ml-3 d-inline-block">
+                      <i class="sl sl-icon-phone"></i>
+                      {{directory.phone}}
+                    </span>
+                  </span>
+                  <span>
+                    <i class="sl sl-icon-map"></i>
+                    State: {{directory.state.name}}
+
+                    <span *ngIf="directory.email" class="d-inline-block ml-3">
+                      <i class="sl sl-icon-envelope-open"></i>
+                      {{directory.email}}
+                    </span>
+                  </span>
+                  <span>
+                    <i class="sl sl-icon-map"></i>
+                    City: {{directory.city.name}}
+                  </span>
+                  <span>
+                    <i class="sl sl-icon-directions"></i>
+                    Categories: <span *ngFor="let category of directory.category" class="badge badge-pill badge-canceled d-inline text-white font-weight-bold">{{category.name}}</span>
+                  </span>
+
+
+                  <hr>
+
+                </div>
+              </div>
+            </div>
+            <div class="buttons-to-right">
+              <a (click)="openApproveSwal(directory.id)" class="button gray"><i class="fa fa-pencil"></i> Approve</a>
+              <a (click)="openDeleteAlert(directory)" class="button gray"><i class="fa fa-trash-o"></i> Delete</a>
+            </div>
+          </li>
+        </ng-container>
+      </ul>
+    </div>
+    <div class="clearfix"></div>
+
+    <div class="utf_pagination_container_part margin-top-30 margin-bottom-30">
+      <pagination-controls (pageBoundsCorrection)="pageChange( $event)" screenReaderCurrentLabel=".." nextLabel=""
+                           previousLabel="" class="pagination" (pageChange)="pageChange( $event)"></pagination-controls>
+    </div>
+
+  </div>
+</div>

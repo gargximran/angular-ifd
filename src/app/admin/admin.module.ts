@@ -31,7 +31,8 @@ import { JobApplicantsComponent } from './job-applicants/job-applicants.componen
 import { SingleApplicationJobComponent } from './single-application-job/single-application-job.component';
 import {MomentModule} from 'ngx-moment';
 import { JobApprovalComponent } from './admin/job-approval/job-approval.component';
-import { MyProfileComponent } from './my-profile/my-profile.component';
+import { PendingDirectoriesComponent } from './admin/pending-directories/pending-directories.component';
+// import { MyProfileComponent } from './my-profile/my-profile.component';
 
 @NgModule({
   declarations: [
@@ -57,7 +58,8 @@ import { MyProfileComponent } from './my-profile/my-profile.component';
     JobApplicantsComponent,
     SingleApplicationJobComponent,
     JobApprovalComponent,
-    MyProfileComponent,
+    PendingDirectoriesComponent,
+    // MyProfileComponent,
   ],
     imports: [
         CommonModule,
