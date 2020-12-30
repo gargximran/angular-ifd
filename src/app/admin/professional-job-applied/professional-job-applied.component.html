@@ -50,8 +50,8 @@
             <div class="utf_list_box_listing_item">
               <div class="utf_list_box_listing_item_content">
                 <div class="inner">
-                  <h3>Title : {{ job.title }}</h3>
-                  <h5 class="text-capitalize">Type : {{ job.job_type }}</h5>
+                  <h3>Title :  <a class="text-primary" [routerLink]="['/job/single', job.slug]"> {{ job.title }} </a></h3>
+                  <h5 class="text-capitalize">Type :{{ job.job_type }}</h5>
                   <h5 *ngIf="job.min_salary">Salary Range : {{ job.min_salary }} - {{job.max_salary}}</h5>
                   <h5 class="text-capitalize">Location : {{ job.state.name}} - {{job.city.name}}</h5>
                   <h5>
@@ -62,12 +62,6 @@
                     >{{ cat.name }}</span
                     >
                   </h5>
-
-                  <div class="row">
-                    <pre class="p-2">
-Description :      <app-read-more title="Description" class="lead" [maxLength]="10" [text]="job.description"></app-read-more>
-                    </pre>
-                  </div>
                 </div>
               </div>
             </div>

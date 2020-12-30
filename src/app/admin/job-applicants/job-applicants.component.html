@@ -37,16 +37,18 @@
             <div class="utf_list_box_listing_item">
               <div class="utf_list_box_listing_item-img">
                 <a>
-                  <img *ngIf="application.professional.image" src="{{application.professional.image}}" />
-                  <img *ngIf="!application.professional.image" src="assets/images/dumylogo.png" />
+                  <img *ngIf="application.user.type.client_type == 'professional' && application.user.profile.image" src="{{application.user.profile.image}}" />
+                  <img *ngIf="application.user.type.client_type == 'company' && application.user.profile.logo" src="{{application.user.profile.logo}}" />
+                  <img *ngIf="!application.user.profile.image && !application.user.profile.logo" src="assets/images/dumylogo.png" />
                 </a>
               </div>
               <div class="utf_list_box_listing_item_content">
                 <div class="inner">
-                  <h3 class="text-capitalize">Name: {{application.professional.name}}</h3>
+                  <h3 class="text-capitalize" *ngIf="application.user.type.client_type == 'company'">Name: {{application.user.profile.name}}</h3>
+                  <h3 class="text-capitalize" *ngIf="application.user.type.client_type == 'professional'">Name: {{application.user.first_name}} {{application.user.last_name}}</h3>
                   <span>
                     <i class="sl sl-icon-location"></i>
-                    {{application.professional.address}}
+                    {{application.user.profile.address}}
 
                     <span class="ml-3 d-inline-block">
                       <i class="sl sl-icon-phone"></i>
@@ -55,7 +57,7 @@
                   </span>
                   <span>
                     <i class="sl sl-icon-map"></i>
-                    State: {{application.professional.state.name}}
+                    State: {{application.user.profile.state.name}}
 
                     <span *ngIf="application.user.email" class="d-inline-block ml-3">
                       <i class="sl sl-icon-envelope-open"></i>
@@ -64,21 +66,22 @@
                   </span>
                   <span>
                     <i class="sl sl-icon-map"></i>
-                    City: {{application.professional.city.name}}
+                    City: {{application.user.profile.city.name}}
                   </span>
-                  <span class="d-inline-block">
+                  <span>
+                    <i class="sl sl-icon-map"></i>
+                    Type: {{application.user.type.client_type}}
+                  </span>
+                  <span class="d-inline-block" *ngIf="application.user.type.client_type == 'professional'">
                     <i class="sl sl-icon-directions"></i>
-                    Categories: <span *ngFor="let category of application.professional.category" class="badge badge-pill badge-canceled d-inline-block text-white font-weight-bold">{{category.name}}</span>
+                    Categories: <span *ngFor="let category of application.user.profile.category" class="badge badge-pill badge-canceled d-inline-block text-white font-weight-bold">{{category.name}}</span>
                   </span>
-
-
-                  <hr>
 
                 </div>
               </div>
             </div>
             <div class="buttons-to-right">
-              <a [routerLink]="['/dashboard/job/view_application/', application.id]" class="button gray"><i class="fa fa-pencil"></i>  View</a>
+              <a [routerLink]="['/dashboard/job/view_application/', application.id]" class="button gray"><i class="fa fa-eye"></i>  View</a>
             </div>
           </li>
         </ng-container>

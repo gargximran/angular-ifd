@@ -45,7 +45,7 @@ export class JobApplicantsComponent implements OnInit {
         (res) => {
           this.applications = res.data.applications;
         },
-        (err) => {}
+        () => {}
       );
     }
   }

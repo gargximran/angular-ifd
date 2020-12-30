@@ -4,45 +4,50 @@
     <div class="col-lg-8 col-md-8">
       <div class="utf_listing_titlebar pt-0" id="titlebar">
         <div class="utf_listing_titlebar_title">
-          <h3 class="utf_listing_headline_part margin-top-30 margin-bottom-30">Personal Detail's</h3>
-          <h4 *ngIf="application" class="text-capitalize">
-            Name: {{ application.professional.name }}
+          <h3 class="utf_listing_headline_part margin-top-30 margin-bottom-30">Detail's</h3>
+          <h4 *ngIf="application.user.type.client_type == 'professional'" class="text-capitalize">
+            Name: {{ application.user.first_name }} {{application.user.last_name}}
           </h4>
-          <ul class="listing_item_social" *ngIf="application">
-            <li *ngFor="let category of application.professional.category" class="m-1">
+
+          <h4 *ngIf="application.user.type.client_type == 'company'" class="text-capitalize">
+            Name: {{ application.user.profile.name }}
+          </h4>
+          <p><b>Type: </b> {{application.user.type.client_type}}</p>
+          <ul class="listing_item_social" *ngIf="application.user.type.client_type == 'professional'">
+            <li *ngFor="let category of application.user.profile.category" class="m-1">
               <a> {{ category.name }}</a>
             </li>
           </ul>
-          <table class="text-capitalize">
+          <table class="text-capitalize" *ngIf="application.user.type.client_type == 'professional'">
             <tr>
               <td><b>Father Name:</b></td>
-              <td class="pl-2">{{application.professional.father}}</td>
+              <td class="pl-2">{{application.user.profile.father}}</td>
             </tr>
             <tr>
               <td><b>Mother Name:</b></td>
-              <td class="pl-2">{{application.professional.mother}}</td>
+              <td class="pl-2">{{application.user.profile.mother}}</td>
             </tr>
             <tr>
               <td><b>Birthday:</b></td>
-              <td class="pl-2">{{application.professional.birthday}}</td>
+              <td class="pl-2">{{application.user.profile.birthday}}</td>
             </tr>
             <tr>
               <td><b>Gender:</b></td>
-              <td class="pl-2">{{application.professional.gender}}</td>
+              <td class="pl-2">{{application.user.profile.gender}}</td>
             </tr>
             <tr>
               <td><b>Marital Status:</b></td>
-              <td class="pl-2">{{application.professional.marital_status}}</td>
+              <td class="pl-2">{{application.user.profile.marital_status}}</td>
             </tr>
 
             <tr>
               <td><b>Nationality:</b></td>
-              <td class="pl-2">{{application.professional.nationality}}</td>
+              <td class="pl-2">{{application.user.profile.nationality}}</td>
             </tr>
 
             <tr>
               <td><b>religion:</b></td>
-              <td class="pl-2">{{application.professional.religion}}</td>
+              <td class="pl-2">{{application.user.profile.religion}}</td>
             </tr>
           </table>
           <h3 class="utf_listing_headline_part margin-top-30 margin-bottom-30">Location and Contact's</h3>
@@ -52,52 +57,52 @@
               <td class="pl-2">{{application.user.phone}}</td>
             </tr>
 
-            <tr *ngIf="application.professional.alternate_phone">
+            <tr *ngIf="application.user.profile.alternate_phone">
               <td><b>Alternate Phone:</b></td>
-              <td class="pl-2">{{application.professional.alternate_phone}}</td>
+              <td class="pl-2">{{application.user.profile.alternate_phone}}</td>
             </tr>
             <tr>
               <td><b>Email:</b></td>
-              <td class="pl-2">{{application.user.email}}</td>
+              <td class="pl-2 text-lowercase">{{application.user.email}}</td>
             </tr>
 
-            <tr *ngIf="application.professional.alternate_email">
+            <tr *ngIf="application.user.profile.alternate_email">
               <td><b>Alternate Email:</b></td>
-              <td class="pl-2">{{application.professional.alternate_email}}</td>
+              <td class="pl-2 text-lowercase">{{application.user.profile.alternate_email}}</td>
             </tr>
 
             <tr>
               <td><b>Address:</b></td>
-              <td class="pl-2">{{application.professional.address}}</td>
+              <td class="pl-2">{{application.user.profile.address}}</td>
             </tr>
 
             <tr>
               <td><b>City:</b></td>
-              <td class="pl-2">{{application.professional.city.name}}</td>
+              <td class="pl-2">{{application.user.profile.city.name}}</td>
             </tr>
 
             <tr>
               <td><b>State:</b></td>
-              <td class="pl-2">{{application.professional.state.name}}</td>
+              <td class="pl-2">{{application.user.profile.state.name}}</td>
             </tr>
           </table>
         </div>
       </div>
-      <div class="utf_listing_section" id="utf_listing_overview" *ngIf="application && application.professional.career_summary">
+      <div class="utf_listing_section" id="utf_listing_overview" *ngIf="application && application.user.profile.career_summary">
         <h3 class="utf_listing_headline_part margin-top-30 margin-bottom-30">
           Career Summary
         </h3>
-        <pre *ngIf="application"
-        >{{ application.professional.career_summary }}
+        <pre
+        >{{ application.user.profile.career_summary }}
         </pre>
       </div>
 
-      <div class="utf_listing_section" id="utf_listing_overview" *ngIf="application && application.professional.description">
+      <div class="utf_listing_section" id="utf_listing_overview" *ngIf="application && application.user.profile.description">
         <h3 class="utf_listing_headline_part margin-top-30 margin-bottom-30">
           description
         </h3>
-        <pre *ngIf="application"
-        >{{ application.professional.description }}
+        <pre
+        >{{ application.user.profile.description }}
         </pre>
       </div>
 
@@ -114,8 +119,13 @@
 
     <!-- Sidebar -->
     <div class="col-lg-4 col-md-4 sidebar-search">
-      <div class="opening-hours" *ngIf=" application &&  application.professional.image">
-        <img class="img-fluid" src="{{application.professional.image}}" >
+      <div class="opening-hours border p-2" *ngIf=" application &&  application.user.profile.image">
+        <img class="img-fluid" src="{{application.user.profile.image}}" >
+
+      </div>
+
+      <div class="opening-hours border p-2" *ngIf=" application &&  application.user.profile.logo">
+        <img class="img-fluid" src="{{application.user.profile.logo}}" >
 
       </div>
       <div class="utf_box_widget margin-top-35">

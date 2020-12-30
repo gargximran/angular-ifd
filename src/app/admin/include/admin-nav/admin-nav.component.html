@@ -11,6 +11,13 @@
         >
       </li>
 
+      <li>
+        <a [routerLinkActiveOptions]="{exact:
+            true}" [routerLink]="[ '/dashboard/profile' ]" routerLinkActive="active"
+        ><i class="sl sl-icon-layers"></i> Profile</a
+        >
+      </li>
+
       <li *ngIf="isCompany">
         <a [routerLinkActiveOptions]="{exact:
             true}" [routerLink]="[ '/dashboard/company' ]" routerLinkActive="active"
@@ -18,7 +25,7 @@
         >
       </li>
 
-      <li>
+      <li *ngIf="!isAdmin">
         <a [routerLinkActiveOptions]="{exact:
             true}" [routerLink]="[ '/dashboard/job' ]" routerLinkActive="active"
         ><i class="sl sl-icon-layers"></i> Job Post</a
@@ -32,14 +39,14 @@
         >
       </li>
 
-      <li *ngIf="isProfessional">
+      <li *ngIf="!isAdmin">
         <a [routerLinkActiveOptions]="{exact:
             true}" [routerLink]="[ '/dashboard/my-jobs' ]" routerLinkActive="active"
         ><i class="sl sl-icon-layers"></i> My Jobs</a
         >
       </li>
 
-      <li>
+      <li *ngIf="!isAdmin">
         <a [routerLinkActiveOptions]="{exact:
             true}" [routerLink]="[ '/dashboard/classified' ]" routerLinkActive="active"
         ><i class="sl sl-icon-list"></i>My Listing</a

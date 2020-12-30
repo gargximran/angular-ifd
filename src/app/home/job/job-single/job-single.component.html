@@ -87,8 +87,8 @@
     <!-- Sidebar -->
     <div class="col-lg-4 col-md-4 sidebar-search">
       <div class="verified-badge with-tip margin-bottom-30 bg-secondary" *ngIf="!isLoggedIn"> Login to Apply</div>
-      <div class="verified-badge with-tip margin-bottom-30" style="cursor: pointer;" (click)="open(content)" *ngIf="isLoggedIn"> Apply Now!</div>
-      <div class="verified-badge with-tip margin-bottom-30 bg-success" *ngIf="isProfessional && job && job.applied">Already Applied!</div>
+      <div class="verified-badge with-tip margin-bottom-30" style="cursor: pointer;" (click)="open(content)" *ngIf="isLoggedIn && !job.applied"> Apply Now!</div>
+      <div class="verified-badge with-tip margin-bottom-30 bg-success" *ngIf="job && job.applied">Already Applied!</div>
       <div class="opening-hours border p-2" *ngIf="job.user.type.client_type == 'professional' && job.user.profile.image">
         <img class="img-fluid" style="margin: 0 auto; display: block;" src="{{job.user.profile.image}}" >
 

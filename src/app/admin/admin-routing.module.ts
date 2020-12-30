@@ -22,6 +22,7 @@ import {ProfessionalJobAppliedComponent} from './professional-job-applied/profes
 import {JobApplicantsComponent} from './job-applicants/job-applicants.component';
 import {SingleApplicationJobComponent} from './single-application-job/single-application-job.component';
 import {JobApprovalComponent} from './admin/job-approval/job-approval.component';
+import {MyProfileComponent} from './my-profile/my-profile.component';
 
 const routes: Routes = [
   {
@@ -31,6 +32,10 @@ const routes: Routes = [
       {
         path: '',
         component: AdminDashboardComponent
+      },
+      {
+        path: 'profile',
+        component: MyProfileComponent
       },
       {
         path: 'company',
@@ -56,8 +61,7 @@ const routes: Routes = [
       },
       {
         path: 'my-jobs',
-        component: ProfessionalJobAppliedComponent,
-        canActivate: [ProfessionalGuard]
+        component: ProfessionalJobAppliedComponent
       },
       {
         path: 'classified',
