@@ -23,7 +23,7 @@ import {JobApplicantsComponent} from './job-applicants/job-applicants.component'
 import {SingleApplicationJobComponent} from './single-application-job/single-application-job.component';
 import {JobApprovalComponent} from './admin/job-approval/job-approval.component';
 import {PendingDirectoriesComponent} from './admin/pending-directories/pending-directories.component';
-// import {MyProfileComponent} from './my-profile/my-profile.component';
+import {MyProfileComponent} from './my-profile/my-profile.component';
 
 const routes: Routes = [
   {
@@ -34,10 +34,10 @@ const routes: Routes = [
         path: '',
         component: AdminDashboardComponent
       },
-      // {
-      //   path: 'profile',
-      //   component: MyProfileComponent
-      // },
+      {
+        path: 'profile',
+        component: MyProfileComponent
+      },
       {
         path: 'company',
         component: CompanyProfileComponent,
