@@ -23,6 +23,7 @@
         Searching for : {{searchText}}
       </div>
     </div>
+
   </div>
 
   <div class="row">
@@ -83,9 +84,12 @@
             </a>
           </div>
         </div>
+        <div class="col-lg-12 col-md-12 mb-3 text-center alert alert-secondary" role="alert" *ngIf="!products[0]">
+          No Data Here!
+        </div>
       </div>
       <div class="clearfix"></div>
-      <div class="row">
+      <div class="row" *ngIf="products[0]">
         <div class="col-md-12">
           <div class="utf_pagination_container_part margin-top-20 margin-bottom-70">
             <pagination-controls

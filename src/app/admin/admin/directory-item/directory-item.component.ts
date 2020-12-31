@@ -288,7 +288,6 @@ export class DirectoryItemComponent implements OnInit {
   openCategoryEditModal(content, data): void {
     this.updateForm.reset();
     const category = data.category.map(value => value.id);
-    console.log(category);
     this.selectedItem.id = data.id;
     this.updateForm.patchValue({
       title: data.title || '',

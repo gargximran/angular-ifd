@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { OwlOptions } from 'ngx-owl-carousel-o';
 import { ApiService } from 'src/app/service/api.service';
 
 @Component({
@@ -26,30 +25,6 @@ export class ListingByCategoryComponent implements OnInit {
   states: any = [];
   currentCategory: any = {};
 
-  customOptions: OwlOptions = {
-    loop: false,
-    mouseDrag: false,
-    touchDrag: true,
-    pullDrag: false,
-    dots: true,
-    navSpeed: 2000,
-    navText: ['', ''],
-    responsive: {
-      0: {
-        items: 2
-      },
-      400: {
-        items: 5
-      },
-      740: {
-        items: 7
-      },
-      940: {
-        items: 8
-      }
-    },
-    nav: true
-  };
 
   constructor(private api: ApiService, private route: ActivatedRoute, private router: Router) { }
 

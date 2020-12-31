@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import {OwlOptions} from 'ngx-owl-carousel-o';
 import {FormControl, FormGroup} from '@angular/forms';
 import {ApiService} from '../../service/api.service';
 import {Router} from '@angular/router';

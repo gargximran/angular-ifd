@@ -1,10 +1,6 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
 import {AuthService} from '../../../service/auth.service';
 import {ApiService} from '../../../service/api.service';
-import {ToastrService} from 'ngx-toastr';
-import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
-import {FormControl, FormGroup} from '@angular/forms';
-import {Select2Data} from 'ng-select2-component';
 
 @Component({
   selector: 'app-job-approval',
@@ -15,8 +11,7 @@ export class JobApprovalComponent implements OnInit {
 
   constructor(
     private auth: AuthService,
-    private api: ApiService,
-    private toastr: ToastrService
+    private api: ApiService
   ) {}
 
   @ViewChild('deleteSwal') deleteSwal;

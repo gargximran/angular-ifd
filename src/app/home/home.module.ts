@@ -11,7 +11,6 @@ import { ReactiveFormsModule } from '@angular/forms';
 import {NgbCarouselModule, NgbModalModule, NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import {NgxPaginationModule} from 'ngx-pagination';
 import { ListingByCategoryComponent } from './listing-by-category/listing-by-category.component';
-import { CarouselModule } from 'ngx-owl-carousel-o';
 import { ListByStateComponent } from './list-by-state/list-by-state.component';
 import { ListByCityComponent } from './list-by-city/list-by-city.component';
 import { ListByCategoryStateComponent } from './list-by-category-state/list-by-category-state.component';
@@ -76,7 +75,6 @@ import { ResetPasswordComponent } from './reset-password/reset-password.componen
     NgbModalModule,
     NgbModule,
     NgxPaginationModule,
-    CarouselModule,
     MomentModule,
     NgbCarouselModule
   ],

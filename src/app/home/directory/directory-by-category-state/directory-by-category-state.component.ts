@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import {OwlOptions} from 'ngx-owl-carousel-o';
 import {ApiService} from '../../../service/api.service';
 import {ActivatedRoute, Router} from '@angular/router';
 
@@ -29,30 +28,6 @@ export class DirectoryByCategoryStateComponent implements OnInit {
   cities: any = [];
   currentCategory: any = {};
 
-  customOptions: OwlOptions = {
-    loop: false,
-    mouseDrag: false,
-    touchDrag: true,
-    pullDrag: false,
-    dots: true,
-    navSpeed: 2000,
-    navText: ['', ''],
-    responsive: {
-      0: {
-        items: 2
-      },
-      400: {
-        items: 5
-      },
-      740: {
-        items: 7
-      },
-      940: {
-        items: 8
-      }
-    },
-    nav: true
-  };
 
   constructor(private api: ApiService, private route: ActivatedRoute, private router: Router) { }
 

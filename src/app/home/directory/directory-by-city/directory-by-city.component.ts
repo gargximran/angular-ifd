@@ -40,6 +40,7 @@ export class DirectoryByCityComponent implements OnInit {
       d => {
         const slug = d.get('slug');
         if (slug){
+          // tslint:disable-next-line:triple-equals
           if (this.params == slug){
           }else {
             this.currentPageNumber = 1;
