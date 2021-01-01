@@ -23,6 +23,7 @@ export class FrontPageComponent implements OnInit {
   constructor(private api: ApiService, private router: Router) { }
 
   ngOnInit(): void {
+    window.scroll(0, 0);
     this.fetchFeaturedDirectoryCategory();
     this.fetchFeaturedClassifiedCategory();
     this.fetchFeaturedJobCategory();

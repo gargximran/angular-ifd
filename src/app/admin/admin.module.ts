@@ -19,7 +19,6 @@ import { SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
 import { DirectoryCategoryComponent } from './admin/directory-category/directory-category.component';
 import { DirectoryItemComponent } from './admin/directory-item/directory-item.component';
 import {ImageUploadModule} from 'angular2-image-upload';
-import {ReadMoreModule} from 'ng-readmore';
 import { ClassifiedItemComponent } from './admin/classified-item/classified-item.component';
 import { JobCategoryComponent } from './admin/job-category/job-category.component';
 import { CompanyProfileComponent } from './company-profile/company-profile.component';
@@ -71,7 +70,6 @@ import { MyProfileComponent } from './my-profile/my-profile.component';
         NgxPaginationModule,
         SweetAlert2Module.forRoot(),
         ImageUploadModule.forRoot(),
-        ReadMoreModule,
         MomentModule
     ],
 })

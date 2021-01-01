@@ -1,28 +1,28 @@
 <swal
   #deleteSwal
-  text="This cannot be undone"
-  icon="question"
-  title=""
-  [showCancelButton]="true"
-  (confirm)="deleteCategory()"
   (cancel)="cancelDelete()"
+  (confirm)="deleteCategory()"
+  [showCancelButton]="true"
+  icon="question"
+  text="This cannot be undone"
+  title=""
 >
 </swal>
 
 <swal
   #ApproveSwal
-  text="Approve this post!"
-  icon="question"
-  title="Approval"
-  [showCancelButton]="true"
   (confirm)="approvalPost()"
+  [showCancelButton]="true"
+  icon="question"
+  text="Approve this post!"
+  title="Approval"
 >
 </swal>
 
-<swal #deleteSuccess title="Category deleted!" icon="success"> </swal>
-<swal #ApproveSuccess title="Approved!" icon="success"> </swal>
+<swal #deleteSuccess icon="success" title="Category deleted!"></swal>
+<swal #ApproveSuccess icon="success" title="Approved!"></swal>
 
-<div id="titlebar" class="dashboard_gradient">
+<div class="dashboard_gradient" id="titlebar">
   <div class="row">
     <div class="col-md-12">
       <h2>Classified</h2>
@@ -82,7 +82,7 @@
             <div class="utf_list_box_listing_item">
               <div class="utf_list_box_listing_item-img">
                 <a>
-                  <img *ngIf="product.images" src="{{ product.images[0] }}" />
+                  <img *ngIf="product.images" src="{{ product.images[0] }}"/>
                   <img
                     *ngIf="!product.images"
                     src="assets/images/dumylogo.png"
@@ -93,7 +93,7 @@
                 <div class="inner">
                   <div class="row">
                     <div class="col-md-6">
-                      <h3>{{ product.name }}</h3>
+                      <h3> <a class="text-primary" [routerLink]="['/classified/sinlge', product.slug]">{{ product.name }}</a></h3>
                       <div class="row">
                         <div class="col-2">
                           <h5 class="font-weight-bold">Brand</h5>
@@ -118,22 +118,22 @@
                             <span
                               *ngFor="let category of product.category"
                               class="badge badge-pill badge-canceled d-inline-block text-white font-weight-bold"
-                              >{{ category.name }}</span
+                            >{{ category.name }}</span
                             >
                           </p>
 
-                          <div class="row" *ngIf="product.images">
+                          <div *ngIf="product.images" class="row">
                             <div
-                              class="col-md-3"
                               *ngFor="
                                 let product_image of product.images;
                                 let ind = index
                               "
+                              class="col-md-3"
                             >
                               <img
-                                src="{{ product_image }}"
                                 alt=""
                                 class="img-fluid"
+                                src="{{ product_image }}"
                               />
                             </div>
                           </div>
@@ -167,30 +167,28 @@
                           <h5>
                             :
                             {{
-                              product.created_at | date: "h:mm aa , dd-LL-yyyy"
+                            product.created_at | date: "h:mm aa , dd-LL-yyyy"
                             }}
                           </h5>
                         </div>
                       </div>
                     </div>
                   </div>
-
-                  <hr />
                 </div>
               </div>
             </div>
             <div class="buttons-to-right">
-              <a *ngIf="product.status == 0"
-                (click)="openApprovalAlert(product.id)"
-                class="button gray"
-                ><i class="fa fa-pencil"></i> Approve</a
+              <a (click)="openApprovalAlert(product.id)"
+                 *ngIf="product.status == 0"
+                 class="button gray"
+              ><i class="fa fa-pencil"></i> Approve</a
               >
               <a (click)="openDeleteAlert(product)" class="button gray"
-                ><i class="fa fa-trash-o"></i> Delete</a
+              ><i class="fa fa-trash-o"></i> Delete</a
               >
             </div>
             <pre class="p-2 border">
-				<app-read-more class="lead" [maxLength]="10" [text]="product.description"></app-read-more>
+				<app-read-more [maxLength]="10" [text]="product.description" class="lead"></app-read-more>
 			  </pre>
           </li>
         </ng-container>
@@ -201,11 +199,11 @@
     <div class="utf_pagination_container_part margin-top-30 margin-bottom-30">
       <pagination-controls
         (pageBoundsCorrection)="pageChange($event)"
-        screenReaderCurrentLabel=".."
+        (pageChange)="pageChange($event)"
+        class="pagination"
         nextLabel=""
         previousLabel=""
-        class="pagination"
-        (pageChange)="pageChange($event)"
+        screenReaderCurrentLabel=".."
       ></pagination-controls>
     </div>
   </div>

@@ -38,6 +38,7 @@ export class SingleListingComponent implements OnInit {
   }
 
   fetchPost(): void{
+    window.scroll(0, 0);
     if (this.postSlug){
       this.api.post('/classified_product/get_post/' + this.postSlug, {}).subscribe(
         res => {

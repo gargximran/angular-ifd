@@ -38,6 +38,7 @@ export class DirectorySingleComponent implements OnInit {
   }
 
   fetchPost(): void{
+    window.scroll(0, 0);
     if (this.postSlug){
       this.api.post('/directory_item/get_directory/' + this.postSlug, {}).subscribe(
         res => {

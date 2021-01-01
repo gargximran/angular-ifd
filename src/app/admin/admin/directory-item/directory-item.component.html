@@ -2,27 +2,27 @@
   <div class="modal-header p-4">
     <h4 class="modal-title" id="modal-basic-title">New Directory</h4>
     <button
-      type="button"
-      class="close text-danger"
-      aria-label="Close"
       (click)="d('Cross click')"
+      aria-label="Close"
+      class="close text-danger"
+      type="button"
     >
       <span aria-hidden="true">&times;</span>
     </button>
   </div>
   <div class="modal-body p-4">
     <form
-      [formGroup]="directoryCreateForm"
       (ngSubmit)="create_new_directory()"
+      [formGroup]="directoryCreateForm"
     >
       <div class="form-group">
         <label for="directory_title_new">Title :</label>
         <input
-          formControlName="title"
-          type="text"
           class="form-control mb-0"
+          formControlName="title"
           id="directory_title_new"
           placeholder="Enter name"
+          type="text"
         />
         <small
           *ngIf="createNewDirectoryErrors.title"
@@ -45,11 +45,11 @@
           <div class="form-group">
             <label>State :</label>
             <select2
+              (update)="getCity($event)"
               [data]="stateDataForFormSelector"
+              [hideSelectedItems]="true"
               formControlName="state"
               placeholder="Select State"
-              (update)="getCity($event)"
-              [hideSelectedItems]="true"
             >
             </select2>
             <small
@@ -65,9 +65,9 @@
             <label>City :</label>
             <select2
               [data]="cityDataForFormSelector"
+              [hideSelectedItems]="true"
               formControlName="city"
               placeholder="Select City"
-              [hideSelectedItems]="true"
             >
             </select2>
             <small
@@ -82,10 +82,10 @@
       <div class="form-group">
         <label>Address :</label>
         <input
-          formControlName="address"
-          type="text"
           class="form-control mb-0"
+          formControlName="address"
           placeholder="Enter address"
+          type="text"
         />
         <small
           *ngIf="createNewDirectoryErrors.address"
@@ -100,10 +100,10 @@
             <label>Categories :</label>
             <select2
               [data]="categoryDataForFormSelector"
+              [hideSelectedItems]="true"
+              [multiple]="true"
               formControlName="category"
               placeholder="Select Categories"
-              [multiple]="true"
-              [hideSelectedItems]="true"
             >
             </select2>
             <small
@@ -117,9 +117,9 @@
         <div class="col-md-6">
           <div class="form-group">
             <label>Image :</label>
-            <image-upload (uploadFinished)="addImage($event)" (removed)="removeImage($event)" [max]="1"
-                          [extensions]="['jpeg', 'jpg', 'png']" [buttonCaption]="'Upload Image'"
-                          ></image-upload>
+            <image-upload (removed)="removeImage($event)" (uploadFinished)="addImage($event)" [buttonCaption]="'Upload Image'"
+                          [extensions]="['jpeg', 'jpg', 'png']" [max]="1"
+            ></image-upload>
           </div>
         </div>
       </div>
@@ -129,10 +129,10 @@
           <div class="form-group">
             <label>Email :</label>
             <input
-              formControlName="email"
-              type="email"
               class="form-control mb-0"
+              formControlName="email"
               placeholder="Enter valid email"
+              type="email"
             />
             <small
               *ngIf="createNewDirectoryErrors.email"
@@ -146,10 +146,10 @@
           <div class="form-group">
             <label>Phone :</label>
             <input
-              formControlName="phone"
-              type="text"
               class="form-control mb-0"
+              formControlName="phone"
               placeholder="Enter valid phone number"
+              type="text"
             />
             <small
               *ngIf="createNewDirectoryErrors.phone"
@@ -161,7 +161,7 @@
       </div>
 
 
-      <button type="submit" class="btn-lg btn-danger btn-block" [disabled]="loading">
+      <button [disabled]="loading" class="btn-lg btn-danger btn-block" type="submit">
         <ng-container *ngIf="loading; else submitText">
           <div class="spinner-border" role="status">
 
@@ -169,12 +169,10 @@
         </ng-container>
         <ng-template #submitText>Submit</ng-template>
       </button>
-      <button type="reset" class="btn-lg btn-warning btn-block">Reset</button>
+      <button class="btn-lg btn-warning btn-block" type="reset">Reset</button>
     </form>
   </div>
 </ng-template>
-
-
 
 
 <!--update modal-->
@@ -182,27 +180,27 @@
   <div class="modal-header p-4">
     <h4 class="modal-title" id="modal-basic-title">New Directory</h4>
     <button
-      type="button"
-      class="close text-danger"
-      aria-label="Close"
       (click)="d('Cross click')"
+      aria-label="Close"
+      class="close text-danger"
+      type="button"
     >
       <span aria-hidden="true">&times;</span>
     </button>
   </div>
   <div class="modal-body p-4">
     <form
-      [formGroup]="updateForm"
       (ngSubmit)="submitUpdateForm()"
+      [formGroup]="updateForm"
     >
       <div class="form-group">
         <label for="directory_title_new">Title :</label>
         <input
-          formControlName="title"
-          type="text"
           class="form-control mb-0"
+          formControlName="title"
           id="directory_title_new"
           placeholder="Enter name"
+          type="text"
         />
         <small
           *ngIf="updateDirectoryErrors.title"
@@ -225,11 +223,11 @@
           <div class="form-group">
             <label>State :</label>
             <select2
+              (update)="getCity($event)"
               [data]="stateDataForFormSelector"
+              [hideSelectedItems]="true"
               formControlName="state"
               placeholder="Select State"
-              (update)="getCity($event)"
-              [hideSelectedItems]="true"
             >
             </select2>
             <small
@@ -245,9 +243,9 @@
             <label>City :</label>
             <select2
               [data]="cityDataForFormSelector"
+              [hideSelectedItems]="true"
               formControlName="city"
               placeholder="Select City"
-              [hideSelectedItems]="true"
             >
             </select2>
             <small
@@ -262,10 +260,10 @@
       <div class="form-group">
         <label>Address :</label>
         <input
-          formControlName="address"
-          type="text"
           class="form-control mb-0"
+          formControlName="address"
           placeholder="Enter address"
+          type="text"
         />
         <small
           *ngIf="updateDirectoryErrors.address"
@@ -280,10 +278,10 @@
             <label>Categories :</label>
             <select2
               [data]="categoryDataForFormSelector"
+              [hideSelectedItems]="true"
+              [multiple]="true"
               formControlName="category"
               placeholder="Select Categories"
-              [multiple]="true"
-              [hideSelectedItems]="true"
             >
             </select2>
             <small
@@ -297,14 +295,14 @@
         <div class="col-md-6">
           <div class="form-group">
             <label>Image :</label>
-            <div class="row" *ngIf="existingImageUrl && !uploadedUpdateImage">
+            <div *ngIf="existingImageUrl && !uploadedUpdateImage" class="row">
               <div class="col-6">
-                <img class="img-fluid" src="{{existingImageUrl}}" >
+                <img class="img-fluid" src="{{existingImageUrl}}">
               </div>
             </div>
 
-            <image-upload (uploadFinished)="addUpdateImage($event)" (removed)="removeUpdateImage($event)" [max]="1"
-                          [extensions]="['jpeg', 'jpg', 'png']"  [buttonCaption]="'Upload Image'"></image-upload>
+            <image-upload (removed)="removeUpdateImage($event)" (uploadFinished)="addUpdateImage($event)" [buttonCaption]="'Upload Image'"
+                          [extensions]="['jpeg', 'jpg', 'png']" [max]="1"></image-upload>
           </div>
         </div>
       </div>
@@ -314,10 +312,10 @@
           <div class="form-group">
             <label>Email :</label>
             <input
-              formControlName="email"
-              type="email"
               class="form-control mb-0"
+              formControlName="email"
               placeholder="Enter valid email"
+              type="email"
             />
             <small
               *ngIf="updateDirectoryErrors.email"
@@ -331,10 +329,10 @@
           <div class="form-group">
             <label>Phone :</label>
             <input
-              formControlName="phone"
-              type="text"
               class="form-control mb-0"
+              formControlName="phone"
               placeholder="Enter valid phone number"
+              type="text"
             />
             <small
               *ngIf="updateDirectoryErrors.phone"
@@ -346,7 +344,7 @@
       </div>
 
 
-      <button type="submit" class="btn-lg btn-danger btn-block" [disabled]="loading">
+      <button [disabled]="loading" class="btn-lg btn-danger btn-block" type="submit">
         <ng-container *ngIf="loading; else submitText">
           <div class="spinner-border" role="status">
 
@@ -354,36 +352,33 @@
         </ng-container>
         <ng-template #submitText>Submit</ng-template>
       </button>
-      <button type="reset" class="btn-lg btn-warning btn-block">Reset</button>
+      <button class="btn-lg btn-warning btn-block" type="reset">Reset</button>
     </form>
   </div>
 </ng-template>
 <!--update modal end-->
 
 
-
-
-
 <swal
   #deleteSwal
-  text="This cannot be undone"
-  icon="question"
-  title=""
-  [showCancelButton]="true"
-  (confirm)="deleteCategory()"
   (cancel)="cancelDelete()"
+  (confirm)="deleteCategory()"
+  [showCancelButton]="true"
+  icon="question"
+  text="This cannot be undone"
+  title=""
 >
 </swal>
 
 <swal
   #deleteSuccess
-  title="Category deleted ?"
   icon="success"
+  title="Category deleted ?"
 >
 </swal>
 
 
-<div id="titlebar" class="dashboard_gradient">
+<div class="dashboard_gradient" id="titlebar">
   <div class="row">
     <div class="col-md-12">
       <h2>Directory</h2>
@@ -395,7 +390,7 @@
         </ul>
       </nav>
 
-      <button class="btn btn-lg btn-danger" (click)="open(content)">
+      <button (click)="open(content)" class="btn btn-lg btn-danger">
         Add New Directory
       </button>
     </div>
@@ -425,20 +420,20 @@
             <div class="utf_list_box_listing_item">
               <div class="utf_list_box_listing_item-img">
                 <a>
-                  <img *ngIf="directory.image" src="{{directory.image}}" />
-                  <img *ngIf="!directory.image" src="assets/images/dumylogo.png" />
+                  <img *ngIf="directory.image" src="{{directory.image}}"/>
+                  <img *ngIf="!directory.image" src="assets/images/dumylogo.png"/>
                 </a>
               </div>
               <div class="utf_list_box_listing_item_content">
                 <div class="inner">
-                  <h3>{{directory.title}}</h3>
+                  <h3><a class="text-primary" [routerLink]="['/directory/single', directory.slug]">{{directory.title}}</a></h3>
                   <span>
                     <i class="sl sl-icon-location"></i>
                     {{directory.address}}
 
                     <span class="ml-3 d-inline-block">
                       <i class="sl sl-icon-phone"></i>
-                        {{directory.phone}}
+                      {{directory.phone}}
                     </span>
                   </span>
                   <span>
@@ -447,7 +442,7 @@
 
                     <span *ngIf="directory.email" class="d-inline-block ml-3">
                       <i class="sl sl-icon-envelope-open"></i>
-                        {{directory.email}}
+                      {{directory.email}}
                     </span>
                   </span>
                   <span>
@@ -456,7 +451,8 @@
                   </span>
                   <span>
                     <i class="sl sl-icon-directions"></i>
-                    Categories: <span *ngFor="let category of directory.category" class="badge badge-pill badge-canceled d-inline text-white font-weight-bold">{{category.name}}</span>
+                    Categories: <span *ngFor="let category of directory.category"
+                                      class="badge badge-pill badge-canceled d-inline text-white font-weight-bold">{{category.name}}</span>
                   </span>
 
 
@@ -466,12 +462,10 @@
               </div>
             </div>
             <div class="buttons-to-right">
-              <a (click)="openCategoryEditModal(updateModal, directory)" class="button gray"><i class="fa fa-pencil"></i> Edit</a>
+              <a (click)="openCategoryEditModal(updateModal, directory)" class="button gray"><i
+                class="fa fa-pencil"></i> Edit</a>
               <a (click)="openDeleteAlert(directory)" class="button gray"><i class="fa fa-trash-o"></i> Delete</a>
             </div>
-            <pre class="p-2 border">
-              <app-read-more class="lead" [maxLength]="15" [text]="directory.description"></app-read-more>
-            </pre>
           </li>
         </ng-container>
       </ul>
@@ -479,8 +473,8 @@
     <div class="clearfix"></div>
 
     <div class="utf_pagination_container_part margin-top-30 margin-bottom-30">
-      <pagination-controls (pageBoundsCorrection)="pageChange( $event)" screenReaderCurrentLabel=".." nextLabel=""
-                           previousLabel="" class="pagination" (pageChange)="pageChange( $event)"></pagination-controls>
+      <pagination-controls (pageBoundsCorrection)="pageChange( $event)" (pageChange)="pageChange( $event)" class="pagination"
+                           nextLabel="" previousLabel="" screenReaderCurrentLabel=".."></pagination-controls>
     </div>
 
   </div>

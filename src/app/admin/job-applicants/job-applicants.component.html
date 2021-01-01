@@ -1,4 +1,4 @@
-<div id="titlebar" class="dashboard_gradient">
+<div class="dashboard_gradient" id="titlebar">
   <div class="row">
     <div class="col-md-12">
       <h2>Company Details</h2>
@@ -37,15 +37,20 @@
             <div class="utf_list_box_listing_item">
               <div class="utf_list_box_listing_item-img">
                 <a>
-                  <img *ngIf="application.user.type.client_type == 'professional' && application.user.profile.image" src="{{application.user.profile.image}}" />
-                  <img *ngIf="application.user.type.client_type == 'company' && application.user.profile.logo" src="{{application.user.profile.logo}}" />
-                  <img *ngIf="!application.user.profile.image && !application.user.profile.logo" src="assets/images/dumylogo.png" />
+                  <img *ngIf="application.user.type.client_type == 'professional' && application.user.profile.image"
+                       src="{{application.user.profile.image}}"/>
+                  <img *ngIf="application.user.type.client_type == 'company' && application.user.profile.logo"
+                       src="{{application.user.profile.logo}}"/>
+                  <img *ngIf="!application.user.profile.image && !application.user.profile.logo"
+                       src="assets/images/dumylogo.png"/>
                 </a>
               </div>
               <div class="utf_list_box_listing_item_content">
                 <div class="inner">
-                  <h3 class="text-capitalize" *ngIf="application.user.type.client_type == 'company'">Name: {{application.user.profile.name}}</h3>
-                  <h3 class="text-capitalize" *ngIf="application.user.type.client_type == 'professional'">Name: {{application.user.first_name}} {{application.user.last_name}}</h3>
+                  <h3 *ngIf="application.user.type.client_type == 'company'" class="text-capitalize">
+                    Name: {{application.user.profile.name}}</h3>
+                  <h3 *ngIf="application.user.type.client_type == 'professional'" class="text-capitalize">
+                    Name: {{application.user.first_name}} {{application.user.last_name}}</h3>
                   <span>
                     <i class="sl sl-icon-location"></i>
                     {{application.user.profile.address}}
@@ -72,16 +77,18 @@
                     <i class="sl sl-icon-map"></i>
                     Type: {{application.user.type.client_type}}
                   </span>
-                  <span class="d-inline-block" *ngIf="application.user.type.client_type == 'professional'">
+                  <span *ngIf="application.user.type.client_type == 'professional'" class="d-inline-block">
                     <i class="sl sl-icon-directions"></i>
-                    Categories: <span *ngFor="let category of application.user.profile.category" class="badge badge-pill badge-canceled d-inline-block text-white font-weight-bold">{{category.name}}</span>
+                    Categories: <span *ngFor="let category of application.user.profile.category"
+                                      class="badge badge-pill badge-canceled d-inline-block text-white font-weight-bold">{{category.name}}</span>
                   </span>
 
                 </div>
               </div>
             </div>
             <div class="buttons-to-right">
-              <a [routerLink]="['/dashboard/job/view_application/', application.id]" class="button gray"><i class="fa fa-eye"></i>  View</a>
+              <a [routerLink]="['/dashboard/job/view_application/', application.id]" class="button gray"><i
+                class="fa fa-eye"></i> View</a>
             </div>
           </li>
         </ng-container>
@@ -90,8 +97,8 @@
     <div class="clearfix"></div>
 
     <div class="utf_pagination_container_part margin-top-30 margin-bottom-30">
-      <pagination-controls (pageBoundsCorrection)="pageChange( $event)" screenReaderCurrentLabel=".." nextLabel=""
-                           previousLabel="" class="pagination" (pageChange)="pageChange( $event)"></pagination-controls>
+      <pagination-controls (pageBoundsCorrection)="pageChange( $event)" (pageChange)="pageChange( $event)" class="pagination"
+                           nextLabel="" previousLabel="" screenReaderCurrentLabel=".."></pagination-controls>
     </div>
 
   </div>

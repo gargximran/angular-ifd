@@ -53,6 +53,7 @@ export class ListByCityComponent implements OnInit {
   }
 
   fetchData(): any {
+    window.scroll(0, 0);
     const form = new FormData();
     form.append('itemPerPage', String(this.itemPerPage));
     form.append('pageNumber', String(this.currentPageNumber));

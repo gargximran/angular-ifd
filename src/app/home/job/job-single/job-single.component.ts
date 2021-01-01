@@ -37,6 +37,7 @@ export class JobSingleComponent implements OnInit {
   }
 
   fetchPost(): void{
+    window.scroll(0, 0);
     if (this.postSlug){
       this.api.post('/job/get_job/' + this.postSlug, {}).subscribe(
         res => {

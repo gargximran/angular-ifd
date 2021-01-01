@@ -1,33 +1,33 @@
 <swal
   #deleteSwal
-  text="This cannot be undone"
-  icon="question"
-  title=""
-  [showCancelButton]="true"
-  (confirm)="deleteCategory()"
   (cancel)="cancelDelete()"
+  (confirm)="deleteCategory()"
+  [showCancelButton]="true"
+  icon="question"
+  text="This cannot be undone"
+  title=""
 >
 </swal>
 
 <swal
   #approveSwal
-  text="This directory will be live at website!"
-  icon="question"
-  title="Approve!"
-  [showCancelButton]="true"
   (confirm)="approveDirectory()"
+  [showCancelButton]="true"
+  icon="question"
+  text="This directory will be live at website!"
+  title="Approve!"
 >
 </swal>
 
 <swal
   #deleteSuccess
-  title="Category deleted ?"
   icon="success"
+  title="Category deleted ?"
 >
 </swal>
 
 
-<div id="titlebar" class="dashboard_gradient">
+<div class="dashboard_gradient" id="titlebar">
   <div class="row">
     <div class="col-md-12">
       <h2>Directory</h2>
@@ -66,13 +66,14 @@
             <div class="utf_list_box_listing_item">
               <div class="utf_list_box_listing_item-img">
                 <a>
-                  <img *ngIf="directory.image" src="{{directory.image}}" />
-                  <img *ngIf="!directory.image" src="assets/images/dumylogo.png" />
+                  <img *ngIf="directory.image" src="{{directory.image}}"/>
+                  <img *ngIf="!directory.image" src="assets/images/dumylogo.png"/>
                 </a>
               </div>
               <div class="utf_list_box_listing_item_content">
                 <div class="inner">
-                  <h3><a class="text-primary" [routerLink]="['/directory/single', directory.slug]">{{directory.title}} </a></h3>
+                  <h3><a [routerLink]="['/directory/single', directory.slug]"
+                         class="text-primary">{{directory.title}} </a></h3>
                   <span>
                     <i class="sl sl-icon-location"></i>
                     {{directory.address}}
@@ -97,12 +98,9 @@
                   </span>
                   <span>
                     <i class="sl sl-icon-directions"></i>
-                    Categories: <span *ngFor="let category of directory.category" class="badge badge-pill badge-canceled d-inline text-white font-weight-bold">{{category.name}}</span>
+                    Categories: <span *ngFor="let category of directory.category"
+                                      class="badge badge-pill badge-canceled d-inline text-white font-weight-bold">{{category.name}}</span>
                   </span>
-
-
-                  <hr>
-
                 </div>
               </div>
             </div>
@@ -117,8 +115,8 @@
     <div class="clearfix"></div>
 
     <div class="utf_pagination_container_part margin-top-30 margin-bottom-30">
-      <pagination-controls (pageBoundsCorrection)="pageChange( $event)" screenReaderCurrentLabel=".." nextLabel=""
-                           previousLabel="" class="pagination" (pageChange)="pageChange( $event)"></pagination-controls>
+      <pagination-controls (pageBoundsCorrection)="pageChange( $event)" (pageChange)="pageChange( $event)" class="pagination"
+                           nextLabel="" previousLabel="" screenReaderCurrentLabel=".."></pagination-controls>
     </div>
 
   </div>
