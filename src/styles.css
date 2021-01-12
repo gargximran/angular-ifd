@@ -94,5 +94,11 @@ pre{
 
 
 
+.utf_listing_item img{
+  object-fit: unset !important;
+}
+
+
+
 
 

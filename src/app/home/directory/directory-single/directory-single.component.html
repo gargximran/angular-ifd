@@ -4,7 +4,7 @@
       <div class="utf_listing_titlebar pt-0" id="titlebar">
         <div class="utf_listing_titlebar_title">
           <h2>
-            {{ post.title }}
+            <img *ngIf="post.image" style="height: 36px;" src="{{post.image}}" > {{ post.title }}
           </h2>
           <ul class="listing_item_social">
             <li *ngFor="let category of post.category" class="m-1">
@@ -41,10 +41,10 @@
     <!-- Sidebar -->
     <div class="col-lg-4 col-md-4 sidebar-search">
 
-      <div class="opening-hours" *ngIf="post.image">
-        <img class="img-fluid" src="{{post.image}}" >
 
-      </div>
+
+
+
 
 
       <div class="utf_box_widget" [class.margin-top-35]="!!post.image">

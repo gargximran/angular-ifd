@@ -151,6 +151,7 @@ export class DirectoryItemComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.uploadedImages = [];
     this.fetchDirectory();
     this.initAllCategory();
     this.initialize_all_states();
@@ -321,7 +322,9 @@ export class DirectoryItemComponent implements OnInit {
         this.loading = false;
         this.toastr.success('Directory updated!');
         this.modalService.dismissAll();
-        this.selectedItem = '';
+        this.selectedItem = {
+          id: ''
+        };
         this.uploadedUpdateImage = null;
         this.ngOnInit();
       },
