@@ -99,6 +99,40 @@ pre{
 }
 
 
+.center-fetaured-items{
+  position: absolute;
+  top: 40%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  border-radius: 50%;
+  height: 120px;
+  width: 120px;
+  background: #e8e8e852;
+}
+
+.center-fetaured-items img{
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  border-radius: 50%;
+  height: 70%;
+  width: 70%;
+}
+
+.utf_img_content_box{
+  left: 0 !important;
+  border-left: unset !important;
+  padding-left: 0 !important;
+
+}
+
+.utf_img_content_box h4{
+  text-align: center !important;
+
+}
+
+
 
 
 
