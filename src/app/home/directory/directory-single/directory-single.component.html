@@ -61,7 +61,7 @@
 
         <ul *ngIf="isLoggedIn" class="utf_listing_detail_sidebar">
           <li><i class="sl sl-icon-phone"></i> {{post.phone}}</li>
-          <li>
+          <li *ngIf="post.email">
             <i class="sl sl-icon-globe"></i>{{post.email}}
           </li>
         </ul>

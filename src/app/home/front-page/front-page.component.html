@@ -60,116 +60,75 @@
 </div>
 
 
-<div class="container padding-bottom-70">
+<div class="container">
+  <div class="row">
+    <div class="col-md-12">-->
+            <h3 class="headline_part centered margin-bottom-35 margin-top-70">Featured Directory Categories <span>Discover best things to do restaurants, shopping, hotels, cafes and places<br>around the world by categories.</span>
+            </h3>
+          </div>
+    <div class="col-md-12">
+      <div class="container_categories_box margin-top-5 margin-bottom-30">
+        <a *ngFor="let directory of featureDirectoryCategories" [routerLink]="['/directory/category', directory.slug]" class="utf_category_small_box_part">
+          <i [ngClass]="directory.icon ? '' : 'fa fa-image'">
+            <img *ngIf="directory.icon" src="{{directory.icon}}">
+          </i>
+          <h4>{{directory.name}}</h4>
+        </a>
+
+      </div>
+      <div class="col-md-12 centered_content"> <a [routerLink]="['/directory']" class="button border margin-top-20">View More</a> </div>
+    </div>
+  </div>
+</div>
+
+
+<div class="container">
   <div class="row">
     <div class="col-md-12">
-      <h3 class="headline_part centered margin-bottom-35 margin-top-70">Featured Directory Categories <span>Discover best things to do restaurants, shopping, hotels, cafes and places<br>around the world by categories.</span>
+      <h3 class="headline_part centered margin-bottom-35 margin-top-70">Featured Classified Categories<span>Discover best things to do restaurants, shopping, hotels, cafes and places<br>around the world by categories.</span>
       </h3>
     </div>
-    <div class="col-md-4" *ngFor="let directory of featureDirectoryCategories">
-      <a [routerLink]="['/directory/category', directory.slug]" class="img-box bg-primary">
-        <div class="center-fetaured-items">
-          <img *ngIf="!directory.icon" src="assets/images/dumylogo.png">
-          <img *ngIf="directory.icon" src="{{directory.icon}}">
-        </div>
-        <div class="utf_img_content_box visible">
-          <h4 class="text-capitalize">{{directory.name}}</h4>
-        </div>
-<!--        <div *ngIf="directory.icon" class="img-box-background" style="background-image: url('{{directory.icon}}');">-->
-
-<!--        </div>-->
-<!--        <div *ngIf="!directory.icon" class="img-box-background" style="background-image: url('assets/images/dumylogo.png');">-->
-
-<!--        </div>-->
-      </a>
-    </div>
-
-    <div class="col-md-12 centered_content"><a [routerLink]="['/directory']" class="button border margin-top-20">View
-      More Directories</a></div>
-  </div>
-</div>
-
-
-<div class="container margin-top-75">
-  <div class="row slick_carousel_slider">
     <div class="col-md-12">
-      <h3 class="headline_part centered margin-bottom-45"> Featured Classified Categories <span>Explore the most famous classified items</span>
-      </h3>
-    </div>
-    <div class="row">
-      <div class="col-md-12">
-        <div class="utf_carousel_item container">
-          <div class="row">
+      <div class="container_categories_box margin-top-5 margin-bottom-30">
+        <a *ngFor="let classified of featureClassifiedCategories"  [routerLink]="['/classified/category', classified.slug]" class="utf_category_small_box_part">
+          <i [ngClass]="classified.icon ? '' : 'fa fa-image'">
+            <img *ngIf="classified.icon" src="{{classified.icon}}">
+          </i>
+          <h4>{{classified.name}}</h4>
+        </a>
 
-            <a *ngFor="let classified of featureClassifiedCategories"  [routerLink]="['/classified/category', classified.slug]" class="utf_listing_item-container compact col-md-4" style="background-color: unset; box-shadow: unset;">
-              <div class="utf_listing_item bg-primary">
-                <div class="center-fetaured-items">
-                  <img *ngIf="!classified.icon" src="assets/images/dumylogo.png">
-                  <img *ngIf="classified.icon" src="{{classified.icon}}">
-                </div>
-
-                <div class="utf_listing_item_content">
-                  <div class="utf_listing_prige_block">
-                  </div>
-                  <div class="utf_img_content_box visible">
-                    <h4 class="text-capitalize">{{classified.name}}</h4>
-                  </div>
-                </div>
-              </div>
-            </a>
-
-            <div class="col-md-12 centered_content">
-              <a [routerLink]="['/classified']" class="button border margin-top-20">View
-                More Classified's
-              </a>
-            </div>
-          </div>
-        </div>
       </div>
+      <div class="col-md-12 centered_content"> <a [routerLink]="['/classified']" class="button border margin-top-20">View More</a> </div>
     </div>
   </div>
 </div>
 
 
-<div class="container margin-top-75">
-  <div class="row slick_carousel_slider">
+
+
+
+<div class="container">
+  <div class="row">
     <div class="col-md-12">
-      <h3 class="headline_part centered margin-bottom-45"> Featured Job Categories <span>Explore the greates places in the city</span>
+      <h3 class="headline_part centered margin-bottom-35 margin-top-70">Featured Job Categories<span>Discover best things to do restaurants, shopping, hotels, cafes and places<br>around the world by categories.</span>
       </h3>
     </div>
-    <div class="row">
-      <div class="col-md-12">
-        <div class="utf_carousel_item container">
-          <div class="row">
+    <div class="col-md-12">
+      <div class="container_categories_box margin-top-5 margin-bottom-30">
+        <a *ngFor="let category of featureJobCategories"  [routerLink]="['/job/category', category.slug]" class="utf_category_small_box_part">
+          <i [ngClass]="category.icon ? '' : 'fa fa-image'">
+            <img *ngIf="category.icon" src="{{category.icon}}">
+          </i>
+          <h4>{{category.name}}</h4>
+        </a>
 
-            <a *ngFor="let category of featureJobCategories"  [routerLink]="['/job/category', category.slug]" class="utf_listing_item-container compact col-md-4" style="background-color: unset; box-shadow: unset;">
-              <div class="utf_listing_item bg-primary">
-                <div class="center-fetaured-items ">
-                  <img *ngIf="!category.icon" src="assets/images/dumylogo.png">
-                  <img *ngIf="category.icon" src="{{category.icon}}">
-                </div>
-
-                <div class="utf_listing_item_content">
-                  <div class="utf_listing_prige_block">
-                  </div>
-                  <div class="utf_img_content_box visible">
-                    <h4 class="text-capitalize">{{category.name}}</h4>
-                  </div>
-                </div>
-              </div>
-            </a>
-
-            <div class="col-md-12 centered_content">
-              <a [routerLink]="['/job']" class="button border margin-top-20">View
-                More Job's
-              </a>
-            </div>
-          </div>
-        </div>
       </div>
+      <div class="col-md-12 centered_content"> <a [routerLink]="['/job']" class="button border margin-top-20">View More</a> </div>
     </div>
   </div>
 </div>
+
+
 
 
 <section class="utf_cta_area_item utf_cta_area2_block">
