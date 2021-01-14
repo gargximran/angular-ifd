@@ -1,0 +1,135 @@
+<swal #deleteSuccess icon="success" title="Delete Success?"></swal>
+<swal #activateSuccess icon="success" title="User Activated!"></swal>
+<swal #deactivateSuccess icon="success" title="User Deactivated!"></swal>
+<swal #FailedSwal icon="error" title="Action Failed!"></swal>
+
+
+<swal
+  #deleteUser
+  (confirm)="deleteConfirm()"
+  [showCancelButton]="true"
+  icon="question"
+  text="This cannot be undone"
+  title="Delete User?"
+>
+</swal>
+
+<swal
+  #activateUser
+  (confirm)="activateThisUser()"
+  [showCancelButton]="true"
+  icon="question"
+  text="Activate this user?"
+  title="Activate"
+>
+</swal>
+
+<swal
+  #DeactivateSwal
+  (confirm)="deactivateThisUser()"
+  [showCancelButton]="true"
+  icon="question"
+  text="Deactivate this user?"
+  title="Deactivate"
+>
+</swal>
+
+
+<div class="dashboard_gradient" id="titlebar">
+  <div class="row">
+    <div class="col-md-12">
+      <h2>Job Post</h2>
+      <nav id="breadcrumbs">
+        <ul>
+          <li><a [routerLink]="['/']">Home</a></li>
+          <li><a [routerLink]="['/dashboard']">Dashboard</a></li>
+          <li> Active Users</li>
+        </ul>
+      </nav>
+    </div>
+  </div>
+</div>
+
+
+<div class="row">
+  <div class="col-lg-12 col-md-12">
+    <div class="utf_dashboard_list_box margin-top-0">
+      <div class="sort-by my_sort_by">
+        <div class="utf_sort_by_select_item">
+          <select
+            (change)="ChangeItemPerPageSize($event)"
+            class="utf_chosen_select_single"
+          >
+            <option value="10">10 items per page</option>
+            <option value="50">50 items per page</option>
+            <option value="100">100 items per page</option>
+            <option value="200">200 items per page</option>
+          </select>
+        </div>
+        <div class="utf_sort_by_select_item ml-2">
+          <select
+            (change)="ChangePostStatus($event)"
+            class="utf_chosen_select_single"
+          >
+            <option value="all">All</option>
+            <option value="company">Company</option>
+            <option value="professional">Professional</option>
+          </select>
+        </div>
+      </div>
+
+      <h4><i class="sl sl-icon-list"></i> Active Users List</h4>
+      <ul class="border-left">
+        <ng-container
+          *ngFor="
+            let user of users
+              | paginate
+                : {
+                    currentPage: currentPageNumber,
+                    totalItems: totalVolume,
+                    itemsPerPage: itemPerPage
+                  }
+          "
+        >
+          <li>
+            <div class="utf_list_box_listing_item">
+              <div class="utf_list_box_listing_item_content">
+                <div class="inner">
+                  <h3>Name : {{ user.first_name }} {{ user.last_name }}</h3>
+                  <h5 class="text-capitalize">Type : {{ user.type.client_type }}</h5>
+                  <h5>Email : {{ user.email }}</h5>
+                  <h5 class="text-capitalize">Phone : {{ user.phone }}</h5>
+                  <h5 class="text-capitalize">Status : {{ user.isActive ? 'Active' : 'Inactive' }}</h5>
+
+                </div>
+              </div>
+            </div>
+            <div class="buttons-to-right">
+              <a (click)="openActivateSwal(user.id)" *ngIf="user.isActive == false" class="button gray">
+                <i class="fa fa-check"></i>
+                Activate</a>
+              <a (click)="openDeactivateSwal(user.id)" *ngIf="user.isActive == true" class="button gray">
+                <i class="fa fa-times"></i>
+                Deactivate</a>
+              <a (click)="deleteSwalOpen(user.id)" class="button gray"
+              ><i class="fa fa-trash-o"></i> Delete</a
+              >
+            </div>
+          </li>
+        </ng-container>
+      </ul>
+    </div>
+    <div class="clearfix"></div>
+
+    <div class="utf_pagination_container_part margin-top-30 margin-bottom-30">
+      <pagination-controls
+        (pageBoundsCorrection)="pageChange($event)"
+        (pageChange)="pageChange($event)"
+        class="pagination"
+        nextLabel=""
+        previousLabel=""
+        screenReaderCurrentLabel=".."
+      ></pagination-controls>
+    </div>
+  </div>
+</div>

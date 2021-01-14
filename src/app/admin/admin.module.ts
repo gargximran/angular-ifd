@@ -32,6 +32,8 @@ import {MomentModule} from 'ngx-moment';
 import { JobApprovalComponent } from './admin/job-approval/job-approval.component';
 import { PendingDirectoriesComponent } from './admin/pending-directories/pending-directories.component';
 import { MyProfileComponent } from './my-profile/my-profile.component';
+import { ActiveUsersComponent } from './admin/active-users/active-users.component';
+import { DeactivatedUsersComponent } from './admin/deactivated-users/deactivated-users.component';
 
 @NgModule({
   declarations: [
@@ -59,6 +61,8 @@ import { MyProfileComponent } from './my-profile/my-profile.component';
     JobApprovalComponent,
     PendingDirectoriesComponent,
     MyProfileComponent,
+    ActiveUsersComponent,
+    DeactivatedUsersComponent,
   ],
     imports: [
         CommonModule,

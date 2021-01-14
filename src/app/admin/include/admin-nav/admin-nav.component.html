@@ -49,7 +49,7 @@
       <li *ngIf="!isAdmin">
         <a [routerLinkActiveOptions]="{exact:
             true}" [routerLink]="[ '/dashboard/classified' ]" routerLinkActive="active"
-        ><i class="sl sl-icon-list"></i>My Listing</a
+        ><i class="sl sl-icon-list"></i>My Classified</a
         >
       </li>
 
@@ -76,6 +76,22 @@
         </ul>
       </li>
 
+      <li *ngIf="isAdmin" #user_menu (click)="toggleMobileMenu(user_menu)">
+        <a><i class="sl sl-icon-layers"></i> User Manager</a>
+        <ul>
+          <li *ngIf="isAdmin">
+            <a [routerLink]="[ '/dashboard/admin-dashboard/active_users' ]"
+            ><i class="sl sl-icon-envelope-open"></i> Active User</a
+            >
+          </li>
+          <li *ngIf="isAdmin">
+            <a [routerLink]="[ '/dashboard/admin-dashboard/deactivated_users' ]"
+            ><i class="sl sl-icon-envelope-open"></i> Deactivated Users</a
+            >
+          </li>
+        </ul>
+      </li>
+
       <li *ngIf="isAdmin" #location_menu (click)="toggleMobileMenu(location_menu)">
         <a><i class="sl sl-icon-layers"></i> Location</a>
         <ul>
@@ -85,11 +101,6 @@
             >
           </li>
 
-<!--          <li *ngIf="isAdmin">-->
-<!--            <a [routerLink]="[ '/dashboard/admin-dashboard/cities' ]"-->
-<!--            ><i class="sl sl-icon-envelope-open"></i> Cities</a-->
-<!--            >-->
-<!--          </li>-->
         </ul>
       </li>
 

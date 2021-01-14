@@ -10,6 +10,7 @@ import { ToastrModule } from 'ngx-toastr';
 import {NgxPaginationModule} from 'ngx-pagination';
 import { SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
 import {ReadMoreModule} from 'ng-readmore';
+import {NgxGoogleAnalyticsModule} from "ngx-google-analytics";
 
 
 
@@ -28,7 +29,8 @@ import {ReadMoreModule} from 'ng-readmore';
     ToastrModule.forRoot(),
     NgxPaginationModule,
     SweetAlert2Module.forRoot(),
-    ReadMoreModule
+    ReadMoreModule,
+    NgxGoogleAnalyticsModule.forRoot('G-Y32ZFPMNQG')
   ],
   providers: [],
   bootstrap: [AppComponent]

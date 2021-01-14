@@ -24,6 +24,8 @@ import {SingleApplicationJobComponent} from './single-application-job/single-app
 import {JobApprovalComponent} from './admin/job-approval/job-approval.component';
 import {PendingDirectoriesComponent} from './admin/pending-directories/pending-directories.component';
 import {MyProfileComponent} from './my-profile/my-profile.component';
+import {ActiveUsersComponent} from "./admin/active-users/active-users.component";
+import {DeactivatedUsersComponent} from "./admin/deactivated-users/deactivated-users.component";
 
 const routes: Routes = [
   {
@@ -128,6 +130,14 @@ const routes: Routes = [
           {
             path: 'all_job',
             component: JobApprovalComponent
+          },
+          {
+            path: 'active_users',
+            component: ActiveUsersComponent
+          },
+          {
+            path: 'deactivated_users',
+            component: DeactivatedUsersComponent
           }
         ]
       }

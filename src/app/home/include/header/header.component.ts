@@ -171,7 +171,7 @@ export class HomeHeaderComponent implements OnInit {
       },
       (error: any) => {
         this.loading = false;
-        this.loginError = 'Unknown Credentials!';
+        this.loginError = error.error.errors;
       }
     );
   }
