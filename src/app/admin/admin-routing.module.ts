@@ -26,6 +26,7 @@ import {PendingDirectoriesComponent} from './admin/pending-directories/pending-d
 import {MyProfileComponent} from './my-profile/my-profile.component';
 import {ActiveUsersComponent} from "./admin/active-users/active-users.component";
 import {DeactivatedUsersComponent} from "./admin/deactivated-users/deactivated-users.component";
+import {AdminControlComponent} from "./admin/admin-control/admin-control.component";
 
 const routes: Routes = [
   {
@@ -138,6 +139,10 @@ const routes: Routes = [
           {
             path: 'deactivated_users',
             component: DeactivatedUsersComponent
+          },
+          {
+            path: 'admin_control',
+            component: AdminControlComponent
           }
         ]
       }

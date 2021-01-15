@@ -35,6 +35,9 @@ import { JobByCategoryCityComponent } from './job/job-by-category-city/job-by-ca
 import { JobSingleComponent } from './job/job-single/job-single.component';
 import { FrontPageComponent } from './front-page/front-page.component';
 import { ResetPasswordComponent } from './reset-password/reset-password.component';
+import { TermsOfUseComponent } from './terms-of-use/terms-of-use.component';
+import { AngularEditorModule } from '@kolkov/angular-editor';
+import { PrivacyAndPolicyComponent } from './privacy-and-policy/privacy-and-policy.component';
 
 @NgModule({
   declarations: [
@@ -65,7 +68,9 @@ import { ResetPasswordComponent } from './reset-password/reset-password.componen
     JobByCategoryCityComponent,
     JobSingleComponent,
     FrontPageComponent,
-    ResetPasswordComponent
+    ResetPasswordComponent,
+    TermsOfUseComponent,
+    PrivacyAndPolicyComponent
   ],
   imports: [
     CommonModule,
@@ -76,7 +81,8 @@ import { ResetPasswordComponent } from './reset-password/reset-password.componen
     NgbModule,
     NgxPaginationModule,
     MomentModule,
-    NgbCarouselModule
+    NgbCarouselModule,
+    AngularEditorModule
   ],
 })
 export class HomeModule {}

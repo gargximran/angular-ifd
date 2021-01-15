@@ -44,7 +44,7 @@
 					><i  class="sl sl-icon-user"></i> My Profile</a
 				  >
 				</li>
-				<li>
+				<li *ngIf="!isAdmin">
 				  <a [routerLink]="[ '/dashboard/classified' ]"
 					><i class="sl sl-icon-list"></i> My Listing</a
 				  >

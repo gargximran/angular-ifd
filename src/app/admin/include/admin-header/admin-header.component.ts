@@ -20,10 +20,13 @@ export class AdminHeaderComponent implements OnInit {
     phone: '',
   };
 
+  isAdmin = false;
+
   ngOnInit(): void {
     if (this.auth._getUser_()){
       this.profile = this.auth._getUser_();
     }
+    this.isAdmin = this.auth.isAdmin();
   }
 
   toggle(content): void{

@@ -34,6 +34,7 @@ import { PendingDirectoriesComponent } from './admin/pending-directories/pending
 import { MyProfileComponent } from './my-profile/my-profile.component';
 import { ActiveUsersComponent } from './admin/active-users/active-users.component';
 import { DeactivatedUsersComponent } from './admin/deactivated-users/deactivated-users.component';
+import { AdminControlComponent } from './admin/admin-control/admin-control.component';
 
 @NgModule({
   declarations: [
@@ -63,6 +64,7 @@ import { DeactivatedUsersComponent } from './admin/deactivated-users/deactivated
     MyProfileComponent,
     ActiveUsersComponent,
     DeactivatedUsersComponent,
+    AdminControlComponent,
   ],
     imports: [
         CommonModule,

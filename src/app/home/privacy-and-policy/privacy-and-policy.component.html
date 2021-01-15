@@ -1,0 +1,48 @@
+<div id="titlebar" class="gradient">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-12">
+        <h2>Privacy And Policy</h2>
+        <nav id="breadcrumbs">
+          <ul>
+            <li><a [routerLink]="'/'">Home</a></li>
+            <li>Privacy And Policy</li>
+          </ul>
+        </nav>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="container">
+  <div class="row">
+    <div class="col-md-12" *ngIf="isAdmin">
+      <div class="text-center" >
+        <button class="btn btn-primary mb-3" *ngIf="!editMode" (click)="editMode = true">Edit</button>
+      </div>
+      <form [formGroup]="formG" *ngIf="editMode" (ngSubmit)="submit()">
+        <angular-editor formControlName="htmlContent" [config]="editorConfig"></angular-editor>
+        <div class="form-group">
+          <button
+            type="submit"
+            class="button border margin-top-5"
+            [disabled]="loading"
+          >
+            <ng-container *ngIf="loading; else submitText22">
+              <div class="spinner-border" role="status"></div>
+            </ng-container>
+            <ng-template #submitText22>Save</ng-template>
+          </button>
+          <button class="button btn-secondary" type="button" (click)="editMode = false">Cancel</button>
+        </div>
+      </form>
+
+
+
+
+    </div>
+
+    <div class="col-md-12" *ngIf="!editMode" [innerHTML]="htmlElements"></div>
+  </div>
+
+</div>

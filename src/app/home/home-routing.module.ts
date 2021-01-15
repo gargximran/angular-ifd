@@ -27,6 +27,8 @@ import {JobSingleComponent} from './job/job-single/job-single.component';
 import {PlaceholderComponent} from '../admin/admin/placeholder/placeholder.component';
 import {FrontPageComponent} from './front-page/front-page.component';
 import {ResetPasswordComponent} from './reset-password/reset-password.component';
+import {TermsOfUseComponent} from "./terms-of-use/terms-of-use.component";
+import {PrivacyAndPolicyComponent} from "./privacy-and-policy/privacy-and-policy.component";
 
 
 const routes: Routes = [
@@ -37,6 +39,14 @@ const routes: Routes = [
       {
         path: '',
         component: FrontPageComponent
+      },
+      {
+        path: 'terms-of-use',
+        component: TermsOfUseComponent
+      },
+      {
+        path: 'privacy-and-policy',
+        component: PrivacyAndPolicyComponent
       },
       {
         path: 'reset/:token',

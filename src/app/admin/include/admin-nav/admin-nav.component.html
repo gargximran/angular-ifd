@@ -89,6 +89,12 @@
             ><i class="sl sl-icon-envelope-open"></i> Deactivated Users</a
             >
           </li>
+
+          <li *ngIf="isAdmin">
+            <a [routerLink]="[ '/dashboard/admin-dashboard/admin_control' ]"
+            ><i class="sl sl-icon-envelope-open"></i> Admin Control</a
+            >
+          </li>
         </ul>
       </li>
 
