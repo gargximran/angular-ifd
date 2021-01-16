@@ -27,6 +27,7 @@ import {MyProfileComponent} from './my-profile/my-profile.component';
 import {ActiveUsersComponent} from "./admin/active-users/active-users.component";
 import {DeactivatedUsersComponent} from "./admin/deactivated-users/deactivated-users.component";
 import {AdminControlComponent} from "./admin/admin-control/admin-control.component";
+import {PortfolioComponent} from "./portfolio/portfolio.component";
 
 const routes: Routes = [
   {
@@ -70,6 +71,10 @@ const routes: Routes = [
       {
         path: 'classified',
         component: ClassifiedProductComponent
+      },
+      {
+        path: 'portfolio',
+        component: PortfolioComponent
       },
       {
         path: 'admin-dashboard',

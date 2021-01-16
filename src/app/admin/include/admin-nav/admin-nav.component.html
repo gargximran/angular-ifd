@@ -39,6 +39,13 @@
         >
       </li>
 
+      <li *ngIf="isProfiled">
+        <a [routerLinkActiveOptions]="{exact:
+            true}" [routerLink]="[ '/dashboard/portfolio' ]" routerLinkActive="active"
+        ><i class="sl sl-icon-layers"></i> Portfolios</a
+        >
+      </li>
+
       <li *ngIf="!isAdmin">
         <a [routerLinkActiveOptions]="{exact:
             true}" [routerLink]="[ '/dashboard/my-jobs' ]" routerLinkActive="active"

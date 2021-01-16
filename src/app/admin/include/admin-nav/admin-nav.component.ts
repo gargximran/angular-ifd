@@ -15,6 +15,7 @@ export class AdminNavComponent implements OnInit {
   isAdmin = false;
   isCompany = false;
   isProfessional = false;
+  isProfiled = false
 
   ngOnInit(): void {
     if (this.auth.isAdmin()){
@@ -27,6 +28,10 @@ export class AdminNavComponent implements OnInit {
 
     if (this.auth.isProfessional()){
       this.isProfessional = true;
+    }
+
+    if (this.auth.CompanyProfile || this.auth.ProfessionalProfile){
+      this.isProfiled = true;
     }
   }
 
