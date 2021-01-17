@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {ActivatedRoute} from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 import {AuthService} from '../../../service/auth.service';
 import {ApiService} from '../../../service/api.service';
 
@@ -10,7 +10,7 @@ import {ApiService} from '../../../service/api.service';
 })
 export class DirectorySingleComponent implements OnInit {
 
-  constructor(private route: ActivatedRoute, private auth: AuthService, private api: ApiService) { }
+  constructor(private route: ActivatedRoute, private auth: AuthService, private api: ApiService, private router: Router) { }
   postSlug = '';
   isLoggedIn = false;
   today = new Date().toISOString();
@@ -45,7 +45,11 @@ export class DirectorySingleComponent implements OnInit {
           this.post = res.data.post;
           this.relatedPosts = res.data.related_posts;
         },
-        () => {}
+        (err) => {
+          if (err.status_code == 404){
+            this.router.navigateByUrl('/error-404');
+          }
+        }
       );
     }
 

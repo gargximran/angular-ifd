@@ -29,6 +29,7 @@ import {FrontPageComponent} from './front-page/front-page.component';
 import {ResetPasswordComponent} from './reset-password/reset-password.component';
 import {TermsOfUseComponent} from "./terms-of-use/terms-of-use.component";
 import {PrivacyAndPolicyComponent} from "./privacy-and-policy/privacy-and-policy.component";
+import {Error_404_Component} from "./error.404/error.404.component";
 
 
 const routes: Routes = [
@@ -39,6 +40,10 @@ const routes: Routes = [
       {
         path: '',
         component: FrontPageComponent
+      },
+      {
+        path: 'error-404',
+        component: Error_404_Component
       },
       {
         path: 'terms-of-use',

@@ -3,7 +3,7 @@
   <div class="row utf_sticky_main_wrapper">
     <div class="col-lg-8 col-md-8">
       <div class="utf_listing_titlebar pt-0" id="titlebar">
-        <div class="utf_listing_titlebar_title">
+        <div class="utf_listing_titlebar_title border-0">
           <h3 class="utf_listing_headline_part margin-top-30 margin-bottom-30">Detail's</h3>
           <h4 *ngIf="application.user.type.client_type == 'professional'" class="text-capitalize">
             Name: {{ application.user.first_name }} {{application.user.last_name}}
@@ -86,40 +86,40 @@
               <td class="pl-2">{{application.user.profile.state.name}}</td>
             </tr>
           </table>
-        </div>
-      </div>
-      <div class="utf_listing_section" id="utf_listing_overview" *ngIf="application && application.user.profile.career_summary">
-        <h3 class="utf_listing_headline_part margin-top-30 margin-bottom-30">
-          Career Summary
-        </h3>
-        <pre
-        >{{ application.user.profile.career_summary }}
-        </pre>
-      </div>
 
-      <div class="utf_listing_section" id="utf_listing_overview" *ngIf="application && application.user.profile.description">
-        <h3 class="utf_listing_headline_part margin-top-30 margin-bottom-30">
-          description
-        </h3>
-        <pre
-        >{{ application.user.profile.description }}
+          <h3 class="utf_listing_headline_part margin-top-30 margin-bottom-30">
+            Career Summary
+          </h3>
+          <pre
+          >{{ application.user.profile.career_summary }}
         </pre>
-      </div>
 
-      <div class="utf_listing_section" id="utf_listing_overview" *ngIf="application && application.user.profile.description">
-        <h3 class="utf_listing_headline_part margin-top-30 margin-bottom-30">
-          Portfolios
-        </h3>
-        <div class="row">
-          <div class="col-md-12 p-2 border" *ngFor="let portfolio of application.portfolios">
-            <div class="inner text-center">
-              <img *ngIf="portfolio.image" style="height: 150px;" class="p-1 m-1 border" [src]="portfolio.image"/>
-              <h3>{{ portfolio.title }}</h3>
-              <p>{{portfolio.description}}</p>
+          <h3 class="utf_listing_headline_part margin-top-30 margin-bottom-30">
+            description
+          </h3>
+          <pre
+          >{{ application.user.profile.description }}
+        </pre>
+
+          <h3 class="utf_listing_headline_part margin-top-30 margin-bottom-30">
+            Portfolios
+          </h3>
+          <div class="row">
+            <div class="col-md-12 p-2 shadow" *ngFor="let portfolio of application.portfolios">
+              <div class="inner text-center">
+                <img *ngIf="portfolio.image" style="height: 150px;" class="p-1 m-1 border" [src]="portfolio.image"/>
+                <h3>{{ portfolio.title }}</h3>
+                <p>{{portfolio.description}}</p>
+              </div>
             </div>
           </div>
+
         </div>
       </div>
+
+
+
+
 
       <div class="utf_listing_section" id="utf_listing_overview" *ngIf="application && application.cover_later">
         <h3 class="utf_listing_headline_part margin-top-30 margin-bottom-30">

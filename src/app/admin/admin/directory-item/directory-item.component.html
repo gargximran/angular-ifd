@@ -178,7 +178,7 @@
 <!--update modal-->
 <ng-template #updateModal let-d="dismiss">
   <div class="modal-header p-4">
-    <h4 class="modal-title" id="modal-basic-title">New Directory</h4>
+    <h4 class="modal-title" id="modal-basic-title">Update Directory</h4>
     <button
       (click)="d('Cross click')"
       aria-label="Close"
@@ -417,49 +417,31 @@
         <ng-container
           *ngFor="let directory of directories | paginate: { currentPage: currentPageNumber, totalItems: totalVolume, itemsPerPage: itemPerPage}">
           <li>
-            <div class="utf_list_box_listing_item">
-              <div class="utf_list_box_listing_item-img">
-                <a>
-                  <img *ngIf="directory.image" src="{{directory.image}}"/>
-                  <img *ngIf="!directory.image" src="assets/images/dumylogo.png"/>
-                </a>
-              </div>
-              <div class="utf_list_box_listing_item_content">
-                <div class="inner">
-                  <h3><a class="text-primary" [routerLink]="['/directory/single', directory.slug]">{{directory.title}}</a></h3>
-                  <span>
-                    <i class="sl sl-icon-location"></i>
-                    {{directory.address}}
+            <div class="row">
+              <div class="col-lg-12 col-md-12 mb-3" >
+                <div class="utf_listing_item-container list-layout mb-0">
+                  <a class="utf_listing_item" [routerLink]="['/directory/single', directory.slug]">
+                    <div class="utf_listing_item-image" *ngIf="directory.image">
+                      <img alt="" src="{{directory.image}}">
+                    </div>
+                    <div class="utf_listing_item-image" *ngIf="!directory.image">
+                      <img alt="" src="{{'assets/images/dumylogo.png'}}">
+                    </div>
+                    <div class="utf_listing_item_content">
+                      <div class="utf_listing_item-inner">
+                        <h3>{{directory.title}}</h3>
+                        <span><i class="sl sl-icon-location"></i> {{directory.address}}</span>
+                        <span><i class="sl sl-icon-directions"></i> {{directory.city.name}}</span>
+                        <span><i class="sl sl-icon-map"></i> {{directory.state.name}}</span>
+                        <span><i class="sl sl-icon-flag"></i> <span class=" text-white badge badge-pill badge-dark d-inline-block mx-1" *ngFor="let category of directory.category">{{category.name}}</span></span>
 
-                    <span class="ml-3 d-inline-block">
-                      <i class="sl sl-icon-phone"></i>
-                      {{directory.phone}}
-                    </span>
-                  </span>
-                  <span>
-                    <i class="sl sl-icon-map"></i>
-                    State: {{directory.state.name}}
-
-                    <span *ngIf="directory.email" class="d-inline-block ml-3">
-                      <i class="sl sl-icon-envelope-open"></i>
-                      {{directory.email}}
-                    </span>
-                  </span>
-                  <span>
-                    <i class="sl sl-icon-map"></i>
-                    City: {{directory.city.name}}
-                  </span>
-                  <span>
-                    <i class="sl sl-icon-directions"></i>
-                    Categories: <span *ngFor="let category of directory.category"
-                                      class="badge badge-pill badge-canceled d-inline text-white font-weight-bold">{{category.name}}</span>
-                  </span>
-
-
-                  <hr>
-
+                        <p>{{directory.description.slice(0, 100)}}...</p>
+                      </div>
+                    </div>
+                  </a>
                 </div>
               </div>
+
             </div>
             <div class="buttons-to-right">
               <a (click)="openCategoryEditModal(updateModal, directory)" class="button gray"><i

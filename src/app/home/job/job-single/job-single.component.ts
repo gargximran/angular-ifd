@@ -5,7 +5,6 @@ import {ApiService} from '../../../service/api.service';
 import {FormControl, FormGroup} from '@angular/forms';
 import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 import {ToastrService} from 'ngx-toastr';
-import { HomeHeaderComponent } from '../../include/header/header.component'
 
 @Component({
   selector: 'app-job-single',
@@ -44,7 +43,11 @@ export class JobSingleComponent implements OnInit {
           this.job = res.data.job;
           this.relatedJobs = res.data.related_job;
         },
-        () => {}
+        (err) => {
+          if (err.status_code == 404){
+            this.router.navigateByUrl('/error-404');
+          }
+        }
       );
     }
 

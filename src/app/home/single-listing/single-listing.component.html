@@ -18,7 +18,7 @@
   </div>
 </div>
 
-<div class="container" *ngIf="post" >
+<div class="container" *ngIf="post?.name" >
   <div class="row utf_sticky_main_wrapper">
     <div class="col-lg-8 col-md-8 margin-top-35">
       <div class="utf_listing_titlebar pt-0" id="titlebar">
@@ -27,20 +27,20 @@
             {{ post.name }}
           </h2>
           <span class="call_now"
-          ><i class="sl sl-icon-phone"></i> Price : {{post.price}} inr <sup
+          >Price : {{post.price}} inr <sup
             class="badge badge-primary">{{post.price_type}}</sup></span
           >
           <span>
             <a class="listing-address">
-              <i class="sl sl-icon-location"></i> Brand : {{post.brand.name}}
+              Brand : {{post.brand.name}}
             </a>
           </span>
           <span class="call_now text-capitalize"
-          ><i class="sl sl-icon-phone"></i> Condition : {{post.condition}}</span
+          >Condition : {{post.condition}}</span
           >
 
           <span class="call_now text-capitalize"
-          ><i class="sl sl-icon-phone"></i> Age : {{post.age}} month</span
+          >Age : {{post.age}} month</span
           >
           <ul class="listing_item_social">
             <li *ngFor="let category of post.category" class="m-1">
@@ -92,7 +92,7 @@
         <ul *ngIf="isLoggedIn" class="utf_listing_detail_sidebar">
           <li><i class="sl sl-icon-phone"></i> {{post.user.phone}}</li>
           <li>
-            <i class="sl sl-icon-globe"></i>{{post.user.email}}
+            <i class="fa fa-envelope"></i>{{post.user.email}}
           </li>
         </ul>
         <ul *ngIf="!isLoggedIn" class="utf_listing_detail_sidebar">

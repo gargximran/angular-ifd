@@ -34,7 +34,7 @@ export class ApiService {
 
       }),
       catchError(err => {
-        if (!err.error.session){
+        if (!err.error.session && err.error.status_code == 401){
           this.modal.dismissAll();
           this.auth.logout();
         }
@@ -54,7 +54,7 @@ export class ApiService {
         return resp;
       }),
       catchError(err => {
-        if (!err.error.session){
+        if (!err.error.session  && err.error.status_code == 401){
           this.modal.dismissAll();
           this.auth.logout();
         }

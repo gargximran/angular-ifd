@@ -38,6 +38,7 @@ import { ResetPasswordComponent } from './reset-password/reset-password.componen
 import { TermsOfUseComponent } from './terms-of-use/terms-of-use.component';
 import { AngularEditorModule } from '@kolkov/angular-editor';
 import { PrivacyAndPolicyComponent } from './privacy-and-policy/privacy-and-policy.component';
+import {Error_404_Component} from './error.404/error.404.component';
 
 @NgModule({
   declarations: [
@@ -70,7 +71,8 @@ import { PrivacyAndPolicyComponent } from './privacy-and-policy/privacy-and-poli
     FrontPageComponent,
     ResetPasswordComponent,
     TermsOfUseComponent,
-    PrivacyAndPolicyComponent
+    PrivacyAndPolicyComponent,
+    Error_404_Component
   ],
   imports: [
     CommonModule,

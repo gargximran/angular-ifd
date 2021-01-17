@@ -597,103 +597,30 @@
 			"
         >
           <li>
-            <div class="utf_list_box_listing_item">
-              <div class="utf_list_box_listing_item-img">
-                <a>
-                  <img *ngIf="product.images" src="{{ product.images[0] }}"/>
-                  <img
-                    *ngIf="!product.images"
-                    src="assets/images/dumylogo.png"
-                  />
-                </a>
-              </div>
-              <div class="utf_list_box_listing_item_content">
-                <div class="inner">
-                  <div class="row">
-                    <div class="col-md-6">
-                      <h3><a [routerLink]="['/classified/single', product.slug]"
-                             class="text-primary">{{ product.name }} </a></h3>
-                      <div class="row">
-                        <div class="col-2">
-                          <h5 class="font-weight-bold">Brand</h5>
-                          <h5 class="font-weight-bold">Condition</h5>
-                          <h5 class="font-weight-bold">Age</h5>
-                          <h5 class="font-weight-bold">Price</h5>
-                          <h5 class="font-weight-bold">Price Type</h5>
+            <div class="row">
+              <div class="col-lg-12 col-md-12 mb-3">
+                <div class="utf_listing_item-container list-layout mb-0">
+                  <a [routerLink]="['/classified/single', product.slug]" class="utf_listing_item">
+                    <div class="utf_listing_item-image" *ngIf="product.images">
+                      <img alt="" src="{{product.images[0]}}">
+                    </div>
+                    <div class="utf_listing_item-image" *ngIf="!product.images">
+                      <img alt="" src="{{'assets/images/dumylogo.png'}}">
+                    </div>
+                    <div class="utf_listing_item_content">
+                      <div class="utf_listing_item-inner">
+                        <h3>{{product.name}} <span class="badge d-inline-block text-white" [class.badge-success]="product.status == 1" [class.badge-danger]="product.status != 1">{{ product.status == 1 ? 'Active': 'Pending'}}</span></h3>
+                        <span><i class="sl sl-icon-location"></i> {{product.address}}</span>
+                        <span><i class="sl sl-icon-directions"></i> {{product.city.name}}</span>
+                        <span><i class="sl sl-icon-map"></i> {{product.state.name}}</span>
+                        <span><i class="sl sl-icon-flag"></i> <span
+                          *ngFor="let category of product.category"
+                          class=" text-white badge badge-pill badge-dark d-inline-block mx-1">{{category.name}}</span></span>
 
-                          <h5 class="font-weight-bold">Status</h5>
-                          <h5 class="font-weight-bold">Categories</h5>
-                        </div>
-                        <div class="col-10">
-                          <h5>: {{ product.brand.name }}</h5>
-                          <h5>: {{ product.condition }}</h5>
-                          <h5>: {{ product.age }} m</h5>
-                          <h5>: {{ product.price }} inr</h5>
-                          <h5>: {{ product.price_type }}</h5>
-                          <h5 *ngIf="product.status == 1">: Active</h5>
-                          <h5 *ngIf="product.status == 0">: Deactive</h5>
-                          <p>
-                            :
-                            <span
-                              *ngFor="let category of product.category"
-                              class="badge badge-pill badge-canceled d-inline-block text-white font-weight-bold"
-                            >{{ category.name }}</span
-                            >
-                          </p>
-
-                          <div *ngIf="product.images" class="row">
-                            <div
-                              *ngFor="
-								  let product_image of product.images;
-								  let ind = index
-								"
-                              class="col-md-3"
-                            >
-                              <img
-                                alt=""
-                                class="img-fluid"
-                                src="{{ product_image }}"
-                              />
-                            </div>
-                          </div>
-                        </div>
+                        <p>{{product.description.slice(0, 100)}}...</p>
                       </div>
                     </div>
-                    <div class="col-md-6">
-                      <h3>Contact & Location</h3>
-                      <div class="row">
-                        <div class="col-2">
-                          <h5 class="font-weight-bold">User</h5>
-                          <h5 class="font-weight-bold">State</h5>
-                          <h5 class="font-weight-bold">City</h5>
-                          <h5 class="font-weight-bold">Phone</h5>
-                          <h5 *ngIf="product.phone" class="font-weight-bold">Phone 2</h5>
-                          <h5 class="font-weight-bold">Email</h5>
-                          <h5 *ngIf="product.email" class="font-weight-bold">Email 2</h5>
-                          <h5 class="font-weight-bold">Listed Date</h5>
-                        </div>
-                        <div class="col-10">
-                          <h5 class="text-capitalize">
-                            : {{ product.user.first_name }}
-                            {{ product.user.last_name }}
-                          </h5>
-                          <h5 class="text-capitalize">: {{ product.state.name }}</h5>
-                          <h5 class="text-capitalize">: {{ product.city.name }}</h5>
-                          <h5>: {{ product.user.phone }}</h5>
-                          <h5 *ngIf="product.phone">: {{ product.phone }}</h5>
-                          <h5>: {{ product.user.email }}</h5>
-                          <h5 *ngIf="product.email">: {{ product.email }}</h5>
-                          <h5>
-                            :
-                            {{
-                            product.created_at | date: "h:mm aa , dd-LL-yyyy"
-                            }}
-                          </h5>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-
+                  </a>
                 </div>
               </div>
             </div>

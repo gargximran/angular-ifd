@@ -1,12 +1,12 @@
 <div class="dashboard_gradient" id="titlebar">
   <div class="row">
     <div class="col-md-12">
-      <h2>Company Details</h2>
+      <h2>Applied Jobs</h2>
       <nav id="breadcrumbs">
         <ul>
           <li><a [routerLink]="['/']">Home</a></li>
           <li><a [routerLink]="['/dashboard']">Dashboard</a></li>
-          <li>Professional / My Job</li>
+          <li>My Job</li>
         </ul>
       </nav>
     </div>
@@ -56,7 +56,7 @@
                     Category :
                     <span
                       *ngFor="let cat of job.category"
-                      class="m-1 badge badge-pill badge-warning p-2 d-inline"
+                      class="m-1 badge badge-secondary text-white p-2 d-inline"
                     >{{ cat.name }}</span
                     >
                   </h5>

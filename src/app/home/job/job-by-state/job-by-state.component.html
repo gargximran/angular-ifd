@@ -67,8 +67,8 @@
               <div class="utf_listing_item_content">
                 <div class="utf_listing_item-inner">
                   <h3>{{job.title}}</h3>
-                  <span><i class="sl sl-icon-location"></i>Type: {{job.job_type}}</span>
-                  <span *ngIf="job.min_salary"><i class="sl sl-icon-location"></i>Salary Range: {{job.min_salary}} - {{job.max_salary}}</span>
+                  <span class="badge-pill badge-success d-inline-block text-white">{{job.job_type}}</span>
+                  <span *ngIf="job.min_salary"><i class="im im-icon-Dollar"></i> Salary Range: {{job.min_salary}} - {{job.max_salary}}</span>
                   <span><i class="sl sl-icon-directions"></i> {{job.city.name}}</span>
                   <span><i class="sl sl-icon-map"></i> {{job.state.name}}</span>
                   <span><i class="sl sl-icon-flag"></i> <span class=" text-white badge badge-pill badge-dark d-inline-block mx-1" *ngFor="let category of job.category">{{category.name}}</span></span>

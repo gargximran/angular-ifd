@@ -20,7 +20,7 @@
         <span>Published Directory</span>
       </div>
       <div class="utf_dashboard_stat_icon">
-        <i class="im im-icon-Map2"></i>
+        <i class="sl sl-icon-direction text-primary"></i>
       </div>
     </div>
   </div>
@@ -32,7 +32,7 @@
         <span>Pending Directory</span>
       </div>
       <div class="utf_dashboard_stat_icon">
-        <i class="im im-icon-Add-UserStar"></i>
+        <i class="sl sl-icon-direction text-danger"></i>
       </div>
     </div>
   </div>
@@ -44,7 +44,7 @@
         <span>Published Classified</span>
       </div>
       <div class="utf_dashboard_stat_icon">
-        <i class="im im-icon-Align-JustifyRight"></i>
+        <i class="im im-icon-Handshake text-primary"></i>
       </div>
     </div>
   </div>
@@ -56,7 +56,7 @@
         <span>Pending Classified</span>
       </div>
       <div class="utf_dashboard_stat_icon">
-        <i class="im im-icon-Diploma"></i>
+        <i class="im im-icon-Handshake text-danger"></i>
       </div>
     </div>
   </div>
@@ -68,7 +68,7 @@
         <span>Published Job</span>
       </div>
       <div class="utf_dashboard_stat_icon">
-        <i class="im im-icon-Eye-Visible"></i>
+        <i class="im im-icon-Suitcase text-primary"></i>
       </div>
     </div>
   </div>
@@ -80,7 +80,7 @@
         <span>Pending Job</span>
       </div>
       <div class="utf_dashboard_stat_icon">
-        <i class="im im-icon-Star"></i>
+        <i class="im im-icon-Suitcase text-danger"></i>
       </div>
     </div>
   </div>
@@ -94,7 +94,7 @@
         <span>Published Classified</span>
       </div>
       <div class="utf_dashboard_stat_icon">
-        <i class="im im-icon-Map2"></i>
+        <i class="im  im-icon-Handshake text-success"></i>
       </div>
     </div>
   </div>
@@ -106,7 +106,7 @@
         <span>Pending Classified</span>
       </div>
       <div class="utf_dashboard_stat_icon">
-        <i class="im im-icon-Add-UserStar"></i>
+        <i class="im  im-icon-Handshake text-danger"></i>
       </div>
     </div>
   </div>
@@ -118,7 +118,7 @@
         <span>Published Job</span>
       </div>
       <div class="utf_dashboard_stat_icon">
-        <i class="im im-icon-Align-JustifyRight"></i>
+        <i class="im  im-icon-Suitcase text-success"></i>
       </div>
     </div>
   </div>
@@ -130,7 +130,7 @@
         <span>Pending Job</span>
       </div>
       <div class="utf_dashboard_stat_icon">
-        <i class="im im-icon-Diploma"></i>
+        <i class="im  im-icon-Suitcase text-danger"></i>
       </div>
     </div>
   </div>
@@ -142,7 +142,7 @@
         <span>Applied Job</span>
       </div>
       <div class="utf_dashboard_stat_icon">
-        <i class="im im-icon-Eye-Visible"></i>
+        <i class="im  im-icon-Suitcase"></i>
       </div>
     </div>
   </div>
@@ -154,7 +154,7 @@
         <span>Applicants</span>
       </div>
       <div class="utf_dashboard_stat_icon">
-        <i class="im im-icon-Star"></i>
+        <i class="im  im-icon-Suitcase"></i>
       </div>
     </div>
   </div>
@@ -166,7 +166,7 @@
       <h4>Recent Published Directories</h4>
       <ul>
         <li *ngFor="let directory of dashboardData.directory.last_published">
-          <i class="utf_list_box_icon sl sl-icon-layers"></i> <strong>{{directory.title}}</strong>
+          <i class="utf_list_box_icon sl sl-icon-direction"></i> <strong>{{directory.title}}</strong>
           <a [routerLink]="['/directory/single', directory.slug]" class="close-list-item"><i class="fa fa-eye"></i></a>
         </li>
       </ul>
@@ -178,7 +178,7 @@
       <h4>Latest Job Listed!</h4>
       <ul>
         <li *ngFor="let job of dashboardData.job.last_published">
-          <i class="utf_list_box_icon sl sl-icon-doc"></i>
+          <i class="utf_list_box_icon im im-icon-Suitcase"></i>
           <strong>{{job.title}}</strong>
           <ul>
             <li><span>Post Date:-</span> {{job.created_at | amDateFormat:'LL'}}</li>
@@ -237,7 +237,7 @@
       <h4>Last Applied Jobs</h4>
       <ul>
         <li *ngFor="let application of dashboardData.job.applied_jobs">
-          <i class="utf_list_box_icon sl sl-icon-doc"></i>
+          <i class="utf_list_box_icon im im-icon-Suitcase"></i>
           <strong>{{application.job.title}}</strong>
           <ul>
             <li><span>Applied Data:-</span> {{application.created_at | amDateFormat:'LL'}}</li>
@@ -257,7 +257,7 @@
       <h4>Latest Job Listed!</h4>
       <ul>
         <li *ngFor="let job of dashboardData.job.last_published">
-          <i class="utf_list_box_icon sl sl-icon-doc"></i>
+          <i class="utf_list_box_icon im im-icon-Suitcase"></i>
           <strong>{{job.title}}</strong>
           <ul>
             <li><span>Post Date:-</span> {{job.created_at | amDateFormat:'LL'}}</li>

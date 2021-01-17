@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 import { ApiService } from 'src/app/service/api.service';
 import { AuthService } from 'src/app/service/auth.service';
 
@@ -10,7 +10,7 @@ import { AuthService } from 'src/app/service/auth.service';
 })
 export class SingleListingComponent implements OnInit {
 
-  constructor(private route: ActivatedRoute, private auth: AuthService, private api: ApiService) { }
+  constructor(private route: ActivatedRoute, private auth: AuthService, private api: ApiService, private router: Router) { }
   postSlug = '';
   isLoggedIn = false;
   today = new Date().toISOString();
@@ -45,7 +45,12 @@ export class SingleListingComponent implements OnInit {
           this.post = res.data.post;
           this.relatedClassifieds = res.data.related_post;
         },
-        () => {}
+        (err) => {
+          console.log(err)
+          if(err.status_code == 404){
+            this.router.navigateByUrl('/error-404')
+          }
+        }
       );
     }
 

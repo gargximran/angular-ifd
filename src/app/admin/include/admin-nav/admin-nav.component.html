@@ -14,69 +14,69 @@
       <li>
         <a [routerLinkActiveOptions]="{exact:
             true}" [routerLink]="[ '/dashboard/profile' ]" routerLinkActive="active"
-        ><i class="sl sl-icon-layers"></i> Profile</a
+        ><i class="im im-icon-Profile"></i> Profile</a
         >
       </li>
 
       <li *ngIf="isCompany">
         <a [routerLinkActiveOptions]="{exact:
             true}" [routerLink]="[ '/dashboard/company' ]" routerLinkActive="active"
-        ><i class="sl sl-icon-layers"></i> Company</a
+        ><i class="im im-icon-Office"></i> Company</a
         >
       </li>
 
       <li *ngIf="!isAdmin">
         <a [routerLinkActiveOptions]="{exact:
             true}" [routerLink]="[ '/dashboard/job' ]" routerLinkActive="active"
-        ><i class="sl sl-icon-layers"></i> Job Post</a
+        ><i class="im im-icon-Suitcase"></i> Job Post</a
         >
       </li>
 
       <li *ngIf="isProfessional">
         <a [routerLinkActiveOptions]="{exact:
             true}" [routerLink]="[ '/dashboard/professional' ]" routerLinkActive="active"
-        ><i class="sl sl-icon-layers"></i> Professional</a
+        ><i class="im im-icon-Suit"></i> Professional</a
         >
       </li>
 
       <li *ngIf="isProfiled">
         <a [routerLinkActiveOptions]="{exact:
             true}" [routerLink]="[ '/dashboard/portfolio' ]" routerLinkActive="active"
-        ><i class="sl sl-icon-layers"></i> Portfolios</a
+        ><i class="im im-icon-Data-Copy"></i> Portfolios</a
         >
       </li>
 
       <li *ngIf="!isAdmin">
         <a [routerLinkActiveOptions]="{exact:
             true}" [routerLink]="[ '/dashboard/my-jobs' ]" routerLinkActive="active"
-        ><i class="sl sl-icon-layers"></i> My Jobs</a
+        ><i class="im im-icon-Suitcase"></i> My Jobs</a
         >
       </li>
 
       <li *ngIf="!isAdmin">
         <a [routerLinkActiveOptions]="{exact:
             true}" [routerLink]="[ '/dashboard/classified' ]" routerLinkActive="active"
-        ><i class="sl sl-icon-list"></i>My Classified</a
+        ><i class="im im-icon-Handshake"></i>My Classified</a
         >
       </li>
 
       <li *ngIf="isAdmin" #classified_menu (click)="toggleMobileMenu(classified_menu)">
-        <a><i class="sl sl-icon-layers"></i> Classified</a>
+        <a><i class="im im-icon-Handshake"></i> Classified</a>
         <ul>
           <li *ngIf="isAdmin">
             <a [routerLink]="[ '/dashboard/admin-dashboard/brands' ]"
-            ><i class="sl sl-icon-envelope-open"></i> Brands</a
+            >Brands</a
             >
           </li>
           <li *ngIf="isAdmin">
             <a [routerLink]="[ '/dashboard/admin-dashboard/classified_category' ]"
-            ><i class="sl sl-icon-envelope-open"></i> Category</a
+            >Category</a
             >
           </li>
 
           <li *ngIf="isAdmin">
             <a [routerLink]="[ '/dashboard/admin-dashboard/classified_item' ]"
-            ><i class="sl sl-icon-envelope-open"></i> Item</a
+            >Item</a
             >
           </li>
 
@@ -84,33 +84,33 @@
       </li>
 
       <li *ngIf="isAdmin" #user_menu (click)="toggleMobileMenu(user_menu)">
-        <a><i class="sl sl-icon-layers"></i> User Manager</a>
+        <a><i class="im im-icon-User"></i> User Manager</a>
         <ul>
           <li *ngIf="isAdmin">
             <a [routerLink]="[ '/dashboard/admin-dashboard/active_users' ]"
-            ><i class="sl sl-icon-envelope-open"></i> Active User</a
+            ><i class="im im-icon-Checked-User"></i> Active User</a
             >
           </li>
           <li *ngIf="isAdmin">
             <a [routerLink]="[ '/dashboard/admin-dashboard/deactivated_users' ]"
-            ><i class="sl sl-icon-envelope-open"></i> Deactivated Users</a
+            ><i class="im im-icon-Lock-User"></i> Deactivated Users</a
             >
           </li>
 
           <li *ngIf="isAdmin">
             <a [routerLink]="[ '/dashboard/admin-dashboard/admin_control' ]"
-            ><i class="sl sl-icon-envelope-open"></i> Admin Control</a
+            ><i class="im im-icon-Love-User"></i> Admin Control</a
             >
           </li>
         </ul>
       </li>
 
       <li *ngIf="isAdmin" #location_menu (click)="toggleMobileMenu(location_menu)">
-        <a><i class="sl sl-icon-layers"></i> Location</a>
+        <a><i class="sl sl-icon-map"></i> Location</a>
         <ul>
           <li *ngIf="isAdmin">
             <a [routerLink]="[ '/dashboard/admin-dashboard/states' ]"
-            ><i class="sl sl-icon-envelope-open"></i> States</a
+            >States</a
             >
           </li>
 
@@ -118,21 +118,21 @@
       </li>
 
       <li *ngIf="isAdmin" #directory_menu (click)="toggleMobileMenu(directory_menu)">
-        <a><i class="sl sl-icon-layers"></i> Directory</a>
+        <a><i class="sl sl-icon-direction"></i> Directory</a>
         <ul>
           <li *ngIf="isAdmin">
             <a [routerLink]="[ '/dashboard/admin-dashboard/directory_category' ]"
-            ><i class="sl sl-icon-envelope-open"></i> Category</a
+            >Category</a
             >
           </li>
           <li *ngIf="isAdmin">
             <a [routerLink]="[ '/dashboard/admin-dashboard/directory_item' ]"
-            ><i class="sl sl-icon-envelope-open"></i> Item</a
+            >Item</a
             >
           </li>
           <li *ngIf="isAdmin">
             <a [routerLink]="[ '/dashboard/admin-dashboard/requested_directory' ]"
-            ><i class="sl sl-icon-envelope-open"></i> Requested Items</a
+            >Requested Items</a
             >
           </li>
         </ul>
@@ -140,17 +140,17 @@
 
 
       <li *ngIf="isAdmin" #job_menu (click)="toggleMobileMenu(job_menu)">
-        <a><i class="sl sl-icon-layers"></i> Job</a>
+        <a><i class="im im-icon-Suitcase"></i> Job</a>
         <ul>
           <li *ngIf="isAdmin">
             <a [routerLink]="[ '/dashboard/admin-dashboard/job_category' ]"
-            ><i class="sl sl-icon-envelope-open"></i> Category</a
+            >Category</a
             >
           </li>
 
           <li *ngIf="isAdmin">
             <a [routerLink]="[ '/dashboard/admin-dashboard/all_job' ]"
-            ><i class="sl sl-icon-envelope-open"></i> All Jobs</a
+            >All Jobs</a
             >
           </li>
 
