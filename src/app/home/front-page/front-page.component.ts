@@ -12,9 +12,9 @@ export class FrontPageComponent implements OnInit {
 
   selectedOption: any = 'directory';
 
-  emailSubmitForm = new FormGroup({
-    email: new FormControl('')
-  });
+  collapseFeaturedDirectoryCategories = true;
+  collapseFeaturedClassifiedCategories = true;
+  collapseFeaturedJobCategories = true;
 
   featureDirectoryCategories: Array<any> = [];
   featureClassifiedCategories: Array<any> = [];
@@ -44,6 +44,36 @@ export class FrontPageComponent implements OnInit {
       },
       () => {}
     );
+  }
+
+  _featureDirectoryCategories(): any {
+    return this.collapseFeaturedDirectoryCategories ?
+      (
+        this.featureDirectoryCategories?.length > 5 ?
+          this.featureDirectoryCategories.slice(0, 5):
+          this.featureDirectoryCategories
+      ):
+      this.featureDirectoryCategories
+  }
+
+  _featureClassifiedCategories(): any {
+    return this.collapseFeaturedClassifiedCategories ?
+      (
+        this.featureClassifiedCategories?.length > 5 ?
+          this.featureClassifiedCategories.slice(0, 5):
+          this.featureClassifiedCategories
+      ):
+      this.featureClassifiedCategories
+  }
+
+  _featureJobCategories(): any {
+    return this.collapseFeaturedJobCategories ?
+      (
+        this.featureJobCategories?.length > 5 ?
+          this.featureJobCategories.slice(0, 5):
+          this.featureJobCategories
+      ):
+      this.featureJobCategories
   }
 
   fetchFeaturedJobCategory(): void{

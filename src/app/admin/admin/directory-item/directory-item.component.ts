@@ -14,6 +14,10 @@ import {FileHolder} from 'angular2-image-upload';
 })
 export class DirectoryItemComponent implements OnInit {
 
+  searchForm = new FormGroup({
+    search: new FormControl('')
+  });
+
   constructor(
     private modalService: NgbModal,
     private api: ApiService,
@@ -233,6 +237,12 @@ export class DirectoryItemComponent implements OnInit {
 
   fetchDirectory(): any {
     const form = new FormData();
+
+    if(this.searchForm.get('search').value){
+      console.log(this.searchForm.get('search').value)
+      form.append('search', this.searchForm.get('search').value);
+    }
+
     form.append('itemPerPage', String(this.itemPerPage));
     form.append('pageNumber', String(this.currentPageNumber));
 

@@ -1,6 +1,7 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
 import {AuthService} from '../../../service/auth.service';
 import {ApiService} from '../../../service/api.service';
+import {FormControl, FormGroup} from "@angular/forms";
 
 @Component({
   selector: 'app-job-approval',
@@ -8,6 +9,10 @@ import {ApiService} from '../../../service/api.service';
   styleUrls: ['./job-approval.component.css']
 })
 export class JobApprovalComponent implements OnInit {
+
+  searchForm = new FormGroup({
+    search: new FormControl('')
+  });
 
   constructor(
     private auth: AuthService,
@@ -26,6 +31,8 @@ export class JobApprovalComponent implements OnInit {
   forDelete = '';
   forApprove = '';
   forDisapprove = '';
+
+
 
 
   currentPageNumber = 1;
@@ -102,6 +109,11 @@ export class JobApprovalComponent implements OnInit {
 
   fetchData(): any {
     const form = new FormData();
+
+    if(this.searchForm.get('search').value){
+      console.log(this.searchForm.get('search').value)
+      form.append('search', this.searchForm.get('search').value);
+    }
     form.append('itemPerPage', String(this.itemPerPage));
     form.append('pageNumber', String(this.currentPageNumber));
     form.append('status', this.status);

@@ -25,15 +25,24 @@ export class DirectoryByCategoryComponent implements OnInit {
   states: Array<any> = [];
   currentCategory: any = {};
 
+  stateDisplayCollapse = true;
+
 
   constructor(private api: ApiService, private route: ActivatedRoute, private router: Router) { }
 
   ngOnInit(): void {
+    window.scroll(0, 0);
     this.fetchData();
     this.fetchCategories();
     this.initialize_all_states();
 
 
+  }
+
+  displayState(): any {
+    return this.stateDisplayCollapse ?
+      (this.states.length > 6 ? this.states.slice(0, 6) : this.states ) :
+      this.states;
   }
 
   // tslint:disable-next-line:use-lifecycle-interface
@@ -55,7 +64,7 @@ export class DirectoryByCategoryComponent implements OnInit {
   }
 
   fetchData(): any {
-    window.scroll(0, 0);
+
     const form = new FormData();
     form.append('itemPerPage', String(this.itemPerPage));
     form.append('pageNumber', String(this.currentPageNumber));

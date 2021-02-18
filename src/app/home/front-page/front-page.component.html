@@ -16,8 +16,7 @@
             </ngx-typed-js>
           </h2>
           <h4>
-            Find some of the best tips from around the city from our partners
-            and friends.
+            Find some of the production resources from around the city from our partners and friends.
           </h4>
           <div class="main_input_search_part">
             <div class="main_input_search_part_item">
@@ -62,13 +61,13 @@
 
 <div class="container">
   <div class="row">
-    <div class="col-md-12">-->
+    <div class="col-md-12">
             <h3 class="headline_part centered margin-bottom-35 margin-top-70">Featured Directory Categories <span>Discover best things to do restaurants, shopping, hotels, cafes and places<br>around the world by categories.</span>
             </h3>
           </div>
     <div class="col-md-12">
       <div class="container_categories_box margin-top-5 margin-bottom-30">
-        <a *ngFor="let directory of featureDirectoryCategories" [routerLink]="['/directory/category', directory.slug]" class="utf_category_small_box_part">
+        <a *ngFor="let directory of _featureDirectoryCategories()" [routerLink]="['/directory/category', directory.slug]" class="utf_category_small_box_part">
           <i [ngClass]="directory.icon ? '' : 'fa fa-image'">
             <img *ngIf="directory.icon" src="{{directory.icon}}">
           </i>
@@ -76,7 +75,12 @@
         </a>
 
       </div>
-      <div class="col-md-12 centered_content"> <a [routerLink]="['/directory']" class="button border margin-top-20">View More</a> </div>
+      <div class="col-md-12 centered_content" *ngIf="featureDirectoryCategories?.length > 5">
+        <a style="cursor: pointer;" (click)="collapseFeaturedDirectoryCategories = !collapseFeaturedDirectoryCategories" class="button border margin-top-20">
+          <ng-template [ngIf]="collapseFeaturedDirectoryCategories">Show More</ng-template>
+          <ng-template [ngIf]="!collapseFeaturedDirectoryCategories">Show Less</ng-template>
+        </a>
+      </div>
     </div>
   </div>
 </div>
@@ -90,7 +94,7 @@
     </div>
     <div class="col-md-12">
       <div class="container_categories_box margin-top-5 margin-bottom-30">
-        <a *ngFor="let classified of featureClassifiedCategories"  [routerLink]="['/classified/category', classified.slug]" class="utf_category_small_box_part">
+        <a *ngFor="let classified of _featureClassifiedCategories()"  [routerLink]="['/classified/category', classified.slug]" class="utf_category_small_box_part">
           <i [ngClass]="classified.icon ? '' : 'fa fa-image'">
             <img *ngIf="classified.icon" src="{{classified.icon}}">
           </i>
@@ -98,7 +102,12 @@
         </a>
 
       </div>
-      <div class="col-md-12 centered_content"> <a [routerLink]="['/classified']" class="button border margin-top-20">View More</a> </div>
+      <div class="col-md-12 centered_content" *ngIf="featureClassifiedCategories?.length > 5">
+        <a style="cursor: pointer;" (click)="collapseFeaturedClassifiedCategories = !collapseFeaturedClassifiedCategories" class="button border margin-top-20">
+          <ng-template [ngIf]="collapseFeaturedClassifiedCategories">Show More</ng-template>
+          <ng-template [ngIf]="!collapseFeaturedClassifiedCategories">Show Less</ng-template>
+        </a>
+      </div>
     </div>
   </div>
 </div>
@@ -115,7 +124,7 @@
     </div>
     <div class="col-md-12">
       <div class="container_categories_box margin-top-5 margin-bottom-30">
-        <a *ngFor="let category of featureJobCategories"  [routerLink]="['/job/category', category.slug]" class="utf_category_small_box_part">
+        <a *ngFor="let category of _featureJobCategories()"  [routerLink]="['/job/category', category.slug]" class="utf_category_small_box_part">
           <i [ngClass]="category.icon ? '' : 'fa fa-image'">
             <img *ngIf="category.icon" src="{{category.icon}}">
           </i>
@@ -123,7 +132,12 @@
         </a>
 
       </div>
-      <div class="col-md-12 centered_content"> <a [routerLink]="['/job']" class="button border margin-top-20">View More</a> </div>
+      <div class="col-md-12 centered_content" *ngIf="featureJobCategories?.length > 5">
+        <a style="cursor: pointer;" (click)="collapseFeaturedJobCategories = !collapseFeaturedJobCategories" class="button border margin-top-20">
+          <ng-template [ngIf]="collapseFeaturedJobCategories">Show More</ng-template>
+          <ng-template [ngIf]="!collapseFeaturedJobCategories">Show Less</ng-template>
+        </a>
+      </div>
     </div>
   </div>
 </div>
@@ -136,23 +150,23 @@
     <div class="row">
       <div class="col-md-12">
         <div class="utf_subscribe_block clearfix">
-          <div class="col-md-8 col-sm-7">
-            <div class="section-heading">
-              <h2 class="utf_sec_title_item utf_sec_title_item2">Subscribe to Newsletter!</h2>
+          <div class="col-md-12"><!-- col-md-8 col-sm-7 -->
+            <div class="section-heading text-center">
+              <h2 class="utf_sec_title_item utf_sec_title_item2">Get in touch!</h2>
               <p class="utf_sec_meta">
-                Subscribe to get latest updates and information.
+                info@indiafilmdirectory.com
               </p>
             </div>
           </div>
-          <div class="col-md-4 col-sm-5">
-            <div class="contact-form-action">
-              <form [formGroup]="emailSubmitForm">
-                <span class="la la-envelope-o"></span>
-                <input class="form-control" formControlName="email" placeholder="Enter your email" type="email">
-                <button class="utf_theme_btn" type="submit">Subscribe</button>
-              </form>
-            </div>
-          </div>
+<!--          <div class="col-md-4 col-sm-5">-->
+<!--            <div class="contact-form-action">-->
+<!--              <form [formGroup]="emailSubmitForm">-->
+<!--                <span class="la la-envelope-o"></span>-->
+<!--                <input class="form-control" formControlName="email" placeholder="Enter your email" type="email">-->
+<!--                <button class="utf_theme_btn" type="submit">Add Email</button>-->
+<!--              </form>-->
+<!--            </div>-->
+<!--          </div>-->
         </div>
       </div>
     </div>

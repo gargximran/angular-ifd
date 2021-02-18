@@ -78,8 +78,25 @@
         </div>
       </div>
 
-      <h4><i class="sl sl-icon-list"></i> Posted Job's List</h4>
+      <h4><i class="sl sl-icon-list"></i> Job's List</h4>
+      <div class="row mt-2">
+        <div class="col-md-6 offset-md-6">
+          <form [formGroup]="searchForm" (ngSubmit)="currentPageNumber = 1; fetchData()">
+            <div class="input-group">
+              <input type="text" formControlName="search" class="form-control" placeholder="Search here">
+              <div class="input-group-append">
+                <button style="width: 100px; font-size: 16px;" class="btn btn-danger" type="submit">Search</button>
+              </div>
+            </div>
+
+          </form>
+        </div>
+      </div>
       <ul class="border-left">
+        <li *ngIf="!jobs?.length">
+          <div class="alert alert-danger">No data here!</div>
+        </li>
+
         <ng-container
           *ngFor="
             let job of jobs

@@ -107,8 +107,17 @@
             of {{state.name}}
           </h3>
           <ul #collapseLocation="ngbCollapse" [(ngbCollapse)]="isCollapsedLocation" class="utf_listing_detail_sidebar">
-            <li *ngFor="let city of cities" class="text-capitalize"><i class="fa fa-angle-double-right"></i> <a
+            <li *ngFor="let city of displayState()" class="text-capitalize"><i class="fa fa-angle-double-right"></i> <a
               [routerLink]="['/directory/category', categorySlug, 'city', city.slug]">{{city.name}}</a></li>
+
+            <li *ngIf="cities?.length > 6" class="text-capitalize text-white font-weight-bold px-0 theme-bg btn" (click)="stateDisplayCollapse = !stateDisplayCollapse"><a style="cursor: pointer;">
+              <ng-template [ngIf]="stateDisplayCollapse">
+                Show more!
+              </ng-template>
+              <ng-template [ngIf]="!stateDisplayCollapse">
+                Show less!
+              </ng-template>
+            </a></li>
           </ul>
         </div>
         <div class="utf_box_widget margin-top-35 margin-bottom-75">

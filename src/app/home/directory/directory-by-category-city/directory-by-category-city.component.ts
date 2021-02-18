@@ -14,6 +14,8 @@ export class DirectoryByCategoryCityComponent implements OnInit {
   citySlug = '';
   categorySlug = '';
 
+  stateDisplayCollapse = true;
+
   // pagination objects
   currentPageNumber = 1;
   totalVolume = 0;
@@ -31,8 +33,15 @@ export class DirectoryByCategoryCityComponent implements OnInit {
   constructor(private api: ApiService, private route: ActivatedRoute, private router: Router) { }
 
   ngOnInit(): void {
+    window.scroll(0, 0);
     this.fetchData();
     this.fetchCategories();
+  }
+
+  displayState(): any {
+    return this.stateDisplayCollapse ?
+      (this.cities.length > 6 ? this.cities.slice(0, 6) : this.cities ) :
+      this.cities;
   }
 
 
@@ -59,7 +68,7 @@ export class DirectoryByCategoryCityComponent implements OnInit {
   }
 
   fetchData(): any {
-    window.scroll(0, 0);
+
     const form = new FormData();
     form.append('itemPerPage', String(this.itemPerPage));
     form.append('pageNumber', String(this.currentPageNumber));

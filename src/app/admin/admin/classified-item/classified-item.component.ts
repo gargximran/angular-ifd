@@ -4,6 +4,7 @@ import {ApiService} from '../../../service/api.service';
 import {ToastrService} from 'ngx-toastr';
 import {ActivatedRoute} from '@angular/router';
 import {Select2Data} from 'ng-select2-component';
+import {FormControl, FormGroup} from "@angular/forms";
 
 
 @Component({
@@ -12,6 +13,10 @@ import {Select2Data} from 'ng-select2-component';
   styleUrls: ['./classified-item.component.css']
 })
 export class ClassifiedItemComponent implements OnInit {
+
+  searchForm = new FormGroup({
+    search: new FormControl('')
+  });
 
   constructor(
     private modalService: NgbModal,
@@ -69,6 +74,10 @@ export class ClassifiedItemComponent implements OnInit {
 
   fetchData(): any {
     const form = new FormData();
+    if(this.searchForm.get('search').value){
+      console.log(this.searchForm.get('search').value)
+      form.append('search', this.searchForm.get('search').value);
+    }
     form.append('itemPerPage', String(this.itemPerPage));
     form.append('pageNumber', String(this.currentPageNumber));
     form.append('status', this.postStatus || 'all');

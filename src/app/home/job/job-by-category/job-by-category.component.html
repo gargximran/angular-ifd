@@ -108,7 +108,16 @@
           <h3 (click)="collapseLocation.toggle()" style="cursor: pointer;"><i class="sl sl-icon-folder-alt"></i> States
           </h3>
           <ul #collapseLocation="ngbCollapse" [(ngbCollapse)]="isCollapsedLocation" class="utf_listing_detail_sidebar">
-            <li *ngFor="let state of states" class="text-capitalize"><i class="fa fa-angle-double-right"></i> <a [routerLink]="[ '/job/state', state.slug]">{{state.name}}</a></li>
+            <li *ngFor="let state of displayState()" class="text-capitalize"><i class="fa fa-angle-double-right"></i> <a [routerLink]="[ '/job/state', state.slug]">{{state.name}}</a></li>
+
+            <li *ngIf="states?.length > 6" class="text-capitalize text-white font-weight-bold px-0 theme-bg btn" (click)="stateDisplayCollapse = !stateDisplayCollapse"><a style="cursor: pointer;">
+              <ng-template [ngIf]="stateDisplayCollapse">
+                Show more!
+              </ng-template>
+              <ng-template [ngIf]="!stateDisplayCollapse">
+                Show less!
+              </ng-template>
+            </a></li>
           </ul>
         </div>
         <div class="utf_box_widget margin-top-35 margin-bottom-75">
